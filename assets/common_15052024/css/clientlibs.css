@@ -1,0 +1,292 @@
+.style1 .contentfeature {
+    width: 100%;
+    height: 347px;
+}
+
+.style1  .background {
+    background: #fceae9;
+    margin: 0px;
+    padding: 10px;
+    height: 290px;
+}
+
+.style1 ul {
+    float: left;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.style1 #aColor a {
+    color: #e0301e;
+}
+
+.style2 h3 {
+    margin-top: 8px;
+    font-size: 1.1em;
+}
+
+.style2 h2 {
+    font-size: 1.3em;
+}
+
+.style2 a {
+    color: #a32020;
+}
+.style1 .contentfeature{
+    width: 100%;
+    height: 347px;
+}
+.style3 .rhbox li{
+    border-bottom:0px;
+    padding-bottom:0px;
+}
+
+/* Scrollable list component style*/
+
+.text-list-component h3:first-of-type {
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.text-list-component h3 {
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+.text-list-component h1, .text-list-component h2, .text-list-component h4, .text-list-component h5, .text-list-component h6, .text-list-component .serif {
+    font-family: georgia, serif;
+    font-style: italic;
+    font-weight: normal;
+    color: inherit;
+}
+
+.text-list-component ul{
+    margin-right: 20px;
+    list-style-type: disc;
+    margin: 0 0 8px;
+    padding: inherit;
+}
+
+.text-list-component ol{
+    margin-right: 20px;
+    list-style-type: disc;
+    margin: 0 0 8px;
+    padding: inherit;
+}
+
+.text-list-component ul > li {
+font-family: georgia, serif;
+font-style: italic;
+line-height: 1.5em;
+list-style: none;
+padding-left: 20px;
+position: relative;
+}
+
+.text-list-component ol > li {
+font-family: georgia, serif;
+font-style: italic;
+line-height: 1.5em;
+list-style: none;
+padding-left: 25px;
+position: relative;
+}
+
+.text-list-component ul > li a,
+.text-list-component ol > li a {
+font-style: normal;
+text-decoration: none;
+}
+
+.text-list-component ul  li {
+margin-bottom: 20px;
+font-size: 18px;
+}
+
+
+.text-list-component ul li::before {
+content: '\2022';
+font-size: 1.25em;
+left: 0;
+position: absolute;
+top: 0;
+}
+
+
+.text-list-component ul > li.fg100 a:hover {
+color: #e1301e; 
+}
+
+.text-list-component ol {
+counter-reset: li;
+margin-right: 20px;
+}
+
+.text-list-component ol > li {
+font-size: 18px;
+margin-bottom: 20px;
+
+}
+
+.text-list-component ol > li::before  {
+content: counter(li)'.';
+    counter-increment: li;
+font-size: 1em;
+font-style: normal;
+left: 0;
+position: absolute;
+top: 0;
+}
+
+
+.text-list-component ol > li.fg100 a:hover{
+color: #e1301e; 
+}
+
+.text-list-controllers .btn:last-of-type {
+    margin-left: 4px;
+}
+
+.text-list-controllers .btn {
+    display:inline-block;
+    padding:14px 23px;
+    font:13px/16px Arial, sans-serif;
+    font-weight:bold;
+    text-decoration:none;
+    border-radius: inherit;
+    color:#414141;
+    background:#f0f0f0;
+    border: 1px solid transparent;
+    cursor:pointer;
+    
+    -webkit-transition: background .2s ease-out;
+    -moz-transition: background .2s ease-out;
+    -o-transition: background .2s ease-out;
+    transition: background .2s ease-out;
+}
+.text-list-controllers .btn:hover, .text-list-controllers .btn:focus {
+    color:#fff;
+    background:#eb8c00;
+}
+
+.text-list-controllers .btn a{
+    color: inherit;
+}
+
+.text-list-controllers .btn a:hover{
+    text-decoration: none;
+}
+
+.text-list-controllers .btn--prev:before {
+    content:'< ';
+    font-family:georgia, serif;
+    font-weight:normal;
+}
+
+.text-list-controllers .btn--next:after {
+    content:' >';
+    font-family:georgia, serif;
+    font-weight:normal;
+}
+
+section.white .text-list-component ul > li > a,
+
+section.white .text-list-component ol > li > a {
+
+color: #ffffff;
+
+}
+
+
+
+
+section.tangerine .text-list-component ul > li > a,
+
+section.tangerine .text-list-component ol > li > a {
+
+color: #eb8c00;
+
+}
+
+
+
+
+section.orange .text-list-component ul > li > a,
+
+section.orange .text-list-component ol > li > a {
+
+color: #dc6900;
+
+}
+
+
+
+
+section.red .text-list-component ul > li > a,
+
+section.red .text-list-component ol > li > a {
+
+color: #e0301e;
+
+}
+
+
+
+
+section.rose .text-list-component ul > li > a,
+
+section.rose .text-list-component ol > li > a {
+
+color: #db536a;
+
+}
+
+
+
+
+section.burgundy .text-list-component ul > li > a,
+
+section.burgundy .text-list-component ol > li > a {
+
+color: #a32020;
+
+}
+
+
+
+
+section.maroon .text-list-component ul > li > a,
+
+section.maroon .text-list-component ol > li > a {
+
+color: #602320;
+
+}
+
+
+
+
+section.grey .text-list-component ul > li > a,
+
+section.grey .text-list-component ol > li > a {
+
+color: #968c6d;
+
+}
+
+
+
+
+section.black .text-list-component ul > li > a,
+
+section.black .text-list-component ol > li > a {
+
+color: #000000;
+
+}
+
+
+
+
+
+

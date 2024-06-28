@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "../scss/raterater.css",
+	"sources": [
+		"../scss/raterater.scss"
+	],
+	"sourcesContent": [
+		"/* change these if you want */\n.raterater-bg-layer {\n    color: rgba( 0, 0, 0, 0.25 );\n}\n.raterater-hover-layer {\n    color: rgba( 255, 255, 0, 0.75 );\n}\n.raterater-hover-layer.rated { /* after the user selects a rating */\n    color: rgba( 255, 255, 0, 1 );\n}\n.raterater-rating-layer {\n    color: rgba( 255, 155, 0, 0.75 );\n}\n.raterater-outline-layer {\n    color: rgba( 0, 0, 0, 0.25 );\n}\n\n/* don't change these - you might break something.. */\n.raterater-wrapper {\n    overflow:visible;\n}\n.raterater-layer,\n.raterater-layer i {\n    display: block;\n    position: absolute;\n    overflow: visible;\n    top: 0px;\n    left: 0px;\n}\n.raterater-hover-layer {\n    display: none;\n}\n.raterater-hover-layer i,\n.raterater-rating-layer i {\n    width: 0px;\n    overflow: hidden;\n}"
+	],
+	"mappings": "AAAA,8BAA8B;;AAC9B,AAAA,mBAAmB,CAAC;EAChB,KAAK,EAAE,mBAAI;CACd;;;AACD,AAAA,sBAAsB,CAAC;EACnB,KAAK,EAAE,uBAAI;CACd;;;AACD,AAAsB,sBAAA,AAAA,MAAM,CAAC;EAAE,qCAAqC;EAChE,KAAK,EAAE,MAAI;CACd;;;AACD,AAAA,uBAAuB,CAAC;EACpB,KAAK,EAAE,uBAAI;CACd;;;AACD,AAAA,wBAAwB,CAAC;EACrB,KAAK,EAAE,mBAAI;CACd;;AAED,sDAAsD;;AACtD,AAAA,kBAAkB,CAAC;EACf,QAAQ,EAAC,OAAQ;CACpB;;;AACD,AAAA,gBAAgB;AAChB,AAAiB,gBAAD,CAAC,CAAC,CAAC;EACf,OAAO,EAAE,KAAM;EACf,QAAQ,EAAE,QAAS;EACnB,QAAQ,EAAE,OAAQ;EAClB,GAAG,EAAE,GAAI;EACT,IAAI,EAAE,GAAI;CACb;;;AACD,AAAA,sBAAsB,CAAC;EACnB,OAAO,EAAE,IAAK;CACjB;;;AACD,AAAuB,sBAAD,CAAC,CAAC;AACxB,AAAwB,uBAAD,CAAC,CAAC,CAAC;EACtB,KAAK,EAAE,GAAI;EACX,QAAQ,EAAE,MAAO;CACpB",
+	"names": []
+}

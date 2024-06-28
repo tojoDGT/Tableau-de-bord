@@ -1,0 +1,64 @@
+/* communiqué */
+
+/*.bx-wrapper, .bx-viewport {
+    height: 70px !important; //provide height of slider
+}
+
+
+.bx-wrapper {
+	padding-left:5%!important;
+}
+*/
+
+#liste-Comm ul.list li .margecomm .photo a {
+    font-size: 16px!important;
+}
+
+#blocEvaluable table, #blocEvaluable th, #blocEvaluable td {
+    /* width: 100% !important; */
+    max-width: inherit !important;
+    /* display: block; */
+}
+
+
+.slider .slidePict{
+	font-size: 16px!important;
+}
+
+.pagination {
+	display:block!important;
+}
+
+table tr td {
+    font-size: 12px!important;
+    vertical-align: middle;
+    padding: 5px;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+/*.input-group-addon .fa {
+    margin: 0px!important;
+    position: static!important;
+    height: 0px!important;
+    width: inherit!important;
+    font-size: 15px!important;;
+}*/
+
+select.input-sm {
+    height: 30px!important;
+    line-height: 12px!important;
+}
+
+@media only screen and (max-width: 700px) {
+
+	#blocEvaluable table,#blocEvaluable th,#blocEvaluable td{
+		width:100% !important;
+		max-width:inherit !important;
+		display:block;
+	}
+}
+
+.open>.dropdown-menu {
+    display: block;
+    z-index: 99999!important;
+}

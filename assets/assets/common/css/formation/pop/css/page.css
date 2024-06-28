@@ -1,0 +1,64 @@
+
+/*  install page css  */
+			
+
+#install{
+	width:680px;
+	margin-left:30px;	
+}
+
+
+
+#install ul{
+	width:400px;
+	margin:5px 0 40px 0;	
+}
+
+#install ul li{
+	margin:10px 0;	
+	float:left;	
+	margin-right:10px;
+	list-style-position:inside;
+	width:100px;
+}
+
+.button{
+	padding:10px 20px;
+	margin-right:20px;	
+}
+
+hr{
+	color:#888;
+	opacity:0.4;
+	margin:40px 0;	
+}
+
+#links{
+	float:right;
+	color:#303030;
+	font-weight:600;
+	list-style:none;
+}
+
+#links li{
+	float:left;
+	margin-left:20px;	
+}
+
+.like-btns{
+	width:50px;
+	padding:5px;
+	background:#ffffff;
+	position:fixed;
+	margin-left:830px;
+	text-align:center;
+	border-radius:0 3px 3px 0;
+}
+
+#copyright, #copyright a {
+	color: #666;
+}
+
+#copyright {
+	font-size: 1em;
+}

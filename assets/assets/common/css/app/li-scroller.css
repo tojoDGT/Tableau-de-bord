@@ -1,0 +1,69 @@
+/* liScroll styles */
+/* line 3, E:/wamp/www/rohi/scss/app/li-scroller.scss */
+.tickercontainer {
+  /* the outer div with the black border */
+  /*border: 1px solid #000;*/
+  /*background: #fff*/
+  width: 60%;
+  height: 30px;
+  margin: 0;
+  padding-top: 5px;
+  overflow: hidden;
+}
+
+/* line 12, E:/wamp/www/rohi/scss/app/li-scroller.scss */
+.tickercontainer .mask {
+  /* that serves as a mask. so you get a sort of padding both left and right */
+  position: relative;
+  left: 10px;
+  top: 8px;
+  width: 800px;
+  overflow: hidden;
+}
+
+/* line 19, E:/wamp/www/rohi/scss/app/li-scroller.scss */
+ul.newsticker {
+  /* that's your list */
+  position: relative;
+  left: 800px;
+  font-size: 14px !important;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: inline-block;
+}
+
+/* line 29, E:/wamp/www/rohi/scss/app/li-scroller.scss */
+ul.newsticker li {
+  float: left;
+  /* important: display inline gives incorrect results when you check for elem's width */
+  margin: 0;
+  height: 35px !important;
+  padding: 0;
+  color: white;
+  position: relative;
+  display: inline-block;
+  /*background: #fff;*/
+}
+
+/* line 39, E:/wamp/www/rohi/scss/app/li-scroller.scss */
+ul.newsticker a {
+  white-space: nowrap;
+  padding: 0;
+  /*color: #b9d20f;*/
+  color: #4feef7;
+  font-size: 14px !important;
+  margin: 0 5px 0 0;
+  position: relative;
+  display: inline-block;
+}
+
+/* line 49, E:/wamp/www/rohi/scss/app/li-scroller.scss */
+ul.newsticker span {
+  margin: 0 10px 0 0;
+  position: relative;
+  display: inline-block;
+}
+
+/*# sourceMappingURL=../../css/app/li-scroller.map */

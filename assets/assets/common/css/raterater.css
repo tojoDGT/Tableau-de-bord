@@ -1,0 +1,56 @@
+/* change these if you want */
+/* line 2, E:/wamp/www/rohi/scss/raterater.scss */
+.raterater-bg-layer {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+/* line 5, E:/wamp/www/rohi/scss/raterater.scss */
+.raterater-hover-layer {
+  color: rgba(255, 255, 0, 0.75);
+}
+
+/* line 8, E:/wamp/www/rohi/scss/raterater.scss */
+.raterater-hover-layer.rated {
+  /* after the user selects a rating */
+  color: yellow;
+}
+
+/* line 11, E:/wamp/www/rohi/scss/raterater.scss */
+.raterater-rating-layer {
+  color: rgba(255, 155, 0, 0.75);
+}
+
+/* line 14, E:/wamp/www/rohi/scss/raterater.scss */
+.raterater-outline-layer {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+/* don't change these - you might break something.. */
+/* line 19, E:/wamp/www/rohi/scss/raterater.scss */
+.raterater-wrapper {
+  overflow: visible;
+}
+
+/* line 22, E:/wamp/www/rohi/scss/raterater.scss */
+.raterater-layer,
+.raterater-layer i {
+  display: block;
+  position: absolute;
+  overflow: visible;
+  top: 0px;
+  left: 0px;
+}
+
+/* line 30, E:/wamp/www/rohi/scss/raterater.scss */
+.raterater-hover-layer {
+  display: none;
+}
+
+/* line 33, E:/wamp/www/rohi/scss/raterater.scss */
+.raterater-hover-layer i,
+.raterater-rating-layer i {
+  width: 0px;
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=../css/raterater.map */

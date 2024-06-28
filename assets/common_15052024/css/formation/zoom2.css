@@ -1,0 +1,28 @@
+.zoom {
+		height:220px;
+		margin:auto;
+		}
+.zoom p {
+		text-align:center;
+		}
+.zoom img {
+		width:250px;
+		height:250px;
+		}
+		
+
+/*		
+.zoom1 {
+		height:220px;
+		margin:auto;
+		}
+.zoom1 p {
+		text-align:center;
+		}*/
+.zoom1 img {
+		width:50% !important;
+		height:48% !important;
+		}
+		
+
+		

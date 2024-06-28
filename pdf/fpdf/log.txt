@@ -1,0 +1,19 @@
+SetFont('Arial','',10)
+SetFont('Arial','',10)
+Write(5, 	)
+Ln(5)
+SetFont('Arial','',10)
+Write(5, 	)
+SetFont('Arial','',18)
+SetFont('Arial','B',14)
+--CBK2 Immeuble bancaire---Cell(0,5,CBK2 Immeuble bancaire,0,0,'C')
+SetFont('Arial','',10)
+SetFont('Arial','',10)
+Ln(5)
+SetFont('Arial','',10)
+Write(5, 	)
+SetFont('Arial','',10)
+--Luxembourg-Kirchberg---Cell(0,5,Luxembourg-Kirchberg,0,0,'C')
+SetFont('Arial','',10)
+Ln(5)
+SetFont('Arial','',10)

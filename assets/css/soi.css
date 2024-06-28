@@ -1,0 +1,58 @@
+.Cv-form .panel .panel-title a {
+	display: block;
+	text-transform: uppercase;
+	padding: 5px 5px 5px 5px;;
+	min-height: 30px;
+	background: linear-gradient(#3c8dbc,#2f5482);
+	border-radius: 5px 5px 0 0;
+	color: #ffffff;
+	position: relative;
+}
+.panel-title {
+	font-size: 14px;
+}
+.form-group {
+	margin-bottom: 6px!important;
+}
+.marge {
+	margin:10px;
+}
+.form-control {
+	/*height: 30px;*/
+}
+form .error input, form .error select, form .error textarea {
+	border-color: #ed1b24;
+	color: #ed1b24;
+}
+
+form .error1 input, form .error1 select, form .error1 textarea {
+	border-color: #ed1b24;
+	color: #ed1b24;
+}
+form .message {
+	color: #ed1b24;
+	font-size: 12px;
+	font-style: italic;
+	padding: 5px 0 5px 10px !important;
+	display: none;
+}
+
+form .otherError {
+	color: #ed1b24;
+	font-size: 12px;
+	font-style: italic;
+	padding: 5px 0 5px 10px !important;
+	display: none;
+}
+
+form .error .message {
+	display: block;
+}
+
+form .error1 .message {
+	display: none;
+}
+
+form .error1 .otherError {
+	display: block;
+}

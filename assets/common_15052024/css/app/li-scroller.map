@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "../../scss/app/li-scroller.css",
+	"sources": [
+		"../../scss/app/li-scroller.scss"
+	],
+	"sourcesContent": [
+		"/* liScroll styles */\r\n\r\n.tickercontainer { /* the outer div with the black border */\r\n/*border: 1px solid #000;*/\r\n/*background: #fff*/; \r\nwidth: 60%; \r\nheight: 30px; \r\nmargin: 0; \r\npadding-top: 5px;\r\noverflow: hidden; \r\n}\r\n.tickercontainer .mask { /* that serves as a mask. so you get a sort of padding both left and right */\r\nposition: relative;\r\nleft: 10px;\r\ntop: 8px;\r\nwidth: 800px;\r\noverflow: hidden;\r\n}\r\nul.newsticker { /* that's your list */\r\nposition: relative;\r\nleft: 800px;\r\nfont-size: 14px!important;\r\nlist-style-type: none;\r\nmargin: 0;\r\npadding: 0;\r\nposition:relative;\r\ndisplay: inline-block;\r\n}\r\nul.newsticker li {\r\nfloat: left; /* important: display inline gives incorrect results when you check for elem's width */\r\nmargin: 0;\r\nheight: 35px!important;\r\npadding: 0;\r\ncolor:white;\r\nposition:relative;\r\ndisplay: inline-block;\r\n/*background: #fff;*/\r\n}\r\nul.newsticker a {\r\nwhite-space: nowrap;\r\npadding: 0;\r\n/*color: #b9d20f;*/\r\ncolor:#4feef7;\r\nfont-size: 14px!important;\r\nmargin: 0 5px 0 0;\r\nposition:relative;\r\ndisplay: inline-block;\r\n} \r\nul.newsticker span {\r\nmargin: 0 10px 0 0;\r\nposition:relative;\r\ndisplay: inline-block;\r\n} "
+	],
+	"mappings": "AAAA,qBAAqB;;AAErB,AAAA,gBAAgB,CAAC;EAAE,yCAAyC;EAC5D,2BAA2B;EAC3B,oBAAoB;EACpB,KAAK,EAAE,GAAI;EACX,MAAM,EAAE,IAAK;EACb,MAAM,EAAE,CAAE;EACV,WAAW,EAAE,GAAI;EACjB,QAAQ,EAAE,MAAO;CAChB;;;AACD,AAAiB,gBAAD,CAAC,KAAK,CAAC;EAAE,6EAA6E;EACtG,QAAQ,EAAE,QAAS;EACnB,IAAI,EAAE,IAAK;EACX,GAAG,EAAE,GAAI;EACT,KAAK,EAAE,KAAM;EACb,QAAQ,EAAE,MAAO;CAChB;;;AACD,AAAE,EAAA,AAAA,WAAW,CAAC;EAAE,sBAAsB;EACtC,QAAQ,EAAE,QAAS;EACnB,IAAI,EAAE,KAAM;EACZ,SAAS,EAAE,IAAI,CAAA,UAAU;EACzB,eAAe,EAAE,IAAK;EACtB,MAAM,EAAE,CAAE;EACV,OAAO,EAAE,CAAE;EACX,QAAQ,EAAC,QAAS;EAClB,OAAO,EAAE,YAAa;CACrB;;;AACD,AAAc,EAAZ,AAAA,WAAW,CAAC,EAAE,CAAC;EACjB,KAAK,EAAE,IAAK;EAAE,uFAAuF;EACrG,MAAM,EAAE,CAAE;EACV,MAAM,EAAE,IAAI,CAAA,UAAU;EACtB,OAAO,EAAE,CAAE;EACX,KAAK,EAAC,KAAM;EACZ,QAAQ,EAAC,QAAS;EAClB,OAAO,EAAE,YAAa;EACtB,qBAAqB;CACpB;;;AACD,AAAc,EAAZ,AAAA,WAAW,CAAC,CAAC,CAAC;EAChB,WAAW,EAAE,MAAO;EACpB,OAAO,EAAE,CAAE;EACX,mBAAmB;EACnB,KAAK,EAAC,OAAQ;EACd,SAAS,EAAE,IAAI,CAAA,UAAU;EACzB,MAAM,EAAE,SAAU;EAClB,QAAQ,EAAC,QAAS;EAClB,OAAO,EAAE,YAAa;CACrB;;;AACD,AAAc,EAAZ,AAAA,WAAW,CAAC,IAAI,CAAC;EACnB,MAAM,EAAE,UAAW;EACnB,QAAQ,EAAC,QAAS;EAClB,OAAO,EAAE,YAAa;CACrB",
+	"names": []
+}

@@ -1,0 +1,2650 @@
+@import url("login-inscr.css");
+/* line 24, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .user-menu li {
+  display: block !important;
+  padding: 5px !important;
+}
+
+/* line 27, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .user-menu li a {
+  height: auto !important;
+}
+
+/* line 33, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .menu-compte ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 36, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .menu-compte ul li {
+  border: none;
+  padding: 0;
+  display: block;
+}
+
+/* line 40, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .menu-compte ul li a {
+  display: block;
+  white-space: nowrap;
+  padding: 5px;
+  height: auto !important;
+}
+
+/* line 45, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .menu-compte ul li a:before {
+  display: inline-block;
+  content: '';
+  font-family: fontawesome;
+  width: 19px;
+  height: 19px;
+  margin: 0 5px 0 0;
+  border-radius: 9px;
+  text-align: center;
+  line-height: 15px;
+  color: #907042;
+  border: 2px solid #907042;
+}
+
+/* line 59, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .menu-compte ul li a.active:before {
+  content: '\f111';
+}
+
+/* line 69, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .theme-list {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #cccccc;
+}
+
+/* line 73, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .theme-list li {
+  border: none;
+  margin: 0;
+  padding: 0 !important;
+}
+
+/* line 77, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .theme-list li a {
+  width: 20px;
+  height: 20px !important;
+  margin: 5px;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 0;
+}
+
+/* line 85, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .theme-list li a.colorred {
+  background: #bc2d2d !important;
+}
+
+/* line 86, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .theme-list li a.colorblue {
+  background: #348fe2 !important;
+}
+
+/* line 87, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .theme-list li a.colorgreen {
+  background: #5bb12f !important;
+}
+
+/* line 88, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .theme-list li a.colorpurple {
+  background: #9b539c !important;
+}
+
+/* line 89, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .theme-list li a.colororange {
+  background: #f59c1a !important;
+}
+
+/* line 92, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .theme-list li.active a {
+  opacity: 0.6;
+}
+
+/* line 100, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderMenu {
+  padding: 0 0 15px 0;
+}
+
+/* line 103, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderMenu nav ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+/* line 107, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderMenu nav ul li {
+  float: left;
+}
+
+/* line 109, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderMenu nav ul li a {
+  display: block;
+  color: #ffffff;
+  padding: 7px 5px;
+  margin: 0 5px 5px 0;
+  border-radius: 3px;
+  background: #eaae62;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+/* line 118, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderMenu nav ul li a:hover {
+  background: #907042;
+}
+
+/* line 123, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderMenu nav ul li.active a {
+  background: #907042;
+}
+
+/* line 129, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderMenu nav:after {
+  content: '';
+  clear: both;
+  display: block;
+  height: 0;
+  width: 100%;
+}
+
+/* line 139, E:/wamp/www/rohi/scss/themeorange.scss */
+html, body {
+  width: 100%;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* line 144, E:/wamp/www/rohi/scss/themeorange.scss */
+body {
+  box-sizing: border-box;
+  padding: 40px 150px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Lato', sans-serif;
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* line 144, E:/wamp/www/rohi/scss/themeorange.scss */
+  body {
+    padding: 40px 70px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* line 144, E:/wamp/www/rohi/scss/themeorange.scss */
+  body {
+    padding: 20px 30px;
+  }
+}
+
+/* line 153, E:/wamp/www/rohi/scss/themeorange.scss */
+body * {
+  font-family: 'Lato', sans-serif;
+}
+
+/* line 160, E:/wamp/www/rohi/scss/themeorange.scss */
+#container {
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  position: relative;
+}
+
+/* line 167, E:/wamp/www/rohi/scss/themeorange.scss */
+#chargement {
+  color: #f59c1a;
+  font-size: 24px;
+  font-weight: 300;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  padding: 0 40%;
+  width: 100%;
+  height: 100%;
+  margin-left: 0x;
+  margin-top: 0;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.9);
+}
+
+@media screen and (max-width: 480px) {
+  /* line 167, E:/wamp/www/rohi/scss/themeorange.scss */
+  #chargement {
+    padding: 0 20%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  /* line 167, E:/wamp/www/rohi/scss/themeorange.scss */
+  #chargement {
+    padding: 0 30%;
+  }
+}
+
+/* line 185, E:/wamp/www/rohi/scss/themeorange.scss */
+#chargement #chargement-infos {
+  position: relative;
+  top: 50%;
+  text-align: center;
+  white-space: nowrap;
+  display: block;
+  margin: 0 auto;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid #f59c1a;
+  width: 0%;
+}
+
+/* line 202, E:/wamp/www/rohi/scss/themeorange.scss */
+#ferromenu-controller-0 {
+  opacity: 0 !important;
+}
+
+/* line 206, E:/wamp/www/rohi/scss/themeorange.scss */
+[id*="ferromenu-controller-"] {
+  opacity: 0 !important;
+  display: none;
+}
+
+/* line 210, E:/wamp/www/rohi/scss/themeorange.scss */
+[id="ferromenu-controller-0"],
+#ferromenu-controller-0 {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+/* line 215, E:/wamp/www/rohi/scss/themeorange.scss */
+.ferromenu-controller {
+  width: 130px;
+  height: 130px;
+  font-size: 0;
+  background: #ffffff;
+  text-decoration: none;
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* line 215, E:/wamp/www/rohi/scss/themeorange.scss */
+  .ferromenu-controller {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* line 215, E:/wamp/www/rohi/scss/themeorange.scss */
+  .ferromenu-controller {
+    padding: 20px 30px;
+  }
+}
+
+/* line 223, E:/wamp/www/rohi/scss/themeorange.scss */
+.ferromenu-controller .label {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: url("../img/logo.png") center center no-repeat;
+  background-size: 100px;
+  transition: trans;
+  -webkit-animation-name: logorotate;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 2s;
+  -webkit-transform-style: preserve-3d;
+  animation-name: logorotate;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 2s;
+  transform-style: preserve-3d;
+}
+
+/* line 241, E:/wamp/www/rohi/scss/themeorange.scss */
+.ferromenu-controller .label:before {
+  width: 0;
+  height: 0;
+  content: 'x';
+  font-size: 0;
+  content: #000000;
+  font-weight: 100;
+  line-height: 120px;
+}
+
+/* line 252, E:/wamp/www/rohi/scss/themeorange.scss */
+.ferromenu-controller .layout {
+  display: none;
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.4);
+  background: -moz-radial-gradient(105px center, circle cover, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 165px, rgba(0, 0, 0, 0.7) 166px, rgba(0, 0, 0, 0.7) 100%);
+  background: -webkit-gradient(radial, 105px center, 0px, center center, 100%, color-stop(0%, rgba(255, 255, 255, 0.4)), color-stop(165px, rgba(255, 255, 255, 0.4)), color-stop(166px, rgba(0, 0, 0, 0.7)), color-stop(100%, rgba(0, 0, 0, 0.7)));
+  background: -webkit-radial-gradient(105px center, circle cover, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 165px, rgba(0, 0, 0, 0.7) 166px, rgba(0, 0, 0, 0.7) 100%);
+  background: -o-radial-gradient(105px center, circle cover, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 165px, rgba(0, 0, 0, 0.7) 166px, rgba(0, 0, 0, 0.7) 100%);
+  background: -ms-radial-gradient(105px center, circle cover, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 165px, rgba(0, 0, 0, 0.7) 166px, rgba(0, 0, 0, 0.7) 100%);
+  background: radial-gradient(circle at 105px center, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 165px, rgba(0, 0, 0, 0.7) 166px, rgba(0, 0, 0, 0.7) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$colwhite, endColorstr='#000000', GradientType=1 );
+  background-size: 100% 100%;
+  background-position: 50% 50%;
+  transition: all 2s ease;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  /* line 252, E:/wamp/www/rohi/scss/themeorange.scss */
+  .ferromenu-controller .layout {
+    background-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.4);
+    background: -moz-radial-gradient(-15px center, circle cover, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 165px, rgba(0, 0, 0, 0.7) 166px, rgba(0, 0, 0, 0.7) 100%);
+    background: -webkit-gradient(radial, -15px center, 0px, center center, 100%, color-stop(0%, rgba(255, 255, 255, 0.4)), color-stop(165px, rgba(255, 255, 255, 0.4)), color-stop(166px, rgba(0, 0, 0, 0.7)), color-stop(100%, rgba(0, 0, 0, 0.7)));
+    background: -webkit-radial-gradient(-15px center, circle cover, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 165px, rgba(0, 0, 0, 0.7) 166px, rgba(0, 0, 0, 0.7) 100%);
+    background: -o-radial-gradient(-15px center, circle cover, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 165px, rgba(0, 0, 0, 0.7) 166px, rgba(0, 0, 0, 0.7) 100%);
+    background: -ms-radial-gradient(-15px center, circle cover, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 165px, rgba(0, 0, 0, 0.7) 166px, rgba(0, 0, 0, 0.7) 100%);
+    background: radial-gradient(circle at -15px center, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 165px, rgba(0, 0, 0, 0.7) 166px, rgba(0, 0, 0, 0.7) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$colwhite, endColorstr='#000000', GradientType=1 );
+  }
+}
+
+/* line 287, E:/wamp/www/rohi/scss/themeorange.scss */
+.ferromenu-controller.open .label {
+  -webkit-transform: rotate(720deg);
+  -moz-transform: rotate(720deg);
+  -ms-transform: rotate(720deg);
+  -o-transform: rotate(720deg);
+  transform: rotate(720deg);
+  background-size: 0;
+}
+
+/* line 294, E:/wamp/www/rohi/scss/themeorange.scss */
+.ferromenu-controller.open .label:before {
+  width: 100%;
+  height: 100%;
+  content: 'x';
+  font-size: 60px;
+  color: #ffffff;
+  line-height: 55px;
+}
+
+/* line 303, E:/wamp/www/rohi/scss/themeorange.scss */
+.ferromenu-controller.open .label:hover:before {
+  color: #353434 !important;
+}
+
+/* line 308, E:/wamp/www/rohi/scss/themeorange.scss */
+.ferromenu-controller.open .layout {
+  display: block;
+}
+
+/* line 312, E:/wamp/www/rohi/scss/themeorange.scss */
+.ferromenu-controller:hover {
+  text-decoration: none;
+}
+
+/* line 315, E:/wamp/www/rohi/scss/themeorange.scss */
+.ferromenu-controller:after {
+  content: 'Menu';
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #353434;
+  z-index: 99999;
+  font-size: 16px;
+}
+
+/* line 328, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 331, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav:before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #000000;
+  width: 0;
+}
+
+/* line 342, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li {
+  position: relative;
+  padding: 0;
+  margin: -40px 0 0 -100px;
+  border: none;
+}
+
+/* line 348, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li.active a {
+  background: #f59c1a;
+}
+
+/* line 350, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li.active a i {
+  color: #ffffff;
+}
+
+/* line 355, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li a {
+  background: #000000;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* line 359, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li a i {
+  font-size: 30px;
+  color: #ffffff;
+}
+
+/* line 363, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li a:hover {
+  opacity: 1;
+}
+
+/* line 365, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li a:hover i {
+  font-size: 28px;
+  color: #747474;
+}
+
+/* line 371, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li a span {
+  font-size: 11px;
+  color: #000000;
+  line-height: 10px;
+  display: none;
+  background: #ffffff;
+  border-radius: 3px;
+  bottom: 100%;
+  word-break: keep-all;
+  position: absolute;
+  bottom: 110%;
+  margin: 0 auto;
+  margin-left: -50%;
+  width: auto;
+  padding: 10%;
+  box-shadow: 0 0 2px #747474;
+}
+
+/* line 387, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li a span:after {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 5px solid transparent;
+  border-top: 5px solid #ffffff;
+  border-left: 5px solid transparent;
+}
+
+/* line 402, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li:hover a span {
+  display: block;
+}
+
+/* line 407, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li .SSmenu > div {
+  position: relative;
+}
+
+/* line 410, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li .SSmenu > div span:after {
+  display: none !important;
+}
+
+/* line 415, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li .SSmenu,
+#nav li .SSmenu > div > div {
+  position: absolute;
+  top: -10px;
+  left: 115%;
+  line-height: 18px;
+  z-index: 99999;
+  background: #747474;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+}
+
+/* line 427, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li .SSmenu:after,
+#nav li .SSmenu > div > div:after {
+  position: absolute;
+  left: -4px;
+  top: 30px;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #747474;
+  border-top: 10px solid transparent;
+}
+
+/* line 440, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li .SSmenu a,
+#nav li .SSmenu > div > div a {
+  font-size: 11px;
+  display: block;
+  width: auto;
+  height: auto;
+  text-align: left;
+  background: transparent;
+  white-space: nowrap;
+  line-height: 18px;
+  color: #ffffff;
+}
+
+/* line 450, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li .SSmenu a i,
+#nav li .SSmenu > div > div a i {
+  display: none !important;
+  color: #ffffff;
+}
+
+/* line 454, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li .SSmenu a span,
+#nav li .SSmenu > div > div a span {
+  display: inline-block;
+  position: static !important;
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: #ffffff;
+}
+
+/* line 463, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li .SSmenu a:active, #nav li .SSmenu a:hover,
+#nav li .SSmenu > div > div a:active,
+#nav li .SSmenu > div > div a:hover {
+  color: #f4f4f4;
+}
+
+/* line 468, E:/wamp/www/rohi/scss/themeorange.scss */
+#nav li .SSmenu > div,
+#nav li .SSmenu > div > div > div {
+  margin: 5px 0;
+}
+
+/* line 475, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .navbar-buttons.navbar-header {
+  float: none !important;
+}
+
+/* line 478, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav {
+  display: block;
+  width: 100%;
+  text-align: right;
+}
+
+/* line 482, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav li {
+  display: inline-block;
+  border-right: 1px solid #747474;
+  padding: 14px;
+}
+
+/* line 486, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav li:first-child {
+  border: none;
+  padding: 4px;
+}
+
+/* line 489, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav li:first-child a {
+  height: 40px;
+}
+
+/* line 493, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav li:last-child {
+  border: none;
+}
+
+/* line 497, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav li span,
+#mainHeaderBottom .nav li a {
+  vertical-align: middle;
+  line-height: 18px;
+  padding: 0;
+  font-size: 13px !important;
+  color: #747474 !important;
+}
+
+/* line 505, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav li .fa {
+  font-size: 20px;
+}
+
+/* line 509, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .user2 {
+  float: none;
+  border: none;
+  padding: 7px;
+  vertical-align: top;
+  display: inline-block;
+  border-right: 1px solid #747474;
+}
+
+/* line 516, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .user2 .form-group {
+  width: 100%;
+  margin: 0;
+  max-width: 250px;
+  min-width: 100px;
+}
+
+/* line 521, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .user2 .form-group .ace-icon {
+  width: 35px;
+  margin: 5px 0 0;
+}
+
+/* line 527, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .user {
+  float: left;
+  border: none;
+}
+
+/* line 530, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .user .user-pict {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #747474;
+  margin-right: 5px;
+}
+
+/* line 539, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .user .user-pict img {
+  position: absolute;
+  top: 0;
+  margin: 0 auto;
+  display: block;
+  max-height: 100%;
+  width: auto;
+}
+
+/* line 548, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .user .user-info {
+  line-height: 18px;
+  text-align: left;
+  color: #828282;
+  font-size: 13px;
+  display: inline-block;
+}
+
+/* line 558, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .dropdown-notif li {
+  display: block;
+  width: 100%;
+  border: none;
+  padding: 0;
+}
+
+/* line 563, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .dropdown-notif li span,
+#mainHeaderBottom .nav .dropdown-notif li a {
+  height: auto;
+}
+
+/* line 567, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .dropdown-notif li a {
+  padding: 5px;
+  display: block;
+}
+
+/* line 570, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainHeaderBottom .nav .dropdown-notif li a i {
+  margin: 0 5px 0 0;
+}
+
+/* line 580, E:/wamp/www/rohi/scss/themeorange.scss */
+.OptMn .dropdown-optionpage {
+  display: none;
+}
+
+/* line 585, E:/wamp/www/rohi/scss/themeorange.scss */
+.OptMn.activated .dropdown-optionpage {
+  display: block;
+}
+
+/* line 591, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab {
+  min-width: 250px;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+/* line 598, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab .ui-tabs-nav {
+  margin: 5px;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+/* line 604, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab .ui-tabs-nav li {
+  width: 44%;
+  margin: 5px 3%;
+  padding: 0 !important;
+  background: #eaae62;
+  border-radius: 5px !important;
+}
+
+/* line 610, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab .ui-tabs-nav li a {
+  height: auto !important;
+  float: none;
+  display: block !important;
+  padding: 5px !important;
+  height: auto;
+  text-align: center !important;
+  color: #f4f4f4 !important;
+}
+
+/* line 619, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab .ui-tabs-nav li.ui-tabs-active {
+  background: #907042;
+}
+
+/* line 621, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab .ui-tabs-nav li.ui-tabs-active a {
+  color: #ffffff !important;
+}
+
+/* line 627, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab .ui-tabs-panel.ui-widget-content {
+  margin: 0;
+  padding: 0 15px;
+  border: none;
+}
+
+/* line 632, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab .ui-tabs-panel.ui-widget-content.menu-design form {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* line 636, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab .ui-tabs-panel.ui-widget-content.menu-design form h4 {
+  font-weight: 700;
+  color: #f59c1a;
+  padding: 0 0 10px;
+}
+
+/* line 641, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab .ui-tabs-panel.ui-widget-content.menu-design form div {
+  display: block;
+}
+
+/* line 647, E:/wamp/www/rohi/scss/themeorange.scss */
+#optTab .ui-tabs-panel.ui-widget-content.menu-design form div input[type=file] {
+  display: none;
+  opacity: 0;
+}
+
+/* line 659, E:/wamp/www/rohi/scss/themeorange.scss */
+.separateur.separateur1,
+h3 {
+  color: #f59c1a;
+  font-size: 16px;
+  padding: 10px 0 3px;
+  margin: 5px 0 10px;
+  position: relative;
+  border-bottom: 1px solid #f59c1a;
+  text-transform: uppercase;
+}
+
+/* line 669, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content {
+  background: #f4f4f4;
+  border-radius: 4px;
+  padding: 5px 15px;
+}
+
+/* line 674, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content h2 {
+  background: #f59c1a;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 10px;
+  margin: -5px -15px 0;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  z-index: 4;
+}
+
+/* line 683, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content h2:after {
+  position: absolute;
+  bottom: -10px;
+  left: 30px;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 10px solid transparent;
+  border-top: 10px solid #f59c1a;
+  border-left: 10px solid transparent;
+}
+
+/* line 698, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content strong {
+  font-weight: 700;
+}
+
+/* line 702, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content #ContentBloc > h2 {
+  text-transform: uppercase;
+}
+
+/* line 703, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content #ContentBloc .contenuePage {
+  width: 100% !important;
+  overflow: auto;
+  padding: 5px 0;
+}
+
+/* line 708, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content #ContentBloc .SSttlPage {
+  background: #bdbaba;
+  padding: 10px;
+  margin: 0 -15px 0;
+  position: relative;
+  z-index: 3;
+}
+
+/* line 713, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content #ContentBloc .SSttlPage #searchAcc .encadre h2 {
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* line 717, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content #ContentBloc .SSttlPage h2 {
+  margin: 0;
+  padding: 10px;
+  font-size: 12px;
+  background: #907042;
+  border-radius: 0;
+}
+
+/* line 723, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content #ContentBloc .SSttlPage h2:after {
+  display: none;
+}
+
+/* line 727, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content #ContentBloc .SSttlPage p {
+  margin: 10px 0;
+  padding: 3px 0;
+  font-size: 13px;
+  color: #353434;
+}
+
+/* line 733, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content #ContentBloc .SSttlPage .encadre {
+  padding: 0;
+}
+
+/* line 735, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content #ContentBloc .SSttlPage .encadre form {
+  margin: 5px 0;
+  padding: 10px;
+  display: none;
+}
+
+/* line 741, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content #ContentBloc .SSttlPage:after {
+  position: absolute;
+  bottom: -10px;
+  left: 30px;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 10px solid transparent;
+  border-top: 10px solid #bdbaba;
+  border-left: 10px solid transparent;
+}
+
+/* line 757, E:/wamp/www/rohi/scss/themeorange.scss */
+section#content fieldset {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* line 763, E:/wamp/www/rohi/scss/themeorange.scss */
+.encadre {
+  padding: 10px;
+  background: #dddddd;
+  border-radius: 5px;
+}
+
+/* line 768, E:/wamp/www/rohi/scss/themeorange.scss */
+#table-liste-evaluer-1,
+#table-liste-evaluer-2 {
+  width: 80%;
+  margin: 30px auto;
+}
+
+/* line 773, E:/wamp/www/rohi/scss/themeorange.scss */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 5px 0;
+}
+
+/* line 779, E:/wamp/www/rohi/scss/themeorange.scss */
+table tr th {
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  background: #907042;
+  color: #ffffff;
+  vertical-align: bottom;
+  padding: 5px;
+}
+
+/* line 788, E:/wamp/www/rohi/scss/themeorange.scss */
+table tr td {
+  font-size: 10px;
+  vertical-align: middle;
+  padding: 5px;
+  border: 1px solid #f4f4f4;
+}
+
+/* line 795, E:/wamp/www/rohi/scss/themeorange.scss */
+table tr.even td {
+  background: #ffffff;
+}
+
+/* line 800, E:/wamp/www/rohi/scss/themeorange.scss */
+table button.btn {
+  font-size: 11px;
+  display: inline-block;
+  width: auto !important;
+  height: auto;
+  padding: 3px !important;
+}
+
+/* line 809, E:/wamp/www/rohi/scss/themeorange.scss */
+table#tableDiplome buttom,
+table#tableDiplome .btn_close {
+  width: 35px;
+}
+
+/* line 812, E:/wamp/www/rohi/scss/themeorange.scss */
+table#tableDiplome buttom i,
+table#tableDiplome .btn_close i {
+  font-size: 16px;
+}
+
+/* line 819, E:/wamp/www/rohi/scss/themeorange.scss */
+::-webkit-input-placeholder {
+  color: #c6c6c6;
+  font-style: italic;
+}
+
+/* line 824, E:/wamp/www/rohi/scss/themeorange.scss */
+:-moz-placeholder {
+  color: #c6c6c6;
+  font-style: italic;
+}
+
+/* line 829, E:/wamp/www/rohi/scss/themeorange.scss */
+::-moz-placeholder {
+  color: #c6c6c6;
+  font-style: italic;
+}
+
+/* line 834, E:/wamp/www/rohi/scss/themeorange.scss */
+:-ms-input-placeholder {
+  color: #c6c6c6;
+  font-style: italic;
+}
+
+/* line 839, E:/wamp/www/rohi/scss/themeorange.scss */
+form legend {
+  color: #adadad;
+  font-size: 1.2em;
+  padding: 0 0 20px;
+}
+
+/* line 845, E:/wamp/www/rohi/scss/themeorange.scss */
+form label,
+form .label {
+  display: block;
+  width: 100%;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #3d423e;
+  padding: 15px  0 5px;
+}
+
+/* line 855, E:/wamp/www/rohi/scss/themeorange.scss */
+form input[type=text],
+form input[type=email],
+form input[type=password],
+form input[type=file],
+form select,
+form textarea {
+  width: 90%;
+  height: 35px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border: 1px solid #907042;
+  box-shadow: 0 0 5px #cccccc;
+  padding: 5px 0;
+  text-indent: 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #000000;
+}
+
+/* line 875, E:/wamp/www/rohi/scss/themeorange.scss */
+form input[type=submit],
+form input[type=button],
+form input[type=reset],
+form button,
+button {
+  width: 90%;
+  height: 35px;
+  color: #ffffff;
+  background: #907042;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 0 5px #cccccc;
+  max-width: 190px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* line 893, E:/wamp/www/rohi/scss/themeorange.scss */
+.faselectDrag {
+  font-size: 25px;
+}
+
+/* line 898, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-widget-overlay {
+  background: rgba(0, 0, 0, 0.7) !important;
+  opacity: 1 !important;
+}
+
+/* line 902, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-dialog {
+  z-index: 99999;
+}
+
+/* line 906, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-widget-header.ui-dialog-titlebar {
+  border: none;
+  background: #f59c1a;
+  margin: -5px -5px 0 -5px;
+  padding: 10px;
+}
+
+/* line 911, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-widget-header.ui-dialog-titlebar span {
+  text-transform: uppercase;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+/* line 916, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-widget-header.ui-dialog-titlebar .ui-dialog-titlebar-close {
+  right: 10px;
+  background: none !important;
+}
+
+/* line 919, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-widget-header.ui-dialog-titlebar .ui-dialog-titlebar-close:before {
+  content: 'x';
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* line 928, E:/wamp/www/rohi/scss/themeorange.scss */
+ul.tabs {
+  margin: 0px;
+  padding: 0px !important;
+  list-style: none;
+}
+
+/* line 932, E:/wamp/www/rohi/scss/themeorange.scss */
+ul.tabs#menuListUsers {
+  margin: 15px 0 0;
+}
+
+/* line 937, E:/wamp/www/rohi/scss/themeorange.scss */
+ul.tabs li {
+  background: none;
+  display: inline-block;
+  padding: 10px 15px !important;
+  cursor: pointer;
+  border-radius: 3px 3px 0 0;
+  font-size: 1.4em !important;
+  background: #eaae62;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* line 948, E:/wamp/www/rohi/scss/themeorange.scss */
+ul.tabs li.current {
+  color: #ffffff;
+  background: #353434;
+}
+
+/* line 954, E:/wamp/www/rohi/scss/themeorange.scss */
+.contenuePage .tab-content {
+  display: none;
+  padding: 10px;
+  padding-bottom: 50px;
+  border-radius: 0;
+  overflow: auto;
+  border: 2px solid #353434;
+}
+
+/* line 962, E:/wamp/www/rohi/scss/themeorange.scss */
+.contenuePage .container {
+  width: 100% !important;
+}
+
+/* line 968, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock ul.nav-tabs {
+  border: none;
+  margin: 20px 0 1px;
+}
+
+/* line 971, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock ul.nav-tabs li {
+  border: none;
+  box-shadow: none;
+}
+
+/* line 974, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock ul.nav-tabs li a {
+  color: #ffffff !important;
+  background: #eaae62;
+  font-size: 11px;
+}
+
+/* line 980, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock ul.nav-tabs li.active a {
+  color: #ffffff !important;
+  background: #353434;
+}
+
+/* line 987, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content {
+  display: block !important;
+  border-radius: 0;
+}
+
+/* line 990, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel {
+  border: none;
+}
+
+/* line 992, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-heading {
+  padding: 0;
+}
+
+/* line 994, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-heading a {
+  display: block;
+  padding: 10px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+/* line 1000, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-heading a.active.collapsed {
+  color: #ffffff;
+  background: #907042;
+  border-radius: 0 !important;
+}
+
+/* line 1006, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-heading a.active, #RevueBlock .tab-content .panel .panel-heading a:hover {
+  background: #eaae62;
+  color: #907042;
+  text-decoration: none;
+}
+
+/* line 1015, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-collapse {
+  box-shadow: none !important;
+}
+
+/* line 1018, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-body {
+  padding: 10px 5px 15px;
+}
+
+/* line 1022, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-body .parbase.section.list ul li {
+  padding: 10px;
+  border-bottom: 1px solid #f4f4f4;
+  font-size: 13px;
+  color: #353434;
+}
+
+/* line 1027, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-body .parbase.section.list ul li a {
+  color: #353434;
+  padding: 0 35px 0 0;
+  position: relative;
+  display: block;
+}
+
+/* line 1032, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-body .parbase.section.list ul li a:hover {
+  color: #907042;
+  text-decoration: none;
+  opacity: 0.6;
+}
+
+/* line 1037, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-body .parbase.section.list ul li a:after {
+  content: '\f138';
+  font-family: fontawesome;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  font-size: 20px;
+  color: #f59c1a;
+}
+
+/* line 1051, E:/wamp/www/rohi/scss/themeorange.scss */
+#RevueBlock .tab-content .panel .panel-body .parbase.section.list ul li:last-child {
+  border-bottom: none;
+  text-decoration: none;
+}
+
+/* line 1062, E:/wamp/www/rohi/scss/themeorange.scss */
+.tab-content.current {
+  display: inherit;
+}
+
+/* line 1065, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-widget-content {
+  padding: 10px;
+}
+
+/* line 1067, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-widget-content.ui-dialog-content {
+  padding: 15px;
+}
+
+/* line 1070, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-widget-content h2 {
+  margin: 0;
+  padding: 3px 0 5px;
+  font-size: 15px;
+  color: #f59c1a;
+  text-transform: uppercase;
+}
+
+/* line 1079, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-dialog-buttonset {
+  width: 100%;
+}
+
+/* line 1081, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-dialog-buttonset:after {
+  clear: both;
+  content: '';
+  width: 100%;
+  display: block;
+}
+
+/* line 1088, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-dialog-buttonset button:first-child {
+  float: left;
+}
+
+/* line 1091, E:/wamp/www/rohi/scss/themeorange.scss */
+.ui-dialog-buttonset button:last-child {
+  float: right;
+}
+
+/* line 1098, E:/wamp/www/rohi/scss/themeorange.scss */
+.dataTables_wrapper {
+  margin: 15px 0 0 0;
+}
+
+/* line 1101, E:/wamp/www/rohi/scss/themeorange.scss */
+table .right {
+  text-align: right;
+}
+
+/* line 1105, E:/wamp/www/rohi/scss/themeorange.scss */
+table .center {
+  text-align: center;
+}
+
+/* line 1112, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination {
+  margin: 0;
+  padding-left: 0;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+/* line 1117, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination > li {
+  display: inline;
+}
+
+/* line 1118, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination > li > a,
+.pagination > li > span {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: #907042;
+  text-decoration: none;
+  background-color: #ffffff;
+  border: 1px solid #f4f4f4;
+}
+
+/* line 1126, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  margin-left: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+/* line 1130, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* line 1135, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+  color: #907042;
+  background-color: #f4f4f4;
+  border-color: #f4f4f4;
+}
+
+/* line 1135, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+  z-index: 2;
+  color: #ffffff;
+  cursor: default;
+  background-color: #907042;
+  border-color: #907042;
+}
+
+/* line 1135, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {
+  color: #f4f4f4;
+  cursor: not-allowed;
+  background-color: #ffffff;
+  border-color: #f4f4f4;
+}
+
+/* line 1135, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination-lg > li > a, .pagination-lg > li > span {
+  padding: 10px 16px;
+  font-size: 18px;
+}
+
+/* line 1135, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination-lg > li:first-child > a, .pagination-lg > li:first-child > span {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+/* line 1135, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination-lg > li:last-child > a, .pagination-lg > li:last-child > span {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/* line 1135, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination-sm > li > a, .pagination-sm > li > span {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+/* line 1135, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination-sm > li:first-child > a, .pagination-sm > li:first-child > span {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+/* line 1135, E:/wamp/www/rohi/scss/themeorange.scss */
+.pagination-sm > li:last-child > a, .pagination-sm > li:last-child > span {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+/* line 1141, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent {
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99999;
+  display: none;
+}
+
+/* line 1149, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent .layoutCal {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.7) !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+/* line 1158, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #contentEventAll {
+  padding: 10px 0;
+}
+
+/* line 1159, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #contentEventAll:after {
+  clear: both;
+  content: '';
+  display: block;
+  width: 100%;
+}
+
+/* line 1167, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda {
+  width: 300px;
+  float: right;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 155px;
+  right: 0;
+  bottom: 10px;
+  overflow: auto;
+  z-index: 20;
+}
+
+/* line 1178, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .widget-header {
+  padding: 0;
+  margin: 0 0 10px;
+}
+
+/* line 1181, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .widget-header .showCalendar {
+  z-index: 9 !important;
+}
+
+/* line 1186, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda h4 {
+  width: 100%;
+  background: #353434;
+  color: #ffffff;
+  padding: 10px 10px 10px 30px;
+  position: relative;
+}
+
+/* line 1192, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda h4:after {
+  position: absolute;
+  bottom: -10px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 10px solid transparent;
+  border-top: 10px solid #353434;
+  border-left: 10px solid transparent;
+}
+
+/* line 1206, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda {
+  border: 1px solid #eaae62;
+  margin: 5px 10px;
+  background: #ffffff;
+  position: relative;
+}
+
+/* line 1211, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .enteteEvenement {
+  background: #eaae62;
+}
+
+/* line 1213, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .enteteEvenement h4 {
+  background: none;
+  padding: 10px !important;
+  margin: 0 !important;
+  white-space: nowrap;
+}
+
+/* line 1218, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .enteteEvenement h4:before, #rightContent #mon-agenda .parentAgenda .enteteEvenement h4:after {
+  display: none;
+}
+
+/* line 1220, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .enteteEvenement h4 a {
+  color: #000000 !important;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* line 1224, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .enteteEvenement h4 a p {
+  white-space: nowrap;
+  color: #000000;
+}
+
+/* line 1231, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .piedEvenement {
+  padding: 5px;
+  background: #f4f4f4;
+}
+
+/* line 1235, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .media.search-media {
+  margin: 5px;
+}
+
+/* line 1238, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .media.search-media.cadreViolet {
+  background: #f59c1a !important;
+}
+
+/* line 1241, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .media.search-media .media-body11 {
+  float: right;
+  width: 70%;
+  height: 100%;
+  background-color: white;
+  min-height: 80px !important;
+}
+
+/* line 1247, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .media.search-media .media-body11 .content {
+  font-size: 11px;
+  color: #747474 !important;
+  font-weight: 400;
+  font-weight: 400;
+  line-height: 18px;
+  padding: 0 10px;
+}
+
+/* line 1257, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .calendar {
+  position: absolute;
+  z-index: 10;
+  top: 40px;
+  width: 30%;
+  left: 0;
+  color: #ffffff;
+  font-size: 16px;
+  text-align: left;
+  text-transform: uppercase;
+  padding: 10px 0 0 10px;
+  text-indent: 10px;
+}
+
+/* line 1269, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .calendar:before {
+  font-family: fontawesome;
+  content: '\f073';
+  font-size: 18px;
+  position: absolute;
+  right: 15px;
+}
+
+/* line 1276, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .calendar em {
+  display: block;
+  text-align: center;
+  padding: 0;
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+
+/* line 1282, E:/wamp/www/rohi/scss/themeorange.scss */
+#rightContent #mon-agenda .parentAgenda .calendar em:before {
+  content: '';
+  width: 70%;
+  display: block;
+  margin: 0 auto 5px;
+  height: 1px;
+  background: #ffffff;
+}
+
+/* line 1299, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainFooter {
+  text-align: center;
+  color: #f59c1a;
+  padding: 30px;
+  font-size: 12px;
+}
+
+/* line 1304, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainFooter #mainFooterTop {
+  padding: 10px;
+}
+
+/* line 1306, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainFooter #mainFooterTop .logo {
+  width: 40px;
+  background: white;
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+/* line 1312, E:/wamp/www/rohi/scss/themeorange.scss */
+#mainFooter #mainFooterTop .logo img {
+  width: 100%;
+}
+
+/* line 1322, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification {
+  position: fixed;
+  z-index: 1000;
+  bottom: 15px;
+  right: 15px;
+  width: 300px;
+  height: 138px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: white;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
+  padding: 20px 15px 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  -webkit-transform: translateX(500px);
+  -moz-transform: translateX(500px);
+  -o-transform: translateX(500px);
+  transform: translateX(500px);
+}
+
+/* line 1345, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification.visible {
+  -webkit-transform: translateX(0);
+  -moz-transform: translateX(0);
+  -o-transform: translateX(0);
+  transform: translateX(0);
+}
+
+/* line 1351, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification .titre {
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0 0 5px;
+  background: #f59c1a;
+  color: #f4f4f4;
+  margin: -25px -15px 10px;
+  padding: 15px 35px 10px 10px;
+}
+
+/* line 1360, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification .titre span {
+  color: #f4f4f4 !important;
+}
+
+/* line 1364, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification .notif {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 1368, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification .button {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  width: 15px;
+  border: none;
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* line 1377, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification .button a {
+  font-size: 1.4em;
+  margin: 0 5px;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  background: #ffffff;
+  border-radius: 2px;
+}
+
+/* line 1389, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification .button a * {
+  color: #f59c1a;
+  padding: 0 !important;
+}
+
+/* line 1393, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification .button a:hover {
+  -webkit-transform: rotate(720deg);
+  -moz-transform: rotate(720deg);
+  -ms-transform: rotate(720deg);
+  -o-transform: rotate(720deg);
+  transform: rotate(720deg);
+  opacity: .6;
+  color: #353434;
+}
+
+/* line 1401, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification .button a:hover * {
+  color: #ffffff;
+}
+
+/* line 1407, E:/wamp/www/rohi/scss/themeorange.scss */
+.notification .button a:hover {
+  /*color: #f10610;*/
+  color: #907042;
+}
+
+/* line 1415, E:/wamp/www/rohi/scss/themeorange.scss */
+.sort-Listing {
+  text-align: right;
+}
+
+/* line 1417, E:/wamp/www/rohi/scss/themeorange.scss */
+.sort-Listing span {
+  font-size: 25px;
+}
+
+/* line 1419, E:/wamp/www/rohi/scss/themeorange.scss */
+.sort-Listing span a {
+  display: inline-block;
+  margin: 0 5px;
+  color: #907042;
+}
+
+/* line 1423, E:/wamp/www/rohi/scss/themeorange.scss */
+.sort-Listing span a:hover {
+  color: #eaae62;
+}
+
+/* line 1426, E:/wamp/www/rohi/scss/themeorange.scss */
+.sort-Listing span a.active {
+  color: #353434;
+  cursor: none;
+  pointer-events: none;
+}
+
+/* line 1435, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* line 1440, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider #slideCom li a {
+  display: block;
+  width: 120px;
+  background: #ffffff;
+}
+
+/* line 1444, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider #slideCom li a img {
+  width: 100% !important;
+}
+
+/* line 1450, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .captionSlide {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 130px;
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* line 1457, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .captionSlide .contentMfb {
+  padding: 0 15px;
+}
+
+/* line 1459, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .captionSlide .contentMfb span {
+  font-size: 12px;
+  color: #747474;
+}
+
+/* line 1463, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .captionSlide .contentMfb .title {
+  display: block;
+  font-size: 20px;
+  color: #f59c1a;
+}
+
+/* line 1464, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .captionSlide .contentMfb .date {
+  font-style: italic;
+  padding: 0 5px;
+  display: inline-block;
+}
+
+/* line 1465, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .captionSlide .contentMfb p {
+  display: block;
+  padding: 5px 0;
+  font-size: 14px;
+  color: #747474;
+  line-height: 18px;
+}
+
+/* line 1475, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .bx-wrapper {
+  margin-bottom: 10px;
+}
+
+/* line 1478, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .bx-wrapper .bx-controls-direction a {
+  color: #907042;
+  font-size: 0;
+  text-indent: 0;
+  border-radius: 16px;
+  padding: 3px;
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* line 1485, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .bx-wrapper .bx-controls-direction a:hover, .slider .bx-wrapper .bx-controls-direction a:focus {
+  text-decoration: none;
+}
+
+/* line 1489, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .bx-wrapper .bx-controls-direction a:before {
+  display: block;
+  width: 26px;
+  height: 26px;
+  content: '';
+  font-family: fontawesome;
+  font-size: 18px;
+  text-align: center;
+  content: '';
+  line-height: 28px;
+}
+
+/* line 1501, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .bx-wrapper .bx-controls-direction a.bx-prev:before {
+  content: '\f053';
+}
+
+/* line 1506, E:/wamp/www/rohi/scss/themeorange.scss */
+.slider .bx-wrapper .bx-controls-direction a.bx-next:before {
+  content: '\f054';
+}
+
+/* line 1515, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul li {
+  background: #e0e7e8;
+}
+
+/* line 1518, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul .margecomm {
+  display: block;
+}
+
+/* line 1520, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul .margecomm .photo {
+  position: relative;
+  display: block;
+  background-size: 100% !important;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* line 1526, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul .margecomm .photo a {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* line 1536, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul .margecomm .contentMfb .title {
+  font-weight: 700;
+  display: block;
+}
+
+/* line 1539, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul .margecomm .contentMfb .title a {
+  color: #907042;
+  display: block;
+  font-size: 16px;
+}
+
+/* line 1546, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul .margecomm .contentMfb span {
+  font-size: 12px;
+  display: inline-block;
+  margin: 0 5px 0 0;
+}
+
+/* line 1550, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul .margecomm .contentMfb span .date {
+  font-style: italic;
+}
+
+/* line 1554, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul .margecomm .contentMfb .descCommunique {
+  color: #000000;
+  padding: 5px 0;
+  font-size: 13px;
+}
+
+/* line 1560, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul .margecomm:after {
+  display: block;
+  content: '';
+  width: 100%;
+  clear: both;
+}
+
+/* line 1568, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul.list {
+  list-style: none;
+  width: 100%;
+}
+
+/* line 1569, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul.list li {
+  display: block;
+  padding: 10px 15px;
+  margin: 0 0 5px 0;
+}
+
+/* line 1573, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul.list li .margecomm .photo {
+  width: 100px;
+  height: 70px;
+  float: left;
+}
+
+/* line 1578, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul.list li .margecomm .contentMfb {
+  width: calc(100% - 120px);
+  float: right;
+}
+
+/* line 1585, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul.grid {
+  list-style: none;
+  margin: 0 auto;
+  padding-left: 25px;
+}
+
+/* line 1586, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul.grid li {
+  position: relative;
+  display: block;
+  float: left;
+  width: 30.3%;
+  height: 220px;
+  padding: 10px;
+  margin: 1% 1% 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+/* line 1597, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul.grid li .margecomm .photo {
+  width: 100%;
+  height: 100px;
+  float: left;
+}
+
+/* line 1602, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul.grid li .margecomm .contentMfb {
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  float: right;
+}
+
+/* line 1607, E:/wamp/www/rohi/scss/themeorange.scss */
+#liste-Comm ul.grid li .margecomm .contentMfb .title {
+  margin: 10px 0 0;
+}
+
+/* line 1620, E:/wamp/www/rohi/scss/themeorange.scss */
+.headblock {
+  position: relative;
+  margin: 0 0 20px;
+}
+
+/* line 1622, E:/wamp/www/rohi/scss/themeorange.scss */
+.headblock .User-photo {
+  width: 140px;
+  height: 140px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid #eaae62;
+  box-shadow: 0 0 4px #eaae62;
+  background: #353434;
+  float: left;
+  position: relative;
+  z-index: 2;
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* line 1622, E:/wamp/www/rohi/scss/themeorange.scss */
+  .headblock .User-photo {
+    float: none;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* line 1622, E:/wamp/www/rohi/scss/themeorange.scss */
+  .headblock .User-photo {
+    float: none;
+    margin: 0 auto;
+  }
+}
+
+/* line 1641, E:/wamp/www/rohi/scss/themeorange.scss */
+.headblock .User-photo img {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+/* line 1653, E:/wamp/www/rohi/scss/themeorange.scss */
+.headblock .User-details {
+  float: left;
+  width: calc(100% - 150px);
+  width: -moz-calc(100% - 150px);
+  width: -webkit-calc(100% - 150px);
+  width: -ms-calc(100% - 150px);
+  z-index: 1;
+  left: -40px;
+  top: 10px;
+  border: 1px solid #eaae62;
+  box-shadow: 0 0 4px #eaae62;
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 10px 10px 10px 65px;
+  text-align: left;
+  position: relative;
+}
+
+/* line 1669, E:/wamp/www/rohi/scss/themeorange.scss */
+.headblock .User-details .row {
+  padding: 10px 0 0;
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* line 1653, E:/wamp/www/rohi/scss/themeorange.scss */
+  .headblock .User-details {
+    float: none;
+    width: 100%;
+    margin: 0 auto;
+    left: inherit;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* line 1653, E:/wamp/www/rohi/scss/themeorange.scss */
+  .headblock .User-details {
+    float: none;
+    margin: -25px auto 0;
+    width: 100%;
+    left: inherit;
+  }
+}
+
+/* line 1690, E:/wamp/www/rohi/scss/themeorange.scss */
+#NotFound {
+  padding: 40px 10px;
+  text-align: center !important;
+}
+
+/* line 1693, E:/wamp/www/rohi/scss/themeorange.scss */
+#NotFound h1 {
+  font-size: 28px;
+  color: #f59c1a;
+  margin: 50px 0;
+}
+
+/* line 1698, E:/wamp/www/rohi/scss/themeorange.scss */
+#NotFound p {
+  color: #747474;
+  font-size: 14px;
+  padding: 5px 0;
+}
+
+/* line 1704, E:/wamp/www/rohi/scss/themeorange.scss */
+#evaluation-table {
+  width: 90%;
+  padding: 0;
+  margin: 0 auto;
+}
+
+/* line 1708, E:/wamp/www/rohi/scss/themeorange.scss */
+#evaluation-table .etoile {
+  max-width: 202px;
+}
+
+/* line 1711, E:/wamp/www/rohi/scss/themeorange.scss */
+#evaluation-table .headeTable {
+  background-color: #907042;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+/* line 1717, E:/wamp/www/rohi/scss/themeorange.scss */
+#noteCritere th {
+  border: 1px solid #f4f4f4;
+  text-align: center;
+  background: #f59c1a;
+  font-weight: bold;
+}
+
+/* line 1724, E:/wamp/www/rohi/scss/themeorange.scss */
+#noteCritere td {
+  border: 1px solid #f4f4f4 !important;
+  color: #747474;
+}
+
+/* line 1729, E:/wamp/www/rohi/scss/themeorange.scss */
+#noteCritere {
+  margin: 0 !important;
+  font-size: 1.2em !important;
+}
+
+/* line 1733, E:/wamp/www/rohi/scss/themeorange.scss */
+.notationCritere {
+  margin: 0 !important;
+  border: none !important;
+}
+
+/* line 1739, E:/wamp/www/rohi/scss/themeorange.scss */
+.etoile {
+  padding: 5px !important;
+}
+
+/* line 1745, E:/wamp/www/rohi/scss/themeorange.scss */
+.toggleBloc * {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* line 1751, E:/wamp/www/rohi/scss/themeorange.scss */
+.raterater-layer i.fa {
+  font-size: 25px !important;
+}
+
+/* line 1759, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form {
+  position: relative;
+}
+
+/* line 1761, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .fileChange {
+  padding: 10px 0;
+}
+
+/* line 1763, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .fileChange label {
+  position: absolute;
+  z-index: 99999;
+  top: 115px;
+  left: 20px;
+  background: #f59c1a;
+  color: #ffffff;
+  display: inline-block;
+  width: 100px;
+  cursor: pointer;
+  padding: 7px;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid #000000;
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* line 1763, E:/wamp/www/rohi/scss/themeorange.scss */
+  .Cv-form .fileChange label {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* line 1763, E:/wamp/www/rohi/scss/themeorange.scss */
+  .Cv-form .fileChange label {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+}
+
+/* line 1788, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .fileChange input {
+  margin: 0;
+  padding: 0;
+  display: none;
+}
+
+/* line 1795, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .panel {
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+/* line 1798, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .panel .panel-heading {
+  margin-right: 0;
+  padding: 0;
+}
+
+/* line 1802, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .panel .panel-title {
+  border-top: 1px solid #ffffff;
+}
+
+/* line 1803, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .panel .panel-title a {
+  display: block;
+  text-transform: uppercase;
+  padding: 10px;
+  font-size: 11px;
+  background: #747474;
+  color: #ffffff;
+}
+
+/* line 1810, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .panel .panel-title a:before {
+  content: '\f14a';
+  font-size: 20px;
+  font-family: fontawesome;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+/* line 1819, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .panel .panel-title a.collapsed, .Cv-form .panel .panel-title a:hover {
+  text-decoration: none;
+}
+
+/* line 1824, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .panel .panel-title a.collapsed:before {
+  content: '\f0c8';
+  text-decoration: none;
+}
+
+/* line 1831, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .panel .panel-title:first-child {
+  border-top: none !important;
+}
+
+/* line 1837, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .libele_form label {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+/* line 1843, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .form-group {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+/* line 1847, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form:after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+/* line 1852, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .SubmitCv {
+  padding: 15px;
+}
+
+/* line 1854, E:/wamp/www/rohi/scss/themeorange.scss */
+.Cv-form .SubmitCv a,
+.Cv-form .SubmitCv input[type=submit],
+.Cv-form .SubmitCv input[type=reset],
+.Cv-form .SubmitCv input[type=button],
+.Cv-form .SubmitCv button[type=submit],
+.Cv-form .SubmitCv button[type=reset],
+.Cv-form .SubmitCv button[type=button] {
+  display: inline-block;
+  width: auto;
+  margin: 5px;
+  text-align: center;
+}
+
+@media screen and (max-width: 480px) {
+  /* line 1854, E:/wamp/www/rohi/scss/themeorange.scss */
+  .Cv-form .SubmitCv a,
+  .Cv-form .SubmitCv input[type=submit],
+  .Cv-form .SubmitCv input[type=reset],
+  .Cv-form .SubmitCv input[type=button],
+  .Cv-form .SubmitCv button[type=submit],
+  .Cv-form .SubmitCv button[type=reset],
+  .Cv-form .SubmitCv button[type=button] {
+    display: block;
+    width: 90%;
+  }
+}
+
+/* line 1873, E:/wamp/www/rohi/scss/themeorange.scss */
+.input-group-addon {
+  text-align: center;
+}
+
+/* line 1875, E:/wamp/www/rohi/scss/themeorange.scss */
+.input-group-addon .fa {
+  margin: 5px 5px 0 0;
+  position: static;
+  height: inherit;
+  width: inherit;
+  font-size: 15px;
+}
+
+@-webkit-keyframes "logorotate" {
+  from {
+    -webkit-transform: rotateY(0deg);
+  }
+  to {
+    -webkit-transform: rotateY(-360deg);
+  }
+  from {
+    -moz-transform: rotateY(0deg);
+  }
+  to {
+    -moz-transform: rotateY(-360deg);
+  }
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-360deg);
+  }
+}
+
+/* line 1892, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar {
+  display: inline-block;
+  padding-right: 0;
+}
+
+/* line 1895, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar h2 {
+  background: none;
+  margin: 0 !important;
+}
+
+/* line 1899, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-toolbar {
+  margin: -5px -15px 0;
+  padding: 10px;
+  background: #f59c1a;
+  position: relative;
+  z-index: 4;
+}
+
+/* line 1905, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-toolbar:after {
+  position: absolute;
+  bottom: -10px;
+  left: 30px;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 10px solid transparent;
+  border-top: 10px solid #f59c1a;
+  border-left: 10px solid transparent;
+}
+
+/* line 1918, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-toolbar .fc-left,
+#calendar .fc-toolbar .fc-right {
+  width: 200px;
+}
+
+/* line 1924, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-unthemed .fc-popover,
+#calendar .fc-unthemed .fc-row,
+#calendar .fc-unthemed hr,
+#calendar .fc-unthemed tbody,
+#calendar .fc-unthemed td,
+#calendar .fc-unthemed th,
+#calendar .fc-unthemed thead {
+  border-color: #BCD4E5;
+}
+
+/* line 1933, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-unthemed .fc-today {
+  background: #FFC;
+}
+
+/* line 1936, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-event {
+  border-width: 0;
+  color: #ffffff;
+  padding: 10px 1px 10px 2px;
+  border-radius: 0;
+}
+
+/* line 1942, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-event:not([class*=label-]) {
+  background-color: #eaae62;
+}
+
+/* line 1945, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-event.label-yellow {
+  color: #963;
+}
+
+/* line 1948, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-event.label-light {
+  color: #888;
+}
+
+/* line 1951, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .label-yellow .fc-event {
+  color: #963;
+}
+
+/* line 1954, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .label-light .fc-event {
+  color: #888;
+}
+
+/* line 1957, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar [class*=label-] > .fc-event,
+#calendar [class*=label-] > .fc-event > .fc-event-skin.fc-event-head {
+  background-color: inherit;
+}
+
+/* line 1961, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-event-vert > .fc-event,
+#calendar .fc-event.fc-event-vert {
+  padding: 0 0 1px;
+}
+
+/* line 1965, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-day-number {
+  color: #2E6589;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+/* line 1970, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc .fc-axis,
+#calendar .fc-widget-header {
+  background: #ECF2F7;
+  color: #8090A0;
+}
+
+/* line 1975, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-event-hori,
+#calendar .fc-event-vert {
+  border-radius: 0 !important;
+  border-color: transparent;
+}
+
+/* line 1980, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-event-vert .fc-event-content {
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+/* line 1984, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-event-vert .fc-event-time {
+  padding: 0;
+}
+
+/* line 1987, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-state-default {
+  border: none;
+}
+
+/* line 1990, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-state-default,
+#calendar .fc-state-default .fc-button-inner {
+  border: none;
+  background-color: #eaae62;
+  color: #ffffff;
+  background-image: none;
+  box-shadow: none;
+  text-shadow: none;
+  border-radius: 0 !important;
+  margin-left: 2px;
+}
+
+/* line 2001, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-state-disabled,
+#calendar .fc-state-disabled .fc-button-inner {
+  opacity: .75;
+  filter: alpha(opacity=75);
+  color: #eaae62;
+}
+
+/* line 2007, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-state-active,
+#calendar .fc-state-active .fc-button-inner {
+  border-color: #eaae62;
+  background-color: #eaae62;
+}
+
+/* line 2012, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc-state-hover,
+#calendar .fc-state-hover .fc-button-inner {
+  background-color: #907042;
+}
+
+/* line 2016, E:/wamp/www/rohi/scss/themeorange.scss */
+#calendar .fc .fc-button-group > * {
+  margin: 0 1px 0 0;
+}
+
+/* line 2023, E:/wamp/www/rohi/scss/themeorange.scss */
+#breadcrumb {
+  margin: 0 0 5px;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: right;
+  font-size: 11px;
+  padding: 0 5px;
+}
+
+/* line 2030, E:/wamp/www/rohi/scss/themeorange.scss */
+#breadcrumb a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: normal;
+  opacity: 0.8;
+}
+
+/* line 2036, E:/wamp/www/rohi/scss/themeorange.scss */
+#breadcrumb span {
+  font-size: 9px;
+  padding: 0 10px;
+}
+
+/*# sourceMappingURL=../css/themeorange.map */
