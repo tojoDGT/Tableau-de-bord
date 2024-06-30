@@ -75,6 +75,11 @@ class Dashboard extends MY_Controller
 		switch ($_zParam){
 
 			case 'general':
+
+				$zReturn = $this->dashboard->getNombreMontantParMois();
+
+				echo $zReturn;
+
 				$iSousMenuActifId = 1;
 				$zLibelle1 = ""; 
 				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/general.tpl";
