@@ -49,7 +49,7 @@
 	  <li class="nav-item">
 		<a href="{$zBasePath}dashboard/stat/performance-des-pc" class="nav-link {if $oData.iSousMenuActifId==44}active{/if}">
 		  <i class="far fa-circle nav-icon text-red"></i>
-		  <p>SSEPC</p>
+		  <p>Gestion de trésorerie</p>
 		</a>
 	  </li>
 	</ul>

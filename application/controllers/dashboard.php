@@ -68,7 +68,7 @@ class Dashboard extends MY_Controller
 		
 		$toColonne = $this->demande->getSessionColonne();
 
-		
+		$toGetAllExercice = $this->dashboard->getAllDateExercice() ; 
 
 		//print_r ($toColonne);
 		
@@ -76,13 +76,19 @@ class Dashboard extends MY_Controller
 
 			case 'general':
 
-				$zReturn = $this->dashboard->getNombreMontantParMois(2023,1);
-				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture(2023,1);
+				$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2023);
+				$iModeAffichage = $this->postGetValue ("iModeAffichage", 1);
+
+				$zReturn = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage);
+				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage);
 				
 				$iSousMenuActifId = 1;
 				$zLibelle1 = ""; 
+				$oSmarty->assign('iAnneeExercice', $iAnneeExercice);
+				$oSmarty->assign('iModeAffichage', $iModeAffichage);
 				$oSmarty->assign('zReturn', $zReturn);
 				$oSmarty->assign('zReturnDonut', $zReturnDonut);
+				$oSmarty->assign('toGetAllExercice',  $toGetAllExercice);
 				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/general.tpl";
 				break;
 			
@@ -95,7 +101,7 @@ class Dashboard extends MY_Controller
 
 				
 				$toMinAbrev = $this->dashboard->getMinAbrev() ; 
-				$toGetAllExercice = $this->dashboard->getAllDateExercice() ; 
+				
 				$toTypeMandat = $this->dashboard->getTypeMandat() ; 
 
 				

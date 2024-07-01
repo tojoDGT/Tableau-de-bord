@@ -11,13 +11,7 @@
             <h1>{$oData.zLibelle1}</h1>
           </div>
         
-		  <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-			  <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-			  <li class="breadcrumb-item"><a href="#">Tableau de bord</a></li>
-			  <li class="breadcrumb-item active">{$oData.zLibelle1|ucfirst}</li>
-            </ol>
-          </div>
+
         </div>
 		
       </div><!-- /.container-fluid -->

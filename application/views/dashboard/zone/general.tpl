@@ -1,6 +1,65 @@
 <section class="content">
       <div class="container-fluid">
         <div class="row">
+		  <!----- debut bloc de recherche -->
+		   <div class="col-md-12">
+		   <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">RECHERCHE</h3>
+              </div>
+              <div class="card-body">
+					<form method="Post" action="">
+					  <div class="row">
+								<div class="col-sm-6">
+									  <!-- select -->
+									  <div class="form-group">
+										<label>Année :</label>
+										<select id="iAnneeExercice" name="iAnneeExercice" class="custom-select">
+										  {foreach from=$toGetAllExercice item=$oGetAllExercice}
+											<option {if $iAnneeExercice==$oGetAllExercice.ECRI_EXERCICE}selected="selected"{/if} value="{$oGetAllExercice.ECRI_EXERCICE}">{$oGetAllExercice.ECRI_EXERCICE}</option>
+										  {/foreach}
+										</select>
+									  </div>
+								</div>
+								<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-3">
+									  <!-- checkbox -->
+									  <div class="form-group">
+									  <label>Mode Affichage :</label>
+										<div class="custom-control custom-radio">
+										  <input class="custom-control-input" type="radio" id="customRadio1" name="iModeAffichage" value="1" {if $iModeAffichage==1}checked="checked"{/if}>
+										  <label for="customRadio1" class="custom-control-label">Nombre</label>
+										</div>
+									  </div>
+									</div>
+									<div class="col-sm-3">
+									  <!-- radio -->
+									  <div class="form-group">
+										<label>&nbsp;</label>
+										<div class="custom-control custom-radio">
+										  <input class="custom-control-input" type="radio" id="customRadio2" name="iModeAffichage" value="2"  {if $iModeAffichage==2}checked="checked"{/if}>
+										  <label for="customRadio2" class="custom-control-label">Montant</label>
+										</div>
+									  </div>
+									  
+									</div>
+									<div class="form-group" style="padding-top: 25px;">
+										<label>&nbsp;</label>
+										<button type="submit" class="searchTb partielSearchHeader partielSearchHeader1">Rechercher</button>
+									</div>
+								  </div>
+							</div>
+					  </div>
+					  
+					  <div class="form-group">
+					  </div>
+					</form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+		  </div>
+		  <!----- fin bloc de recherche -->
           <div class="col-md-6">
             <!-- AREA CHART -->
             <div class="card card-primary">
@@ -28,7 +87,7 @@
             <!-- DONUT CHART -->
             <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title">Graphique en beignet</h3>
+                <h3 class="card-title">Diagramme à bandes</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -40,16 +99,16 @@
                 </div>
               </div>
               <div class="card-body">
-                <canvas id="donutChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                <canvas id="barChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
 
             <!-- PIE CHART -->
-            <div class="card card-danger">
+            <div class="card card-warning">
               <div class="card-header">
-                <h3 class="card-title">Pie Chart</h3>
+                <h3 class="card-title">Diagramme circulaire</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -86,7 +145,7 @@
               </div>
               <div class="card-body">
                 <div class="chart">
-                  <canvas id="lineChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                  <canvas id="stackedBarChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
                 </div>
               </div>
               <!-- /.card-body -->
@@ -96,7 +155,7 @@
             <!-- BAR CHART -->
             <div class="card card-success">
               <div class="card-header">
-                <h3 class="card-title">Diagramme à bandes</h3>
+                <h3 class="card-title">Graphique en beignet</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -109,7 +168,7 @@
               </div>
               <div class="card-body">
                 <div class="chart">
-                  <canvas id="barChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                  <canvas id="donutChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
                 </div>
               </div>
               <!-- /.card-body -->
@@ -132,7 +191,7 @@
               </div>
               <div class="card-body">
                 <div class="chart">
-                  <canvas id="stackedBarChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                  <canvas id="lineChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
                 </div>
               </div>
               <!-- /.card-body -->
@@ -150,7 +209,11 @@
 <script src="{$zBasePath}assets/common/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
 <script src="{$zBasePath}assets/common/plugins/chart.js/Chart.min.js"></script>
-
+<style>
+h1, h2, h3, h4, h5, h6 {
+    color: #ffff; 
+}
+</style>
 
 <script>
  $(function () {
