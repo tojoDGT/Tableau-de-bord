@@ -108,7 +108,7 @@ class Demande_model extends CI_Model {
 
 		//$zSql = "select * from (";
 
-		$zSql = "	select COUNT(tt.TITULAIRE) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,
+		$zSql = "	select COUNT(tt.TITULAIRE) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,tt.CODE_TIERS,
 					(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE,
 				    (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE,
 					m.MAND_VISA_TEF,

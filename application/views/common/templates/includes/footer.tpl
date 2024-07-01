@@ -23,6 +23,7 @@
 				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="Identifiant-t.ECRI_NUM" class="mr-1" name="colonneAffiche[]" /><span>Identifiant</span></div>
 				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="IdentifiantNumInfo-m.MAND_NUM_INFO" class="mr-1" name="colonneAffiche[]" /><span>Identifiant Mandat</span></div>
 				<div class="mb-2"><input type="checkbox" {if TITULAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="TITULAIRE-tt.TITULAIRE" class="mr-1" name="colonneAffiche[]" /><span>TITULAIRE</span></div>
+				<div class="mb-2"><input type="checkbox" {if CODE_TIERS|in_array:$oDataTempCol} checked="checked" {/if} value="CODE TIERS-tt.CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>CODE TIERS</span></div>
 				<div class="mb-2"><input type="checkbox" {if ECRI_REF|in_array:$oDataTempCol} checked="checked" {/if} value="Référence-t.ECRI_REF" class="mr-1" name="colonneAffiche[]" /><span>Réference</span></div>
 				<div class="mb-2"><input type="checkbox" {if ECRI_LIB|in_array:$oDataTempCol} checked="checked" {/if} value="Libellé-t.ECRI_LIB" class="mr-1" name="colonneAffiche[]" /><span>Libellé</span></div>
 				<div class="mb-2"><input type="checkbox" {if ECRI_DT_CECRITURE|in_array:$oDataTempCol} checked="checked" {/if} value="Date-t.ECRI_DT_CECRITURE" class="mr-1" name="colonneAffiche[]" /><span>Date</span></div>
