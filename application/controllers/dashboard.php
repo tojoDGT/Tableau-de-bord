@@ -76,12 +76,13 @@ class Dashboard extends MY_Controller
 
 			case 'general':
 
-				$zReturn = $this->dashboard->getNombreMontantParMois();
-
-				echo $zReturn;
-
+				$zReturn = $this->dashboard->getNombreMontantParMois(2023,1);
+				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture(2023,1);
+				
 				$iSousMenuActifId = 1;
 				$zLibelle1 = ""; 
+				$oSmarty->assign('zReturn', $zReturn);
+				$oSmarty->assign('zReturnDonut', $zReturnDonut);
 				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/general.tpl";
 				break;
 			

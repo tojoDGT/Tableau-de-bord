@@ -58,7 +58,7 @@ class Dashboard_model extends CI_Model {
 
 		//$zSql = "select * from (";
 
-		$zSql = "select COUNT(*) over () found_rows,t.* from TESTSOI.T_ECRITURE t where 1=1 " ;
+		$zSql = "select COUNT(*) over () found_rows,t.* from T_ECRITURE t where 1=1 " ;
 
 		if( !empty($oRequest['search']['value']) ) {   
 			$zSql.=" AND ( ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
@@ -146,7 +146,7 @@ class Dashboard_model extends CI_Model {
 		return $toRow;
 	}
 
-	public function getNombreMontantParMoisEcriture($_iAnneeExercice='2023'){
+	public function getNombreMontantParMoisEcriture($_iAnneeExercice='2023',$_iMode){
 		
 		global $db;
 
@@ -156,22 +156,78 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "select SUM(MAND_MONTANT) as montant,COUNT(t.ECRI_NUM) as nombre,to_char(ECRI_DT_VALID, 'MM') as Mois,ECRI_EXERCICE 
-				 from TESTSOI.T_ECRITURE t,TESTSOI.T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
+		$zSql = "select PROP_CODE,SUM(MAND_MONTANT) as montant,COUNT(t.ECRI_NUM) as nombre,ECRI_EXERCICE 
+				 from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
+				 AND t.PROP_CODE <> 'ERR' 
 				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
-				 GROUP BY to_char(ECRI_DT_VALID, 'MM'),ECRI_EXERCICE
-				 ORDER BY to_char(ECRI_DT_VALID, 'MM') ASC" ;
+				 GROUP BY PROP_CODE,ECRI_EXERCICE
+				 ORDER BY PROP_CODE ASC" ;
 	
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
 
+		/*echo "<pre>";
+		print_r ($toRow);
+		echo "</pre>";*/
 
-		return $toRow;
+		$zReturn = $this->DispatchDataForChartJsDonut($_iMode,$toRow);
+
+
+		return $zReturn;
+	}
+
+	private function DispatchDataForChartJsDonut($_iMode=2,$_toRow){
+
+		$zAfficheSerieStat = "";
+		$toAffiche = array();
+		$iTotal = 0;
+		$toAfficheLibelle = array();
+		$toAfficheMontant = array();
+		$toAfficheNombre = array();
+		$toTotal = array();
+
+		$toColor = array('#7cb5ec','#434348','#90ed7d', '#f7a35c', '#8085e9', '#00c0ef', '#3c8dbc' );
+
+		$iTotal = 0;
+
+		$zTestPropCode = "-1";
+		foreach ($_toRow as $oRow){
+			array_push($toAfficheLibelle, "'".$oRow["PROP_CODE"]."'");
+			array_push($toAfficheNombre, "'".$oRow["NOMBRE"]."'");
+			array_push($toAfficheMontant, "'".str_replace(",",".",$oRow['MONTANT'])."'");
+		}
+
+		/*
+		echo "<pre>";
+		print_r ($toAfficheMontant);
+		echo "</pre>";*/
+		
+
+		$zAfficheSerieStat .= "labels: [";
+		$zAfficheSerieStat .= implode(",",$toAfficheLibelle);
+		$zAfficheSerieStat .= "  ],";
+		$zAfficheSerieStat .= "  datasets: [";
+		$zAfficheSerieStat .= "	{";
+		if($_iMode==1){
+			$zAfficheSerieStat .= "	  data: [".implode(",",$toAfficheNombre)."],";
+		} else {
+			$zAfficheSerieStat .= "	  data: [".implode(",",$toAfficheMontant)."],";
+		}
+		
+		$zAfficheSerieStat .= "	  backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],";
+		$zAfficheSerieStat .= "	}";
+		$zAfficheSerieStat .= "  ]";
+
+
+		//echo $zAfficheSerieStat;
+
+
+		return $zAfficheSerieStat;
 	}
 
 
-	public function getNombreMontantParMois($_iAnneeExercice='2023'){
+	public function getNombreMontantParMois($_iAnneeExercice='2023',$_iMode){
 		
 		global $db;
 
@@ -182,27 +238,27 @@ class Dashboard_model extends CI_Model {
 		$toRow = array();
 
 		$zSql = "select PROP_CODE,SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as Mois,ECRI_EXERCICE 
-				 from TESTSOI.T_ECRITURE t,TESTSOI.T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
+				 from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
 				 AND t.PROP_CODE <> 'ERR' 
 				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
 				 GROUP BY PROP_CODE,to_char(ECRI_DT_VALID, 'MM'),ECRI_EXERCICE
 				 ORDER BY PROP_CODE,to_char(ECRI_DT_VALID, 'MM') ASC" ;
-	
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
 
-		$zReturn = $this->DispatchDataForChartJs($_iType,$_iMode=1,$toRow);
+		$zReturn = $this->DispatchDataForChartJs($_iMode,$toRow);
 
 
 		return $zReturn;
 	}
 
-	private function DispatchDataForChartJs($_iType,$_iMode=2,$_toRow){
+	private function DispatchDataForChartJs($_iMode=2,$_toRow){
 
 		$zAfficheSerieStat = "";
-
 		$toAffiche = array();
+
+		$toColor = array('#7cb5ec','#434348','#90ed7d', '#f7a35c', '#8085e9', '#00c0ef', '#3c8dbc' );
 
 		$zTestPropCode = "-1";
 		foreach ($_toRow as $oRow){
@@ -211,45 +267,53 @@ class Dashboard_model extends CI_Model {
 				$zTestPropCode = $oRow['PROP_CODE'];
 				$toAffiche[$zTestPropCode]['nombre'] = array();
 				$toAffiche[$zTestPropCode]['montant'] = array();
+				$iTest = 0;
 			} 
 
-			if($zTestPropCode == $oRow['PROP_CODE']){
-				array_push($toAffiche[$zTestPropCode]['nombre'], $oRow['NOMBRE']);
-				array_push($toAffiche[$zTestPropCode]['montant'], $oRow['MONTANT']);
-			}
 			
-		}
+			if($zTestPropCode == $oRow['PROP_CODE']){
 
-		/*echo "<pre>";
-		print_r ($toAffiche);
-		echo "</pre>";*/
-
-		switch ($_iType){
-			case 1:
-				break;
-
-			default:
-				
-				foreach ($toAffiche as $zkey => $oRow){
-
-						$toData = array();
-						$toData = ($_iMode==1)?$oRow['nombre']:$oRow['montant'];
-					
-						$zAfficheSerieStat .= "{";
-						$zAfficheSerieStat .= "label				: '".$zkey."',";
-						$zAfficheSerieStat .= "backgroundColor		: 'rgba(60,141,188,0.9)',";
-						$zAfficheSerieStat .= "borderColor			: 'rgba(60,141,188,0.8)',";
-						$zAfficheSerieStat .= "pointRadius          : true,";
-						$zAfficheSerieStat .= "pointColor			: '#3b8bba',";
-						$zAfficheSerieStat .= "pointStrokeColor		: 'rgba(60,141,188,1)',";
-						$zAfficheSerieStat .= "pointHighlightFill	: '#fff',";
-						$zAfficheSerieStat .= "pointHighlightStroke	: 'rgba(60,141,188,1)',";
-						$zAfficheSerieStat .= "data					: [".implode(",", $toData)."]";
-						$zAfficheSerieStat .= "},";
+				$iTest++;
+				if($iTest != (int)$oRow['MOIS']){
+					$iTest++;
+					array_push($toAffiche[$zTestPropCode]['nombre'], 0);
+					array_push($toAffiche[$zTestPropCode]['montant'], 0);
 				}
 
-				break;
+				array_push($toAffiche[$zTestPropCode]['nombre'], $oRow['NOMBRE']);
+				array_push($toAffiche[$zTestPropCode]['montant'], str_replace(",",".",$oRow['MONTANT']));
+			}
 		}
+
+		/*
+		echo "<pre>";
+		print_r ($toAffiche);
+		echo "</pre>";
+		*/
+
+		$iColor = 0;
+		foreach ($toAffiche as $zkey => $oRow){
+
+			$toData = array();
+			$toData = ($_iMode==1)?$oRow['nombre']:$oRow['montant'];
+		
+			$zAfficheSerieStat .= "{";
+			$zAfficheSerieStat .= "label				: '".$zkey."',";
+			$zAfficheSerieStat .= "backgroundColor		: '".$toColor[$iColor]."',";
+			$zAfficheSerieStat .= "borderColor			: '".$toColor[$iColor]."',";
+			$zAfficheSerieStat .= "pointRadius          : true,";
+			$zAfficheSerieStat .= "pointColor			: '#3b8bba',";
+			$zAfficheSerieStat .= "pointStrokeColor		: '".$toColor[$iColor]."',";
+			$zAfficheSerieStat .= "pointHighlightFill	: '#fff',";
+			$zAfficheSerieStat .= "pointHighlightStroke	: '".$toColor[$iColor]."',";
+			$zAfficheSerieStat .= "data					: [".implode(",", $toData)."]";
+			$zAfficheSerieStat .= "},";
+
+			$iColor++;
+		}
+
+
+		//echo $zAfficheSerieStat;
 
 		return $zAfficheSerieStat;
 	}
