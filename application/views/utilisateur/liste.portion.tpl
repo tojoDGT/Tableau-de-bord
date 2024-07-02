@@ -120,13 +120,14 @@ td.details-control {
 	background-size: 15px;
 	width:15px;
 }
-.dataTable > thead > tr > th[class*="details-control"]:before,
-.dataTable > thead > tr > th[class*="details-control"]:after {
-    content: "" !important;
-}
 tr.shown td.details-control {
     background: url('{/literal}{$zBasePath}{literal}assets/images/flch_or_bas.png') no-repeat center center;
 	background-size: 25px;
+}
+
+.dataTable > thead > tr > th[class*="details-control"]:before,
+.dataTable > thead > tr > th[class*="details-control"]:after {
+    content: "" !important;
 }
 </style>
 {/literal}

@@ -88,6 +88,44 @@ class Utilisateur_model extends CI_Model {
 
 	}
 
+	public function getDetailUtilisateur($_iUserId){
+		global $db;
+
+		$toDB = $this->load->database('specl',true);
+
+		$oRequest = $_REQUEST;
+
+		$zSql=" SELECT  * FROM ".$toDB->database.".V_USERS u WHERE USERID = '" . $_iUserId . "'";
+
+		//echo $zSql;
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+		$zQuery->free_result();
+
+		return $toRow;
+
+	}
+
+	public function getAllApplication(){
+		global $db;
+
+		$toDB = $this->load->database('specl',true);
+
+		$oRequest = $_REQUEST;
+
+		$zSql=" SELECT  * FROM ".$toDB->database.".USERINFOAPPLI ";
+
+		//echo $zSql;
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+		$zQuery->free_result();
+
+		return $toRow;
+
+	}
+
 	public function __getUtilisateur(&$_iNbrTotal = 0,$_this=''){
 		global $db;
 

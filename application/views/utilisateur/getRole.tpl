@@ -1,4 +1,4 @@
-﻿ <div id="detail-{$iEcriNum}" class="card mb-0 detailTj" style="width:100%">
+﻿ <div id="detail" class="card mb-0 detailTj" style="width:100%">
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
@@ -8,31 +8,35 @@
                             <div class="profile-info-left1">
 								<div class="profile-info-left1">
 													<div class="card card-primary card-outline">
-														  <div class="card-body box-profile">
-															<div class="text-center">
-															  <img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
-															</div>
+															  <div class="card-body box-profile">
+																<div class="text-center">
+																  <img class="profile-user-img img-fluid img-circle" src="{$zBasePath}assets/common/dist/img/non-user.jpg" alt="User profile picture">
+																</div>
 
-															<h3 class="profile-username text-center">Nina Mcintire</h3>
+																<h3 class="profile-username">{$toGetInfoAgent.0.FULLNAME}</h3>
 
-															<p class="text-muted text-center">Software Engineer</p>
+																<p class="text-muted"><strong>Fonction :</strong> {$toGetInfoAgent.0.ACTIVITYFUNCTION}</p>
+																<p class="text-muted"><strong>Entité :</strong> {$toGetInfoAgent.0.ACTIVITYNAME}</p>
+																<p class="text-muted"><strong>Adresse d'activité :</strong> {$toGetInfoAgent.0.ACTIVITYADRS}</p>
+																
 
-															<ul class="list-group list-group-unbordered mb-3">
-															  <li class="list-group-item">
-																<b>Followers</b> <a class="float-right">1,322</a>
-															  </li>
-															  <li class="list-group-item">
-																<b>Following</b> <a class="float-right">543</a>
-															  </li>
-															  <li class="list-group-item">
-																<b>Friends</b> <a class="float-right">13,287</a>
-															  </li>
-															</ul>
-
-															<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
-														  </div>
-														  <!-- /.card-body -->
-														</div>
+																<div class="text-muted"><h3>Rôle</h3></div>
+																<ul class="list-group list-group-unbordered mb-3">
+																  <li class="list-group-item">
+																	<b>Nom de rôle :</b> <a class="float-right">{$toGetInfoAgent.0.ROLETYPENAME}</a>
+																  </li>
+																  <li class="list-group-item">
+																	<b>Type de Rôle :</b> <a class="float-right">{$toGetInfoAgent.0.ROLETYPE}</a>
+																  </li>
+																  <li class="list-group-item">
+																	<b>Libellé Rôle</b> <a class="float-right">{$toGetInfoAgent.0.ROLETYPELIB}</a>
+																  </li>
+																 
+																</ul>
+																
+															  </div>
+															  <!-- /.card-body -->
+													</div>
 								</div>
 								<div class="profile-info-left1">
 									
@@ -48,149 +52,37 @@
                         <div class="col-md-6 profile-info-right">
 																	<div class="card card-success">
 												  <div class="card-header">
-													<h3 class="card-title">iCheck Bootstrap - Checkbox &amp; Radio Inputs</h3>
+													<h3 class="card-title txt-center">Accessibilité sur les applications</h3>
 												  </div>
 												  <div class="card-body">
 													<!-- Minimal style -->
 													<div class="row">
-													  <div class="col-sm-6">
-														<!-- checkbox -->
-														<div class="form-group clearfix">
-														  <div class="icheck-primary d-inline">
-															<input type="checkbox" id="checkboxPrimary1" checked="">
-															<label for="checkboxPrimary1">
-															</label>
-														  </div>
-														  <div class="icheck-primary d-inline">
-															<input type="checkbox" id="checkboxPrimary2">
-															<label for="checkboxPrimary2">
-															</label>
-														  </div>
-														  <div class="icheck-primary d-inline">
-															<input type="checkbox" id="checkboxPrimary3" disabled="">
-															<label for="checkboxPrimary3">
-															  Primary checkbox
-															</label>
-														  </div>
-														</div>
-													  </div>
-													  <div class="col-sm-6">
-														<!-- radio -->
-														<div class="form-group clearfix">
-														  <div class="icheck-primary d-inline">
-															<input type="radio" id="radioPrimary1" name="r1" checked="">
-															<label for="radioPrimary1">
-															</label>
-														  </div>
-														  <div class="icheck-primary d-inline">
-															<input type="radio" id="radioPrimary2" name="r1">
-															<label for="radioPrimary2">
-															</label>
-														  </div>
-														  <div class="icheck-primary d-inline">
-															<input type="radio" id="radioPrimary3" name="r1" disabled="">
-															<label for="radioPrimary3">
-															  Primary radio
-															</label>
-														  </div>
-														</div>
-													  </div>
+													 
 													</div>
 													<!-- Minimal red style -->
 													<div class="row">
-													  <div class="col-sm-6">
-														<!-- checkbox -->
-														<div class="form-group clearfix">
-														  <div class="icheck-danger d-inline">
-															<input type="checkbox" checked="" id="checkboxDanger1">
-															<label for="checkboxDanger1">
-															</label>
-														  </div>
-														  <div class="icheck-danger d-inline">
-															<input type="checkbox" id="checkboxDanger2">
-															<label for="checkboxDanger2">
-															</label>
-														  </div>
-														  <div class="icheck-danger d-inline">
-															<input type="checkbox" disabled="" id="checkboxDanger3">
-															<label for="checkboxDanger3">
-															  Danger checkbox
-															</label>
-														  </div>
-														</div>
-													  </div>
-													  <div class="col-sm-6">
+													  
+													  <div class="col-sm-8">
 														<!-- radio -->
+
+														{foreach from=$toGetAllApplication item=$oGetAllApplication}
 														<div class="form-group clearfix">
 														  <div class="icheck-danger d-inline">
+															 <label for="radioDanger1">
+																{$oGetAllApplication.ROLEAPPLILIB}
+															</label>
 															<input type="radio" name="r2" checked="" id="radioDanger1">
-															<label for="radioDanger1">
-															</label>
-														  </div>
-														  <div class="icheck-danger d-inline">
-															<input type="radio" name="r2" id="radioDanger2">
-															<label for="radioDanger2">
-															</label>
-														  </div>
-														  <div class="icheck-danger d-inline">
-															<input type="radio" name="r2" disabled="" id="radioDanger3">
-															<label for="radioDanger3">
-															  Danger radio
-															</label>
+															
 														  </div>
 														</div>
+														{/foreach}
+
 													  </div>
 													</div>
 													<!-- Minimal red style -->
-													<div class="row">
-													  <div class="col-sm-6">
-														<!-- checkbox -->
-														<div class="form-group clearfix">
-														  <div class="icheck-success d-inline">
-															<input type="checkbox" checked="" id="checkboxSuccess1">
-															<label for="checkboxSuccess1">
-															</label>
-														  </div>
-														  <div class="icheck-success d-inline">
-															<input type="checkbox" id="checkboxSuccess2">
-															<label for="checkboxSuccess2">
-															</label>
-														  </div>
-														  <div class="icheck-success d-inline">
-															<input type="checkbox" disabled="" id="checkboxSuccess3">
-															<label for="checkboxSuccess3">
-															  Success checkbox
-															</label>
-														  </div>
-														</div>
-													  </div>
-													  <div class="col-sm-6">
-														<!-- radio -->
-														<div class="form-group clearfix">
-														  <div class="icheck-success d-inline">
-															<input type="radio" name="r3" checked="" id="radioSuccess1">
-															<label for="radioSuccess1">
-															</label>
-														  </div>
-														  <div class="icheck-success d-inline">
-															<input type="radio" name="r3" id="radioSuccess2">
-															<label for="radioSuccess2">
-															</label>
-														  </div>
-														  <div class="icheck-success d-inline">
-															<input type="radio" name="r3" disabled="" id="radioSuccess3">
-															<label for="radioSuccess3">
-															  Success radio
-															</label>
-														  </div>
-														</div>
-													  </div>
-													</div>
+													
 												  </div>
-												  <!-- /.card-body -->
-												  <div class="card-footer">
-													Many more skins available. <a href="https://bantikyan.github.io/icheck-bootstrap/">Documentation</a>
-												  </div>
+
 												</div>
                         </div>
                     </div>
