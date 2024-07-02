@@ -126,6 +126,7 @@ class Utilisateur extends MY_Controller
 		$toGetAllApplication = $this->utilisateur->getAllApplication() ;
 		
 		$oSmarty->assign("zBasePath",base_url());
+		$oSmarty->assign("iUserId",$iUserId);
 		$oSmarty->assign("toGetInfoAgent",$toGetInfoAgent);
 		$oSmarty->assign("toApplicationId",$toApplicationId);
 		$oSmarty->assign("toGetAllApplication",$toGetAllApplication);

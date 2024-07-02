@@ -1,4 +1,4 @@
-﻿ <div id="detail" class="card mb-0 detailTj" style="width:100%">
+﻿ <div id="detail-{$iUserId}" class="card mb-0 detailTj" style="width:100%">
     <div class="card-body1">
         <div class="row">
             <div class="col-md-12" style="padding-right:0px;">
@@ -196,7 +196,7 @@ h3.card-title {
 {literal}
 <script type="text/javascript">
 
-	var scrollDiv = document.getElementById("detail-{/literal}{$iEcriNum}{literal}").offsetTop+600;
+	var scrollDiv = document.getElementById("detail-{/literal}{$iUserId}{literal}").offsetTop+200;
 	window.scrollTo({ top: scrollDiv, behavior: 'smooth'});
 </script>
 {/literal}
