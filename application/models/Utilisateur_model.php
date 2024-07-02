@@ -46,7 +46,8 @@ class Utilisateur_model extends CI_Model {
 		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM ".$toDB->database.".V_USERS u WHERE 1=1 ";
 
 		if( !empty($oRequest['search']['value']) ) {   
-			$zSql.=" AND ( FIRST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" AND ( USERID LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  FIRST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
 			$zSql.=" OR  LAST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
 			$zSql.=" OR  EMAIL_CANONICAL LIKE '%".$oRequest['search']['value']."%' ) ";
 		}

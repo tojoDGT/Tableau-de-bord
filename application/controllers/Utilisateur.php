@@ -33,8 +33,8 @@ class Utilisateur extends MY_Controller
 		global $oSmarty ; 
 		
 		$oData=array();
-		$iMenuActifId = 3;
-		$iSousMenuActifId = 3;
+		$iMenuActifId = 33;
+		$iSousMenuActifId = 33;
 		$toGetAllData = array();
 	
 		
