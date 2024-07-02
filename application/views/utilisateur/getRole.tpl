@@ -13,7 +13,7 @@
 																  <img class="profile-user-img img-fluid img-circle" src="{$zBasePath}assets/common/dist/img/non-user.jpg" alt="User profile picture">
 																</div>
 
-																<h3 class="profile-username">{$toGetInfoAgent.0.FULLNAME}</h3>
+																<h3 class="profile-username text-center">{$toGetInfoAgent.0.FULLNAME}</h3>
 
 																<p class="text-muted"><strong>Fonction :</strong> {$toGetInfoAgent.0.ACTIVITYFUNCTION}</p>
 																<p class="text-muted"><strong>Entité :</strong> {$toGetInfoAgent.0.ACTIVITYNAME}</p>
@@ -153,7 +153,7 @@ table.table-bordered.dataTable td {
 	margin-right:0px!important;
 }
 
-h3 {
+h3.card-title {
 	text-align:center!important;
 	color:#fff;
 }
