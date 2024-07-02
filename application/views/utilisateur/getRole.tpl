@@ -1,9 +1,9 @@
 ﻿ <div id="detail" class="card mb-0 detailTj" style="width:100%">
-    <div class="card-body">
+    <div class="card-body1">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" style="padding-right:0px;">
                 <div class="profile-basic">
-                    <div class="row">
+                    <div class="row noPadding">
                         <div class="col-md-6">
                             <div class="profile-info-left1">
 								<div class="profile-info-left1">
@@ -49,41 +49,62 @@
 							</div>
 							
                         </div>                          
-                        <div class="col-md-6 profile-info-right">
-																	<div class="card card-success">
-												  <div class="card-header">
-													<h3 class="card-title txt-center">Accessibilité sur les applications</h3>
-												  </div>
-												  <div class="card-body">
-													<!-- Minimal style -->
-													<div class="row">
-													 
-													</div>
-													<!-- Minimal red style -->
-													<div class="row">
-													  
-													  <div class="col-sm-8">
-														<!-- radio -->
-
+                        <div class="profile-info-right">
+											
+									 <div class="card card-primary">
+											<div class="card-header">
+											  <h3 class="card-title text-center">Accessibilité sur les applications</h3>
+											</div>
+										<div class="card-body p-0">
+											<div class="mailbox-read-message">
+												<div class="col-md-6" style="float:left;">
+													<table >
+														{assign var=iIncrement value=0}
 														{foreach from=$toGetAllApplication item=$oGetAllApplication}
-														<div class="form-group clearfix">
-														  <div class="icheck-danger d-inline">
-															 <label for="radioDanger1">
-																{$oGetAllApplication.ROLEAPPLILIB}
-															</label>
-															<input type="radio" name="r2" checked="" id="radioDanger1">
-															
-														  </div>
-														</div>
+														{if $iIncrement<12}
+														<tr>
+															<td><strong>{$oGetAllApplication.ROLEAPPLILIB} : </strong></td>
+															<td>
+																	<div class="form-group clearfix">
+																		  <div class="icheck-success d-inline">
+																			<input type="radio" name="radioDanger{$iIncrement}" {if $oGetAllApplication.ROLEAPPLIID|in_array:$toApplicationId} checked="checked" {/if} id="radioDanger{$iIncrement}">
+																			<label for="radioDanger{$iIncrement}">
+																			</label>
+																		  </div>
+																	</div>
+															</td>
+														</tr>
+														{/if}
+														{assign var=iIncrement value=$iIncrement+1}
 														{/foreach}
-
-													  </div>
-													</div>
-													<!-- Minimal red style -->
-													
-												  </div>
-
+													</table>
 												</div>
+												<div class="col-md-6" style="float:right;">
+												<table>
+													{assign var=iIncrement value=0}
+													{foreach from=$toGetAllApplication item=$oGetAllApplication}
+													{if $iIncrement>=12}
+													<tr>
+														<td><strong>{$oGetAllApplication.ROLEAPPLILIB} : </strong></td>
+														<td>
+																<div class="form-group clearfix">
+																	  <div class="icheck-success d-inline">
+																		<input type="radio" name="radioDanger{$iIncrement}" {if $oGetAllApplication.ROLEAPPLIID|in_array:$toApplicationId} checked="checked" {/if}  id="radioDanger{$iIncrement}">
+																		<label for="radioDanger{$iIncrement}">
+																		</label>
+																	  </div>
+																</div>
+														</td>
+													</tr>
+													{/if}
+													{assign var=iIncrement value=$iIncrement+1}
+													{/foreach}
+												</table>
+												</div>
+											</div>
+										</div>
+									 </div>
+									
                         </div>
                     </div>
                 </div>      
@@ -92,8 +113,19 @@
     </div>
 </div>
 <style>
+.card-body1 {
+    padding-top: 1.25rem;
+}
 .profile-info-right {
 	border-left: 2px dashed #ccc;
+	padding-left:20px;
+	width:50%;
+}
+
+table.table-bordered.dataTable th, 
+table.table-bordered.dataTable td {
+    border-left-width: 1px!important;
+	border-bottom-width: 1px!important;
 }
 
 .profile-info-right li,.alert{
@@ -118,10 +150,12 @@
 
 .noPadding {
 	margin-left:0px!important;
+	margin-right:0px!important;
 }
 
 h3 {
-	text-align:center;
+	text-align:center!important;
+	color:#fff;
 }
 .detailTj a.bleu {
     color: #337ab7!important;

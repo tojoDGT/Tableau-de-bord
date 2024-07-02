@@ -116,15 +116,18 @@ class Utilisateur extends MY_Controller
 
 		$iUserId = $this->postGetValue ("iUserId", 0);
 
-		$toGetInfoAgent = $this->utilisateur->getDetailUtilisateur($iUserId) ;
-		$toGetAllApplication = $this->utilisateur->getAllApplication() ;
+		$toApplicationId = array();
 
-		/*echo "<pre>";
-		print_r ($toGetAllApplication);
-		echo "</pre>";*/
+		$toGetInfoAgent = $this->utilisateur->getDetailUtilisateur($iUserId) ;
+
+		foreach ($toGetInfoAgent as $oGetInfoAgent){
+			array_push($toApplicationId, $oGetInfoAgent['ROLEAPPLIID']);
+		}
+		$toGetAllApplication = $this->utilisateur->getAllApplication() ;
 		
 		$oSmarty->assign("zBasePath",base_url());
 		$oSmarty->assign("toGetInfoAgent",$toGetInfoAgent);
+		$oSmarty->assign("toApplicationId",$toApplicationId);
 		$oSmarty->assign("toGetAllApplication",$toGetAllApplication);
 		$zDetailEcriture = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "utilisateur/getRole.tpl" );
 		
