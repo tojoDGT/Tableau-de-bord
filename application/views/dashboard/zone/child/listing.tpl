@@ -163,6 +163,10 @@ hr {
 .dt-Visible {
 	display:none;
 }
+.dataTable > thead > tr > th[class*="details-control"]:before,
+.dataTable > thead > tr > th[class*="details-control"]:after {
+    content: "" !important;
+}
 td.details-control {
     background: url('{$zBasePath}assets/images/flch_or.png') no-repeat center center;
     cursor: pointer;

@@ -37,8 +37,9 @@ class Utilisateur extends MY_Controller
 		$iSousMenuActifId = 3;
 		$toGetAllData = array();
 	
-		$zLibelle = "Liste des utilisateurs de l'application";
-		$zLibelle1 = "Utilisateur"; 
+		
+		$zLibelle	= "utilisateurs"; 
+		$zLibelle1 = "Liste des utilisateurs des applications";
 						
 		$zPathTpl = ADMIN_TEMPLATE_PATH . "utilisateur/liste.portion.tpl";
 		$oData['zBasePath']			= base_url();
@@ -70,7 +71,13 @@ class Utilisateur extends MY_Controller
 
 		$oRequest = $_REQUEST;
 		$iNombreTotal = 0;
-		$toGetListe = $this->utilisateur->getUtilisateur($iNombreTotal,$this) ; 
+		$toGetListe = $this->utilisateur->getUtilisateur($iNombreTotal,$this) ;
+		
+		/*echo "<pre>";
+		print_r ($toGetListe);
+		echo "</pre>";
+
+		die("tojo");*/
 
 		$oDataAssign = array();
 		$iIncrement = 1;
@@ -78,48 +85,11 @@ class Utilisateur extends MY_Controller
 			
 			$oDataTemp=array(); 
 
-			$zImg = '<img src="'.zURL_BO.'assets/common/dist/img/'.$oGetListe['image'].'" width="100">';
-
 			$oDataTemp[] = '';
-			$oDataTemp[] = $oGetListe['id'];
-			$oDataTemp[] = $zImg;
-			$oDataTemp[] = $oGetListe['nom'];
-			$oDataTemp[] = $oGetListe['prenom'];
-			$oDataTemp[] = $oGetListe['email'];
-			//$oDataTemp[] = $oGetListe['privilege'];
-
-			
-			if($oGetListe['isChef']==1) {
-
-				$zChef = '<i style="font-size:22px;color:green" class="fa fa-check-circle"></i>';
-
-			} else {
-
-				$zChef = '<i style="font-size:22px;color:red" class="fa fa-times-circle"></i>';
-			}
-
-			//$oDataTemp[] = $zChef;
-			
-
-			if($oGetListe['isDeveloppeur']==1) {
-
-				$zDeveloppeur = '<i style="font-size:22px;color:green" class="fa fa-check-circle"></i>';
-
-			} else {
-
-				$zDeveloppeur = '<i style="font-size:22px;color:red" class="fa fa-times-circle"></i>';
-			}
-
-			//$oDataTemp[] = $zDeveloppeur;
-
-			$zAction = '<a title="Modifier le utilisateur" alt="Modifier" href="'.base_url().'utilisateur/edit/'.$oGetListe['id'].'" title="Modifier" style="cursor:pointer;" class="action dialog-link"><i style="font-size:22px;color:#12105A" class="fa fa-edit"></i></a>&nbsp;&nbsp;';
-
-			/*if ($oSession['privilege'] == 'superadmin'){*/
-			$zAction .= '<a href="#" title="Supprimer" alt="Supprimer" class="supprFormation" dataSuppr="'.$oGetListe['id'].'" class="action suppr"><i style="font-size:22px;color: #F10610;" class="fa fa-trash"></i></a>' ; 
-			/*}*/
-			
-			$oDataTemp[] = $zAction;
-			
+			$oDataTemp[] = $oGetListe['USERID'];
+			$oDataTemp[] = $oGetListe['FIRST_NAME'];
+			$oDataTemp[] = $oGetListe['LAST_NAME'];
+			$oDataTemp[] = $oGetListe['EMAIL_CANONICAL'];
 			
 			$oDataAssign[] = $oDataTemp;
 			$iIncrement++;
@@ -131,6 +101,25 @@ class Utilisateur extends MY_Controller
 						"data"            => $oDataAssign
 					);
 		echo json_encode($taJson);
+			
+    }
+
+	/** 
+	* function Ajax chargement détail ecriture / Mandat
+	*
+	* @return Ajax
+	*/
+	public function getRole(){
+		
+		global $oSmarty ; 
+
+
+		$iUserId = $this->postGetValue ("iUserId", 0);
+		
+		$oSmarty->assign("zBasePath",base_url());
+		$zDetailEcriture = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "utilisateur/getRole.tpl" );
+		
+		echo $zDetailEcriture ;  
 			
     }
 

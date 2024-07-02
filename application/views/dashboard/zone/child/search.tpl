@@ -1,3 +1,4 @@
+{if $iTypeAfficheSearch==1}
 <div class="col-md-12" style="padding:0px">
 <div class="searchStatus">
 		<div class="au-card au-card--bg-blue ">
@@ -98,6 +99,75 @@
 		</div>
 	</div>
 </div>
+{else}
+<div class="col-md-12" style="padding:0px">
+<div class="searchStatus">
+		<div class="au-card au-card--bg-blue ">
+			<div class="au-card-inner">
+				<div class="table-responsive" style="padding:15px;">
+					<form id="sendSearch" name="sendSearch" action="post">
+					<input type="hidden" id="iAjax" name="iAjax" value="1">
+					<input type="hidden" id="TYPE_MAND" name="TYPE_MAND" value="REGULARISATION">
+					<input type="hidden" id="iModeGraph" name="iModeGraph" value="1">
+					<input type="hidden" name="MAND_MODE_PAIE[]" value="OO">
+					{foreach from=$toGetPropCode item=$oGetPropCode}
+					<input type="hidden" name="PROP_CODE[]" value="{$oGetPropCode.PROP_CODE}">
+					{/foreach}
+						<div class="col-md-4" style="display:inline-flex">
+						<table class="table tableRond table-top-countries">
+							<tbody>
+								<tr>
+									<td class="middle" width="10">Année Exercice:</td>
+									<td class="noBottom">
+										<select class="form-control" id="ECRI_EXERCICE" name="ECRI_EXERCICE">
+												<option selected="selected" value="">Tous</option>
+													{foreach from=$toGetAllExercice item=$oGetAllExercice}
+													<option value="{$oGetAllExercice.ECRI_EXERCICE}">{$oGetAllExercice.ECRI_EXERCICE}</option>
+													{/foreach}
+												</select>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+						<div class="col-md-4" style="display:inline-flex">
+							<table class="table tableRond table-top-countries">
+							<tbody>
+								<tr>
+									<td class="middle" width="10">Titulaire : </td>
+									<td class="noBottom">
+										<select class="form-control" id="MIN_ABREV" name="MIN_ABREV">
+												<option selected="selected" value="">Tous</option>
+														{foreach from=$toMinAbrev item=$oMinAbrev}
+														<option {if $oMinAbrev.MIN_ABREV=='MEF'}selected="selected"{/if} value="{$oMinAbrev.MIN_ABREV}">{$oMinAbrev.MIN_ABREV}</option>
+														{/foreach}
+												</select>
+									</td>
+								</tr>
+								<tr id="nombreMontant" style="display:none">
+									<td class="middle" width="10">Mode d'affichage:</td>
+									<td class="noBottom">
+										<input type="radio" checked="checked" name="iMode" value="1">&nbsp;&nbsp;Nombre
+										<input type="radio" name="iMode" value="2">&nbsp;&nbsp;Montant
+									</td>
+								</tr>
+							</tr>
+							</tbody>
+						</table>
+						</div>
+						<div style="text-align: center;"> <input type="button" class="searchTb partielSearchHeader partielSearchHeader1" value="Rechercher" autocomplete="off"></div>
+						</form>	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<style>
+.table-top-countries tbody td {
+    border-bottom: none;
+}
+</style>
+{/if}
 <style>
 .middle{
 	vertical-align:middle!important;

@@ -14,6 +14,7 @@ if(isset($_SESSION["colonneAffiche"])){
 }
 
 $oSmarty->assign('oDataTempCol',  $oDataTempCol);
+$oSmarty->assign('zReturnUrl',  $_SERVER['PHP_SELF']);
 $oSmarty->display( ADMIN_TEMPLATE_PATH . "common/templates/includes/footer.tpl" );
 
 

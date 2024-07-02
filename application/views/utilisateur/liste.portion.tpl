@@ -1,16 +1,11 @@
 <table id="table_bd" class="table  table-bordered table-hover" style="margin-left:10px">
 	<thead>
 		<tr>
-			<th>Privilège</th>
-			<th>Identifiant</th>
-			<th>Photo</th>
-			<th>Nom</th>
-			<th>Prénom</th>
-			<th class="dt-center">Email</th>
-			<!--<th class="dt-center">Privilège</th>
-			<th class="dt-center">Liste et détail</th>
-			<th class="dt-center">Exportation Excel</th>-->
-			<th class="dt-center">Actions</th>
+			<th>DETAIL</th>
+			<th>IDENTIFIANT</th>
+			<th>NOM</th>
+			<th>PRENOM</th>
+			<th>EMAIL</th>
         </tr>
 	</thead>
 	<tbody>
@@ -28,10 +23,10 @@
 						
 				var zData = "";
 				$.ajax({
-					url: zBasePath + "demande/getPrivilege", // json datasource
+					url: zBasePath + "utilisateur/getRole", // json datasource
 					type: 'POST',
 					data: {
-						iEcriNum: d[1]
+						iUserId: d[1]
 					},
 					success: function(data, textStatus, jqXHR) {
 						zData = data;
@@ -48,8 +43,9 @@
 				"searching": true,
 				"footer": true,
 				"columnDefs": [
-					{ className: "dt-center", "targets": [ 1,3,4,5,6 ] },
+					{ className: "dt-center", "targets": [ 1,3,4 ] },
 					{ className: "details-control", "targets": [ 0 ] },
+					{ orderable: false, targets: [0] },
 				 ],
 				"language": {
 					"sProcessing":     "Traitement en cours...",
@@ -109,111 +105,28 @@
 				}
 			} );
 
-			$("#table_bd").on("click", ".checkActive", function(){
-				var iValue = jQuery(this).is(':checked');
-				var iId = jQuery(this).attr("iId");
-				
-				jQuery(this).attr("");
-				var iActif = 0;
-				var zMessage = "";
-				switch (iValue) {
-					case true:
-						iActif = 1;
-						zMessage = " activer";
-						break;
-
-					case false:
-						iActif = 0;
-						zMessage = " désactiver";
-						break;
-				}
-	
-				var s = confirm("Voulez-vous "+zMessage+"?");
-				if(s == true){
-					jQuery.ajax({
-							url: zBasePath + "utilisateur/setActif/menu",
-							type: 'post',
-							data: {
-								iActif: iActif,
-								iId: iId
-							},
-							success: function(data, textStatus, jqXHR) {
-								
-							},
-							async: false
-						})
-				} else {
-
-					if(iActif ==1){
-						jQuery(this).prop('checked', false);
-					} else {
-						jQuery(this).prop('checked', true);
-					}
-					
-				}
-			});
-
-			$("#table_bd").on("click", ".supprFormation", function(){
-				var iElement = $(this).attr("dataSuppr");
-				if (confirm ("Voulez-vous supprimer cet enregistrement?"))
-				{
-					$.ajax({
-					url : zBasePath + "utilisateur/supprimer",
-					type : "POST",
-					data : {supprId :  iElement},
-						success : function(data){
-								zListeEntite.ajax.reload();  
-						}
-					});
-				}
-					
-			});
-
 		});
-
-		function getOrdre(_iMode,_iOrdre,_iId){
-			
-				jQuery.ajax({
-					url: zBasePath + "utilisateur/getOrdreAffichage",
-					type: 'post',
-					data: {
-						iMode: _iMode,
-						iOrdre: _iOrdre,
-						iId: _iId
-					},
-					success: function(data, textStatus, jqXHR) {
-						jQuery("#setHtmlInfo1").html(data);
-						
-					},
-					async: false
-				}).done(function() {
-					$.getScript( zBasePath + "assets/js/loading-content.js" )
-				});
-			
-		}
-
 		
 </script>
 <style>
 th.dt-center, td.dt-center { text-align: center!important; }
 .dt-width {width:20%!important}
 #table_bd th{
-    width: 75px!important;
-}
-#table_bd td img {
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    min-width: 40px;
+    width: 15px!important;
 }
 td.details-control {
     background: url('{/literal}{$zBasePath}{literal}assets/images/flch_or.png') no-repeat center center;
     cursor: pointer;
-	background-size: 10%;
+	background-size: 15px;
+	width:15px;
+}
+.dataTable > thead > tr > th[class*="details-control"]:before,
+.dataTable > thead > tr > th[class*="details-control"]:after {
+    content: "" !important;
 }
 tr.shown td.details-control {
     background: url('{/literal}{$zBasePath}{literal}assets/images/flch_or_bas.png') no-repeat center center;
-	background-size: 15%;
+	background-size: 25px;
 }
 </style>
 {/literal}

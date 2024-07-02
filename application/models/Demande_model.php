@@ -72,19 +72,6 @@ class Demande_model extends CI_Model {
 
 		$toDB = $this->load->database('oracle',true);
 		
-
-		/*$toColumns = array( 
-			0  => 'ECRI_NUM', 
-			1  => 'MAND_NUM_INFO', 
-			2  => 'ECRI_REF',
-			3  => 'ECRI_LIB', 
-			4  => 'ECRI_DT_CECRITURE',
-			5  => 'PROP_CODE',
-			6  => 'ECRI_LIB',
-			7  => 'MAND_MODE_PAIE',
-			8  => 'MAND_MONTANT'
-		);*/
-
 		$toGetListeColonne = $this->getSessionColonne();
 
 			
@@ -96,8 +83,6 @@ class Demande_model extends CI_Model {
 				array_push($toColumns, $oColonne[1]);
 			}
 		}
-		
-
 
 		$oRequest = $_REQUEST;
 

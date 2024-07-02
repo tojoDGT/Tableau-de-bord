@@ -33,6 +33,7 @@ class Dashboard extends MY_Controller
 	{
 		$toColonne = array();
 		unset($_SESSION["colonneAffiche"]);
+		$zReturnUrl = $this->postGetValue ("zReturnUrl", 0);
 		if(empty($_SESSION["colonneAffiche"])){
 			
 			$toColonnePost = $this->postGetValue ("colonneAffiche", 0);
@@ -44,7 +45,9 @@ class Dashboard extends MY_Controller
 			$_SESSION["colonneAffiche"] = serialize($toColonne);
 		} 
 
-		redirect("dashboard/stat/situation-des-dossiers");
+		$toUrl = explode("index.php/", $zReturnUrl);
+
+		redirect($toUrl[1]);
 	}
 
 	 
@@ -93,19 +96,11 @@ class Dashboard extends MY_Controller
 				break;
 			
 			case 'situation-des-dossiers':
-				$iMenuActifId = 2;
-				$iSousMenuActifId = 2;
-				$zLibelle1 = "Situation des dossiers"; 
+			case 'situation-des-op':
 
 				$toGetPropCode = $this->dashboard->getPropCode() ; 
-
-				
 				$toMinAbrev = $this->dashboard->getMinAbrev() ; 
-				
 				$toTypeMandat = $this->dashboard->getTypeMandat() ; 
-
-				
-
 				
 				$zAnnee = "-1";
 				$zAfficheSerieStat = "";
@@ -116,16 +111,30 @@ class Dashboard extends MY_Controller
 				$oSmarty->assign('toGetAllExercice',  $toGetAllExercice);
 				$oSmarty->assign('zBasePath',  base_url());
 
-				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/search.tpl" );
+				switch ($_zParam){
+					case 'situation-des-dossiers':
+						$iMenuActifId = 2;
+						$iSousMenuActifId = 2;
+						$zLibelle1 = "Situation des dossiers"; 
+						$oSmarty->assign('iTypeAfficheSearch',  1);
+						$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/search.tpl" );
+						break;
+
+					case 'situation-des-op':
+						$iMenuActifId = 2;
+						$iSousMenuActifId = 3;
+						$zLibelle1 = "Situations des OP et régularisations"; 
+						$oSmarty->assign('iTypeAfficheSearch',  2);
+						$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/search.tpl" );
+						break;
+				}
+
 				
 				$oSmarty->assign('zAfficheSerieStat',  $zAfficheSerieStat);
 				$oSmarty->assign('toColonne',  $toColonne);
 				$zFirstTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/graph.tpl" );
 				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/listing.tpl" );
 				$zStatGLobal = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/stat.tpl" );
-
-				
-				
 				
 				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
 				$oSmarty->assign('zFirstTpl',  $zFirstTpl);
@@ -137,14 +146,8 @@ class Dashboard extends MY_Controller
 				
 				break;
 
-			case 'situation-des-op':
-				$iMenuActifId = 2;
-				$iSousMenuActifId = 3;
-				$zLibelle1 = "Situations des OP et régularisations"; 
-				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/situation-des-op.tpl";
-				break;
 
-			case 'performance-des-pc':
+			case 'performance-des-pc11':
 				$iMenuActifId = 2;
 				$iSousMenuActifId = 4;
 				$zLibelle1 = "Performance des postes comptables"; 

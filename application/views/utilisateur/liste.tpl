@@ -22,20 +22,17 @@
 		
       </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content -->
-	<div class="row">
-	  <a href="{$zBasePath}utilisateur/edit" class="btn btn-primary" style="text-align:left">Ajouter un {$oData.zLibelle1}</button></a> 
-	</div>
 	<div>&nbsp;</div>
 	<div class="row">	
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title"></h3>
-
-					<div class="card-tools">
-					</div>
+					<h3 class="card-title">
+					  <i class="fas fa-chart-pie mr-1"></i>
+					  Resultats
+					</h3>
+					<br>
 				</div>
 					{$oData.zPortionTable}
 				</div>

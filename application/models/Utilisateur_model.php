@@ -27,7 +27,68 @@ class Utilisateur_model extends CI_Model {
         return $oQuery->row_array();
 	}
 
+
 	public function getUtilisateur(&$_iNbrTotal = 0,$_this=''){
+		global $db;
+
+
+		$toDB = $this->load->database('specl',true);
+
+		$toColumns = array( 
+			0  => 'USERID', 
+			1  => 'FIRST_NAME',
+			2  => 'LAST_NAME', 
+			3  => 'EMAIL_CANONICAL'
+		);
+
+		$oRequest = $_REQUEST;
+
+		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM ".$toDB->database.".V_USERS u WHERE 1=1 ";
+
+		if( !empty($oRequest['search']['value']) ) {   
+			$zSql.=" AND ( FIRST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  LAST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  EMAIL_CANONICAL LIKE '%".$oRequest['search']['value']."%' ) ";
+		}
+
+
+		$zSql .= " GROUP BY USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL ";
+		
+		$zDebut = 0;
+		$zFin = 10;
+
+		if (sizeof($oRequest)>0){
+			
+			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
+				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+			} else {
+				$zSql.=" ORDER BY FIRST_NAME ASC ";
+			}
+
+			$zDebut = (int)$oRequest['start'] ;
+			$zFin =  (int)$oRequest['length'];
+		} else {
+			$zSql.=" ORDER BY FIRST_NAME ASC ";
+		}
+
+		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+
+		//echo $zSql;
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+		$zQuery->free_result();
+
+		
+        if(sizeof($toRow)>0){
+			$_iNbrTotal = $toRow[0]['FOUND_ROWS'] ;
+		}
+
+		return $toRow;
+
+	}
+
+	public function __getUtilisateur(&$_iNbrTotal = 0,$_this=''){
 		global $db;
 
 

@@ -17,8 +17,9 @@
   <link rel="stylesheet" href="{$zBasePath}assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{$zBasePath}assets/common/dist/css/adminlte.min.css">
- <link rel="stylesheet" href="{$zBasePath}assets/common/dist/css/theme.css">
+  <link rel="stylesheet" href="{$zBasePath}assets/common/dist/css/theme.css">
   <link rel="stylesheet" href="{$zBasePath}assets/css/soi.css">
+  <link rel="stylesheet" href="{$zBasePath}assets/common/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   
 </head>
 <script>

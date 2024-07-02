@@ -17,6 +17,7 @@
   <aside class="control-sidebar control-sidebar-dark">
 			<!-- Control sidebar content goes here -->
 			<form id="sendSearch" name="sendSearch" action="{$zBasePath}dashboard/changeCol" method="post">
+			<input type="zReturnUrl" name="zReturnUrl" value="{$zReturnUrl}">
 			<div class="p-3 control-sidebar-content" style="">
 				<h5>COLONNE A AFFICHER</h5>
 				<hr class="mb-2" />

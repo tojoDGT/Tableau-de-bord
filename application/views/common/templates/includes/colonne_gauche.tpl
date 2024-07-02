@@ -23,7 +23,7 @@
 		</a>
 	  </li>
 	  <li class="nav-item">
-		<a href="{$zBasePath}dashboard/stat/situation-des-op" class="nav-link {if $oData.iSousMenuActifId==33}active{/if}">
+		<a href="{$zBasePath}dashboard/stat/situation-des-op" class="nav-link {if $oData.iSousMenuActifId==3}active{/if}">
 		  <i class="far fa-circle nav-icon text-blue"></i>
 		  <p>OP / régularisations</p>
 		</a>
@@ -54,16 +54,16 @@
 	  </li>
 	</ul>
   </li>
-  <li class="nav-item">
+  <!--<li class="nav-item">
 		<a href="{$zBasePath}/Login/logout" class="nav-link">
 		  <i class="nav-icon fas fa-copy"></i>
 		  <p>Rôles et privilièges</p>
 		</a>
-   </li>
+   </li>-->
     <li class="nav-item">
 		<a href="{$zBasePath}/utilisateur/liste" class="nav-link {if $oData.iMenuActifId==3}active{/if}">
 		  <i class="nav-icon fas fa-copy"></i>
-		  <p>Gestion utilisateur</p>
+		  <p>Les utilisateurs</p>
 		</a>
    </li>  
    <li class="nav-item">

@@ -132,7 +132,7 @@
             <!-- LINE CHART -->
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Diagramme de surface</h3>
+                <h3 class="card-title">Graphique à barres empilées</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -155,7 +155,7 @@
             <!-- BAR CHART -->
             <div class="card card-success">
               <div class="card-header">
-                <h3 class="card-title">Graphique en beignet</h3>
+                <h3 class="card-title">Graphique Donut</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -176,9 +176,9 @@
             <!-- /.card -->
 
             <!-- STACKED BAR CHART -->
-            <div class="card card-success">
+            <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Graphique à barres empilées</h3>
+                <h3 class="card-title">Diagramme de surface</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
