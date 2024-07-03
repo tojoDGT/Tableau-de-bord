@@ -7,7 +7,7 @@
 		  <p>Tableau de bord</p>
 		</a>
   </li>
-  <li class="nav-item {if $oData.iMenuActifId==2}menu-open{/if}">
+  <li class="nav-item menu-open">
 	<a href="#" class="nav-link {if $oData.iMenuActifId==2}active{/if}">
 	  <i class="nav-icon fas fa-columns"></i>
 	  <p>

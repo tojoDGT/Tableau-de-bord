@@ -36,28 +36,28 @@
 									  <div class="time-label">
 										<span class="bg-green">Traitement et Visa</span>
 									  </div>
-									  {assign var="zCreationString" value=$oGetDetail->MAND_DATE_RECUP}
-									  {assign var="zCreationSplit" value=" "|explode:$zCreationString}
+									  {assign var="zCreationString1" value=$oGetDetail->MAND_DATE_RECUP}
+									  {assign var="zCreationSplit1" value=" "|explode:$zCreationString1}
 									  <div>
 										<i class="fas fa-user bg-olive"></i>
 										<div class="timeline-item">
-										  <span class="time"><i class="fas fa-clock"></i> {$zCreationSplit[1]}</span>
+										  <span class="time"><i class="fas fa-clock"></i> {$zCreationSplit1[1]}</span>
 										  <h3 class="timeline-header"><a href="#">Récuperation</a>&nbsp;</h3>
 										  <div class="timeline-body">
-											<b>Date :</b> {$zCreationSplit[0]}
+											<b>Date :</b> {$zCreationSplit1[0]}
 										  </div>
 										  
 										</div>
 									  </div>
-									  {assign var="zCreationString" value=$oGetDetail->MAND_DATE_REEL_VISA}
-									  {assign var="zCreationSplit" value=" "|explode:$zCreationString}
+									  {assign var="zCreationString2" value=$oGetDetail->MAND_DATE_REEL_VISA}
+									  {assign var="zCreationSplit2" value=" "|explode:$zCreationString2}
 									  <div>
 										<i class="fas fa-user bg-pink"></i>
 										<div class="timeline-item">
-										  <span class="time"><i class="fas fa-clock"></i> {$zCreationSplit[1]}</span>
+										  <span class="time"><i class="fas fa-clock"></i> {$zCreationSplit2[1]}</span>
 										  <h3 class="timeline-header"><a href="#">date du visa</a>&nbsp;</h3>
 										  <div class="timeline-body">
-											<b>Date du visa :</b> {$zCreationSplit[0]}
+											<b>Date du visa :</b> {$zCreationSplit2[0]}
 										  </div>
 										  
 										</div>
@@ -68,16 +68,16 @@
 								</div>
 
 								<div class="profile-info-left1">
-									<div class="text-muted"><h3>PERFORMANCE DES POSTES COMPTABLES</h3></div>
+									<div class="text-muted"><h3>DELAI DE TRAITEMENT</h3></div>
 									<ul class="todo-list ui-sortable" data-widget="todo-list">
 									  <li>
+										{assign var=num1 value=$oGetDetail->MAND_DATE_RECUP|mktimedate}
+										{assign var=num2 value=$oGetDetail->MAND_DATE_REEL_VISA|mktimedate}
+										{assign var=diff value=$num2-$num1}
+										{assign var=final value=$diff/86400}
 										
 										<span class="text">Délai :</span>
-										<small class="badge badge-info"><i class="far fa-clock"></i> 7 jours</small>
-										<div class="tools">
-										  <i class="fas fa-edit"></i>
-										  <i class="fas fa-trash-o"></i>
-										</div>
+										<small class="badge badge-info"><i class="far fa-clock"></i> {$final|round} jour{if $final|round>1}s{/if}</small>
 									  </li>
 									</ul>
 								</div>
@@ -257,6 +257,21 @@
 											</div>
 										  </div>
 										 
+										</div>
+
+										<div class="profile-info-left1">
+											<div class="text-muted"><h3>DELAI D'EXECUTION</h3></div>
+											<ul class="todo-list ui-sortable" data-widget="todo-list">
+											  <li>
+												{assign var=num1 value=$oVirement->NOTEDATEVALID|mktimedate}
+												{assign var=num2 value=$oVirement->OVDATEVALID|mktimedate}
+												{assign var=diff value=$num2-$num1}
+												{assign var=final value=$diff/86400}
+												
+												<span class="text">Délai :</span>
+												<small class="badge bg-green"><i class="far fa-clock"></i> {$final|round} jour{if $final|round>1}s{/if}</small>
+											  </li>
+											</ul>
 										</div>
 									{else}
 									<li class="text-muted"><b>Libellé :</b> &nbsp;&nbsp;&nbsp;</li>

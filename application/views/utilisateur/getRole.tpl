@@ -19,17 +19,17 @@
 																<p class="text-muted"><strong>Entité :</strong> {$toGetInfoAgent.0.ACTIVITYNAME}</p>
 																<p class="text-muted"><strong>Adresse d'activité :</strong> {$toGetInfoAgent.0.ACTIVITYADRS}</p>
 																
-
+																{assign var=iLast value=count($toGetInfoAgent)-1}
 																<div class="text-muted"><h3>Rôle</h3></div>
 																<ul class="list-group list-group-unbordered mb-3">
 																  <li class="list-group-item">
-																	<b>Nom de rôle :</b> <a class="float-right">{$toGetInfoAgent.0.ROLETYPENAME}</a>
+																	<b>Nom de rôle :</b> <a class="float-right">{$toGetInfoAgent.$iLast.ROLETYPENAME}</a>
 																  </li>
 																  <li class="list-group-item">
-																	<b>Type de Rôle :</b> <a class="float-right">{$toGetInfoAgent.0.ROLETYPE}</a>
+																	<b>Type de Rôle :</b> <a class="float-right">{$toGetInfoAgent.$iLast.ROLETYPE}</a>
 																  </li>
 																  <li class="list-group-item">
-																	<b>Libellé Rôle</b> <a class="float-right">{$toGetInfoAgent.0.ROLETYPELIB}</a>
+																	<b>Libellé Rôle</b> <a class="float-right">{$toGetInfoAgent.$iLast.ROLETYPELIB}</a>
 																  </li>
 																 
 																</ul>
