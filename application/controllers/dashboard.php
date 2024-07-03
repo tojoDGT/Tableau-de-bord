@@ -19,7 +19,7 @@ class Dashboard extends MY_Controller
 		$this->load->model('Dashboard_model', 'dashboard');
 		$this->load->model('Demande_model', 'demande');
 
-		if(empty($this->session->userdata['id'])){ redirect('Login');}
+		if(empty($this->session->userdata['USERID'])){ redirect('Login');}
 
 	}
 

@@ -6,13 +6,27 @@ class Login_model extends CI_Model{
 
 	public function checkUser($data)
 	{
-		$st=$this->db->SELECT('*')->from('users')
-						->WHERE('username',$data['username'])
-						->WHERE('password',sha1(md5($data['password'])))
-						->get()->result_array();
-		if(count($st)>0)
+		global $db;
+
+
+		$toDB = $this->load->database('specl',true);
+
+		$zSql=" SELECT DISTINCT * FROM ".$toDB->database.".V_USERS_TBLBOARD u WHERE USERID = '" . $data['USERID'] . "' AND ROLEVALID = 1 AND EMAIL_CANONICAL IS NOT NULL ";
+
+		/*echo $zSql;
+		die();*/
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+		/*print_r ($toRow);
+		die();*/
+		$zQuery->free_result();
+
+		if(count($toRow)>0)
 		{
-			return $st[0];
+			print_r ($toRow[0]);
+			return $toRow[0];
 		}
 		else
 		{
@@ -21,9 +35,8 @@ class Login_model extends CI_Model{
 	}
 	public function checkPassword($str)
 	{
-		$st=$this->db->SELECT('*')->from('users')
-			->WHERE('id',$this->session->userdata['id'])
-			->WHERE('password',sha1(md5($str)))
+		$st=$this->db->SELECT('*')->from($toDB->database.'.V_USERS_TBLBOARD')
+			->WHERE('USERID',$this->session->userdata['USERID'])
 			->get()->result_array();
 		if(count($st)>0)
 		{
@@ -40,7 +53,7 @@ class Login_model extends CI_Model{
 		$pass=array(
 			'password' => sha1(md5($password))
 		);
-		$this->db->WHERE('id',$id)->update('users',$pass);
+		$this->db->WHERE('USERID',$id)->update('users',$pass);
 	}
 }
 ?>

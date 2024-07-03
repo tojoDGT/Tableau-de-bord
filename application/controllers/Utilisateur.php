@@ -18,7 +18,7 @@ class Utilisateur extends MY_Controller
 		parent:: __construct();
 		$this->load->model('Utilisateur_model', 'utilisateur');
 
-		if(empty($this->session->userdata['id'])){ redirect('Login');}
+		if(empty($this->session->userdata['USERID'])){ redirect('Login');}
 
 	}
 	
@@ -87,8 +87,8 @@ class Utilisateur extends MY_Controller
 
 			$oDataTemp[] = '';
 			$oDataTemp[] = $oGetListe['USERID'];
-			$oDataTemp[] = $oGetListe['FIRST_NAME'];
 			$oDataTemp[] = $oGetListe['LAST_NAME'];
+			$oDataTemp[] = $oGetListe['FIRST_NAME'];
 			$oDataTemp[] = $oGetListe['EMAIL_CANONICAL'];
 			
 			$oDataAssign[] = $oDataTemp;

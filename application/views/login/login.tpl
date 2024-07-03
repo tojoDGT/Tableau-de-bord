@@ -39,14 +39,14 @@
 	<div class="login-box-msg">
 		<span><img style="width:25%" src="{$zBasePath}assets/images/logo_tresor.png"></span>
 	</div>
-    <form action="{$zBasePath}" method="post">
+    <form action="{$zBasePath}Login" method="post">
       
 	  <div class="form-group has-feedback">
-        <input type="text" autocomplete="off" name="username" id="username" class="form-control" placeholder="Pseudo">
+        <input type="text" autocomplete="off" name="USERID" id="USERID" class="form-control" placeholder="Identifiant">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe">
+        <input type="password" name="PASSWORD" id="PASSWORD" class="form-control" placeholder="Mot de passe">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">

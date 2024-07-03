@@ -18,7 +18,7 @@ class Usager extends MY_Controller
 		parent:: __construct();
 		$this->load->model('Usager_model', 'usager');
 
-		if(empty($this->session->userdata['id'])){ redirect('Login');}
+		if(empty($this->session->userdata['USERID'])){ redirect('Login');}
 
 	}
 	

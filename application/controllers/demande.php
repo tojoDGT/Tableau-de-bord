@@ -18,7 +18,7 @@ class Demande extends MY_Controller
 		parent:: __construct();
 		$this->load->model('Demande_model', 'demande');
 
-		if(empty($this->session->userdata['id'])){ redirect('Login');}
+		if(empty($this->session->userdata['USERID'])){ redirect('Login');}
 
 	}
 	 
