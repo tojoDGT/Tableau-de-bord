@@ -161,6 +161,12 @@ hr {
 .dt-right {
 	text-align:right;
 }
+
+.badge {
+    padding: .50em .9em;
+	font-size: 80%;
+    font-weight: 900;
+}
 .dt-width {
 	width:150px;
 }
