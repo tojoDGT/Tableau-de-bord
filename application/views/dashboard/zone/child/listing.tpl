@@ -9,6 +9,9 @@
 			{assign var="zAfficheSplit" value="-"|explode:$oColonne}
 			<th>{$zAfficheSplit[0]}</th>
 			{/foreach}
+			{if $iTypeAfficheSearch==2}
+			<th class="dt-center">STATUT</th>
+			{/if}
 			<!--<th>Réf</th>
 			<th class="dt-center">Libellé</th>
 			<th class="dt-center">Date</th>
@@ -96,9 +99,10 @@ $(document).ready(function() {
 		"ajax":{
 			url : zBasePath + "demande/getAjax", 
 			data: function ( d ) {
-				d.ECRI_EXERCICE  = $('#ECRI_EXERCICE').val();
-				d.MIN_ABREV		 = $('#MIN_ABREV').val();
-				d.TYPE_MAND		 = $('#TYPE_MAND').val();
+				d.ECRI_EXERCICE			= $('#ECRI_EXERCICE').val();
+				d.MIN_ABREV				= $('#MIN_ABREV').val();
+				d.TYPE_MAND				= $('#TYPE_MAND').val();
+				d.iTypeAfficheSearch	= {/literal}{$iTypeAfficheSearch}{literal};
 				d.data			 = $("#sendSearch").serializeArray();
 			},
 			type: "post", 

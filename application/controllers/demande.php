@@ -71,6 +71,8 @@ class Demande extends MY_Controller
 
 		$oRequest = $_REQUEST;
 
+		$iTypeAfficheSearch	= $this->postGetValue ("iTypeAfficheSearch", 1);
+
 		//print_r($oRequest);
 		//die();
 
@@ -94,8 +96,17 @@ class Demande extends MY_Controller
 				$oColonne = explode(".", $oColonne);
 				$oDataTemp[] = $oGetListe[$oColonne[1]];
 			}
-			
-			$oDataTemp[] = $zAction;
+
+			// cas REGULARISATION
+			if($iTypeAfficheSearch==2){
+				$zClass="badge-secondary";
+
+				if($oGetListe["STATUT"]=='VISE'){
+					$zClass="badge-success";
+				}
+				
+				$oDataTemp[] = '<span class="badge '.$zClass.'">'.$oGetListe["STATUT"].'</span>';
+			}
 			
 			
 			$oDataAssign[] = $oDataTemp;

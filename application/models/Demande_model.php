@@ -108,9 +108,33 @@ class Demande_model extends CI_Model {
 					WHEN m.MAND_MODE_PAIE = 'BC' THEN 'Bon de Caisse'
 					WHEN m.MAND_MODE_PAIE = 'OP' THEN 'Ordre de paiement'
 					END MAND_MODE_PAIE,
+					CASE
+					   WHEN NVL (t.ecri_valid, 0) = 1 AND BT_REF IS NULL
+					   THEN
+						   'EN INSTANCE DE TRANSFERT'
+					   WHEN NVL (t.ecri_valid, 0) = 1 AND BT_REF IS NOT NULL
+					   THEN
+						   LIB_STATUS
+					   WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
+							AND NVL (m.mand_rejet, 0) = 0
+					   THEN
+						   'VISE'
+					   WHEN     m.MAND_COMPTE_CREDIT IS NULL
+							AND NVL (m.mand_rejet, 0) = 1
+					   THEN
+						   'REJETE (Motif:' || M.rejet_note || ')'
+					   WHEN M.MAND_DATE_TRAIT IS NULL
+					   THEN
+						   'RECUPERE AU NIVEAU GUICHET UNIQUE'
+					   WHEN NVL (m.mand_date_recup,
+								 TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
+							TO_DATE ('01/01/2019', 'DD/MM/RRRR')
+					   THEN
+						   'DOSSIER NON PARVENU AU TRESOR'
+				    END                STATUT,
 					CONCAT (TO_CHAR(MAND_MONTANT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS MAND_MONTANT1
 
-		from T_ECRITURE t,T_MANDAT m, T_TITRE tt WHERE t.ECRI_NUM = m.ECRI_NUM AND tt.MAND_NUM_INFO = m.MAND_NUM_INFO(+) AND tt.ID_MAND = m.ID_MAND " ;
+		from T_ECRITURE t,T_MANDAT m,T_TRANSFERT  TR, T_TITRE tt WHERE t.ECRI_NUM = m.ECRI_NUM AND tt.MAND_NUM_INFO = m.MAND_NUM_INFO(+) AND tt.ID_MAND = m.ID_MAND AND m.MAND_NUM_INFO = TR.DET_BT_MANDAT(+)" ;
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$zSql.=" AND t.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
