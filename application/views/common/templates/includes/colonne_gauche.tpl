@@ -68,7 +68,7 @@
    </li>  
    <li class="nav-item">
 		<a href="{$zBasePath}/Login/logout" class="nav-link">
-		  <i class="nav-icon fas fa-copy"></i>
+		  <i class="nav-icon fas fa-sign-out-alt"></i>
 		  <p>Déconnexion</p>
 		</a>
    </li>
