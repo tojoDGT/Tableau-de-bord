@@ -77,7 +77,7 @@
 										{assign var=final value=$diff/86400}
 										
 										<span class="text">Délai :</span>
-										<small class="badge badge-info"><i class="far fa-clock"></i> {$final|round} jour{if $final|round>1}s{/if}</small>
+										<small class="badge badge-info"><i class="far fa-clock"></i> {if $final|round ==0}le même jour{else}{$final|round} jour{if $final|round>1}s{/if}{/if}</small>
 									  </li>
 									</ul>
 								</div>

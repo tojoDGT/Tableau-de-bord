@@ -146,7 +146,7 @@ class Dashboard_model extends CI_Model {
 		return $toRow;
 	}
 
-	public function getNombreMontantParMoisEcriture($_iAnneeExercice='2023',$_iMode){
+	public function getNombreMontantParMois($_iAnneeExercice='2023',$_iMode,$_zParamAffich="PROP_CODE"){
 		
 		global $db;
 
@@ -156,12 +156,44 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "select PROP_CODE,SUM(MAND_MONTANT) as montant,COUNT(t.ECRI_NUM) as nombre,ECRI_EXERCICE 
+		$zSql = "select ".$_zParamAffich.",SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as Mois,ECRI_EXERCICE 
 				 from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
 				 AND t.PROP_CODE <> 'ERR' 
 				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
-				 GROUP BY PROP_CODE,ECRI_EXERCICE
-				 ORDER BY PROP_CODE ASC" ;
+				 GROUP BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM'),ECRI_EXERCICE
+				 ORDER BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM') ASC" ;
+
+		//echo $zSql . "\n\n<br>";
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+		/*echo "<pre>";
+		print_r ($toRow);
+		echo "</pre>";*/
+
+		$zReturn = $this->DispatchDataForChartJs($_iMode,$toRow,$_zParamAffich);
+
+
+		return $zReturn;
+	}
+
+	public function getNombreMontantParMoisEcriture($_iAnneeExercice='2023',$_iMode,$_zParamAffich="PROP_CODE"){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('oracle',true);
+
+		$toRow = array();
+
+		$zSql = "select ".$_zParamAffich.",SUM(MAND_MONTANT) as montant,COUNT(t.ECRI_NUM) as nombre,ECRI_EXERCICE 
+				 from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
+				 AND t.PROP_CODE <> 'ERR' 
+				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
+				 GROUP BY ".$_zParamAffich.",ECRI_EXERCICE
+				 ORDER BY ".$_zParamAffich." ASC" ;
 	
 		
 		$zQuery = $toDB->query($zSql);
@@ -171,13 +203,13 @@ class Dashboard_model extends CI_Model {
 		print_r ($toRow);
 		echo "</pre>";*/
 
-		$zReturn = $this->DispatchDataForChartJsDonut($_iMode,$toRow);
+		$zReturn = $this->DispatchDataForChartJsDonut($_iMode,$toRow,$_zParamAffich);
 
 
 		return $zReturn;
 	}
 
-	private function DispatchDataForChartJsDonut($_iMode=2,$_toRow){
+	private function DispatchDataForChartJsDonut($_iMode=2,$_toRow,$_zParamAffich){
 
 		$zAfficheSerieStat = "";
 		$toAffiche = array();
@@ -193,7 +225,7 @@ class Dashboard_model extends CI_Model {
 
 		$zTestPropCode = "-1";
 		foreach ($_toRow as $oRow){
-			array_push($toAfficheLibelle, "'".$oRow["PROP_CODE"]."'");
+			array_push($toAfficheLibelle, "'".$oRow[$_zParamAffich]."'");
 			array_push($toAfficheNombre, "'".$oRow["NOMBRE"]."'");
 			array_push($toAfficheMontant, "'".str_replace(",",".",$oRow['MONTANT'])."'");
 		}
@@ -226,52 +258,25 @@ class Dashboard_model extends CI_Model {
 		return $zAfficheSerieStat;
 	}
 
-
-	public function getNombreMontantParMois($_iAnneeExercice='2023',$_iMode){
-		
-		global $db;
-
-		$oRequest = $_REQUEST;
-
-		$toDB = $this->load->database('oracle',true);
-
-		$toRow = array();
-
-		$zSql = "select PROP_CODE,SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as Mois,ECRI_EXERCICE 
-				 from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
-				 AND t.PROP_CODE <> 'ERR' 
-				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
-				 GROUP BY PROP_CODE,to_char(ECRI_DT_VALID, 'MM'),ECRI_EXERCICE
-				 ORDER BY PROP_CODE,to_char(ECRI_DT_VALID, 'MM') ASC" ;
-		
-		$zQuery = $toDB->query($zSql);
-		$toRow = $zQuery->result_array();
-
-		$zReturn = $this->DispatchDataForChartJs($_iMode,$toRow);
-
-
-		return $zReturn;
-	}
-
-	private function DispatchDataForChartJs($_iMode=2,$_toRow){
+	private function DispatchDataForChartJs($_iMode=2,$_toRow,$_zParamAffich){
 
 		$zAfficheSerieStat = "";
 		$toAffiche = array();
 
-		$toColor = array('#7cb5ec','#434348','#90ed7d', '#f7a35c', '#8085e9', '#00c0ef', '#3c8dbc' );
+		$toColor = array('#00c0ef', '#3c8dbc','#434348','#7cb5ec','#90ed7d', '#f7a35c', '#8085e9', '#00c0ef', '#3c8dbc' );
 
 		$zTestPropCode = "-1";
 		foreach ($_toRow as $oRow){
 
-			if($oRow['PROP_CODE'] != $zTestPropCode){
-				$zTestPropCode = $oRow['PROP_CODE'];
+			if($oRow[$_zParamAffich] != $zTestPropCode){
+				$zTestPropCode = $oRow[$_zParamAffich];
 				$toAffiche[$zTestPropCode]['nombre'] = array();
 				$toAffiche[$zTestPropCode]['montant'] = array();
 				$iTest = 0;
 			} 
 
 			
-			if($zTestPropCode == $oRow['PROP_CODE']){
+			if($zTestPropCode == $oRow[$_zParamAffich]){
 
 				$iTest++;
 				if($iTest != (int)$oRow['MOIS']){

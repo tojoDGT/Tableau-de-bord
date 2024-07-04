@@ -23,10 +23,10 @@
 								</div>
 								<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-3">
+									<div class="col-sm-2">
 									  <!-- checkbox -->
 									  <div class="form-group">
-									  <label>Mode Affichage :</label>
+									  <label>Affichage :</label>
 										<div class="custom-control custom-radio">
 										  <input class="custom-control-input" type="radio" id="customRadio1" name="iModeAffichage" value="1" {if $iModeAffichage==1}checked="checked"{/if}>
 										  <label for="customRadio1" class="custom-control-label">Nombre</label>
@@ -64,7 +64,7 @@
             <!-- AREA CHART -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Graphique en ligne</h3>
+                <h3 class="card-title">Propriétaire code : Graphique en ligne</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -87,7 +87,7 @@
             <!-- DONUT CHART -->
             <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title">Diagramme à bandes</h3>
+                <h3 class="card-title">Type de mandat : diagramme à bandes</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -108,7 +108,7 @@
             <!-- PIE CHART -->
             <div class="card card-warning">
               <div class="card-header">
-                <h3 class="card-title">Diagramme circulaire</h3>
+                <h3 class="card-title">Mode de paiement : diagramme circulaire</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -132,7 +132,7 @@
             <!-- LINE CHART -->
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Graphique à barres empilées</h3>
+                <h3 class="card-title">Type de mandat : graphique à barres empilées</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -155,30 +155,7 @@
             <!-- BAR CHART -->
             <div class="card card-success">
               <div class="card-header">
-                <h3 class="card-title">Graphique Donut</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="chart">
-                  <canvas id="donutChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
-                </div>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
-            <!-- STACKED BAR CHART -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Diagramme de surface</h3>
+                <h3 class="card-title">Mode de paiement : Diagramme de surface</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -198,8 +175,59 @@
             </div>
             <!-- /.card -->
 
+            <!-- STACKED BAR CHART -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Propriétaire code : graphique Donut</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="donutChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+			
+
           </div>
           <!-- /.col (RIGHT) -->
+		  <!--
+		  <div class="col-md-12">
+
+					<div class="card card-primary">
+					  <div class="card-header">
+						<h3 class="card-title">Entité : graphique Donut</h3>
+
+						<div class="card-tools">
+						  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+							<i class="fas fa-minus"></i>
+						  </button>
+						  <button type="button" class="btn btn-tool" data-card-widget="remove">
+							<i class="fas fa-times"></i>
+						  </button>
+						</div>
+					  </div>
+					  <div class="card-body">
+						<div class="chart">
+						  <canvas id="EntiteChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+						</div>
+					  </div>
+					  
+				    </div>
+					
+			</div>
+			-->
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -261,9 +289,14 @@ h1, h2, h3, h4, h5, h6 {
       options: lineChartOptions
     })
 
+	var areaChartData1 = {
+		  labels  : ['Janv', 'Févr', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil','Août', 'Sept', 'Oct', 'Nov', 'Déc'],
+		  datasets: [{$zReturnModePaiement}]
+		}
+
 	var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
     var lineChartOptions = $.extend(true, {}, areaChartOptions)
-    var lineChartData = $.extend(true, {}, areaChartData)
+    var lineChartData = $.extend(true, {}, areaChartData1)
     lineChartData.datasets[0].fill = false;
     lineChartData.datasets[1].fill = false;
     lineChartOptions.datasetFill = false
@@ -277,10 +310,18 @@ h1, h2, h3, h4, h5, h6 {
 	 //-------------
     //- BAR CHART -
     //-------------
+
+
+	
+
+	var barChartData = {
+		  labels  : ['Janv', 'Févr', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil','Août', 'Sept', 'Oct', 'Nov', 'Déc'],
+		  datasets: [{$zReturnTypeMand}]
+		}
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = $.extend(true, {}, areaChartData)
-    var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
+    var barChartData = $.extend(true, {}, barChartData)
+    var temp0 = barChartData.datasets[0]
+    var temp1 = barChartData.datasets[1]
     barChartData.datasets[0] = temp1
     barChartData.datasets[1] = temp0
 
@@ -317,12 +358,16 @@ h1, h2, h3, h4, h5, h6 {
       options: donutOptions
     })
 
+	var pieData        = {
+		{$zReturnPie}
+    }
+
 	//-------------
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
     var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieData        = donutData;
+    var pieData        = pieData;
     var pieOptions     = {
       maintainAspectRatio : false,
       responsive : true,

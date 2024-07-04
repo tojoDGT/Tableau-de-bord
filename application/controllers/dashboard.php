@@ -82,15 +82,26 @@ class Dashboard extends MY_Controller
 				$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2023);
 				$iModeAffichage = $this->postGetValue ("iModeAffichage", 1);
 
-				$zReturn = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage);
-				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage);
+				$zReturn = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"PROP_CODE");
+				$zReturnTypeMand = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
+				$zReturnMinAbrev = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
+				$zReturnModePaiement = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
+				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"PROP_CODE");
+				$zReturnPie = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
+
+
+				//echo $zReturnMinAbrev;
 				
 				$iSousMenuActifId = 1;
 				$zLibelle1 = ""; 
 				$oSmarty->assign('iAnneeExercice', $iAnneeExercice);
 				$oSmarty->assign('iModeAffichage', $iModeAffichage);
 				$oSmarty->assign('zReturn', $zReturn);
+				$oSmarty->assign('zReturnTypeMand', $zReturnTypeMand);
+				$oSmarty->assign('zReturnMinAbrev', $zReturnMinAbrev);
+				$oSmarty->assign('zReturnModePaiement', $zReturnModePaiement);
 				$oSmarty->assign('zReturnDonut', $zReturnDonut);
+				$oSmarty->assign('zReturnPie', $zReturnPie);
 				$oSmarty->assign('toGetAllExercice',  $toGetAllExercice);
 				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/general.tpl";
 				break;
@@ -159,14 +170,9 @@ class Dashboard extends MY_Controller
 		$oData['zBasePath']			= base_url();
 		$oData['zLibelle']			= $zLibelle;
 		$oData['zLibelle1']			= $zLibelle1;
-	
 		
 		$oData['iMenuActifId']		= $iMenuActifId;
 		$oData['iSousMenuActifId']  = $iSousMenuActifId;
-
-		
-
-		
 
 		$oSmarty->assign('oSession',  $_SESSION);
 		$oSmarty->assign("zBasePath",base_url());
