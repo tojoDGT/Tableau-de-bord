@@ -175,5 +175,5 @@
 </aside>
 <script type="text/javascript" src="{$zBasePath}assets/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="{$zBasePath}assets/js/jquery-ui.js"></script>
- <link rel="stylesheet" type="text/css" href="{$zBasePath}assets/css/jquery-ui.css?dfdfd" >
+<link rel="stylesheet" type="text/css" href="{$zBasePath}assets/css/jquery-ui.css?dfdfd" >
 <script src="{$zBasePath}assets/js/transverse.js"></script>

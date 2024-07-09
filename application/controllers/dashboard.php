@@ -18,6 +18,7 @@ class Dashboard extends MY_Controller
 		parent:: __construct();
 		$this->load->model('Dashboard_model', 'dashboard');
 		$this->load->model('Demande_model', 'demande');
+		$this->load->model('Utilisateur_model', 'utilisateur');
 
 		if(empty($this->session->userdata['USERID'])){ redirect('Login');}
 
@@ -158,10 +159,14 @@ class Dashboard extends MY_Controller
 				break;
 
 
-			case 'performance-des-pc11':
+			case 'performance-des-pc':
 				$iMenuActifId = 2;
 				$iSousMenuActifId = 4;
-				$zLibelle1 = "Performance des postes comptables"; 
+
+				$zLibelle1 = "Les postes comptables"; 
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/listing.tpl" );
+
+				$oSmarty->assign('zListingTpl',  $zListingTpl);
 				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
 				break;
 		}
@@ -354,6 +359,53 @@ class Dashboard extends MY_Controller
 
 		echo $zHtmlGraph;
 			
+    } 
+
+
+	/** 
+	* function Ajax chargement de la liste à partir de la base
+	*
+	* @return Ajax
+	*/
+	public function getPostComptable(){
+		
+		$oUser = array();
+		$oCandidat = array();
+
+		$oSession = $_SESSION;
+
+		$oRequest = $_REQUEST;
+		$iNombreTotal = 0;
+		$toGetListe = $this->utilisateur->posteComptable($iNombreTotal,$this) ;
+		
+		/*echo "<pre>";
+		print_r ($toGetListe);
+		echo "</pre>";*/
+
+		$oDataAssign = array();
+		$iIncrement = 1;
+		foreach ($toGetListe as $oGetListe){
+			
+			$oDataTemp=array(); 
+			
+			$oDataTemp[] = $oGetListe['PSTP_CODE'];
+			$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
+
+			$zAction = '<a title="Consultation" alt="Consultation" id="'.$oGetListe['PSTP_CODE'].'" onClick="getTabPc();" title="Consultation" style="cursor:pointer;" class="action dialog-link"><i style="font-size:22px;color:#12105A" class="fa fa-search"></i></a>&nbsp;&nbsp;';
+
+			$oDataTemp[] = $zAction;
+			
+			$oDataAssign[] = $oDataTemp;
+			$iIncrement++;
+		}
+		$taJson = array(
+						"draw"            => intval( $oRequest['draw'] ),
+						"recordsTotal"    => intval( $iNombreTotal ),
+						"recordsFiltered" => intval( $iNombreTotal ),
+						"data"            => $oDataAssign
+					);
+		echo json_encode($taJson);
+			
     }
 
 
@@ -376,6 +428,31 @@ class Dashboard extends MY_Controller
 		$oSmarty->assign("zBasePath", base_url());
 		$oSmarty->assign("oResult", $oResult);
 		$zHtmlGraph = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/stat.tpl" );
+
+
+		echo $zHtmlGraph;
+			
+    }
+
+	/** 
+	* function get statitistique global
+	*
+	* @return Ajax
+	*/
+	public function getTabsPc(){
+
+		global $oSmarty ; 
+
+		$oRequest = $_REQUEST;
+
+		/*$zAfficheSerieStat = "";
+		$oResult = $this->dashboard->getStatGLobal();*/
+
+		/*print_r ($oResult);*/
+		
+		$oSmarty->assign("zBasePath", base_url());
+		/*$oSmarty->assign("oResult", $oResult);*/
+		$zHtmlGraph = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/parametre.tpl" );
 
 
 		echo $zHtmlGraph;

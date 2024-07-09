@@ -42,7 +42,7 @@
     <form action="{$zBasePath}Login" method="post">
       
 	  <div class="form-group has-feedback">
-        <input type="text" autocomplete="off" name="USERID" id="USERID" class="form-control" placeholder="Identifiant">
+        <input type="text"  name="USERID" id="USERID" class="form-control" placeholder="Identifiant">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

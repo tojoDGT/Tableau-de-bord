@@ -35,7 +35,7 @@ $(document).ready(function() {
 		$("html, body").animate({ scrollTop: 0 }, "slow");
     });
 
-	function format ( d ) {
+	function format ( d, ) {
 						
 		var zData = "";
 		var form = $("#sendSearch");
@@ -48,6 +48,10 @@ $(document).ready(function() {
 				iEcriNum: d[1],
 				iNumMandat: d[2],
 				iModePaiement: $("#sendSearch").find("input[name='MAND_MODE_PAIE[]']:checked").val()
+			},
+			beforeSend: function() {
+				
+				$(".shown").html('<div style=";text-align: center;vertical-align: middle;padding-top: 10px;"><img class="imageAloha" src="'+zBasePath+'assets/images/loading.gif" width="100">');
 			},
 			success: function(data, textStatus, jqXHR) {
 				zData = data;
@@ -103,7 +107,7 @@ $(document).ready(function() {
 				d.MIN_ABREV				= $('#MIN_ABREV').val();
 				d.TYPE_MAND				= $('#TYPE_MAND').val();
 				d.iTypeAfficheSearch	= {/literal}{$iTypeAfficheSearch}{literal};
-				d.data			 = $("#sendSearch").serializeArray();
+				d.data					= $("#sendSearch").serializeArray();
 			},
 			type: "post", 
 			error: function (request, error) {
@@ -143,7 +147,7 @@ $(document).ready(function() {
         }
         else {
             // Open this row
-            row.child( format(row.data()) ).show();
+            row.child( format(row.data())).show();
             tr.addClass('shown');
         }
     } );

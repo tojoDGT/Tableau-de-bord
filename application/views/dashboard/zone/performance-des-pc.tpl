@@ -1,12 +1,9 @@
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-6">
-           
-
-	  </div>
-	  <!-- /.col (RIGHT) -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				{$zListingTpl}
+			</div>
+		</div>
 	</div>
-	<!-- /.row -->
-  </div><!-- /.container-fluid -->
 </section>

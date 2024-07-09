@@ -29,7 +29,7 @@
 		</a>
 	  </li>
 	  <li class="nav-item">
-		<a href="{$zBasePath}dashboard/stat/performance-des-pc" class="nav-link {if $oData.iSousMenuActifId==44}active{/if}">
+		<a href="{$zBasePath}dashboard/stat/performance-des-pc" class="nav-link {if $oData.iSousMenuActifId==4}active{/if}">
 		  <i class="far fa-circle nav-icon text-yellow"></i>
 		  <p>Performance des PC</p>
 		</a>

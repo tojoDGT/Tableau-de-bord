@@ -192,7 +192,7 @@
 									<div class="timeline">
 										  <!-- timeline time label -->
 										  <div class="time-label">
-											<span class="bg-red">Parcours sur le dossier</span>
+											<span class="bg-red">Parcous sur le dossier</span>
 										  </div>
 										  <!-- /.timeline-label -->
 										  <!-- timeline item -->

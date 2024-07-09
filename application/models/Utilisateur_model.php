@@ -89,6 +89,61 @@ class Utilisateur_model extends CI_Model {
 
 	}
 
+
+	public function posteComptable(&$_iNbrTotal = 0,$_this=''){
+		global $db;
+
+
+		$toDB = $this->load->database('oracle',true);
+
+		$toColumns = array( 
+			0  => 'PSTP_CODE', 
+			1  => 'PSTP_LIBELLE'
+		);
+
+		$oRequest = $_REQUEST;
+
+		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,p.* FROM T_POSTE_COMPTABLE p WHERE p.PSTP_TYPE = 0 ";
+
+		if( !empty($oRequest['search']['value']) ) {   
+			$zSql.=" AND ( PSTP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  PSTP_LIBELLE LIKE '%".$oRequest['search']['value']."%' ) ";
+		}
+		
+		$zDebut = 0;
+		$zFin = 10;
+
+		if (sizeof($oRequest)>0){
+			
+			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
+				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+			} else {
+				$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
+			}
+
+			$zDebut = (int)$oRequest['start'] ;
+			$zFin =  (int)$oRequest['length'];
+		} else {
+			$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
+		}
+
+		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+
+		//echo $zSql;
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+		$zQuery->free_result();
+
+		
+        if(sizeof($toRow)>0){
+			$_iNbrTotal = $toRow[0]['FOUND_ROWS'] ;
+		}
+
+		return $toRow;
+
+	}
+
 	public function getDetailUtilisateur($_iUserId){
 		global $db;
 
