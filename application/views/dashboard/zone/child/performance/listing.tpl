@@ -34,6 +34,9 @@ function getTabPc(){
 						open: function(event, ui) {
 							$(event.target).parent().css('top', '40px');
 							$("#overlay").show();
+							 $("#div_list_pc_tab").dialog({
+								title: 'Performance de Poste comptable : ' 
+							 });
 						},
 						close: function(event, ui) {
 							$("#overlay").hide();
@@ -99,10 +102,6 @@ $(document).ready(function() {
 			}
 		}
 	}); 
-
-	$('#table_bd tbody').on('click', '.dialog-link11', function () {
-			
-    } );
 
 });
 		

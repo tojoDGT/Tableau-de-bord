@@ -439,19 +439,56 @@ class Dashboard extends MY_Controller
 	*
 	* @return Ajax
 	*/
-	public function getTabsPc(){
+	public function getTabsPcActive(){
 
 		global $oSmarty ; 
 
 		$oRequest = $_REQUEST;
 
-		/*$zAfficheSerieStat = "";
-		$oResult = $this->dashboard->getStatGLobal();*/
+		$zType = $this->postGetValue ("iType", 'statistique');
 
-		/*print_r ($oResult);*/
-		
+
 		$oSmarty->assign("zBasePath", base_url());
-		/*$oSmarty->assign("oResult", $oResult);*/
+		switch ($zType){
+
+			case 'statistique':
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
+				break;
+
+			case 'agents':
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agents.tpl" );
+				break;
+
+			case 'valider':
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/valider.tpl" );
+				break;
+
+			case 'refuser':
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/refuser.tpl" );
+				break;
+
+		}
+
+
+		echo $zTplAffiche;
+			
+    }
+
+
+	/** 
+	* function get statitistique global
+	*
+	* @return Ajax
+	*/
+	public function getTabsPc(){
+
+		global $oSmarty ; 
+
+		$oRequest = $_REQUEST;
+		
+		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
+		$oSmarty->assign("zBasePath", base_url());
+		$oSmarty->assign('zTplAffiche',  $zTplAffiche);
 		$zHtmlGraph = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/parametre.tpl" );
 
 
