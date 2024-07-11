@@ -89,6 +89,21 @@ class Utilisateur_model extends CI_Model {
 
 	}
 
+	public function getInfoPostComptable($_zPsCode = 0){
+		global $db;
+
+
+		$toDB = $this->load->database('oracle',true);
+
+		$zSql=" SELECT  * FROM T_POSTE_COMPTABLE p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "'";
+	
+		$zQuery = $toDB->query($zSql);
+		$oRow = $zQuery->row();
+
+		return $oRow;
+
+	}
+
 
 	public function posteComptable(&$_iNbrTotal = 0,$_this=''){
 		global $db;

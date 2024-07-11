@@ -361,7 +361,7 @@ h3 {
 {literal}
 <script type="text/javascript">
 
-	var scrollDiv = document.getElementById("detail-{/literal}{$iEcriNum}{literal}").offsetTop+600;
+	var scrollDiv = document.getElementById("detail-{/literal}{$iEcriNum}{literal}").offsetTop+{/literal}{$iOffset}{literal};
 	window.scrollTo({ top: scrollDiv, behavior: 'smooth'});
 </script>
 {/literal}

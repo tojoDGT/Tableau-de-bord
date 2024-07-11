@@ -391,7 +391,7 @@ class Dashboard extends MY_Controller
 			$oDataTemp[] = $oGetListe['PSTP_CODE'];
 			$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
 
-			$zAction = '<a title="Consultation" alt="Consultation" id="'.$oGetListe['PSTP_CODE'].'" onClick="getTabPc();" title="Consultation" style="cursor:pointer;" class="action dialog-link"><i style="font-size:22px;color:#12105A" class="fa fa-search"></i></a>&nbsp;&nbsp;';
+			$zAction = '<a title="Consultation" alt="Consultation" id="'.$oGetListe['PSTP_CODE'].'" onClick="getTabPc(\''.$oGetListe['PSTP_CODE'].'\');" title="Consultation" style="cursor:pointer;" class="action dialog-link"><i style="font-size:22px;color:#12105A" class="fa fa-search"></i></a>&nbsp;&nbsp;';
 
 			$oDataTemp[] = $zAction;
 			
@@ -446,7 +446,7 @@ class Dashboard extends MY_Controller
 		$oRequest = $_REQUEST;
 
 		$zType = $this->postGetValue ("iType", 'statistique');
-
+		$zPsCode = $this->postGetValue ("zPsCode", '');
 
 		$oSmarty->assign("zBasePath", base_url());
 		switch ($zType){
@@ -460,17 +460,80 @@ class Dashboard extends MY_Controller
 				break;
 
 			case 'valider':
-				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/valider.tpl" );
-				break;
-
 			case 'refuser':
-				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/refuser.tpl" );
+				$toColonne = $this->demande->getSessionColonne();
+				$oSmarty->assign("zBasePath", base_url());
+				$oSmarty->assign("zPsCode", $zPsCode);
+				$oSmarty->assign("toColonne", $toColonne);
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/".$zType.".tpl" );
 				break;
 
 		}
 
 
 		echo $zTplAffiche;
+			
+    }
+
+
+	/** 
+	* function Ajax chargement de la liste à partir de la base
+	*
+	* @return Ajax
+	*/
+	public function getDossierValideRefusAjax(){
+		
+		$oUser = array();
+		$oCandidat = array();
+
+		$oSession = $_SESSION;
+
+		$oRequest = $_REQUEST;
+
+		$iTypeAfficheSearch	= $this->postGetValue ("iTypeAfficheSearch", 1);
+		$iVisaValid	= $this->postGetValue ("MAND_VISA_VALIDE", 1);
+
+
+		$iNombreTotal = 0;
+
+		$toGetListe = $this->demande->getDossier($iNombreTotal,$this) ; 
+
+		/*print_r($toGetListe);
+		die();*/
+
+		$iIncrement = 1;
+		$oDataAssign = array();
+		
+		foreach ($toGetListe as $oGetListe){
+			
+			$oDataTemp=array(); 
+
+			$oDataTemp[] = '';
+			$oDataTemp[] = $oGetListe['ECRI_NUM'];
+			$oDataTemp[] = $oGetListe['MAND_NUM_INFO'];
+			$oDataTemp[] = ($iVisaValid==1)?$oGetListe['ECRI_LIB']:$oGetListe['REJET_NOTE'];
+			$oDataTemp[] = $oGetListe['MAND_OBJET'];
+			$oDataTemp[] = $oGetListe['MAND_DATE_RECUP'];
+			$oDataTemp[] = $oGetListe['MAND_MONTANT1'];
+			
+			
+			$oDataAssign[] = $oDataTemp;
+			$iIncrement++;
+		}
+
+		//print_r ($oDataTemp);
+		$taJson = array(
+						"draw"            => intval( $oRequest['draw'] ),
+						"recordsTotal"    => intval( $iNombreTotal ),
+						"recordsFiltered" => intval( $iNombreTotal ),
+						"data"            => $oDataAssign
+					);
+
+		/*echo "<pre>";
+		print_r ($taJson);
+		echo "</pre>";*/
+
+		echo json_encode($taJson);
 			
     }
 
@@ -485,9 +548,16 @@ class Dashboard extends MY_Controller
 		global $oSmarty ; 
 
 		$oRequest = $_REQUEST;
+
+		$zType = $this->postGetValue ("iType", 'statistique');
+		$zPsCode = $this->postGetValue ("zPsCode", '');
+
+		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
 		
 		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
+
 		$oSmarty->assign("zBasePath", base_url());
+		$oSmarty->assign("oGetInfo", $oGetInfo);
 		$oSmarty->assign('zTplAffiche',  $zTplAffiche);
 		$zHtmlGraph = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/parametre.tpl" );
 

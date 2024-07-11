@@ -27,26 +27,31 @@
 </div>
 
 <script type="text/javascript">
-	
-	$(".radioTabs").off("click").on("click", function(){
 
-		iType = $(this).attr("data-info"); 
+		$("#ui-id-1").html("Performance de Poste comptable : {$oGetInfo->PSTP_LIBELLE}");
 		
-		$.ajax({
-			url: zBasePath + "dashboard/getTabsPcActive",
-			method: "POST",
-			data: {
-				iType : iType,
-				ajax : 1
-			},
-			success: function(data, textStatus, jqXHR) {
-					$("#contentPaneTabs").html(data);
-			},
-			async: false
+		$(".radioTabs").off("click").on("click", function(){
 
+			var iType = $(this).attr("data-info"); 
+			var zPsCode = '{$oGetInfo->PSTP_CODE}';
+			
+			$.ajax({
+				url: zBasePath + "dashboard/getTabsPcActive",
+				method: "POST",
+				data: {
+					iType : iType,
+					zPsCode : zPsCode,
+					ajax : 1
+				},
+				success: function(data, textStatus, jqXHR) {
+						$("#contentPaneTabs").html(data);
+				},
+				async: false
+
+			});
+			
 		});
-		
-	});
+
 </script>
 <style>
 

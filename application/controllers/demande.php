@@ -139,8 +139,9 @@ class Demande extends MY_Controller
 		global $oSmarty ; 
 
 		$iEcriNum	= $this->postGetValue ("iEcriNum", 0);
-		$iNumMandat	= $this->postGetValue ("iNumMandat", 0);
+		$iNumMandat	= $this->postGetValue ("iNumMandat", 0); 
 		$iMode		= $this->postGetValue ("iModePaiement", 0);
+		$iOffset	= $this->postGetValue ("iOffset", 600);
 
 		$oGetDetail = $this->demande->GetDetail($iEcriNum, $iNumMandat, $iMode) ; 
 		
@@ -172,6 +173,7 @@ class Demande extends MY_Controller
 		$oSmarty->assign("oTransfert",$oTransfert);
 		$oSmarty->assign("iModePaiement",$iMode);
 		$oSmarty->assign("oGetDetail",$oGetDetail);
+		$oSmarty->assign("iOffset",$iOffset);
 		$oSmarty->assign("oGetLECecriture",$oGetLECecriture);
 
 		$zDetailEcriture = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/getDetail.tpl" );

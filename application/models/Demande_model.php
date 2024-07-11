@@ -147,6 +147,14 @@ class Demande_model extends CI_Model {
 
 		if( !empty($oRequest['TYPE_MAND']) &&  $oRequest['TYPE_MAND']!="") {   
 			$zSql.=" AND m.TYPE_MAND = '".$oRequest['TYPE_MAND']."'  ";
+		} 
+
+		if( !empty($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
+			$zSql.=" AND m.ENTITE = '".$oRequest['zPsCode']."'  ";
+		}
+
+		if( !empty($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']!="") {   
+			$zSql.=" AND m.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
 		}
 
 		if( !empty($oRequest['data']) &&  sizeof($oRequest['data'])>0) {   
@@ -237,6 +245,121 @@ class Demande_model extends CI_Model {
 		return $toRow;
 
 	}
+
+
+	public function getDossier(&$_iNbrTotal = 0,$_this=''){
+		
+		global $db;
+
+		//error_reporting(E_ALL);
+
+		$toRow = array();
+
+		$toDB = $this->load->database('oracle',true);
+		
+		$toColumns = array( 
+			0  => 'ECRI_NUM', 
+			1  => 'MAND_NUM_INFO',
+			2  => 'ECRI_LIB', 
+			3  => 'MAND_OBJET',
+			0  => 'MAND_DATE_RECUP', 
+			1  => 'MAND_MONTANT1'
+		);
+
+		$oRequest = $_REQUEST;
+
+		/*
+		echo "<pre>";
+		print_r ($oRequest);
+		echo "</pre>";*/
+
+		//$zSql = "select * from (";
+
+		$zSql = "	select COUNT(*) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,REJET_NOTE,
+					(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE,
+				    (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE,
+					m.MAND_VISA_TEF,
+					m.MAND_NUM_INFO,  
+					m.MAND_OBJET,
+					m.MAND_DATE_RECUP,
+					m.MAND_DATE_REEL_VISA,
+					CASE
+					WHEN m.MAND_MODE_PAIE = 'VB' THEN 'Virement bancaire'
+					WHEN m.MAND_MODE_PAIE = 'OO' THEN 'Opération d`ordre'
+					WHEN m.MAND_MODE_PAIE = 'BC' THEN 'Bon de Caisse'
+					WHEN m.MAND_MODE_PAIE = 'OP' THEN 'Ordre de paiement'
+					END MAND_MODE_PAIE,
+					CONCAT (TO_CHAR(MAND_MONTANT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS MAND_MONTANT1
+
+		from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM " ;
+
+		
+
+		if( isset($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
+			$zSql.=" AND m.ENTITE = '".$oRequest['zPsCode']."'  ";
+		}
+
+		if( isset($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']!="") {   
+			$zSql.=" AND m.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
+		}
+
+		
+		
+		if( !empty($oRequest['search']['value']) ) {   
+			$zSql.=" AND ( t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  t.ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  m.MAND_OBJET LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  t.PROP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  m.MAND_MODE_PAIE LIKE '%".$oRequest['search']['value']."%' ) ";
+		}
+		
+		$zDebut = 0;
+		$zFin = 10;
+		if (sizeof($oRequest)>0){
+			
+			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
+				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+			} else {
+				$zSql.=" ORDER BY t.ECRI_NUM ASC ";
+			}
+
+			$zDebut = (int)$oRequest['start'] ;
+			$zFin =  (int)$oRequest['length'];
+		} else {
+			$zSql.=" ORDER BY t.ECRI_NUM ASC ";
+		}
+
+		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+
+
+		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
+		/*echo $zSql;
+		die();*/
+
+		//set_time_limit(200000000000);
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+		$toError = $this->db->error();
+
+		/*
+		echo "<pre>";
+		print_r ($toRow);
+		echo "</pre>";*/
+
+		//$_iNbrTotal = 0;
+
+		if(sizeof($toRow)>0){
+			$_iNbrTotal = $toRow[0]['FOUND_ROWS'] ;
+		}
+
+		return $toRow;
+
+	}
+
 
 	public function GetDetail($_iEcriNum, $_iNumMandat, $_iMode){
 
