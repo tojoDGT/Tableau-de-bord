@@ -27,8 +27,6 @@
 </div>
 
 <script type="text/javascript">
-
-		$("#ui-id-1").html("Performance de Poste comptable : {$oGetInfo->PSTP_LIBELLE}");
 		
 		$(".radioTabs").off("click").on("click", function(){
 

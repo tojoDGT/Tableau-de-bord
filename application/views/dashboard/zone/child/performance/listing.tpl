@@ -15,8 +15,10 @@
 {literal}
 <script>
 
-function getTabPc(zPsCode){
+function getTabPc(_this){
 
+	var zPsCode = $(_this).attr("id");
+	var zLibelle = $(_this).attr("libelle");
 	$.ajax({
 			url: zBasePath + "dashboard/getTabsPc",
 			method: "POST",
@@ -31,6 +33,7 @@ function getTabPc(zPsCode){
 						autoOpen: true,
 						width: '80%',
 						modal: true, 
+						title: "Performance de Poste comptable : " + zLibelle,
 						open: function(event, ui) {
 							$(event.target).parent().css('top', '40px');
 							$("#overlay").show();

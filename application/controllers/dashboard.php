@@ -391,7 +391,7 @@ class Dashboard extends MY_Controller
 			$oDataTemp[] = $oGetListe['PSTP_CODE'];
 			$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
 
-			$zAction = '<a title="Consultation" alt="Consultation" id="'.$oGetListe['PSTP_CODE'].'" onClick="getTabPc(\''.$oGetListe['PSTP_CODE'].'\');" title="Consultation" style="cursor:pointer;" class="action dialog-link"><i style="font-size:22px;color:#12105A" class="fa fa-search"></i></a>&nbsp;&nbsp;';
+			$zAction = '<a title="Consultation" alt="Consultation" libelle="'.$oGetListe['PSTP_LIBELLE'].'" id="'.$oGetListe['PSTP_CODE'].'" onClick="getTabPc(this);" title="Consultation" style="cursor:pointer;" class="action dialog-link"><i style="font-size:22px;color:#12105A" class="fa fa-search"></i></a>&nbsp;&nbsp;';
 
 			$oDataTemp[] = $zAction;
 			
