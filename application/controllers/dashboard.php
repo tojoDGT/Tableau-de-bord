@@ -454,7 +454,12 @@ class Dashboard extends MY_Controller
 			case 'statistique':
 
 				$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
+				$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2023') ;
+				$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023') ;
+
 				$oSmarty->assign("oGetInfo", $oGetInfo);
+				$oSmarty->assign("zAfficheValide", $zAfficheValide);
+				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
 				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
 				break;
 
@@ -560,10 +565,14 @@ class Dashboard extends MY_Controller
 		$zPsCode = $this->postGetValue ("zPsCode", '');
 
 		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
+		$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2023') ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023') ;
 
 		//print_r ($oGetInfo);
 		
 		$oSmarty->assign("oGetInfo", $oGetInfo);
+		$oSmarty->assign("zAfficheValide", $zAfficheValide);
+				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
 		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
 
 		$oSmarty->assign("zBasePath", base_url());

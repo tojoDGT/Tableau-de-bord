@@ -33,7 +33,7 @@
                                                 validés par rapport au autre poste comptable
                                             </p>
                                             <div class="progress progress-xs mb-0">
-                                                <div class="progress-bar bg-success" role="progressbar" data-bs-toggle="tooltip" title="0.74955908289242%" style="width: 0.74955908289242%"></div>
+                                                <div class="progress-bar bg-success" role="progressbar" data-bs-toggle="tooltip" title='{$num1}%' style='width: {$num1}%'></div>
                                             </div>
 											
                                             <p>
@@ -42,7 +42,7 @@
                                                 rejetés par rapport au autre poste comptable
                                             </p>
                                             <div class="progress progress-xs mb-0">
-                                                <div class="progress-bar bg-danger" role="progressbar" data-bs-toggle="tooltip" title="0.14069353637342%" style="width: 0.14069353637342%"></div>
+                                                <div class="progress-bar bg-danger" role="progressbar" data-bs-toggle="tooltip" title='{$num2}%' style='width: {$num2}%'></div>
                                             </div>
 											
 											<!--
@@ -93,139 +93,16 @@
    <script type="text/javascript">
         const ctx = document.getElementById("structurePyramidChart").getContext('2d');
         const ctxMef = document.getElementById("mefPyramidChart").getContext('2d');
-        const data = [{
-            "33": {
-                "compte": "1",
-                "age": "33",
-                "sexe": "0"
-            },
-            "35": {
-                "compte": "2",
-                "age": "35",
-                "sexe": "0"
-            },
-            "36": {
-                "compte": "1",
-                "age": "36",
-                "sexe": "0"
-            },
-            "39": {
-                "compte": 0,
-                "age": "39",
-                "sexe": 0
-            },
-            "41": {
-                "compte": "2",
-                "age": "41",
-                "sexe": "0"
-            },
-            "42": {
-                "compte": 0,
-                "age": "42",
-                "sexe": 0
-            },
-            "46": {
-                "compte": 0,
-                "age": "46",
-                "sexe": 0
-            },
-            "47": {
-                "compte": "1",
-                "age": "47",
-                "sexe": "0"
-            },
-            "48": {
-                "compte": "1",
-                "age": "48",
-                "sexe": "0"
-            },
-            "49": {
-                "compte": 0,
-                "age": "49",
-                "sexe": 0
-            },
-            "50": {
-                "compte": 0,
-                "age": "50",
-                "sexe": 0
-            },
-            "52": {
-                "compte": "1",
-                "age": "52",
-                "sexe": "0"
-            },
-            "53": {
-                "compte": 0,
-                "age": "53",
-                "sexe": 0
-            }
+       
+
+		const data = [{
+            {$zAfficheValide}
+           
         }, {
-            "33": {
-                "compte": 0,
-                "age": "33",
-                "sexe": 1
-            },
-            "35": {
-                "compte": 0,
-                "age": "35",
-                "sexe": 1
-            },
-            "36": {
-                "compte": 0,
-                "age": "36",
-                "sexe": 1
-            },
-            "39": {
-                "compte": "1",
-                "age": "39",
-                "sexe": "1"
-            },
-            "41": {
-                "compte": 0,
-                "age": "41",
-                "sexe": 1
-            },
-            "42": {
-                "compte": "1",
-                "age": "42",
-                "sexe": "1"
-            },
-            "46": {
-                "compte": "1",
-                "age": "46",
-                "sexe": "1"
-            },
-            "47": {
-                "compte": 0,
-                "age": "47",
-                "sexe": 1
-            },
-            "48": {
-                "compte": 0,
-                "age": "48",
-                "sexe": 1
-            },
-            "49": {
-                "compte": "3",
-                "age": "49",
-                "sexe": "1"
-            },
-            "50": {
-                "compte": "1",
-                "age": "50",
-                "sexe": "1"
-            },
-            "52": {
-                "compte": 0,
-                "age": "52",
-                "sexe": 1
-            },
-            "53": {
-                "compte": "1",
-                "age": "53",
-                "sexe": "1"
-            }
+            {$zAfficheRefus}
         }];
+
+		
         const dataMef = [{
             "19": {
                 "compte": "3",
@@ -721,34 +598,34 @@
         }];
         const structure_title = 'ACCTDP';
 
-        const Refusés = Object.values(data[0]);
-        const Validés = Object.values(data[1]);
-        const RefusésMef = Object.values(dataMef[0]);
-        const ValidésMef = Object.values(dataMef[1]);
+        const Refuses = Object.values(data[1]);
+        const Valides = Object.values(data[0]);
+        const RefusesMef = Object.values(dataMef[0]);
+        const ValidesMef = Object.values(dataMef[1]);  
 
         const barChartData = {
-            labels: Refusés.map(val=>val.age).reverse(),
+            labels: Refuses.map(val=>val.Mois).reverse(),
             datasets: [{
                 label: "Validé",
-                backgroundColor: "#d41111",
-                data: Validés.map(val=>-Number(val.compte)).reverse(),
+                backgroundColor: "#3765b0",
+                data: Valides.map(val=>-Number(val.Nombre)).reverse(),
             }, {
                 label: "Refusé",
-                backgroundColor: "#3765b0",
-                data: Refusés.map(val=>Number(val.compte)).reverse(),
+                backgroundColor: "#d41111",
+                data: Refuses.map(val=>Number(val.Nombre)).reverse(),
             }],
         };
 
         const barChartDataMef = {
-            labels: RefusésMef.map(val=>val.age).reverse(),
+            labels: RefusesMef.map(val=>val.age).reverse(),
             datasets: [{
                 label: "Validé",
                 backgroundColor: "#d41111",
-                data: ValidésMef.map(val=>-Number(val.compte)).reverse(),
+                data: ValidesMef.map(val=>-Number(val.compte)).reverse(),
             }, {
                 label: "Refusé",
                 backgroundColor: "#3765b0",
-                data: RefusésMef.map(val=>Number(val.compte)).reverse(),
+                data: RefusesMef.map(val=>Number(val.compte)).reverse(),
             }],
         };
 

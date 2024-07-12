@@ -178,6 +178,106 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
+	public function getValidePcParMois($_zPsCode,$_iAnneeExercice='2023'){
+		
+		global $db;
+
+		$toDB = $this->load->database('oracle',true);
+
+		$toRow = array();
+
+		$zSql = "SELECT  COUNT(m.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as MOIS
+				from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				AND m.ENTITE = '".$_zPsCode."' AND MAND_VISA_VALIDE = 1 
+				GROUP BY to_char(ECRI_DT_VALID, 'MM')
+				ORDER BY to_char(ECRI_DT_VALID, 'MM') ASC" ;
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+
+		$zReturn = $this->DispatchDataForChartJsPyramid($toRow,1);
+
+
+		return $zReturn;
+	}
+
+	public function getRefusePcParMois($_zPsCode,$_iAnneeExercice='2023'){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('oracle',true);
+
+		$toRow = array();
+
+		$zSql = " SELECT  COUNT(m.MAND_DT_RJT) as NOMBRE,to_char(MAND_DT_RJT, 'MM') as MOIS
+				  from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				  AND m.ENTITE = '".$_zPsCode."' AND MAND_VISA_VALIDE = 0 
+				  GROUP BY to_char(MAND_DT_RJT, 'MM')
+				  ORDER BY to_char(MAND_DT_RJT, 'MM') ASC" ;
+
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+
+		$zReturn = $this->DispatchDataForChartJsPyramid($toRow,0);
+
+
+		return $zReturn;
+	}
+
+	private function DispatchDataForChartJsPyramid($_toRow,$_iValid){
+
+		$zAfficheSerieStat = "";
+		$toAffiche = array();
+
+
+		$iTest = 1;
+		foreach ($_toRow as $oRow){
+			
+			if($iTest != (int)$oRow['MOIS']){
+				$oAffiche = array();
+				$oAffiche["NOMBRE"] = 0;
+				$oAffiche["MOIS"]	= $iTest;
+				array_push ($toAffiche,$oAffiche);
+				$iTest++;
+			} 
+
+			$oAffiche = array();
+			$oAffiche["NOMBRE"] = $oRow['NOMBRE'];
+			$oAffiche["MOIS"]	= $oRow['MOIS'];
+			array_push ($toAffiche,$oAffiche);
+			
+			$iTest++;
+		}
+
+		$toMois = array("Nan", "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
+
+		
+
+		$iColor = 0;
+		foreach ($toAffiche  as $oRow){
+
+			$toData = array();
+		
+			$zAfficheSerieStat .= '"' . (int)$oRow["MOIS"] . '":{';
+			$zAfficheSerieStat .= '"Nombre":"'.(int)$oRow["NOMBRE"].'",';
+			$zAfficheSerieStat .= '"Mois":"'.$toMois[(int)$oRow["MOIS"]].'",';
+			$zAfficheSerieStat .= '"Valid":"'.$_iValid.'"';
+			$zAfficheSerieStat .= '},';
+
+		}
+
+
+		//echo $zAfficheSerieStat;
+
+		return $zAfficheSerieStat;
+	}
+
+
 	public function getNombreMontantParMoisEcriture($_iAnneeExercice='2023',$_iMode,$_zParamAffich="PROP_CODE"){
 		
 		global $db;
