@@ -8,6 +8,7 @@
 							<th>Ecrinum</th>
 							<th>NmMandat</th>
 							<th>Note rejet</th>
+							<th>Date rejet</th>
 							<th>Objet du mandat</th>
 							<th>Date récupération</th>
 							<th>Montant</th>

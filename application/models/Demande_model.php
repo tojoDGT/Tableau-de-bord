@@ -256,17 +256,30 @@ class Demande_model extends CI_Model {
 		$toRow = array();
 
 		$toDB = $this->load->database('oracle',true);
-		
-		$toColumns = array( 
-			0  => 'ECRI_NUM', 
-			1  => 'MAND_NUM_INFO',
-			2  => 'ECRI_LIB', 
-			3  => 'MAND_OBJET',
-			0  => 'MAND_DATE_RECUP', 
-			1  => 'MAND_MONTANT1'
-		);
 
 		$oRequest = $_REQUEST;
+
+		
+		if( isset($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']==1){   
+			$toColumns = array( 
+				0  => 'm.ECRI_NUM', 
+				1  => 'm.MAND_NUM_INFO',
+				2  => 't.ECRI_LIB', 
+				3  => 'm.MAND_OBJET',
+				4  => 'm.MAND_DATE_RECUP', 
+				5  => 'm.MAND_MONTANT1'
+			);
+		} else {
+			$toColumns = array( 
+				0  => 'm.ECRI_NUM', 
+				1  => 'm.MAND_NUM_INFO',
+				2  => 'm.REJET_NOTE', 
+				3  => 'm.MAND_DT_RJT',
+				4  => 'm.MAND_OBJET',
+				5  => 'm.MAND_DATE_RECUP', 
+				6  => 'm.MAND_MONTANT1'
+			);
+		}
 
 		/*
 		echo "<pre>";
@@ -275,7 +288,7 @@ class Demande_model extends CI_Model {
 
 		//$zSql = "select * from (";
 
-		$zSql = "	select COUNT(*) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,REJET_NOTE,
+		$zSql = "	select COUNT(*) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,REJET_NOTE,MAND_DT_RJT,
 					(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE,
 				    (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE,
 					m.MAND_VISA_TEF,
@@ -331,8 +344,8 @@ class Demande_model extends CI_Model {
 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
-		/*echo $zSql;
-		die();*/
+		//echo $zSql;
+		//die();
 
 		//set_time_limit(200000000000);
 

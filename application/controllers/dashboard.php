@@ -452,6 +452,9 @@ class Dashboard extends MY_Controller
 		switch ($zType){
 
 			case 'statistique':
+
+				$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
+				$oSmarty->assign("oGetInfo", $oGetInfo);
 				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
 				break;
 
@@ -511,7 +514,11 @@ class Dashboard extends MY_Controller
 			$oDataTemp[] = '';
 			$oDataTemp[] = $oGetListe['ECRI_NUM'];
 			$oDataTemp[] = $oGetListe['MAND_NUM_INFO'];
-			$oDataTemp[] = ($iVisaValid==1)?$oGetListe['ECRI_LIB']:$oGetListe['REJET_NOTE'];
+			$oDataTemp[] = ($iVisaValid==1)?$oGetListe['ECRI_LIB']:'<span class="text-danger float-end">'.$oGetListe['REJET_NOTE']."</span>";
+
+			if ($iVisaValid==0){
+				$oDataTemp[] = $oGetListe['MAND_DT_RJT'];
+			}
 			$oDataTemp[] = $oGetListe['MAND_OBJET'];
 			$oDataTemp[] = $oGetListe['MAND_DATE_RECUP'];
 			$oDataTemp[] = $oGetListe['MAND_MONTANT1'];
@@ -553,6 +560,8 @@ class Dashboard extends MY_Controller
 		$zPsCode = $this->postGetValue ("zPsCode", '');
 
 		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
+
+		//print_r ($oGetInfo);
 		
 		$oSmarty->assign("oGetInfo", $oGetInfo);
 		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );

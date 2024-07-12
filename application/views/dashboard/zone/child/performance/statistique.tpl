@@ -2,7 +2,7 @@
     <div class="tab-content tab-content-info typography">
         <h5>Information</h5>
         <link href="http://rohi.mef.gov.mg:8088/ROHI/assets/light/assets/css/charts.min.css" rel="stylesheet">
-        <div class="mb-0 detailTj">
+        <div class="mb-0 detailTj" style="font-size:14px;">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -22,15 +22,15 @@
                                         <div class="card-body" style="align-center;">
                                             <div class="pro-deadline m-b-15">
                                                 <div class="sub-title">
-                                                    <br>Nombre de dossier validé : {$oGetInfo->VALIDE}
+                                                    <br>Nombre de dossier validé : <strong>{$oGetInfo->VALIDE}</strong>
                                                 </div>
-                                                <div class="sub-title">Nombre de dossier rejeté : {$oGetInfo->REJET}</div>
+                                                <div class="sub-title">Nombre de dossier rejeté : <strong>{$oGetInfo->REJET}</strong></div>
                                             </div>
 
                                             <p>
-												{assign var=num1 value=$oGetInfo->VALIDE/$oGetInfo->VALIDAUTRE}
-                                                <span class="text-success float-end">{$num1}%</span>
-                                                validé par rapport au autre poste comptable
+												{assign var=num1 value=$oGetInfo->VALIDE/$oGetInfo->VALIDEAUTRE}
+                                                <span class="text-success float-end">{$num1|number_format:2:",":"."}%</span>
+                                                validés par rapport au autre poste comptable
                                             </p>
                                             <div class="progress progress-xs mb-0">
                                                 <div class="progress-bar bg-success" role="progressbar" data-bs-toggle="tooltip" title="0.74955908289242%" style="width: 0.74955908289242%"></div>
@@ -38,8 +38,8 @@
 											
                                             <p>
                                                 {assign var=num2 value=$oGetInfo->REJET/$oGetInfo->REJETAUTRE}
-												<span class="text-danger float-end">{$num2}%</span>
-                                                rejeté par rapport au autre poste comptable
+												<span class="text-danger float-end">{$num2|number_format:2:",":"."}%</span>
+                                                rejetés par rapport au autre poste comptable
                                             </p>
                                             <div class="progress progress-xs mb-0">
                                                 <div class="progress-bar bg-danger" role="progressbar" data-bs-toggle="tooltip" title="0.14069353637342%" style="width: 0.14069353637342%"></div>
