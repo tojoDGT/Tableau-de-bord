@@ -554,10 +554,10 @@ class Dashboard extends MY_Controller
 
 		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
 		
+		$oSmarty->assign("oGetInfo", $oGetInfo);
 		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
 
 		$oSmarty->assign("zBasePath", base_url());
-		$oSmarty->assign("oGetInfo", $oGetInfo);
 		$oSmarty->assign('zTplAffiche',  $zTplAffiche);
 		$zHtmlGraph = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/parametre.tpl" );
 

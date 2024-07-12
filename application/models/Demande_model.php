@@ -293,8 +293,6 @@ class Demande_model extends CI_Model {
 
 		from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM " ;
 
-		
-
 		if( isset($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
 			$zSql.=" AND m.ENTITE = '".$oRequest['zPsCode']."'  ";
 		}
@@ -302,8 +300,6 @@ class Demande_model extends CI_Model {
 		if( isset($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']!="") {   
 			$zSql.=" AND m.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
 		}
-
-		
 		
 		if( !empty($oRequest['search']['value']) ) {   
 			$zSql.=" AND ( t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
