@@ -1,7 +1,7 @@
 <div class="parametre" id="changeColor">
 		<div class="tab-content tab-content-parametre typography">
 		<h5>Liste agents validateurs</h5>
-				<table id="table_bd" class="table  table-bordered table-hover" style="margin-left:10px">
+				<table id="table_bdAgent" class="table  table-bordered table-hover" style="margin-left:10px">
 				<thead>
 					<tr>
 						<th>DETAIL</th>
@@ -23,7 +23,7 @@
 							
 					var zData = "";
 					$.ajax({
-						url: "{$zBasePath}utilisateur/getRole", // json datasource
+						url: "{/literal}{$zBasePath}{literal}utilisateur/getRole", // json datasource
 						type: 'POST',
 						data: {
 							iUserId: d[1]
@@ -37,7 +37,7 @@
 					return zData;
 				}
 				
-				var zListeEntite = $('#table_bd').DataTable( {
+				var zListeEntite = $('#table_bdAgent').DataTable( {
 					"processing": true,
 					"serverSide": true,
 					"searching": true,
@@ -77,7 +77,7 @@
 						}
 					},
 					"ajax":{
-						url : "{$zBasePath}utilisateur/getAjax", // json datasource
+						url : "{/literal}{$zBasePath}{literal}utilisateur/getAjax", // json datasource
 						data: function ( d ) {
 							
 						},
@@ -89,7 +89,7 @@
 				}); 
 
 				// Add event listener for opening and closing details
-				$('#table_bd tbody').on('click', 'td.details-control', function () {
+				$('#table_bdAgent tbody').on('click', 'td.details-control', function () {
 					var tr = $(this).parents('tr');
 					var row = zListeEntite.row( tr );
 			 
@@ -110,7 +110,7 @@
 			<style>
 			th.dt-center, td.dt-center { text-align: center!important; }
 			.dt-width {width:20%!important}
-			#table_bd th{
+			#table_bdAgent th{
 				width: 15px!important;
 			}
 			td.details-control {
