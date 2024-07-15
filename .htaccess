@@ -1,6 +1,6 @@
 
 #   Empêche la visualisation de l'arborescence, n'a rien à voir avec le masquage du « index.php ».
-Options -Indexes
+# Options -Indexes
 
 #   Active le module de réécriture d'URL.
 RewriteEngine on

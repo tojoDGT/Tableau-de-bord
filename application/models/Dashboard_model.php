@@ -178,7 +178,7 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
-	public function getValidePcParMois($_zPsCode,$_iAnneeExercice='2023'){
+	public function getValidePcParMois($_zPsCode,$_iAnneeExercice='2023',$_iTypeAffiche){
 		
 		global $db;
 
@@ -196,13 +196,13 @@ class Dashboard_model extends CI_Model {
 		$toRow = $zQuery->result_array();
 
 
-		$zReturn = $this->DispatchDataForChartJsPyramid($toRow,1);
+		$zReturn = $this->DispatchDataForChartJsPyramid($toRow,1,$_iTypeAffiche);
 
 
 		return $zReturn;
 	}
 
-	public function getRefusePcParMois($_zPsCode,$_iAnneeExercice='2023'){
+	public function getRefusePcParMois($_zPsCode,$_iAnneeExercice='2023',$_iTypeAffiche){
 		
 		global $db;
 
@@ -223,13 +223,13 @@ class Dashboard_model extends CI_Model {
 		$toRow = $zQuery->result_array();
 
 
-		$zReturn = $this->DispatchDataForChartJsPyramid($toRow,0);
+		$zReturn = $this->DispatchDataForChartJsPyramid($toRow,0,$_iTypeAffiche);
 
 
 		return $zReturn;
 	}
 
-	private function DispatchDataForChartJsPyramid($_toRow,$_iValid){
+	private function DispatchDataForChartJsPyramid($_toRow,$_iValid,$_iTypeAffiche){
 
 		$zAfficheSerieStat = "";
 		$toAffiche = array();
@@ -255,26 +255,36 @@ class Dashboard_model extends CI_Model {
 		}
 
 		$toMois = array("Nan", "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
-
 		
 
-		$iColor = 0;
-		foreach ($toAffiche  as $oRow){
+		if ($_iTypeAffiche==1){
 
+			$iColor = 0;
+			foreach ($toAffiche  as $oRow){
+
+				$toData = array();
+			
+				$zAfficheSerieStat .= '"' . (int)$oRow["MOIS"] . '":{';
+				$zAfficheSerieStat .= '"Nombre":"'.(int)$oRow["NOMBRE"].'",';
+				$zAfficheSerieStat .= '"Mois":"'.$toMois[(int)$oRow["MOIS"]].'",';
+				$zAfficheSerieStat .= '"Valid":"'.$_iValid.'"';
+				$zAfficheSerieStat .= '},';
+
+			}
+
+			return $zAfficheSerieStat;
+
+		} else {
+			$iColor = 0;
 			$toData = array();
-		
-			$zAfficheSerieStat .= '"' . (int)$oRow["MOIS"] . '":{';
-			$zAfficheSerieStat .= '"Nombre":"'.(int)$oRow["NOMBRE"].'",';
-			$zAfficheSerieStat .= '"Mois":"'.$toMois[(int)$oRow["MOIS"]].'",';
-			$zAfficheSerieStat .= '"Valid":"'.$_iValid.'"';
-			$zAfficheSerieStat .= '},';
+			foreach ($toAffiche  as $oRow){
+				array_push($toData, $oRow['NOMBRE']);
+			}
 
+			$zAfficheSerieStat .= "data: [".implode(",",$toData)."],";
+			return $zAfficheSerieStat;
 		}
-
-
-		//echo $zAfficheSerieStat;
-
-		return $zAfficheSerieStat;
+		
 	}
 
 

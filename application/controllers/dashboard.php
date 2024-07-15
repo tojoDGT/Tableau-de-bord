@@ -85,10 +85,15 @@ class Dashboard extends MY_Controller
 
 				$zReturn = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"PROP_CODE");
 				$zReturnTypeMand = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
-				$zReturnMinAbrev = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
-				$zReturnModePaiement = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
+				//$zReturnMinAbrev = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
+				//$zReturnModePaiement = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
+				//$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"PROP_CODE");
+				//$zReturnPie = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
+
+				$zReturnMinAbrev = $zReturnTypeMand; //$this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
+				$zReturnModePaiement = $zReturnTypeMand;//$this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
 				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"PROP_CODE");
-				$zReturnPie = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
+				$zReturnPie = $zReturnDonut;//$this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
 
 
 				//echo $zReturnMinAbrev;
@@ -454,12 +459,17 @@ class Dashboard extends MY_Controller
 			case 'statistique':
 
 				$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
-				$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2023') ;
-				$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023') ;
+				$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2023',1) ;
+				$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023',1) ;
+
+				$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2023',2) ;
+				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023',2) ;
 
 				$oSmarty->assign("oGetInfo", $oGetInfo);
 				$oSmarty->assign("zAfficheValide", $zAfficheValide);
-				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
+				$oSmarty->assign("zAfficheValide", $zAfficheValide);
+				$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
+				$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
 				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
 				break;
 
@@ -565,14 +575,19 @@ class Dashboard extends MY_Controller
 		$zPsCode = $this->postGetValue ("zPsCode", '');
 
 		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
-		$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2023') ;
-		$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023') ;
+		$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2023',1) ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023',1) ;
+
+		$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2023',2) ;
+		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023',2) ;
 
 		//print_r ($oGetInfo);
 		
 		$oSmarty->assign("oGetInfo", $oGetInfo);
 		$oSmarty->assign("zAfficheValide", $zAfficheValide);
-				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
+		$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
+		$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
+		$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
 		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
 
 		$oSmarty->assign("zBasePath", base_url());
