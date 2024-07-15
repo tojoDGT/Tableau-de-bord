@@ -79,7 +79,8 @@
 					"ajax":{
 						url : "{/literal}{$zBasePath}{literal}utilisateur/getAjax", // json datasource
 						data: function ( d ) {
-							
+							d.pc = 1,
+							d.zPsCode = '{/literal}{$zPsCode}{literal}'
 						},
 						type: "post",  // method  , by default get
 						error: function(){  // error handling

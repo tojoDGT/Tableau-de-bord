@@ -454,6 +454,7 @@ class Dashboard extends MY_Controller
 		$zPsCode = $this->postGetValue ("zPsCode", '');
 
 		$oSmarty->assign("zBasePath", base_url());
+		$oSmarty->assign("zPsCode", $zPsCode);
 		switch ($zType){
 
 			case 'statistique':

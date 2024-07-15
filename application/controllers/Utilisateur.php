@@ -67,11 +67,19 @@ class Utilisateur extends MY_Controller
 		$oUser = array();
 		$oCandidat = array();
 
+		$iPc = $this->postGetValue ("pc", 0);
+		$zPsCode = $this->postGetValue ("zPsCode", 0);
+
 		$oSession = $_SESSION;
 
 		$oRequest = $_REQUEST;
 		$iNombreTotal = 0;
-		$toGetListe = $this->utilisateur->getUtilisateur($iNombreTotal,$this) ;
+
+		if ($iPc==1){
+			$toGetListe = $this->utilisateur->getUtilisateurPc($iNombreTotal,$this,$zPsCode) ;
+		} else {
+			$toGetListe = $this->utilisateur->getUtilisateur($iNombreTotal,$this) ;
+		}
 		
 		/*echo "<pre>";
 		print_r ($toGetListe);
