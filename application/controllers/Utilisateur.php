@@ -145,6 +145,42 @@ class Utilisateur extends MY_Controller
     }
 
 	/** 
+	* function Ajax chargement détail ecriture / Mandat
+	*
+	* @return Ajax
+	*/
+	public function getPcUserRole(){
+		
+		global $oSmarty ; 
+
+
+		$iUserId = $this->postGetValue ("iUserId", 0);
+
+		$toApplicationId = array();
+
+		$toGetInfoAgent = $this->utilisateur->getDetailUtilisateur($iUserId) ;
+
+		/*echo "<pre>";
+		print_r ($toGetInfoAgent);
+		echo "</pre>";*/
+
+		foreach ($toGetInfoAgent as $oGetInfoAgent){
+			array_push($toApplicationId, $oGetInfoAgent['ROLEAPPLIID']);
+		}
+		$toGetAllApplication = $this->utilisateur->getAllApplication() ;
+		
+		$oSmarty->assign("zBasePath",base_url());
+		$oSmarty->assign("iUserId",$iUserId);
+		$oSmarty->assign("toGetInfoAgent",$toGetInfoAgent);
+		$oSmarty->assign("toApplicationId",$toApplicationId);
+		$oSmarty->assign("toGetAllApplication",$toGetAllApplication);
+		$zDetailEcriture = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "utilisateur/getPcUserRole.tpl" );
+		
+		echo $zDetailEcriture ;  
+			
+    }
+
+	/** 
 	* function modification ordre affichage
 	*
 	* @return fiche html

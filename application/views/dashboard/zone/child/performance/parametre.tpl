@@ -1,4 +1,4 @@
-<link href="http://rohi.mef.gov.mg:8088/ROHI/assets/light/assets/css/tabsOrganigramme.css" rel="stylesheet">
+<link href="{$zBasePath}assets/css/tabsOrganigramme.css" rel="stylesheet">
 <div class="mb-0 detailTj">
 	<div class="card-body">
 		<div class="row">

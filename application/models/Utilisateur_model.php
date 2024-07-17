@@ -241,7 +241,7 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql=" SELECT  * FROM ".$toDB->database.".V_USERS u WHERE USERID = '" . $_iUserId . "'";
+		$zSql=" SELECT DISTINCT * FROM ".$toDB->database.".V_USERS u WHERE USERID = '" . $_iUserId . "'";
 
 		//echo $zSql;
 
