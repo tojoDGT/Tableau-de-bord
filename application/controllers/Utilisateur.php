@@ -75,10 +75,18 @@ class Utilisateur extends MY_Controller
 		$oRequest = $_REQUEST;
 		$iNombreTotal = 0;
 
-		if ($iPc==1){
-			$toGetListe = $this->utilisateur->getUtilisateurPc($iNombreTotal,$this,$zPsCode) ;
-		} else {
-			$toGetListe = $this->utilisateur->getUtilisateur($iNombreTotal,$this) ;
+		switch ($iPc){
+			case 0:
+				$toGetListe = $this->utilisateur->getUtilisateur($iNombreTotal,$this) ;
+				break;
+
+			case 1:
+				$toGetListe = $this->utilisateur->getUtilisateurPc($iNombreTotal,$this,$zPsCode) ;
+				break;
+
+			case 2:
+				$toGetListe = $this->utilisateur->getUtilisateurAgent($iNombreTotal,$this) ;
+				break;
 		}
 		
 		/*echo "<pre>";

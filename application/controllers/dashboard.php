@@ -174,6 +174,18 @@ class Dashboard extends MY_Controller
 				$oSmarty->assign('zListingTpl',  $zListingTpl);
 				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
 				break;
+
+			case 'performance-des-agents':
+				$iMenuActifId = 2;
+				$iSousMenuActifId = 5;
+
+				$zLibelle1 = "Les agents dans le poste comptable"; 
+				$oSmarty->assign("zBasePath",base_url());
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/listingAgents.tpl" );
+
+				$oSmarty->assign('zListingTpl',  $zListingTpl);
+				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
+				break;
 		}
 		
 		
