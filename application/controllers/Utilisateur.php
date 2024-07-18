@@ -106,6 +106,7 @@ class Utilisateur extends MY_Controller
 			$oDataTemp[] = $oGetListe['LAST_NAME'];
 			$oDataTemp[] = $oGetListe['FIRST_NAME'];
 			$oDataTemp[] = $oGetListe['EMAIL_CANONICAL'];
+			$oDataTemp[] = $oGetListe['ACTIVITYNAME'];
 			
 			$oDataAssign[] = $oDataTemp;
 			$iIncrement++;
