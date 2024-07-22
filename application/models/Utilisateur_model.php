@@ -242,6 +242,34 @@ class Utilisateur_model extends CI_Model {
 
 	}
 
+	public function getInfoPostComptableUser($_iUserId = 0){
+		global $db;
+
+
+		$toDB = $this->load->database('oracle',true);
+
+		//$zSql=" SELECT  * FROM T_POSTE_COMPTABLE p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "'";
+
+		 
+		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				AND m.MAND_UTR_VISA = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) valide,
+				(  SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				AND m.MAND_UTR_RJT = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejet,
+				( SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				AND m.MAND_UTR_VISA <> '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) as valideAutre,
+				(  SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				AND m.MAND_UTR_RJT <> '" . $_iUserId . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejetAutre,
+				 m1.MAND_UTR_VISA FROM T_MANDAT m1 WHERE m1.MAND_UTR_VISA = '" . $_iUserId . "' OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY";
+
+		//echo $zSql;
+	
+		$zQuery = $toDB->query($zSql);
+		$oRow = $zQuery->row();
+
+		return $oRow;
+
+	}
+
 
 	public function posteComptable(&$_iNbrTotal = 0,$_this=''){
 		global $db;

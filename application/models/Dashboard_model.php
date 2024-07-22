@@ -202,6 +202,30 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
+	public function getValidePcParMoisUser($_iUserId,$_iAnneeExercice='2023',$_iTypeAffiche){
+		
+		global $db;
+
+		$toDB = $this->load->database('oracle',true);
+
+		$toRow = array();
+
+		$zSql = "SELECT  COUNT(m.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as MOIS
+				from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				AND m.MAND_UTR_VISA = '".$_iUserId."' AND MAND_VISA_VALIDE = 1 
+				GROUP BY to_char(ECRI_DT_VALID, 'MM')
+				ORDER BY to_char(ECRI_DT_VALID, 'MM') ASC" ;
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+
+		$zReturn = $this->DispatchDataForChartJsPyramid($toRow,1,$_iTypeAffiche);
+
+
+		return $zReturn;
+	}
+
 	public function getRefusePcParMois($_zPsCode,$_iAnneeExercice='2023',$_iTypeAffiche){
 		
 		global $db;
@@ -215,6 +239,33 @@ class Dashboard_model extends CI_Model {
 		$zSql = " SELECT  COUNT(m.MAND_DT_RJT) as NOMBRE,to_char(MAND_DT_RJT, 'MM') as MOIS
 				  from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				  AND m.ENTITE = '".$_zPsCode."' AND MAND_VISA_VALIDE = 0 
+				  GROUP BY to_char(MAND_DT_RJT, 'MM')
+				  ORDER BY to_char(MAND_DT_RJT, 'MM') ASC" ;
+
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+
+		$zReturn = $this->DispatchDataForChartJsPyramid($toRow,0,$_iTypeAffiche);
+
+
+		return $zReturn;
+	}
+
+	public function getRefusePcParMoisUser($_iUserId,$_iAnneeExercice='2023',$_iTypeAffiche){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('oracle',true);
+
+		$toRow = array();
+
+		$zSql = " SELECT  COUNT(m.MAND_DT_RJT) as NOMBRE,to_char(MAND_DT_RJT, 'MM') as MOIS
+				  from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				  AND m.MAND_UTR_RJT = '".$_iUserId."' AND MAND_VISA_VALIDE = 0 
 				  GROUP BY to_char(MAND_DT_RJT, 'MM')
 				  ORDER BY to_char(MAND_DT_RJT, 'MM') ASC" ;
 

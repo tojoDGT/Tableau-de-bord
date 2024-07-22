@@ -17,6 +17,7 @@ class Utilisateur extends MY_Controller
 	{
 		parent:: __construct();
 		$this->load->model('Utilisateur_model', 'utilisateur');
+		$this->load->model('Dashboard_model', 'dashboard');
 
 		if(empty($this->session->userdata['USERID'])){ redirect('Login');}
 
@@ -118,6 +119,39 @@ class Utilisateur extends MY_Controller
 						"data"            => $oDataAssign
 					);
 		echo json_encode($taJson);
+			
+    }
+
+	/** 
+	* function Ajax chargement détail ecriture / Mandat
+	*
+	* @return Ajax
+	*/
+	public function getUserPerformance(){
+		
+		global $oSmarty ; 
+
+
+		$iUserId = $this->postGetValue ("iUserId", 0);
+
+		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId) ;
+		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2023',1) ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2023',1) ;
+
+		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2023',2) ;
+		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2023',2) ;
+
+		//print_r ($oGetInfo);
+		
+		$oSmarty->assign("oGetInfo", $oGetInfo);
+		$oSmarty->assign("zAfficheValide", $zAfficheValide);
+		$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
+		$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
+		$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
+		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "utilisateur/getUserPerformance.tpl" );
+		
+		
+		echo $zTplAffiche ;  
 			
     }
 

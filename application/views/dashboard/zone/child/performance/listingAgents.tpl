@@ -23,7 +23,7 @@
 						
 				var zData = "";
 				$.ajax({
-					url: zBasePath + "utilisateur/getRole", // json datasource
+					url: zBasePath + "utilisateur/getUserPerformance", // json datasource
 					type: 'POST',
 					data: {
 						iUserId: d[1]
