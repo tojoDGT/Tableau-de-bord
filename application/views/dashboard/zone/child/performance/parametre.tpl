@@ -1,4 +1,3 @@
-<link href="{$zBasePath}assets/css/tabsOrganigramme.css" rel="stylesheet">
 <div class="mb-0 detailTj">
 	<div class="card-body">
 		<div class="row">

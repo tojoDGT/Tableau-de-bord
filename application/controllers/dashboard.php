@@ -85,15 +85,15 @@ class Dashboard extends MY_Controller
 
 				$zReturn = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"PROP_CODE");
 				$zReturnTypeMand = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
-				//$zReturnMinAbrev = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
-				//$zReturnModePaiement = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
-				//$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"PROP_CODE");
-				//$zReturnPie = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
-
-				$zReturnMinAbrev = $zReturnTypeMand; //$this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
-				$zReturnModePaiement = $zReturnTypeMand;//$this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
+				$zReturnMinAbrev = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
+				$zReturnModePaiement = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
 				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"PROP_CODE");
-				$zReturnPie = $zReturnDonut;//$this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
+				$zReturnPie = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
+
+				//$zReturnMinAbrev = $zReturnTypeMand; //$this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
+				//$zReturnModePaiement = $zReturnTypeMand;//$this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
+				//$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"PROP_CODE");
+				//$zReturnPie = $zReturnDonut;//$this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
 
 
 				//echo $zReturnMinAbrev;

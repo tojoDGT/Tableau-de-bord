@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="{$zBasePath}assets/common/dist/css/theme.css">
   <link rel="stylesheet" href="{$zBasePath}assets/css/soi.css">
   <link rel="stylesheet" href="{$zBasePath}assets/common/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="{$zBasePath}assets/css/tabsOrganigramme.css" rel="stylesheet">
   
 </head>
 <script>

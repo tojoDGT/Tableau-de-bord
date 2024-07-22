@@ -159,7 +159,7 @@
         <div class="image">
           <img src="{$zBasePath}assets/common/dist/img/non-user.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
-        <div class="info">
+        <div class="info" style="border:none!important">
           <a href="#" class="d-block">{$oSession.FIRST_NAME}</a>
 		  <a href="#" style="font-size:12px;"><i class="fa fa-circle text-success"></i> En ligne</a>
         </div>
