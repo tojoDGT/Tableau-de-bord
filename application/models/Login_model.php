@@ -1,9 +1,24 @@
 <?php
+/**
+* @package DGT
+* @subpackage le modèle concenrnant la page login
+* @author RANDRIANANTENAINA Tojo Michaël
+*/
 class Login_model extends CI_Model{
+
+	/**  
+	* Classe qui concerne le modèle login
+	* @package  DGT  
+	* @subpackage entité */ 
 	function __construct(){
 		parent::__construct();
 	}
 
+	/** 
+	* function permettant de checker un utilisateur depuis la page authentification
+	*
+	* @return objet d'un utilisateur / false
+	*/
 	public function checkUser($data)
 	{
 		global $db;
@@ -13,14 +28,9 @@ class Login_model extends CI_Model{
 
 		$zSql=" SELECT DISTINCT * FROM ".$toDB->database.".V_USERS_TBLBOARD u WHERE USERID = '" . $data['USERID'] . "' AND ROLEVALID = 1 AND EMAIL_CANONICAL IS NOT NULL ";
 
-		/*echo $zSql;
-		die();*/
-
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
 
-		/*print_r ($toRow);
-		die();*/
 		$zQuery->free_result();
 
 		if(count($toRow)>0)
@@ -33,6 +43,12 @@ class Login_model extends CI_Model{
 			return false;
 		}
 	}
+
+	/** 
+	* function permettant de checker le mot de passe d'un utilisateur 
+	*
+	* @return boolean true/false
+	*/
 	public function checkPassword($str)
 	{
 		$st=$this->db->SELECT('*')->from($toDB->database.'.V_USERS_TBLBOARD')
@@ -48,12 +64,5 @@ class Login_model extends CI_Model{
 		}
 	}
 
-	public function updatePassword($password,$id)
-	{
-		$pass=array(
-			'password' => sha1(md5($password))
-		);
-		$this->db->WHERE('USERID',$id)->update('users',$pass);
-	}
 }
 ?>

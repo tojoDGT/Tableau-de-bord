@@ -1,42 +1,33 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+* @package DGT
+* @subpackage le modèle concenrnant le tableau de bord accueil
+* @author RANDRIANANTENAINA Tojo Michaël
+*/
 class Dashboard_model extends CI_Model {
 
+	/**  
+	* Classe qui concerne le modèle tableau de bord
+	* @package  DGT  
+	* @subpackage entité */ 
 	function __construct(){
 		parent::__construct();
 
 	}
-	
-	public function insert($oData)
-	{
-		global $db;
-		$zDatabaseOracle =  $db['oracle']['database'] ;
-		if($this->db->insert($zDatabaseOracle.'.users', $oData)){
-			return $this->db->insert_id();
-		}else return false;
-		
-	} 
 
-	public function update($oData, $_iId){
-		global $db;
-		$zDatabaseOracle		=  $db['oracle']['database'] ; 
-		$this->db->update($zDatabaseOracle.'.users', $oData, "id = ".$_iId);
-	}
-
-	public function getEdit($_iId)
-	{
-		global $db;
-		$zDatabaseOracle =  $db['oracle']['database'] ;
-		$oQuery = $this->db->get_where($zDatabaseOracle.'.users', array('id' => $_iId));
-        return $oQuery->row_array();
-	}
-
+	/** 
+	* function permettant d'afficher la liste des suivis de dossiers
+	*
+	* @param integer $_iNbrTotal nombre total à afficher dans la pagination
+	* @param object $_this : controller
+	*
+	* @return liste en tableau d'objet
+	*/
 	public function getDashboard(&$_iNbrTotal = 0,$_this=''){
 		
 		global $db;
-
-		//error_reporting(E_ALL);
 
 		$toRow = array();
 
@@ -53,8 +44,6 @@ class Dashboard_model extends CI_Model {
 		);
 
 		$oRequest = $_REQUEST;
-
-		
 
 		//$zSql = "select * from (";
 
@@ -105,6 +94,12 @@ class Dashboard_model extends CI_Model {
 
 	}
 
+	/** 
+	* function permettant d'afficher la liste des propriétaires codes
+	*
+	*
+	* @return liste en tableau d'objet
+	*/
 
 	public function getPropCode(){
 		
@@ -136,8 +131,6 @@ class Dashboard_model extends CI_Model {
 		$zSql .=" GROUP BY t.PROP_CODE ORDER BY t.PROP_CODE";
 
 		//echo $zSql;
-
-	
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
@@ -146,6 +139,14 @@ class Dashboard_model extends CI_Model {
 		return $toRow;
 	}
 
+	/** 
+	* function permettant d'afficher le nombre / montant par mois dans la statistique
+	*
+	* @param integer $_iAnneeExercice Année de l'exercice
+	* @param string $_zParamAffich : propriétaire code
+	*
+	* @return format Json
+	*/
 	public function getNombreMontantParMois($_iAnneeExercice='2023',$_iMode,$_zParamAffich="PROP_CODE"){
 		
 		global $db;
@@ -178,6 +179,15 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
+	/** 
+	* function permettant d'afficher la liste des dossiers validés pour les postes comptable indiqué par mois
+	*
+	* @param string $_zPsCode : poste comptable indiqué
+	* @param integer $_iAnneeExercice Année de l'exercice
+	* @param integer $_iTypeAffiche : Type d'affichage
+	*
+	* @return format Json
+	*/
 	public function getValidePcParMois($_zPsCode,$_iAnneeExercice='2023',$_iTypeAffiche){
 		
 		global $db;
@@ -202,6 +212,15 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
+	/** 
+	* function permettant d'afficher la liste des dossiers validés pour les agents d'un poste comptable indiqué par mois
+	*
+	* @param string $_iUserId : Utilisateur donné
+	* @param integer $_iAnneeExercice Année de l'exercice
+	* @param integer $_iTypeAffiche : Type d'affichage
+	*
+	* @return format Json
+	*/
 	public function getValidePcParMoisUser($_iUserId,$_iAnneeExercice='2023',$_iTypeAffiche){
 		
 		global $db;
@@ -226,6 +245,15 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
+	/** 
+	* function permettant d'afficher la liste des dossiers refusés pour les postes comptable indiqué par mois
+	*
+	* @param string $_zPsCode : poste comptable indiqué
+	* @param integer $_iAnneeExercice Année de l'exercice
+	* @param integer $_iTypeAffiche : Type d'affichage
+	*
+	* @return format Json
+	*/
 	public function getRefusePcParMois($_zPsCode,$_iAnneeExercice='2023',$_iTypeAffiche){
 		
 		global $db;
@@ -253,6 +281,15 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
+	/** 
+	* function permettant d'afficher la liste des dossiers refusés pour les agents d'un poste comptable indiqué par mois
+	*
+	* @param string $_iUserId : Utilisateur donné
+	* @param integer $_iAnneeExercice Année de l'exercice
+	* @param integer $_iTypeAffiche : Type d'affichage
+	*
+	* @return format Json
+	*/
 	public function getRefusePcParMoisUser($_iUserId,$_iAnneeExercice='2023',$_iTypeAffiche){
 		
 		global $db;
@@ -280,6 +317,15 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
+	/** 
+	* function permettant d'afficher en Json les retours de résultat
+	*
+	* @param tableau object $_toRow : tableau d'objet retour
+	* @param integer $_iValid :  valide / refus
+	* @param integer $_iTypeAffiche : Type d'affichage
+	*
+	* @return format Json
+	*/
 	private function DispatchDataForChartJsPyramid($_toRow,$_iValid,$_iTypeAffiche){
 
 		$zAfficheSerieStat = "";
@@ -338,7 +384,16 @@ class Dashboard_model extends CI_Model {
 		
 	}
 
-
+	
+	/** 
+	* function permettant d'afficher le nombre / montant d'un ecriture
+	*
+	* @param integer $_iAnneeExercice Année de l'exercice
+	* @param integer $_iMode :  mode affichage
+	* @param integer $_zParamAffich : proprietaire code
+	*
+	* @return template HTML
+	*/
 	public function getNombreMontantParMoisEcriture($_iAnneeExercice='2023',$_iMode,$_zParamAffich="PROP_CODE"){
 		
 		global $db;
@@ -370,6 +425,15 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
+	/** 
+	* function privée permettant d'afficher en Json les retours de résultat
+	*
+	* @param integer $_iMode : mode d'affichage
+	* @param tableau objet $_toRow :  tableau objet retour résultat
+	* @param string $_zParamAffich : Type d'affichage
+	*
+	* @return format Json
+	*/
 	private function DispatchDataForChartJsDonut($_iMode=2,$_toRow,$_zParamAffich){
 
 		$zAfficheSerieStat = "";
@@ -419,6 +483,15 @@ class Dashboard_model extends CI_Model {
 		return $zAfficheSerieStat;
 	}
 
+	/** 
+	* function privée permettant d'afficher en Json les retours de résultat
+	*
+	* @param integer $_iMode : mode d'affichage
+	* @param tableau objet $_toRow :  tableau objet retour résultat
+	* @param string $_zParamAffich : Type d'affichage
+	*
+	* @return format Json
+	*/
 	private function DispatchDataForChartJs($_iMode=2,$_toRow,$_zParamAffich){
 
 		$zAfficheSerieStat = "";
@@ -484,43 +557,11 @@ class Dashboard_model extends CI_Model {
 		return $zAfficheSerieStat;
 	}
 
-	public function __getPropCode(){
-		
-		global $db;
-
-		$oRequest = $_REQUEST;
-
-		$toDB = $this->load->database('oracle',true);
-
-		$toRow = array();
-
-		$zSql = "select PROP_CODE from T_ECRITURE " ;
-
-		if( !empty($oRequest['PROP_CODE']) &&  sizeof($oRequest['PROP_CODE'])>0) {   
-			
-			$toPropCode = array();
-			foreach ($oRequest['PROP_CODE'] as $zPropCode){
-				$zValue = "'". $zPropCode . "'";
-				array_push($toPropCode, $zValue);
-			}
-			
-			if(sizeof($toPropCode)>0){
-				$zSql .=" WHERE PROP_CODE IN (".implode(",",$toPropCode).")";
-			}
-		}
-
-		$zSql .=" GROUP BY PROP_CODE ORDER BY PROP_CODE";
-
-	
-		
-		$zQuery = $toDB->query($zSql);
-		$toRow = $zQuery->result_array();
-
-
-		return $toRow;
-	}
-
-
+	/** 
+	* function permettant d'afficher la liste des abreviations des Ministères
+	*
+	* @return tableau objet
+	*/
 	public function getMinAbrev(){
 		
 		global $db;
@@ -538,6 +579,11 @@ class Dashboard_model extends CI_Model {
 		return $toRow;
 	}
 
+	/** 
+	* function permettant d'afficher la liste des types de mandats
+	*
+	* @return tableau objet
+	*/
 	public function getTypeMandat(){
 		
 		global $db;
@@ -555,6 +601,11 @@ class Dashboard_model extends CI_Model {
 		return $toRow;
 	}
 
+	/** 
+	* function permettant d'afficher la liste des dates d'exercice
+	*
+	* @return tableau objet
+	*/
 	public function getAllDateExercice(){
 		
 		global $db;
@@ -583,6 +634,11 @@ class Dashboard_model extends CI_Model {
 	}
 
 
+	/** 
+	* function permettant d'afficher la liste suivis Mandats
+	*
+	* @return tableau objet
+	*/
 	public function getSuiviMandat(){
 		
 		global $db;
@@ -771,7 +827,11 @@ SELECT
 	}
 
 
-
+	/** 
+	* function permettant d'afficher la graphe
+	*
+	* @return tableau objet
+	*/
 	public function getGraph(){
 		
 		global $db;
@@ -834,7 +894,11 @@ SELECT
 		return $toRow;
 	}
 
-
+	/** 
+	* function permettant d'afficher la statistique globale
+	*
+	* @return tableau objet
+	*/
 	public function getStatGLobal(){
 		
 		global $db;
@@ -922,40 +986,4 @@ SELECT
 
 		return $toRow;
 	}
-
-	public function __getGraph($_ECRI_EXERCICE, $_PROP_CODE){
-		
-		global $db;
-
-		$toDB = $this->load->database('oracle',true);
-
-		$toRow = array();
-
-		$zSql = "select count(PROP_CODE) as nb,PROP_CODE,ECRI_EXERCICE from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM ";
-
-		$zSql .= " AND ECRI_EXERCICE = '" . $_ECRI_EXERCICE . "'";
-		$zSql .= " AND PROP_CODE = '" . $_PROP_CODE . "'";
-		
-		$zSql .= " GROUP BY PROP_CODE,ECRI_EXERCICE  ORDER BY ECRI_EXERCICE ASC" ;
-
-		//echo $zSql . "\n" ;
-		
-		$zQuery = $toDB->query($zSql);
-		$toRow = $zQuery->row();
-
-		//print_r ($toRow);
-
-		$iNombre = 0;
-
-		if(is_object($toRow)){
-			$iNombre = $toRow->NB;
-		}
-
-
-		//echo $_ECRI_EXERCICE . " - " . $iNombre . "\n";
-
-
-		return $iNombre;
-	}
-
 }

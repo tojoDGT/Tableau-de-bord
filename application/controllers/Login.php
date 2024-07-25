@@ -1,9 +1,19 @@
 <?php
+/**
+* @package DGT
+* @subpackage page Authentification
+* @author RANDRIANANTENAINA Tojo Michaël
+*/
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 	class Login extends CI_Controller {
 	function __construct()
 	{
+		/**  
+		* Classe qui concerne l'authentification d'un utilisateur
+		* @package  DGT  
+		* @subpackage entité */ 
+
 		parent::__construct();
 		$this->load->model('Login_model');
 		$this->load->library('form_validation');
@@ -11,6 +21,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->load->helper('url');
 	}
 
+	/** 
+	* function permettant d'afficher la page par defaut 
+	* pour la connexiob
+	*
+	* @return redirection page authentification
+	*/
 	public function index()
 	{
 		if($this->isLoggedin()){ 
@@ -40,12 +56,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	}
 	
+	/** 
+	* function appelé pour la déconnexion
+	* 
+	*
+	* @return redirection index
+	*/
 	public function logout()
 	{
 		$this->session->sess_destroy();
 		redirect('Login');
 	}
 
+	/** 
+	* function permettant de tester si on est connecté/loggé
+	* 
+	*
+	* @return redirection index
+	*/
 	public function isLoggedin()
 	{
 		if(!empty($this->session->userdata['USERID']))

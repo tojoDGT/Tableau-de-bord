@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
-* @package SOI
+* @package DGT
 * @subpackage Dashboard de la page accueil
 * @author RANDRIANANTENAINA Tojo Michaël
 */
@@ -10,8 +10,8 @@ class Dashboard extends MY_Controller
 {
 
 	/**  
-	* Classe qui concerne la page d'accueil du FO
-	* @package  SOI  
+	* Classe qui concerne la page d'accueil du tableau de bord FO
+	* @package  DGT  
 	* @subpackage entité */ 
 	function __construct()
 	{ 
@@ -28,7 +28,7 @@ class Dashboard extends MY_Controller
 	* function permettant de changer la colonne à afficher
 	*
 	*
-	* @return liste
+	* @return redirection vers la page qui necessite le changement de colonne
 	*/
 	public function changeCol ()
 	{
@@ -53,8 +53,9 @@ class Dashboard extends MY_Controller
 
 	 
 	/** 
-	* function permettant d'afficher la liste des demandes 
+	* function permettant d'afficher la statistique de la page demandée
 	*
+	* @param string $_zParam type de page à afficher
 	*
 	* @return liste
 	*/
@@ -380,7 +381,7 @@ class Dashboard extends MY_Controller
 
 
 	/** 
-	* function Ajax chargement de la liste à partir de la base
+	* function permettant de retourner la liste des postes comptables
 	*
 	* @return Ajax
 	*/
@@ -427,9 +428,9 @@ class Dashboard extends MY_Controller
 
 
 	/** 
-	* function get statitistique global
+	* function permettant d'afficher la statitistique globale
 	*
-	* @return Ajax
+	* @return template HTML
 	*/
 	public function getStatGLobal(){
 
@@ -454,7 +455,7 @@ class Dashboard extends MY_Controller
 	/** 
 	* function get statitistique global
 	*
-	* @return Ajax
+	* @return template HTML
 	*/
 	public function getTabsPcActive(){
 
@@ -508,7 +509,7 @@ class Dashboard extends MY_Controller
 
 
 	/** 
-	* function Ajax chargement de la liste à partir de la base
+	* function Ajax chargement de la liste validé / refusé à partir de la base
 	*
 	* @return Ajax
 	*/
@@ -574,9 +575,9 @@ class Dashboard extends MY_Controller
 
 
 	/** 
-	* function get statitistique global
+	* function permettant d'afficher l'onglet relatif à un poste comptable
 	*
-	* @return Ajax
+	* @return template HTML
 	*/
 	public function getTabsPc(){
 
@@ -613,7 +614,7 @@ class Dashboard extends MY_Controller
     }
 
 	/** 
-	* function Ajax chargement de la liste à partir de la base
+	* function Ajax chargement des suivis de dossiers
 	*
 	* @return Ajax
 	*/
@@ -689,246 +690,4 @@ class Dashboard extends MY_Controller
 		
 		echo $zPortionTable ;  
 	}
-	
-	/** 
-	* function edition d'un demande
-	*
-	* @return fiche html
-	*/
-	public function edit($iId = FALSE){
-		
-		global $oSmarty ; 
-
-		$oData['zBasePath'] = base_url();
-
-		$iMenuActifId = 3;
-		$iSousMenuActifId = 6;
-		$oData['oForm'] = array();
-
-		$zLibelle  = "d'une demande " . strtoupper($_zHashUrl);
-		$zLibelle1 = "demande " . strtoupper($_zHashUrl);
-		
-		$oDashboard	= array();
-		$oData['oContact1'] = array();
-		$oData['oContact2'] = array();
-		
-		if ($iId){
-			
-			$oDashboard = $this->demande->getEdit($iId);
-			$oData['oDashboard'] = $oDashboard;
-		}
-
-
-		$zContentDashboard = $oSmarty->fetch( ADMIN_TEMPLATE_PATH .  "demande/zone/zoneDashboard.tpl" );
-		$zContentDeveloppement = $oSmarty->fetch( ADMIN_TEMPLATE_PATH .  "demande/zone/zoneDeveloppeur.tpl" );
-		$zContentObservation = $oSmarty->fetch( ADMIN_TEMPLATE_PATH .  "demande/zone/zoneObservateur.tpl" );
-		$zContentFaq = $oSmarty->fetch( ADMIN_TEMPLATE_PATH .  "demande/zone/zoneFaq.tpl" );
-		
-		
-		$oData['zContentDashboard'] = $zContentDashboard;
-		$oData['zContentDeveloppement'] = $zContentDeveloppement;
-		$oData['zContentObservation'] = $zContentObservation;
-		$oData['zContentFaq'] = $zContentFaq;
-
-		$zTplpath = "demande/modif.tpl" ; 
-		$oData['oDashboard'] = $oDashboard;
-		$oData['oSession'] = $_SESSION;
-		$oData['iMenuActifId'] = $iMenuActifId;
-		$oData['iSousMenuActifId'] = $iSousMenuActifId;
-		$oData['zLibelle'] = $zLibelle;
-		$oData['zLibelle1'] = $zLibelle1;
-		$oData['iId'] = $iId;
-		$oData['zHashUrl'] = $_zHashUrl;
-		
-		$this->load_my_view_Common($zTplpath,$oData);
-	}
-
-	/** 
-	* function edition d'un demande
-	*
-	* @return fiche html
-	*/
-	public function edit1903($iId = FALSE){
-		
-		$oData['zBasePath'] = base_url();
-
-		$iMenuActifId = -103;
-		$iAccueil = 8;
-		$oData['oForm'] = array();
-
-		$zLibelle  = "d'un demande " . strtoupper($_zHashUrl);
-		$zLibelle1 = "demande " . strtoupper($_zHashUrl);
-		
-		$oDashboard	= array();
-		$oData['oContact1'] = array();
-		$oData['oContact2'] = array();
-		
-		$zContentCourt = $this->setFckEditor('descriptionCourt', '',100);
-		$zContentLong = $this->setFckEditor('descriptionLong', '',100);
-		if ($iId){
-			
-			$oDashboard = $this->demande->getEdit($iId);
-			$zContentCourt = $this->setFckEditor('descriptionCourt', $oDashboard['descriptionCourt'],200);
-			$zContentLong = $this->setFckEditor('descriptionLong', $oDashboard['descriptionLong'],200);
-			$oData['oDashboard'] = $oDashboard;
-		}
-
-		$zTplpath = "demande/modif.tpl" ; 
-		$oData['iAccueil'] = $iAccueil;
-		$oData['oDashboard'] = $oDashboard;
-		$oData['zContentCourt'] = $zContentCourt;
-		$oData['zContentLong'] = $zContentLong;
-		$oData['iMenuActifId'] = $iMenuActifId;
-		$oData['zLibelle'] = $zLibelle;
-		$oData['zLibelle1'] = $zLibelle1;
-		$oData['iId'] = $iId;
-		$oData['zHashUrl'] = $_zHashUrl;
-		
-		$this->load_my_view_Common($zTplpath,$oData);
-	}
-
-
-	/** 
-	* FCK Editor
-	* retourner le wysiwig
-	*
-	* @return view
-	*/
-	public function setFckEditor($_zName, $_zValue, $_iHeight){
-		
-		require_once (APPLICATION_PATH.'assets/fckeditor/fckeditor.php');
-
-		$oFCKeditor = new FCKeditor ($_zName) ;
-		$oFCKeditor->BasePath = base_url().'assets/fckeditor/' ;
-		$oFCKeditor->ToolbarSet	= 'Basic' ;
-		$oFCKeditor->Width	= '50%' ;
-		$oFCKeditor->Height	= $_iHeight ;
-		$oFCKeditor->Value = $_zValue ;
-		$zHtml =  $oFCKeditor->CreateHtml () ;
-
-		return $zHtml;
-    	
-    }
-
-	/** 
-	* Enregistrement demandes 
-	*
-	* @return redirection liste
-	*/
-	public function save()
-	{
-		$oData = array();
-		
-		$iId = $this->postGetValue ("iId",''); 
-		$oData = array();
-
-		
-
-		
-		$oData["nom"]				= $this->postGetValue ("nom", '');
-		$oData["prenom"]			= $this->postGetValue ("prenom", '');
-		$oData["fullname"]			= $this->postGetValue ("prenom", '');
-		$oData["status"]			= 1;
-
-		$iChangeImage = 0;
-		if (isset($_FILES['image']) && trim($_FILES['image']['name']) != "") {
-			
-
-			$oFile = $_FILES['image'];
-
-			$zFileName = utf8_decode($_FILES["image"]["name"]);
-			$zFileName = str_replace(" ","_",$zFileName);
-			$zFileName = strtr($zFileName, 
-			'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 
-			'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
-
-			$zPath = PATH_ROOT_DIR;
-
-			move_uploaded_file($_FILES["image"]["tmp_name"],$zPath . '/assets/common/dist/img/' . $zFileName);
-
-			$this->resizePicture($zPath . '/assets/common/dist/img/' . $zFileName, $zFileName , "300", "153",$zPath . "/assets/common/dist/img/");
-			$oData["image"]		= $zFileName ; 
-			$iChangeImage = 1;
-
-		}
-
-		$oData["email"]				= $this->postGetValue ("email", '');
-		$oData["isChef"]			= $this->postGetValue ("isChef", 0);
-		$oData["isDeveloppeur"]		= $this->postGetValue ("isDeveloppeur", 0);
-		$oData["privilege"]			= $this->postGetValue ("privilege", 'Admin');
-		
-		if ($iId == '') {
-			
-			$zLogin					= $this->postGetValue ("login", '');
-
-			if($zLogin != ""){
-				$oData["username"]	= $zLogin;
-			}
-
-			$zPassword				= $this->postGetValue ("password", '');
-			$oData["password"]		= sha1(md5($zPassword));
-
-			$iDashboardId = $this->demande->insert($oData);
-		} else {
-
-				
-			
-			$oSession = $_SESSION;
-			$oDashboard = $this->demande->getEdit($iId);
-
-			
-
-			if ($oSession['id'] == $oDashboard['id']){
-
-				$zLogin						= $this->postGetValue ("login", '');
-
-				if($zLogin != ""){
-					$oData["username"]			= $zLogin;
-				}
-				
-				$isChangePass				= $this->postGetValue ("isChangePass", 0);
-				if($isChangePass == 1){
-					$zPassword				= $this->postGetValue ("password", '');
-					if($zPassword != ""){
-						$oData["password"]	= sha1(md5($zPassword));
-					}
-				}
-
-				$_SESSION["fullname"] = $oData["prenom"];
-
-				if($iChangeImage == 1){
-					$_SESSION["image"] = $oData["image"];
-				}
-
-			}
-			
-			$this->demande->update($oData, $iId);
-		}
-
-		redirect("demande/liste");
-	}
-
-
-	/** 
-	* Suppression demande
-	*
-	* @param string $_zHashModule type d'demandes
-	*
-	* @return redirection liste
-	*/
- 	public function supprimer(){
-		
-		global $oSmarty;
-
-		$oData = array();
-
-		$iElementId		= $_POST['supprId'] ;
-		$this->demande->deleteDashboard($iElementId);
-		
-		echo "1";
-	}
-
-
-	
-
 }

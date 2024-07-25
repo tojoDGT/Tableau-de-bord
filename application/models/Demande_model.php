@@ -1,42 +1,25 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+* @package DGT
+* @subpackage le modèle concenrnant les demandes
+* @author RANDRIANANTENAINA Tojo Michaël
+*/
 class Demande_model extends CI_Model {
 
+	/**  
+	* Classe qui concerne le modèle demande
+	* @package  DGT  
+	* @subpackage entité */ 
 	function __construct(){
 		parent::__construct();
-
-	}
-	
-	public function insert($oData)
-	{
-		global $db;
-		$zDatabaseOracle =  $db['oracle']['database'] ;
-		if($this->db->insert($zDatabaseOracle.'.users', $oData)){
-			return $this->db->insert_id();
-		}else return false;
-		
-	} 
-
-	public function update($oData, $_iId){
-		global $db;
-		$zDatabaseOracle		=  $db['oracle']['database'] ; 
-		$this->db->update($zDatabaseOracle.'.users', $oData, "id = ".$_iId);
-	}
-
-	public function getEdit($_iId)
-	{
-		global $db;
-		$zDatabaseOracle =  $db['oracle']['database'] ;
-		$oQuery = $this->db->get_where($zDatabaseOracle.'.users', array('id' => $_iId));
-        return $oQuery->row_array();
 	}
 
 	/** 
-	* function permettant de retourner le colonne à afficher
+	* function permettant de retourner le colonne à afficher dans une variable session
 	*
-	*
-	* @return liste
+	* @return liste des colonnes à afficher
 	*/
 	public function getSessionColonne ()
 	{
@@ -62,11 +45,18 @@ class Demande_model extends CI_Model {
 		return $toColonne;
 	}
 
+	
+	/** 
+	* function permettant d'afficher la liste des demandes
+	*
+	* @param integer $_iNbrTotal nombre total à afficher dans la pagination
+	* @param object $_this : controller
+	*
+	* @return liste en tableau d'objet
+	*/
 	public function getDemande(&$_iNbrTotal = 0,$_this=''){
 		
 		global $db;
-
-		//error_reporting(E_ALL);
 
 		$toRow = array();
 
@@ -246,7 +236,14 @@ class Demande_model extends CI_Model {
 
 	}
 
-
+	/** 
+	* function permettant d'afficher la liste des dossiers
+	*
+	* @param integer $_iNbrTotal nombre total à afficher dans la pagination
+	* @param object $_this : controller
+	*
+	* @return liste en tableau d'objet
+	*/
 	public function getDossier(&$_iNbrTotal = 0,$_this=''){
 		
 		global $db;
@@ -369,7 +366,15 @@ class Demande_model extends CI_Model {
 
 	}
 
-
+	/** 
+	* function permettant d'afficher de détail d'un dossier
+	*
+	* @param integer $_iEcriNum : Ecriture numéro
+	* @param integer $_iNumMandat : numéro de mandant
+	* @param integer $_iMode : Mode de paiement
+	*
+	* @return liste en tableau d'objet
+	*/
 	public function GetDetail($_iEcriNum, $_iNumMandat, $_iMode){
 
 		global $db;
@@ -398,6 +403,13 @@ class Demande_model extends CI_Model {
 		return $toRow;
 	}
 
+	/** 
+	* function permettant d'afficher de détail d'un dossier
+	*
+	* @param integer $_iEcriNum : Ecriture numéro
+	*
+	* @return liste en tableau d'objet
+	*/
 	public function GetDetailViews($_iEcriNum){
 
 		global $db;
@@ -421,7 +433,13 @@ class Demande_model extends CI_Model {
 		return $toRow;
 	}
 	
-
+	/** 
+	* function permettant d'afficher le detail d'un transfert
+	*
+	* @param integer $_iNumMandat : numéro du mandat
+	*
+	* @return liste en tableau d'objet
+	*/
 	public function GetTransfert($_iNumMandat){
 
 		global $db;
@@ -540,6 +558,13 @@ class Demande_model extends CI_Model {
 		return $toRow;
 	}
 
+	/** 
+	* function permettant d'afficher le detail d'un virement
+	*
+	* @param integer $_iNumMandat : numéro du mandat
+	*
+	* @return liste en tableau d'objet
+	*/
 	public function GetVirement($_iNumMandat){
 
 		global $db;
@@ -649,6 +674,13 @@ class Demande_model extends CI_Model {
 		return $toRow;
 	}
 
+	/** 
+	* function permettant d'afficher le detail d'un LEGEcriture
+	*
+	* @param integer $_iNumMandat : numéro du mandat
+	*
+	* @return liste en tableau d'objet
+	*/
 	public function GetLEGecriture($_iEcriNum){
 
 		global $db;
@@ -670,7 +702,4 @@ class Demande_model extends CI_Model {
 
 		return $toRow;
 	}
-
-	
-
 }
