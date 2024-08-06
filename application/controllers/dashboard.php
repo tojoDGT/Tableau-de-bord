@@ -228,8 +228,6 @@ class Dashboard extends MY_Controller
 		$toColonne = $this->demande->getSessionColonne();
 
 		$toGetAllExercice = $this->dashboard->getAllDateExercice() ; 
-
-		//print_r ($toColonne);
 		
 		switch ($_zParam){
 
@@ -238,23 +236,23 @@ class Dashboard extends MY_Controller
 				$iSousMenuActifId = 6;
 				$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2023);
 
-				$zLibelle1 = "normalité des comptes"; 
-				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/listing.tpl" );
+				$zLibelle1 = "Normalité des comptes"; 
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/normalite.tpl" );
 
 				$oSmarty->assign('zListingTpl',  $zListingTpl);
-				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
+				
 				break;
 
 			case 'a-ventiler':
 				
 				$iSousMenuActifId = 7;
 
-				$zLibelle1 = "les comptes à ventiler"; 
+				$zLibelle1 = "Les comptes à ventiler"; 
 				$oSmarty->assign("zBasePath",base_url());
-				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/listingAgents.tpl" );
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/ventiler.tpl" );
 
 				$oSmarty->assign('zListingTpl',  $zListingTpl);
-				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
+				
 				break;
 
 			case 'non-apure':
@@ -263,10 +261,10 @@ class Dashboard extends MY_Controller
 
 				$zLibelle1 = "Compte en attente non apuré"; 
 				$oSmarty->assign("zBasePath",base_url());
-				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/listingAgents.tpl" );
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/apure.tpl" );
 
 				$oSmarty->assign('zListingTpl',  $zListingTpl);
-				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
+				
 				break;
 
 			case 'inexistants':
@@ -275,14 +273,14 @@ class Dashboard extends MY_Controller
 
 				$zLibelle1 = "Compte inexistants"; 
 				$oSmarty->assign("zBasePath",base_url());
-				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/listingAgents.tpl" );
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/inexistants.tpl" );
 
 				$oSmarty->assign('zListingTpl',  $zListingTpl);
-				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
+				
 				break;
 		}
 		
-		
+		$zPathTpl = ADMIN_TEMPLATE_PATH . "compte/zone/compte.tpl";
 		$oData['zBasePath']			= base_url();
 		$oData['zLibelle']			= $zLibelle;
 		$oData['zLibelle1']			= $zLibelle1;
