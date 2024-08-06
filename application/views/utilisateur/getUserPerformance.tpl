@@ -1,4 +1,4 @@
-﻿<div class="mb-0 detailTj" style="font-size:14px;">
+﻿<div id="detail-{$iUserId}" class="mb-0 detailTj" style="font-size:14px;">
 		<div class="card-body1">
 			<div class="row">
 				<div class="col-md-12">
@@ -18,9 +18,9 @@
 									<div class="card-body" style="align-center;">
 										<div class="pro-deadline m-b-15">
 											<div class="sub-title">
-												<br>Nombre de dossier validé : <strong style="color:#28a745!important">{$oGetInfo->VALIDE}</strong>
+												<br>- Nombre de dossier validés : <strong style="color:#28a745!important">{$oGetInfo->VALIDE}</strong>
 											</div>
-											<div class="sub-title">Nombre de dossier rejeté : <strong style="color:#dc3545!important">{$oGetInfo->REJET}</strong></div>
+											<div class="sub-title">- Nombre de dossier rejetés : <strong style="color:#dc3545!important">{$oGetInfo->REJET}</strong></div>
 										</div>
 
 										<p>
@@ -40,6 +40,14 @@
 										</p>
 										<div class="progress progress-xs mb-0">
 											<div class="progress-bar bg-danger" role="progressbar" data-bs-toggle="tooltip" title='{$num2}%' style='width: {$num2}%'></div>
+										</div>
+
+										<div class="pro-deadline m-b-15">
+											<div class="sub-title">
+												<br>- Durée minimale de traitement de dossier : <strong style="color:#28a745!important">3 Jours</strong>
+											</div>
+											<div class="sub-title">- Durée maximale de traitement de dossier : <strong style="color:#dc3545!important">21 jours</strong></div>
+											<div class="sub-title">- Temps moyen de traitement de dossier : <strong style="color:#28a745!important">5 jours</strong></div>
 										</div>
 										
 										<!--
@@ -82,6 +90,9 @@
 	</div>
 </div>
 <style>
+	.sub-title {
+		font-size:17px!important;
+	}
 	.detailTj a.bleu {
 		color: #337ab7!important;
 		text-decoration: none;
@@ -184,5 +195,8 @@
 			}
 		}
 	});
+
+	var scrollDiv = document.getElementById("detail-{$iUserId}").offsetTop+275;
+	window.scrollTo({ top: scrollDiv, behavior: 'smooth'});
 </script>
 

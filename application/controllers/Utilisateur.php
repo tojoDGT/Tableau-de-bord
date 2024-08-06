@@ -144,6 +144,7 @@ class Utilisateur extends MY_Controller
 		//print_r ($oGetInfo);
 		
 		$oSmarty->assign("oGetInfo", $oGetInfo);
+		$oSmarty->assign("iUserId", $iUserId);
 		$oSmarty->assign("zAfficheValide", $zAfficheValide);
 		$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
 		$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);

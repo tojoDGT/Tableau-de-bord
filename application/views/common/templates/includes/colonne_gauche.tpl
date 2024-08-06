@@ -42,14 +42,43 @@
 	  </li>
 	  <li class="nav-item">
 		<a href="{$zBasePath}dashboard/stat/performance-des-pc" class="nav-link {if $oData.iSousMenuActifId==44}active{/if}">
-		  <i class="far fa-circle nav-icon text-purple"></i>
-		  <p>Qualité compte</p>
+		  <i class="far fa-circle nav-icon text-red"></i>
+		  <p>Gestion de trésorerie</p>
+		</a>
+	  </li>
+	</ul>
+  </li>
+  <li class="nav-item {if $oData.iMenuActifId==3}menu-open{/if}">
+	<a href="#" class="nav-link {if $oData.iMenuActifId==3}active{/if}">
+	  <i class="nav-icon fas fa-columns"></i>
+	  <p>
+		Compte
+		<i class="right fas fa-angle-left"></i>
+	  </p>
+	</a>
+	<ul class="nav nav-treeview">
+	  <li class="nav-item">
+		<a href="{$zBasePath}dashboard/compte/normalite" class="nav-link {if $oData.iSousMenuActifId==6}active{/if}">
+		  <i class="far fa-circle nav-icon text-red"></i>
+		  <p>Normalité</p>
 		</a>
 	  </li>
 	  <li class="nav-item">
-		<a href="{$zBasePath}dashboard/stat/performance-des-pc" class="nav-link {if $oData.iSousMenuActifId==44}active{/if}">
-		  <i class="far fa-circle nav-icon text-red"></i>
-		  <p>Gestion de trésorerie</p>
+		<a href="{$zBasePath}dashboard/compte/a-ventiler" class="nav-link {if $oData.iSousMenuActifId==7}active{/if}">
+		  <i class="far fa-circle nav-icon text-blue"></i>
+		  <p>A ventiler</p>
+		</a>
+	  </li>
+	  <li class="nav-item">
+		<a href="{$zBasePath}dashboard/compte/non-apure" class="nav-link {if $oData.iSousMenuActifId==8}active{/if}">
+		  <i class="far fa-circle nav-icon text-yellow"></i>
+		  <p>En attente non apuré</p>
+		</a>
+	  </li>
+	  <li class="nav-item">
+		<a href="{$zBasePath}dashboard/compte/inexistants" class="nav-link {if $oData.iSousMenuActifId==9}active{/if}">
+		  <i class="far fa-circle nav-icon text-green"></i>
+		  <p>Inexistant</p>
 		</a>
 	  </li>
 	</ul>

@@ -22,9 +22,9 @@
                                         <div class="card-body" style="align-center;">
                                             <div class="pro-deadline m-b-15">
                                                 <div class="sub-title">
-                                                    <br>Nombre de dossier validé : <strong style="color:#28a745!important">{$oGetInfo->VALIDE}</strong>
+                                                    <br>Nombre de dossier validés : <strong style="color:#28a745!important">{$oGetInfo->VALIDE}</strong>
                                                 </div>
-                                                <div class="sub-title">Nombre de dossier rejeté : <strong style="color:#dc3545!important">{$oGetInfo->REJET}</strong></div>
+                                                <div class="sub-title">Nombre de dossier rejetés : <strong style="color:#dc3545!important">{$oGetInfo->REJET}</strong></div>
                                             </div>
 
                                             <p>

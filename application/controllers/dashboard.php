@@ -207,6 +207,97 @@ class Dashboard extends MY_Controller
 		$this->load_my_view_Common("dashboard/liste.tpl",$oData);
 	}
 
+
+	/** 
+	* function permettant d'afficher les informations des comptes
+	*
+	* @param string $_zParam type de page à afficher
+	*
+	* @return liste
+	*/
+	public function compte($_zParam="normalite")
+	{
+		global $oSmarty ; 
+		
+		$oData=array();
+		$iMenuActifId = 3;
+		$toGetAllData = array();
+	
+		$zLibelle = "COMPTE";
+		
+		$toColonne = $this->demande->getSessionColonne();
+
+		$toGetAllExercice = $this->dashboard->getAllDateExercice() ; 
+
+		//print_r ($toColonne);
+		
+		switch ($_zParam){
+
+			case 'normalite':
+				
+				$iSousMenuActifId = 6;
+				$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2023);
+
+				$zLibelle1 = "normalité des comptes"; 
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/listing.tpl" );
+
+				$oSmarty->assign('zListingTpl',  $zListingTpl);
+				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
+				break;
+
+			case 'a-ventiler':
+				
+				$iSousMenuActifId = 7;
+
+				$zLibelle1 = "les comptes à ventiler"; 
+				$oSmarty->assign("zBasePath",base_url());
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/listingAgents.tpl" );
+
+				$oSmarty->assign('zListingTpl',  $zListingTpl);
+				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
+				break;
+
+			case 'non-apure':
+				
+				$iSousMenuActifId = 8;
+
+				$zLibelle1 = "Compte en attente non apuré"; 
+				$oSmarty->assign("zBasePath",base_url());
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/listingAgents.tpl" );
+
+				$oSmarty->assign('zListingTpl',  $zListingTpl);
+				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
+				break;
+
+			case 'inexistants':
+				
+				$iSousMenuActifId = 9;
+
+				$zLibelle1 = "Compte inexistants"; 
+				$oSmarty->assign("zBasePath",base_url());
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/listingAgents.tpl" );
+
+				$oSmarty->assign('zListingTpl',  $zListingTpl);
+				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
+				break;
+		}
+		
+		
+		$oData['zBasePath']			= base_url();
+		$oData['zLibelle']			= $zLibelle;
+		$oData['zLibelle1']			= $zLibelle1;
+		
+		$oData['iMenuActifId']		= $iMenuActifId;
+		$oData['iSousMenuActifId']  = $iSousMenuActifId;
+
+		$oSmarty->assign('oSession',  $_SESSION);
+		$oSmarty->assign("zBasePath",base_url());
+		$zPortionTable = $oSmarty->fetch( $zPathTpl );
+		$oData['zPortionTable'] = $zPortionTable;
+
+		$this->load_my_view_Common("dashboard/liste.tpl",$oData);
+	}
+
 	/** 
 	* function graphe Ajax chargement de la graphe
 	*
@@ -481,7 +572,7 @@ class Dashboard extends MY_Controller
 
 				$oSmarty->assign("oGetInfo", $oGetInfo);
 				$oSmarty->assign("zAfficheValide", $zAfficheValide);
-				$oSmarty->assign("zAfficheValide", $zAfficheValide);
+				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
 				$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
 				$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
 				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
