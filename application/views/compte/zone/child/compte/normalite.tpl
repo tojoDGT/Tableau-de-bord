@@ -23,7 +23,7 @@
 						
 				var zData = "";
 				$.ajax({
-					url: zBasePath + "utilisateur/getUserPerformance", // json datasource
+					url: zBasePath + "compte/getUserPerformance", // json datasource
 					type: 'POST',
 					data: {
 						iUserId: d[1]
@@ -77,7 +77,7 @@
 					}
 				},
 				"ajax":{
-					url : zBasePath + "utilisateur/getAjax", // json datasource
+					url : zBasePath + "compte/getAjax", // json datasource
 					data: function ( d ) {
 						d.pc = 2
 					},
