@@ -93,10 +93,10 @@ class Compte extends MY_Controller
 					$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
 					$oDataTemp[] = $oGetListe['PSTP_CODE'];
 					$oDataTemp[] = $oGetListe['COMPTE_NUM'];
-					$oDataTemp[] = $oGetListe['SOLDE_DEBIT'];
-					$oDataTemp[] = $oGetListe['SOLDE_CREDIT'];
-					$oDataTemp[] = $oGetListe['TOTAL_G_D'];
-					$oDataTemp[] = $oGetListe['TOTAL_G_C'];
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['SOLDE_DEBIT']), 2, ',', ' ') . " Ar"; 
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['SOLDE_CREDIT']), 2, ',', ' '). " Ar"; 
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['TOTAL_G_D']), 2, ',', ' '). " Ar"; 
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['TOTAL_G_C']), 2, ',', ' '). " Ar"; 
 					$oDataTemp[] = $oGetListe['SENSFIN'];
 					$oDataTemp[] = $oGetListe['SENSOG'];
 					$oDataTemp[] = $oGetListe['CONCLUSION'];
