@@ -44,7 +44,7 @@
 					{ orderable: false, targets: [0] },
 				 ],
 				"language": {
-					"sProcessing":    "<div style=\";text-align: center;vertical-align: middle;padding-top: 10px;\"><img class=\"imageAloha\" src=\""+zBasePath+"assets/images/loading.gif\" width=\"100\">",
+					"sProcessing":    "<div id='overlay111'><div style=\";text-align: center;vertical-align: middle;padding-top: 10px;\"><img class=\"imageAloha\" src=\""+zBasePath+"assets/images/loading.gif\" width=\"100\"></div>",
 					"sSearch":         "Rechercher&nbsp;:",
 					"sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
 					"sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
@@ -79,6 +79,9 @@
 						d.iAnnee = $("#iAnnee").val()
 
 					},
+					beforeSend: function() {
+						$("body").addClass('overlay');
+					},
 					type: "post",  // method  , by default get
 					error: function(){  // error handling
 
@@ -92,6 +95,32 @@
 		
 </script>
 <style>
+
+.overlay {
+  opacity: 1;
+  /*position: fixed;*/
+  width: 100%;
+  height: 0;
+  text-align: center;
+  /*background-color: rgba(0,0,0, 0.5);*/
+  z-index: 9; 
+  cursor: pointer;
+}
+
+/*.overlay {
+  
+  height: 100%;
+  width: 0;
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0, 0.9); 
+  overflow-x: hidden; 
+  transition: 0.5s; 
+}
+*/
 
 .solde {
 	background-color: #007bff;
