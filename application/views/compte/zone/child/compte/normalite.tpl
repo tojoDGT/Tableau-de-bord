@@ -97,21 +97,18 @@
 	background-color: #007bff;
     border: 1px solid #1371d5 !important;
     color: white;
-	width: 65px !important;
 }
 
 .total {
 	background-color: #28a745;
     border: 1px solid #339349 !important;
     color: white;
-	width: 65px !important;
 }
 
 .sens {
 	background-color: #fd7e14!important;
     border: 1px solid #d7721d !important;
     color: white;
-	width: 65px !important;
 }
 
 
@@ -119,21 +116,21 @@
 	background-color: #90b1d5;
     border: 1px solid #1371d5 !important;
     color: white;
-	width: 65px !important;
+	width: 125px !important;
 }
 
 .total1 {
 	background-color: #6bb17b;
     border: 1px solid #339349 !important;
     color: white;
-	width: 65px !important;
+	width: 125px !important;
 }
 
 .sens1 {
 	background-color: #d9a57a!important;
     border: 1px solid #d7721d !important;
     color: white;
-	width: 65px !important;
+	width: 90px !important;
 }
 th.dt-center, td.dt-center { text-align: center!important; }
 .dt-width {width:20%!important}

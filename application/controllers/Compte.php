@@ -99,7 +99,31 @@ class Compte extends MY_Controller
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['TOTAL_G_C']), 2, ',', ' '). " Ar"; 
 					$oDataTemp[] = $oGetListe['SENSFIN'];
 					$oDataTemp[] = $oGetListe['SENSOG'];
-					$oDataTemp[] = $oGetListe['CONCLUSION'];
+
+					$zBadge = "badge-danger";
+					$zFa = "far fa-thumbs-up";
+					switch ($oGetListe['CONCLUSION']){
+
+						case 'SOLDE ANORMAL':
+						case 'COMPTE INEXISTANT':
+							$zBadge = "badge-danger";
+							$zFa = "fas fa-exclamation-circle";
+							break;
+
+						case 'COMPTE REDRESSE':
+							$zBadge = "badge-warning";
+							$zFa = "fas fa-exclamation-circle";
+							break;
+
+						case 'SOLDE NORMAL':
+							$zBadge = "badge-success";
+							$zFa = "far fa-thumbs-up";
+							break;
+					}
+					
+					$zConclusion = "<small style=\"padding:10px;\" class=\"badge ".$zBadge."\"><i class=\"far ".$zFa."\"></i> ".$oGetListe['CONCLUSION']."</small>";
+					
+					$oDataTemp[] = $zConclusion;
 					
 					$oDataAssign[] = $oDataTemp;
 					$iIncrement++;
