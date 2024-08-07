@@ -36,7 +36,7 @@
 				"searching": true,
 				"footer": true,
 				"columnDefs": [
-					{ className: "dt-center", "targets": [ 1 ] },
+					{ className: "dt-center", "targets": [ 1,9 ] },
 					{ className: "solde1", "targets": [ 3,4 ] },
 					{ className: "total1", "targets": [ 5,6 ] },
 					{ className: "sens1", "targets": [ 7,8 ] },
@@ -44,7 +44,7 @@
 					{ orderable: false, targets: [0] },
 				 ],
 				"language": {
-					"sProcessing":     "Traitement en cours...",
+					"sProcessing":    "<div style=\";text-align: center;vertical-align: middle;padding-top: 10px;\"><img class=\"imageAloha\" src=\""+zBasePath+"assets/images/loading.gif\" width=\"100\">",
 					"sSearch":         "Rechercher&nbsp;:",
 					"sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
 					"sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
