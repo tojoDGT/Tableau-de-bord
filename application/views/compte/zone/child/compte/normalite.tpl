@@ -1,3 +1,4 @@
+<input type="hidden" name="iAnnee" id="iAnnee" value="{$iAnneeExercice}">
 <table id="table_bd" class="table  table-bordered table-hover" style="margin-left:10px">
 	<thead>
 		<tr>
@@ -17,27 +18,7 @@
 		
 		
 		$(document).ready(function() {
-
-			
-			function format ( d ) {
-						
-				var zData = "";
-				$.ajax({
-					url: zBasePath + "compte/getUserPerformance", // json datasource
-					type: 'POST',
-					data: {
-						iUserId: d[1]
-					},
-					success: function(data, textStatus, jqXHR) {
-						zData = data;
-					},
-					async: !1
-				})
-
-				return zData;
-			}
-			
-			var zListeEntite = $('#table_bd').DataTable( {
+			var zListeCompte = $('#table_bd').DataTable( {
 				"processing": true,
 				"serverSide": true,
 				"searching": true,
@@ -79,7 +60,9 @@
 				"ajax":{
 					url : zBasePath + "compte/getAjax", // json datasource
 					data: function ( d ) {
-						d.pc = 2
+						d.iSwitch = 1,
+						d.iAnnee = $("#iAnnee").val()
+
 					},
 					type: "post",  // method  , by default get
 					error: function(){  // error handling
@@ -88,22 +71,7 @@
 				}
 			}); 
 
-			// Add event listener for opening and closing details
-			$('#table_bd tbody').on('click', 'td.details-control', function () {
-				var tr = $(this).parents('tr');
-				var row = zListeEntite.row( tr );
-		 
-				if ( row.child.isShown() ) {
-					// This row is already open - close it
-					row.child.hide();
-					tr.removeClass('shown');
-				}
-				else {
-					// Open this row
-					row.child( format(row.data()) ).show();
-					tr.addClass('shown');
-				}
-			} );
+			
 
 		});
 		
@@ -114,20 +82,6 @@ th.dt-center, td.dt-center { text-align: center!important; }
 #table_bd th{
     width: 15px!important;
 }
-td.details-control {
-    background: url('{/literal}{$zBasePath}{literal}assets/images/flch_or.png') no-repeat center center;
-    cursor: pointer;
-	background-size: 15px;
-	width:15px;
-}
-tr.shown td.details-control {
-    background: url('{/literal}{$zBasePath}{literal}assets/images/flch_or_bas.png') no-repeat center center;
-	background-size: 25px;
-}
 
-.dataTable > thead > tr > th[class*="details-control"]:before,
-.dataTable > thead > tr > th[class*="details-control"]:after {
-    content: "" !important;
-}
 </style>
 {/literal}

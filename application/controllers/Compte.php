@@ -68,7 +68,8 @@ class Compte extends MY_Controller
 		$oUser = array();
 		$oCandidat = array();
 
-		$iSwitch = $this->postGetValue ("iSwitch", 0);
+		$iSwitch = $this->postGetValue ("iSwitch", 1); 
+		$iAnneeExo = $this->postGetValue ("iAnnee", 2023); 
 
 		$oSession = $_SESSION;
 
@@ -77,7 +78,11 @@ class Compte extends MY_Controller
 
 		switch ($iSwitch){
 			case 1:
-				$toGetListe = $this->compte->getCompte($iNombreTotal,$this) ;
+				$toGetListe = $this->compte->getCompteNormalite($iAnneeExo,$iNombreTotal,$this) ;
+
+				/*echo "<pre>";
+				print_r ($toGetListe);
+				echo "</pre>";*/
 
 				$oDataAssign = array();
 				$iIncrement = 1;
@@ -85,12 +90,16 @@ class Compte extends MY_Controller
 					
 					$oDataTemp=array(); 
 
-					$oDataTemp[] = '';
-					$oDataTemp[] = $oGetListe['USERID'];
-					$oDataTemp[] = $oGetListe['LAST_NAME'];
-					$oDataTemp[] = $oGetListe['FIRST_NAME'];
-					$oDataTemp[] = $oGetListe['EMAIL_CANONICAL'];
-					$oDataTemp[] = $oGetListe['ACTIVITYNAME'];
+					$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
+					$oDataTemp[] = $oGetListe['PSTP_CODE'];
+					$oDataTemp[] = $oGetListe['COMPTE_NUM'];
+					$oDataTemp[] = $oGetListe['SOLDE_DEBIT'];
+					$oDataTemp[] = $oGetListe['SOLDE_CREDIT'];
+					$oDataTemp[] = $oGetListe['TOTAL_G_D'];
+					$oDataTemp[] = $oGetListe['TOTAL_G_C'];
+					$oDataTemp[] = $oGetListe['SENSFIN'];
+					$oDataTemp[] = $oGetListe['SENSOG'];
+					$oDataTemp[] = $oGetListe['CONCLUSION'];
 					
 					$oDataAssign[] = $oDataTemp;
 					$iIncrement++;
@@ -99,7 +108,7 @@ class Compte extends MY_Controller
 				break;
 
 			case 2:
-				$toGetListe = $this->compte->getComptePc($iNombreTotal,$this,$zPsCode) ;
+				/*$toGetListe = $this->compte->getComptePc($iNombreTotal,$this,$zPsCode) ;
 				
 				$oDataAssign = array();
 				$iIncrement = 1;
@@ -116,12 +125,12 @@ class Compte extends MY_Controller
 					
 					$oDataAssign[] = $oDataTemp;
 					$iIncrement++;
-				}
+				}*/
 
 				break;
 
 			case 3:
-				$toGetListe = $this->compte->getCompteAgent($iNombreTotal,$this) ;
+				/*$toGetListe = $this->compte->getCompteAgent($iNombreTotal,$this) ;
 
 				$oDataAssign = array();
 				$iIncrement = 1;
@@ -138,11 +147,11 @@ class Compte extends MY_Controller
 					
 					$oDataAssign[] = $oDataTemp;
 					$iIncrement++;
-				}
+				}*/
 				break;
 
 			case 4:
-				$toGetListe = $this->compte->getCompteAgent($iNombreTotal,$this) ;
+				/*$toGetListe = $this->compte->getCompteAgent($iNombreTotal,$this) ;
 
 				$oDataAssign = array();
 				$iIncrement = 1;
@@ -159,7 +168,7 @@ class Compte extends MY_Controller
 					
 					$oDataAssign[] = $oDataTemp;
 					$iIncrement++;
-				}
+				}*/
 				break;
 		}
 

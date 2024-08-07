@@ -237,8 +237,9 @@ class Dashboard extends MY_Controller
 				$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2023);
 
 				$zLibelle1 = "Normalité des comptes"; 
+				$oSmarty->assign('iAnneeExercice',  $iAnneeExercice);
 				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/normalite.tpl" );
-
+				
 				$oSmarty->assign('zListingTpl',  $zListingTpl);
 				
 				break;
