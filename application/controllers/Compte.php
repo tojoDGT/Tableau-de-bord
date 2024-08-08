@@ -101,7 +101,26 @@ class Compte extends MY_Controller
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['OPER_FIN_GEST_C']), 2, ',', ' '). " Ar"; 
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['TOTAL_G_D']), 2, ',', ' '). " Ar"; 
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['TOTAL_G_C']), 2, ',', ' '). " Ar"; 
-					$oDataTemp[] = $oGetListe['SENS_ENCOURS'];
+					
+					$zSens = "";
+
+					switch ($oGetListe['SENS_ENCOURS']){
+						case 'DEBITEUR':
+							$zSens = "#dc3545";
+							
+							break;
+
+						case 'CREDITEUR':
+							$zSens = "#28a745";
+							
+							break;
+
+						default:
+							$zSens = "#007bff";
+							break;
+					}
+					
+					$oDataTemp[] = "<span style=\"color:".$zSens."\"><strong>" . $oGetListe['SENS_ENCOURS'] . "</strong></span>";
 					//$oDataTemp[] = $oGetListe['SENSOG'];
 
 					$zBadge = "badge-danger";
