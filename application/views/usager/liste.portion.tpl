@@ -1,4 +1,4 @@
-<table id="table_bd" class="table  table-bordered table-hover">
+<table id="table_bd" class="table  table-bordered table-hover" style="margin-left:10px;min-height: 300px;">
 	<thead>
 		<tr>
 			<th>Nom</th>

@@ -337,7 +337,6 @@ class Dashboard extends MY_Controller
 
 			case '1':
 
-
 					foreach($toGetPropCode as $oGetPropCode){
 									
 							$zAfficheSerieStat .= "{";

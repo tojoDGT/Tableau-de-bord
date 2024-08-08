@@ -28,7 +28,7 @@
 							<!------------------ Manaraka ------------------------------->	
 							<section class="connectedSortable ui-sortable">
 							<!-- Custom tabs (Charts with tabs)-->
-							<div class="card" style="position: relative; left: 0px; top: 0px;">
+							<div class="card" style="position: relative; left: 0px; top: 0px;min-height:400px;">
 							  <div class="card-header ui-sortable-handle" style="cursor: move;">
 								<h3 class="card-title">
 								  <i class="fas fa-chart-pie mr-1"></i>
