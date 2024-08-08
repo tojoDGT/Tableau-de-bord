@@ -72,7 +72,7 @@ $(document).ready(function() {
 			{ className: "details-control", "targets": [ 0 ] }
 		 ],
 		"language": {
-			"sProcessing":     "Traitement en cours...",
+			"sProcessing":     "<div id='overlay111'>Chargement...<br/><div style=\";text-align: center;vertical-align: middle;padding-top: 10px;\"><img class=\"imageAloha\" src=\""+zBasePath+"assets/images/loading.gif\" width=\"100\"></div>",
 			"sSearch":         "Rechercher&nbsp;:",
 			"sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
 			"sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",

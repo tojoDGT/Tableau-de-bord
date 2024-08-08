@@ -15,6 +15,8 @@
 										<td class="noBottom">
 											<select class="form-control" id="ECRI_EXERCICE" name="ECRI_EXERCICE">
 													<option selected="selected" value="">Tous</option>
+													<option value="2023">2023</option>
+													<option value="2023">2024</option>
 											</select>
 										</td>
 									</tr>
@@ -44,8 +46,11 @@
 										<td class="noBottom">
 											<select class="form-control" id="MIN_ABREV" name="MIN_ABREV">
 													<option selected="selected" value="">Tous</option>
-															
-													</select>
+													<option value="SOLDE ANORMAL">SOLDE ANORMAL</option>
+													<option value="COMPTE INEXISTANT">COMPTE INEXISTANT</option>
+													<option value="COMPTE REDRESSE">COMPTE REDRESSE</option>
+													<option value="SOLDE NORMAL">SOLDE NORMAL</option>	
+											</select>
 										</td>
 									</tr>
 								</tbody>
