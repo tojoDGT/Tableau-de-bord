@@ -29,12 +29,19 @@
 									<tr>
 										<td class="middle" width="10">Poste Comptable : </td>
 										<td class="noBottom">
-											<select class="form-control" id="MIN_ABREV" name="MIN_ABREV">
+											<select class="form-control" id="PSTP_CODE" name="PSTP_CODE">
 													<option selected="selected" value="">Tous</option>	
 											</select>
 										</td>
 									</tr>
-									
+									<tr>
+										<td class="middle" width="10">Compte num : </td>
+										<td class="noBottom">
+											<select class="form-control" id="COMPTE_NUM" name="COMPTE_NUM">
+													<option selected="selected" value="">Tous</option>	
+											</select>
+										</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -44,7 +51,7 @@
 									<tr>
 										<td class="middle" width="10">Conclusion : </td>
 										<td class="noBottom">
-											<select class="form-control" id="MIN_ABREV" name="MIN_ABREV">
+											<select class="form-control" id="CONCLUSION" name="CONCLUSION">
 													<option selected="selected" value="">Tous</option>
 													<option value="SOLDE ANORMAL">SOLDE ANORMAL</option>
 													<option value="COMPTE INEXISTANT">COMPTE INEXISTANT</option>

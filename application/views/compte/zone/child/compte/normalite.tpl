@@ -5,10 +5,11 @@
 	<thead>
 		<tr>
 			<th colspan="3"></th>
-			<th colspan="2" class="dt-center solde">SOLDE</th>
-			<th colspan="2" class="dt-center total">TOTAL</th>
-			<th colspan="2" class="dt-center sens">SENS</th>
-			<th colspan="1"></th>
+			<th colspan="2" class="dt-center solde">BALANCE ENTREE</th>
+			<th colspan="2" class="dt-center total">OPERATION DE GESTION</th>
+			<th colspan="2" class="dt-center sens">OPERATION FIN DE GESTION</th>
+			<th colspan="2" class="dt-center oper">TOTAL</th>
+			<th colspan="2"></th>
         </tr>
 		<tr>
 			<th class="dt-center">POSTE COMPTABLE</th>
@@ -18,8 +19,11 @@
 			<th class="dt-center solde">CREDIT</th>
 			<th class="dt-center total">DEBIT</th>
 			<th class="dt-center total">CREDIT</th>
-			<th class="dt-center sens">FIN</th>
-			<th class="dt-center sens">OG</th>
+			<th class="dt-center sens">DEBIT</th>
+			<th class="dt-center sens">CREDIT</th>
+			<th class="dt-center oper">DEBIT</th>
+			<th class="dt-center oper">CREDIT</th>
+			<th class="dt-center">SENS EN COURS</th>
 			<th class="dt-center">CONCLUSION</th>
         </tr>
 	</thead>
@@ -29,8 +33,6 @@
 </table>
 {literal}
 <script>
-		
-		
 		$(document).ready(function() {
 			var zListeCompte = $('#table_bd').DataTable( {
 				"processing": true,
@@ -38,10 +40,11 @@
 				"searching": true,
 				"footer": true,
 				"columnDefs": [
-					{ className: "dt-center", "targets": [ 1,9 ] },
+					{ className: "dt-center", "targets": [ 1,11 ] },
 					{ className: "solde1", "targets": [ 3,4 ] },
 					{ className: "total1", "targets": [ 5,6 ] },
 					{ className: "sens1", "targets": [ 7,8 ] },
+					{ className: "oper1", "targets": [ 9,10 ] },
 					{ className: "details-control", "targets": [ 0 ] },
 					{ orderable: false, targets: [0] },
 				 ],
@@ -132,6 +135,11 @@
     color: white;
 }
 
+.oper {
+	background-color: #ffc107!important;
+    border: 1px solid #ffc107 !important;
+    color: white;
+}
 
 .solde1 {
 	background-color: #90b1d5;
@@ -151,6 +159,13 @@
 	background-color: #d9a57a!important;
     border: 1px solid #d7721d !important;
     color: white;
+	width: 90px !important;
+}
+
+.oper1 {
+	background-color: #fbdd84 !important;
+    border: 1px solid #ffc107 !important;
+    color: #6a6565;
 	width: 90px !important;
 }
 th.dt-center, td.dt-center { text-align: center!important; }

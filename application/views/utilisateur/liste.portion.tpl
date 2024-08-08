@@ -14,11 +14,9 @@
 </table>
 {literal}
 <script>
-		
-		
+	
 		$(document).ready(function() {
 
-			
 			function format ( d ) {
 						
 				var zData = "";

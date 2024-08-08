@@ -93,12 +93,16 @@ class Compte extends MY_Controller
 					$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
 					$oDataTemp[] = $oGetListe['PSTP_CODE'];
 					$oDataTemp[] = $oGetListe['COMPTE_NUM'];
-					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['SOLDE_DEBIT']), 2, ',', ' ') . " Ar"; 
-					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['SOLDE_CREDIT']), 2, ',', ' '). " Ar"; 
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['BAL_ENTR_D']), 2, ',', ' ') . " Ar"; 
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['BAL_ENTR_C']), 2, ',', ' '). " Ar"; 
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['OPER_GEST_D']), 2, ',', ' '). " Ar"; 
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['OPER_GEST_C']), 2, ',', ' '). " Ar"; 
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['OPER_FIN_GEST_D']), 2, ',', ' '). " Ar"; 
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['OPER_FIN_GEST_C']), 2, ',', ' '). " Ar"; 
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['TOTAL_G_D']), 2, ',', ' '). " Ar"; 
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['TOTAL_G_C']), 2, ',', ' '). " Ar"; 
-					$oDataTemp[] = $oGetListe['SENSFIN'];
-					$oDataTemp[] = $oGetListe['SENSOG'];
+					$oDataTemp[] = $oGetListe['SENS_ENCOURS'];
+					//$oDataTemp[] = $oGetListe['SENSOG'];
 
 					$zBadge = "badge-danger";
 					$zFa = "far fa-thumbs-up";
