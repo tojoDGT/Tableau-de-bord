@@ -239,7 +239,11 @@ class Dashboard extends MY_Controller
 				$zLibelle1 = "Normalité des comptes"; 
 				$oSmarty->assign('iAnneeExercice',  $iAnneeExercice);
 				$oSmarty->assign("zBasePath",base_url());
+				$oSmarty->assign('iTypeAfficheSearch',  1);
+				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/search.tpl" );
+				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
 				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/normalite.tpl" );
+				
 				
 				$oSmarty->assign('zListingTpl',  $zListingTpl);
 				

@@ -1,3 +1,5 @@
+{$zSearchTpl}
+<br><br>
 <input type="hidden" name="iAnnee" id="iAnnee" value="{$iAnneeExercice}">
 <table id="table_bd" class="table  table-bordered table-hover" style="margin-left:10px">
 	<thead>
@@ -80,7 +82,7 @@
 
 					},
 					beforeSend: function() {
-						$("body").addClass('overlay');
+						$(".content").addClass('overlay');
 					},
 					type: "post",  // method  , by default get
 					error: function(){  // error handling
@@ -96,23 +98,13 @@
 </script>
 <style>
 
-.overlay {
-  opacity: 1;
-  /*position: fixed;*/
-  width: 100%;
-  height: 0;
-  text-align: center;
-  /*background-color: rgba(0,0,0, 0.5);*/
-  z-index: 9; 
-  cursor: pointer;
-}
 
 /*.overlay {
-  
-  height: 100%;
+  opacity:0.5;
+  height: 0;
   width: 0;
   position: fixed; 
-  z-index: 1; 
+  z-index: 999; 
   left: 0;
   top: 0;
   background-color: rgb(0,0,0); 
