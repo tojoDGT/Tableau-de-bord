@@ -131,4 +131,34 @@ class Compte_model extends CI_Model {
 		return $toRow;
 
 	}
+
+	/** 
+	* function permettant d'afficher la liste des propriétaires codes
+	*
+	*
+	* @return liste en tableau d'objet
+	*/
+
+	public function getAllCompte(){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('catia',true);
+
+		$toRow = array();
+
+		$zSql = "select distinct compte_num,compte_lib from COMPTE p
+				 WHERE compte_num IN (SELECT distinct lecr_cpt_general from EXECUTION2023.lgecriture)
+				 AND p.compte_owner='01'
+				 GROUP BY compte_num,compte_lib
+				 ORDER BY compte_num" ;
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+
+		return $toRow;
+	}
 }
