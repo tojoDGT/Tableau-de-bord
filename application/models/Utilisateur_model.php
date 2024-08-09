@@ -284,7 +284,7 @@ class Utilisateur_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet des postes comptables
 	*/
-	public function posteComptable(&$_iNbrTotal = 0,$_this=''){
+	public function posteComptable(&$_iNbrTotal = 0,$_this='',$iLimit=0){
 		global $db;
 
 
@@ -321,7 +321,9 @@ class Utilisateur_model extends CI_Model {
 			$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+		if($iLimit == 0){
+			$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+		}
 
 		//echo $zSql;
 

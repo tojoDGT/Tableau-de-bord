@@ -81,9 +81,10 @@
 					url : zBasePath + "compte/getAjax", // json datasource
 					data: function ( d ) {
 						d.iSwitch = 1,
-						d.iAnnee = $("#ECRI_EXERCICE").val();
-						d.CONCLUSION = $("#CONCLUSION").val();
-
+						d.iAnnee = $("#ECRI_EXERCICE").val(),
+						d.CONCLUSION = $("#CONCLUSION").val(),
+						d.SENS = $("#SENS").val(),
+						d.PSTP_CODE = $("#PSTP_CODE").val()
 					},
 					beforeSend: function() {
 						$(".content").addClass('overlay');

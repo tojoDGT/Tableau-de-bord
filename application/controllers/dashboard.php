@@ -236,8 +236,11 @@ class Dashboard extends MY_Controller
 				$iSousMenuActifId = 6;
 				$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2023);
 
+				$toGetListePc = $this->utilisateur->posteComptable($iNombreTotal,$this,1) ;
+
 				$zLibelle1 = "Normalité des comptes"; 
 				$oSmarty->assign('iAnneeExercice',  $iAnneeExercice);
+				$oSmarty->assign('toGetListePc',  $toGetListePc);
 				$oSmarty->assign("zBasePath",base_url());
 				$oSmarty->assign('iTypeAfficheSearch',  1);
 				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/search.tpl" );

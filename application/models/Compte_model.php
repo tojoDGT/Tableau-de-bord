@@ -74,6 +74,14 @@ class Compte_model extends CI_Model {
 			$zWhere.=" AND norm.CONCLUSION = '" . $oRequest['CONCLUSION'] . "'";
 		}
 
+		if( !empty($oRequest['SENS']) && ($oRequest['SENS']!="") ) {   
+			$zWhere.=" AND norm.SENS_ENCOURS = '" . $oRequest['SENS'] . "'";
+		}
+
+		if( !empty($oRequest['PSTP_CODE']) && ($oRequest['PSTP_CODE']!="") ) {   
+			$zWhere.=" AND norm.PSTP_CODE = '" . $oRequest['PSTP_CODE'] . "'";
+		}
+
 		if($_iAnneeExo!=""){
 			$zWhere.=" AND norm.ECRI_EXERCICE = '" . $_iAnneeExo . "' ";
 		}
