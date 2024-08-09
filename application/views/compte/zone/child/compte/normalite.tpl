@@ -13,7 +13,7 @@
         </tr>
 		<tr>
 			<th class="dt-center">POSTE COMPTABLE</th>
-			<th class="dt-center">CODE POSTE</th>
+			<th class="dt-center">ANNEE EXERCICE</th>
 			<th class="dt-center">COMPTE NUMERO</th>
 			<th class="dt-center solde">DEBIT</th>
 			<th class="dt-center solde">CREDIT</th>

@@ -91,7 +91,7 @@ class Compte extends MY_Controller
 					$oDataTemp=array(); 
 
 					$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
-					$oDataTemp[] = $oGetListe['PSTP_CODE'];
+					$oDataTemp[] = $oGetListe['ECRI_EXERCICE'];
 					$oDataTemp[] = $oGetListe['COMPTE_NUM'];
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['BAL_ENTR_D']), 2, ',', ' ') . " Ar"; 
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['BAL_ENTR_C']), 2, ',', ' '). " Ar"; 
