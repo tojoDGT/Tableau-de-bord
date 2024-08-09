@@ -59,18 +59,24 @@ class Compte_model extends CI_Model {
 
 		//$zSql = "select * from (";
 
-		$zSql = "select COUNT(*) over () found_rows,n.* from V_NORMALITE_COMPTE n where 1=1 " ;
+		$zWhere = "";
+
+		//$zSql = "select COUNT(*) over () found_rows,n.* from V_NORMALITE_COMPTE n where 1=1 " ;
 
 		if( !empty($oRequest['search']['value']) ) {   
-			$zSql.=" AND ( PSTP_LIBELLE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  PSTP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  COMPTE_NUM LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  CONCLUSION LIKE '%".$oRequest['search']['value']."%' ) ";
+			$zWhere.=" AND ( PSTP_LIBELLE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  PSTP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  COMPTE_NUM LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  CONCLUSION LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
 		if($_iAnneeExo!=""){
-			$zSql.=" AND ECRI_EXERCICE = '" . $_iAnneeExo . "' ";
+			$zWhere.=" AND ecriture.ECRI_EXERCICE = '" . $_iAnneeExo . "' ";
 		}
+
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/normalite.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ZDATE%", '31/12/2023', $zData) ; 
 		
 		$zDebut = 0;
 		$zFin = 10;
