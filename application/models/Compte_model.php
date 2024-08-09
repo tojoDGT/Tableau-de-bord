@@ -59,7 +59,7 @@ class Compte_model extends CI_Model {
 
 		//$zSql = "select * from (";
 
-		$zWhere = "";
+		$zWhere = " WHERE 1=1 ";
 
 		//$zSql = "select COUNT(*) over () found_rows,n.* from V_NORMALITE_COMPTE n where 1=1 " ;
 
@@ -70,13 +70,21 @@ class Compte_model extends CI_Model {
 			$zWhere.=" OR  CONCLUSION LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
+		if( !empty($oRequest['CONCLUSION']) && ($oRequest['CONCLUSION']!="") ) {   
+			$zWhere.=" AND norm.CONCLUSION = '" . $oRequest['CONCLUSION'] . "'";
+		}
+
 		if($_iAnneeExo!=""){
-			$zWhere.=" AND ecriture.ECRI_EXERCICE = '" . $_iAnneeExo . "' ";
+			$zWhere.=" AND norm.ECRI_EXERCICE = '" . $_iAnneeExo . "' ";
 		}
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/normalite.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ZDATE%", '31/12/2023', $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
+
+		$zDateParam = date("d/m/".$_iAnneeExo) ;
+
+		$zSql = str_replace("%ZDATE%", trim($zDateParam), $zData) ; 
 		
 		$zDebut = 0;
 		$zFin = 10;

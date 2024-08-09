@@ -1,4 +1,5 @@
-select distinct COUNT(*) over () found_rows,bal."PSTP_LIBELLE",bal."PSTP_CODE",bal."ECRI_EXERCICE",bal."CLASSE",bal."COMPTE_NUM",bal."BAL_ENTR_D",bal."BAL_ENTR_C",bal."OPER_GEST_D",bal."OPER_GEST_C",bal."OPER_FIN_GEST_D",bal."OPER_FIN_GEST_C",bal."TOTAL_G_D",bal."TOTAL_G_C",bal."SOLDE_DEBIT",bal."SOLDE_CREDIT",bal."SENSFIN",bal."SENSOG", 
+SELECT COUNT(*) over () found_rows,norm.* from (
+select distinct bal."PSTP_LIBELLE",bal."PSTP_CODE",bal."ECRI_EXERCICE",bal."CLASSE",bal."COMPTE_NUM",bal."BAL_ENTR_D",bal."BAL_ENTR_C",bal."OPER_GEST_D",bal."OPER_GEST_C",bal."OPER_FIN_GEST_D",bal."OPER_FIN_GEST_C",bal."TOTAL_G_D",bal."TOTAL_G_C",bal."SOLDE_DEBIT",bal."SOLDE_CREDIT",bal."SENSFIN",bal."SENSOG", 
 case when SUBSTR ('%ZDATE%', 1, 5) = '31/12' then (
 CASE 
     WHEN (compte.compte_sens_fin_gestion = 'C')
@@ -156,9 +157,9 @@ FROM
                           ELSE 0
                        END
                       ) AS oper_gest_c
-              FROM EXECUTION2023.T_lgecriture_ctrl lgecriture, EXECUTION2023.ecriture ecriture, CATIA.POSTE_COMPTABLE pc
+              FROM EXECUTION%ANNEE%.T_lgecriture_ctrl lgecriture, EXECUTION%ANNEE%.ecriture ecriture, CATIA.POSTE_COMPTABLE pc
              WHERE lgecriture.ecri_num = ecriture.ecri_num
-			   %WHERE%
+			  
                AND NVL (ecriture.ecri_valid, 9) = 1
                            -- and pc.pstp_code=ecriture.ENTITE
                            and pc.pstp_code=lgecriture.entite
@@ -178,3 +179,5 @@ group by a.pstp_libelle,a.pstp_code,a.ecri_exercice, classe, p.compte_num
 order by classe, compte_num
 ) bal, catia.compte compte
 where bal.compte_num = compte.compte_num (+) AND compte_owner='01'
+) norm
+%WHERE%
