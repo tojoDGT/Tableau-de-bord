@@ -263,4 +263,55 @@ class Compte extends MY_Controller
 		echo $zTplAffiche ;  
 			
     }
+
+	public function getCompteSelect2(){
+
+		global $oSmarty ;
+		
+		$zTerm = "" ;
+        $tRetour = array () ;
+
+        $iFiltre = 0;
+		if (isset ($_GET['q']))
+        {
+            $zTerm = htmlentities ($_GET['q']) ;
+        }
+        else
+        {
+            $zTerm = "" ;
+        }
+
+		if (isset ($_GET['iFiltre']))
+        {
+            $iFiltre = $_GET['iFiltre'] ;
+        }
+
+		$toListe = $this->compte->getAllCompte($zTerm);
+
+		/*echo "<pre>";
+		print_r ($toListe);
+		echo "</pre>";*/
+
+		$iActif = 0;
+
+		$toRes = array();
+
+        foreach ($toListe as $oListe)
+        {
+
+            $toTemp         = array () ;
+            $toTemp["id"]   = $oListe['COMPTE_NUM'];
+            $toTemp["text"] = $oListe['COMPTE_LIB'] ;
+            $toRes []       = $toTemp ;
+        }
+
+		$zCallback = $_GET ['callback'] ;
+        $zToReturn = $zCallback . "(\n" ;
+        $zToReturn .= json_encode ($toRes) ;
+        $zToReturn .= ")" ;
+		
+		echo $zToReturn ; 
+		
+	}
+
 }

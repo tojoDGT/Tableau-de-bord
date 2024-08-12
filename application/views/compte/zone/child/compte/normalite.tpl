@@ -84,6 +84,7 @@
 						d.iAnnee = $("#ECRI_EXERCICE").val(),
 						d.CONCLUSION = $("#CONCLUSION").val(),
 						d.SENS = $("#SENS").val(),
+						d.COMPTE_NUM = $("#COMPTE_NUM").val(),
 						d.PSTP_CODE = $("#PSTP_CODE").val()
 					},
 					beforeSend: function() {
