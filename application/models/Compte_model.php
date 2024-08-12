@@ -82,6 +82,10 @@ class Compte_model extends CI_Model {
 			$zWhere.=" AND norm.PSTP_CODE = '" . $oRequest['PSTP_CODE'] . "'";
 		}
 
+		if( !empty($oRequest['COMPTE_NUM']) && ($oRequest['COMPTE_NUM']!="") ) {   
+			$zWhere.=" AND norm.COMPTE_NUM = '" . $oRequest['COMPTE_NUM'] . "'";
+		}
+
 		if($_iAnneeExo!=""){
 			$zWhere.=" AND norm.ECRI_EXERCICE = '" . $_iAnneeExo . "' ";
 		}
@@ -139,7 +143,7 @@ class Compte_model extends CI_Model {
 	* @return liste en tableau d'objet
 	*/
 
-	public function getAllCompte(){
+	public function getAllCompte($_zTerm = ''){
 		
 		global $db;
 
@@ -151,9 +155,15 @@ class Compte_model extends CI_Model {
 
 		$zSql = "select distinct compte_num,compte_lib from COMPTE p
 				 WHERE compte_num IN (SELECT distinct lecr_cpt_general from EXECUTION2023.lgecriture)
-				 AND p.compte_owner='01'
-				 GROUP BY compte_num,compte_lib
-				 ORDER BY compte_num" ;
+				 AND p.compte_owner='01' " ;
+
+
+		if ($_zTerm != '') {
+			$zSql .= " AND compte_lib like '%". $_zTerm ."%'" ; 
+		}
+
+		$zSql .= " GROUP BY compte_num,compte_lib
+				   ORDER BY compte_num " ; 
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
