@@ -23,7 +23,7 @@ select pc.PSTP_LIBELLE,pc.PSTP_CODE,ecriture.ecri_exercice exercice, ecriture.ec
                -- AND TO_DATE (ecriture.ecri_dt_cecriture, 'DD/MM/RRRR')
                --       BETWEEN TO_DATE ($P{Date_Start}, 'DD/MM/RRRR')
                --           AND TO_DATE ($P{Date_End}, 'DD/MM/RRRR')
-                AND UPPER(ecriture.prop_code) LIKE 'ETAT'
+               -- AND UPPER(ecriture.prop_code) LIKE 'ETAT'
 				
                 and lgecriture.lecr_cpt_general not in (select compte.compte_num
                 from catia.compte,catia.compte_tcompte

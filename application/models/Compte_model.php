@@ -199,6 +199,10 @@ class Compte_model extends CI_Model {
 			$zWhere.=" AND COMPTE = '" . $oRequest['COMPTE_NUM'] . "'";
 		}
 
+		if( !empty($oRequest['PROP_CODE']) && ($oRequest['PROP_CODE']!="") ) {   
+			$zWhere.=" AND PROPRIETAIRE = '" . $oRequest['PROP_CODE'] . "'";
+		}
+
 		if($_iAnneeExo!=""){
 			$zWhere.=" AND EXERCICE = '" . $_iAnneeExo . "' ";
 		}

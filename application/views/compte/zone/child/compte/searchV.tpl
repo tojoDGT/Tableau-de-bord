@@ -77,6 +77,19 @@
 											</select>
 										</td>
 									</tr>
+									<tr>
+										<td class="middle" width="10">Proprietaire : </td>
+										<td class="noBottom">
+											<select class="form-control" id="PROP_CODE" name="PROP_CODE">
+												<option value="">Tous</option>
+												<option value="ETAT">ETAT</option>
+												<option value="CCI">CCI</option>	
+												<option value="CTD">CTD</option>	
+												<option value="EPN">EPN</option>	
+												<option value="RGN">RGN</option>	
+											</select>
+										</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
