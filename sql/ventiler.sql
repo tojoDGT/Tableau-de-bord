@@ -1,4 +1,5 @@
-select COUNT(*) over () found_rows,pc.PSTP_LIBELLE,pc.PSTP_CODE,ecriture.ecri_exercice exercice, ecriture.ecri_ref as reference_ecriture,ecriture.ecri_lib libelle_ecriture,
+SELECT COUNT(*) over () found_rows,norm.* from (
+select pc.PSTP_LIBELLE,pc.PSTP_CODE,ecriture.ecri_exercice exercice, ecriture.ecri_ref as reference_ecriture,ecriture.ecri_lib libelle_ecriture,
         ecriture.ecri_dt_cecriture date_ecriture,ecriture.ecri_oper_saisie operateur,
         ecriture.ECRI_MT ecriture_mt,decode (ecriture.ecri_valid,1,'VALIDE','NON VALIDE') status,
         ecriture.prop_code proprietaire,
@@ -23,7 +24,7 @@ select COUNT(*) over () found_rows,pc.PSTP_LIBELLE,pc.PSTP_CODE,ecriture.ecri_ex
                --       BETWEEN TO_DATE ($P{Date_Start}, 'DD/MM/RRRR')
                --           AND TO_DATE ($P{Date_End}, 'DD/MM/RRRR')
                 AND UPPER(ecriture.prop_code) LIKE 'ETAT'
-				%WHERE%
+				
                 and lgecriture.lecr_cpt_general not in (select compte.compte_num
                 from catia.compte,catia.compte_tcompte
                 where compte.id = compte_tcompte.ID_COMPTE
@@ -33,3 +34,5 @@ select COUNT(*) over () found_rows,pc.PSTP_LIBELLE,pc.PSTP_CODE,ecriture.ecri_ex
                select 'X' from catia.compte where compte.compte_num = lgecriture.lecr_cpt_general and compte.compte_owner ='01'
 		and exo='%ANNEE%'
                )
+) norm
+%WHERE%

@@ -174,7 +174,7 @@ class Compte_model extends CI_Model {
 
 		//$zSql = "select * from (";
 
-		$zWhere = " ";
+		$zWhere = " WHERE 1=1 ";
 
 		if( !empty($oRequest['search']['value']) ) {   
 			$zWhere.=" AND ( PSTP_LIBELLE LIKE '%".$oRequest['search']['value']."%'  ";

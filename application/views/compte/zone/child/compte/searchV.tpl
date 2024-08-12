@@ -68,25 +68,12 @@
 							<table class="table tableRond table-top-countries">
 								<tbody>
 									<tr>
-										<td class="middle" width="10">Conclusion : </td>
-										<td class="noBottom">
-											<select class="form-control" id="CONCLUSION" name="CONCLUSION">
-													<option selected="selected" value="">Tous</option>
-													<option value="SOLDE ANORMAL">SOLDE ANORMAL</option>
-													<option value="COMPTE INEXISTANT">COMPTE INEXISTANT</option>
-													<option value="COMPTE REDRESSE">COMPTE REDRESSE</option>
-													<option value="SOLDE NORMAL">SOLDE NORMAL</option>	
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td class="middle" width="10">Sens en cours : </td>
+										<td class="middle" width="10">Sens : </td>
 										<td class="noBottom">
 											<select class="form-control" id="SENS" name="SENS">
-													<option selected="selected" value="">Tous</option>
-													<option value="NEUTRE">NEUTRE</option>
-													<option value="DEBITEUR">DEBITEUR</option>
-													<option value="CREDITEUR">CREDITEUR</option>	
+												<option value="">Tous</option>
+												<option value="D">DEBITEUR</option>
+												<option value="C">CREDITEUR</option>	
 											</select>
 										</td>
 									</tr>
