@@ -288,8 +288,14 @@ class Dashboard extends MY_Controller
 				
 				$iSousMenuActifId = 9;
 
-				$zLibelle1 = "Compte inexistants"; 
+				$toGetListePc = $this->utilisateur->posteComptable($iNombreTotal,$this,1) ;
+
+				$zLibelle1 = "Les comptes inexistants"; 
+				$oSmarty->assign('iAnneeExercice',  $iAnneeExercice);
 				$oSmarty->assign("zBasePath",base_url());
+				$oSmarty->assign('toGetListePc',  $toGetListePc);
+				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/searchI.tpl" );
+				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
 				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/inexistants.tpl" );
 
 				$oSmarty->assign('zListingTpl',  $zListingTpl);
