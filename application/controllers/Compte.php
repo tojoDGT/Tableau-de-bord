@@ -77,6 +77,7 @@ class Compte extends MY_Controller
 		$iNombreTotal = 0;
 
 		switch ($iSwitch){
+
 			case 1:
 				$toGetListe = $this->compte->getCompteNormalite($iAnneeExo,$iNombreTotal,$this) ;
 
@@ -151,31 +152,62 @@ class Compte extends MY_Controller
 					$oDataAssign[] = $oDataTemp;
 					$iIncrement++;
 				}
-
 				break;
 
 			case 2:
-				/*$toGetListe = $this->compte->getComptePc($iNombreTotal,$this,$zPsCode) ;
-				
+				$toGetListe = $this->compte->getCompteAVentiler($iAnneeExo,$iNombreTotal,$this) ;
+
+				/*echo "<pre>";
+				print_r ($toGetListe);
+				echo "</pre>";*/
+
 				$oDataAssign = array();
 				$iIncrement = 1;
 				foreach ($toGetListe as $oGetListe){
 					
 					$oDataTemp=array(); 
 
-					$oDataTemp[] = '';
-					$oDataTemp[] = $oGetListe['USERID'];
-					$oDataTemp[] = $oGetListe['LAST_NAME'];
-					$oDataTemp[] = $oGetListe['FIRST_NAME'];
-					$oDataTemp[] = $oGetListe['EMAIL_CANONICAL'];
-					$oDataTemp[] = $oGetListe['ACTIVITYNAME'];
+					$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
+					$oDataTemp[] = $oGetListe['EXERCICE'];
+					$oDataTemp[] = $oGetListe['COMPTE'];
+					$oDataTemp[] = $oGetListe['REFERENCE_ECRITURE'];
+					$oDataTemp[] = $oGetListe['LIBELLE_ECRITURE'];
+					$oDataTemp[] = $oGetListe['DATE_ECRITURE'];
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['ECRITURE_MT']), 2, ',', ' ') . " Ar"; 
+					$oDataTemp[] = $oGetListe['STATUS'];
+					$oDataTemp[] = $oGetListe['PROPRIETAIRE'];
+					$oDataTemp[] = $oGetListe['LIBELLE_LIGNE'];
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['MONTANT_OPERATION']), 2, ',', ' ') . " Ar";
+					
+					$zSens		= "";
+					$zLibelle	= "";
+
+					switch ($oGetListe['SENS']){
+						case 'D':
+							$zSens		= "#dc3545";
+							$zLibelle	= "DEBITEUR";
+							break;
+
+						case 'C':
+							$zSens		= "#28a745";
+							$zLibelle	= "CREDITEUR";
+							
+							break;
+
+						default:
+							$zSens = "#007bff";
+							break;
+					}
+					
+					$oDataTemp[] = "<span style=\"color:".$zSens."\"><strong>" . $zLibelle . "</strong></span>";
 					
 					$oDataAssign[] = $oDataTemp;
 					$iIncrement++;
-				}*/
+				}
 
 				break;
 
+			
 			case 3:
 				/*$toGetListe = $this->compte->getCompteAgent($iNombreTotal,$this) ;
 

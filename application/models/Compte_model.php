@@ -137,6 +137,115 @@ class Compte_model extends CI_Model {
 	}
 
 	/** 
+	* function permettant d'afficher la liste de compte à ventiler
+	*
+	* @param integer $_iNbrTotal nombre total à afficher dans la pagination
+	* @param object $_this : controller
+	*
+	* @return liste en tableau d'objet
+	*/
+	public function getCompteAVentiler($_iAnneeExo,&$_iNbrTotal = 0,$_this=''){
+		
+		global $db;
+
+		$toRow = array();
+
+		$toDB = $this->load->database('catia',true);
+		
+
+		$toColumns = array( 
+			0  => 'PSTP_LIBELLE', 
+			1  => 'EXERCICE',
+			2  => 'REFERENCE_ECRITURE', 
+			3  => 'LIBELLE_ECRITURE',
+			4  => 'DATE_ECRITURE',
+			5  => 'OPERATEUR',
+			6  => 'ECRITURE_MT', 
+			7  => 'STATUS',
+			8  => 'PROPRIETAIRE', 
+			9  => 'TYPE_ECRITURE',
+			10  => 'LIBELLE_LIGNE',
+			11  => 'MONTANT_OPERATION',
+			12  => 'SENS', 
+			13  => 'COMPTE'
+		);
+
+		$oRequest = $_REQUEST;
+
+		//$zSql = "select * from (";
+
+		$zWhere = " ";
+
+		if( !empty($oRequest['search']['value']) ) {   
+			$zWhere.=" AND ( PSTP_LIBELLE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  LIBELLE_ECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  LIBELLE_LIGNE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  TYPE_ECRITURE LIKE '%".$oRequest['search']['value']."%' ) ";
+		}
+
+		if( !empty($oRequest['PSTP_CODE']) && ($oRequest['PSTP_CODE']!="") ) {   
+			$zWhere.=" AND PSTP_CODE = '" . $oRequest['PSTP_CODE'] . "'";
+		}
+
+		if( !empty($oRequest['SENS']) && ($oRequest['SENS']!="") ) {   
+			$zWhere.=" AND SENS = '" . $oRequest['SENS'] . "'";
+		}
+
+		if( !empty($oRequest['LIBELLE_ECRITURE']) && ($oRequest['LIBELLE_ECRITURE']!="") ) {   
+			$zWhere.=" AND LIBELLE_ECRITURE LIKE '%" . $oRequest['LIBELLE_ECRITURE'] . "%'";
+		}
+
+		if( !empty($oRequest['COMPTE_NUM']) && ($oRequest['COMPTE_NUM']!="") ) {   
+			$zWhere.=" AND COMPTE = '" . $oRequest['COMPTE_NUM'] . "'";
+		}
+
+		if($_iAnneeExo!=""){
+			$zWhere.=" AND EXERCICE = '" . $_iAnneeExo . "' ";
+		}
+
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/ventiler.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
+		
+		$zDebut = 0;
+		$zFin = 10;
+		if (sizeof($oRequest)>0){
+			
+			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
+				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+			} else {
+				$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
+			}
+
+			$zDebut = (int)$oRequest['start'] ;
+			$zFin =  (int)$oRequest['length'];
+		} else {
+			$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
+		}
+
+		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+
+
+		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
+		//echo $zSql;
+		//die();
+
+		//set_time_limit(200000000000);
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+		$toError = $this->db->error();
+
+		if(sizeof($toRow)>0){
+			$_iNbrTotal = $toRow[0]['FOUND_ROWS'] ;
+		}
+
+		return $toRow;
+
+	}
+
+	/** 
 	* function permettant d'afficher la liste des propriétaires codes
 	*
 	*

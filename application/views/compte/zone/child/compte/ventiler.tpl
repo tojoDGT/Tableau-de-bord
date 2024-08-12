@@ -1,11 +1,26 @@
+{$zSearchTpl}
+<br><br>
+<input type="hidden" name="iAnnee" id="iAnnee" value="{$iAnneeExercice}">
 <table id="table_bd" class="table  table-bordered table-hover" style="margin-left:10px;min-height: 300px;">
 	<thead>
 		<tr>
-			<th>DETAIL</th>
-			<th>IDENTIFIANT</th>
-			<th>NOM</th>
-			<th>PRENOM</th>
-			<th>EMAIL</th>
+			<th colspan="3"></th>
+			<th colspan="4" class="dt-center solde oper">ECRITURE</th>
+			<th colspan="6" class="dt-center total"></th>
+        </tr>
+		<tr>
+			<th class="dt-center">POSTE COMPTABLE</th>
+			<th class="dt-center">ANNEE EXERCICE</th>
+			<th class="dt-center">COMPTE NUMERO</th>
+			<th class="dt-center oper">REFERENCE</th>
+			<th class="dt-center oper">LIBELLE</th>
+			<th class="dt-center oper">DATE</th>
+			<th class="dt-center oper">MONTANT</th>
+			<th class="dt-center">STATUT</th>
+			<th class="dt-center">PROPRIETAIRE</th>
+			<th class="dt-center">LIBELLE LIGNE</th>
+			<th class="dt-center">MONTANT OPERATION</th>
+			<th class="dt-center">SENS</th>
         </tr>
 	</thead>
 	<tbody>
@@ -14,41 +29,20 @@
 </table>
 {literal}
 <script>
-		
-		
 		$(document).ready(function() {
-
-			
-			function format ( d ) {
-						
-				var zData = "";
-				$.ajax({
-					url: zBasePath + "compte/getUserPerformance", // json datasource
-					type: 'POST',
-					data: {
-						iUserId: d[1]
-					},
-					success: function(data, textStatus, jqXHR) {
-						zData = data;
-					},
-					async: !1
-				})
-
-				return zData;
-			}
-			
-			var zListeEntite = $('#table_bd').DataTable( {
+			var zListeCompte = $('#table_bd').DataTable( {
 				"processing": true,
 				"serverSide": true,
 				"searching": true,
 				"footer": true,
 				"columnDefs": [
-					{ className: "dt-center", "targets": [ 1,3,4 ] },
+					{ className: "dt-center", "targets": [ 1,11 ] },
+					{ className: "oper1", "targets": [ 3,4,5,6 ] },
 					{ className: "details-control", "targets": [ 0 ] },
 					{ orderable: false, targets: [0] },
 				 ],
 				"language": {
-					"sProcessing":     "<div id='overlay111'>Chargement...<br/><div style=\";text-align: center;vertical-align: middle;padding-top: 10px;\"><img class=\"imageAloha\" src=\""+zBasePath+"assets/images/loading.gif\" width=\"100\"></div>",
+					"sProcessing":    "<div id='overlay111'>Chargement...<br/><div style=\";text-align: center;vertical-align: middle;padding-top: 10px;\"><img class=\"imageAloha\" src=\""+zBasePath+"assets/images/loading.gif\" width=\"100\"></div>",
 					"sSearch":         "Rechercher&nbsp;:",
 					"sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
 					"sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
@@ -79,7 +73,15 @@
 				"ajax":{
 					url : zBasePath + "compte/getAjax", // json datasource
 					data: function ( d ) {
-						d.pc = 2
+						d.iSwitch = 2,
+						d.iAnnee = $("#ECRI_EXERCICE").val(),
+						d.CONCLUSION = $("#CONCLUSION").val(),
+						d.SENS = $("#SENS").val(),
+						d.COMPTE_NUM = $("#COMPTE_NUM").val(),
+						d.PSTP_CODE = $("#PSTP_CODE").val()
+					},
+					beforeSend: function() {
+						$(".content").addClass('overlay');
 					},
 					type: "post",  // method  , by default get
 					error: function(){  // error handling
@@ -88,46 +90,30 @@
 				}
 			}); 
 
-			// Add event listener for opening and closing details
-			$('#table_bd tbody').on('click', 'td.details-control', function () {
-				var tr = $(this).parents('tr');
-				var row = zListeEntite.row( tr );
-		 
-				if ( row.child.isShown() ) {
-					// This row is already open - close it
-					row.child.hide();
-					tr.removeClass('shown');
-				}
-				else {
-					// Open this row
-					row.child( format(row.data()) ).show();
-					tr.addClass('shown');
-				}
-			} );
+			
 
 		});
 		
 </script>
 <style>
+
+.oper {
+	background-color: #ffc107!important;
+    border: 1px solid #ffc107 !important;
+    color: white;
+}
+
+.oper1 {
+	background-color: #fbdd84 !important;
+    border: 1px solid #ffc107 !important;
+    color: #6a6565;
+	width: 90px !important;
+}
 th.dt-center, td.dt-center { text-align: center!important; }
 .dt-width {width:20%!important}
 #table_bd th{
     width: 15px!important;
 }
-td.details-control {
-    background: url('{/literal}{$zBasePath}{literal}assets/images/flch_or.png') no-repeat center center;
-    cursor: pointer;
-	background-size: 15px;
-	width:15px;
-}
-tr.shown td.details-control {
-    background: url('{/literal}{$zBasePath}{literal}assets/images/flch_or_bas.png') no-repeat center center;
-	background-size: 25px;
-}
 
-.dataTable > thead > tr > th[class*="details-control"]:before,
-.dataTable > thead > tr > th[class*="details-control"]:after {
-    content: "" !important;
-}
 </style>
 {/literal}
