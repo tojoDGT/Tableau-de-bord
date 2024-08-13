@@ -382,7 +382,7 @@ class Compte_model extends CI_Model {
 		$toRow = array();
 
 		$zSql = "select distinct compte_num,compte_lib from COMPTE p
-				 WHERE compte_num IN (SELECT distinct lecr_cpt_general from EXECUTION2023.lgecriture)
+				 WHERE compte_num IN (SELECT distinct lecr_cpt_general from EXECUTION".$_iAnneeExercice.".lgecriture)
 				 AND p.compte_owner='01' " ;
 
 

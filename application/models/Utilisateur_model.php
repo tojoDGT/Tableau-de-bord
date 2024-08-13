@@ -96,7 +96,7 @@ class Utilisateur_model extends CI_Model {
 		$oRequest = $_REQUEST;
 
 		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM ".$toDB->database.".V_USERS u WHERE 1=1
-				AND USERID IN (select DISTINCT MAND_UTR_VISA from T_MANDAT WHERE ENTITE='".$_zPostCode."'
+				AND USERID IN (select DISTINCT MAND_UTR_VISA from EXECUTION".$_iAnneeExercice.".MANDAT WHERE ENTITE='".$_zPostCode."'
 				AND MAND_UTR_VISA IS NOT NULL)";
 
 		if( !empty($oRequest['search']['value']) ) {   
@@ -167,7 +167,7 @@ class Utilisateur_model extends CI_Model {
 		$oRequest = $_REQUEST;
 
 		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM ".$toDB->database.".V_USERS u WHERE 1=1
-				AND USERID IN (select DISTINCT MAND_UTR_VISA from T_MANDAT WHERE MAND_UTR_VISA IS NOT NULL)";
+				AND USERID IN (select DISTINCT MAND_UTR_VISA from EXECUTION".$_iAnneeExercice.".MANDAT WHERE MAND_UTR_VISA IS NOT NULL)";
 
 		if( !empty($oRequest['search']['value']) ) {   
 			$zSql.=" AND ( USERID LIKE '%".$oRequest['search']['value']."%'  ";
@@ -229,13 +229,13 @@ class Utilisateur_model extends CI_Model {
 		//$zSql=" SELECT  * FROM T_POSTE_COMPTABLE p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "'";
 
 		 
-		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) valide,
-				(  SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejet,
-				( SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) as valideAutre,
-				(  SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejetAutre,
 				p.* FROM T_POSTE_COMPTABLE p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "' ";
 	
@@ -259,15 +259,15 @@ class Utilisateur_model extends CI_Model {
 
 		$toDB = $this->load->database('oracle',true);
 
-		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.MAND_UTR_VISA = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) valide,
-				(  SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.MAND_UTR_RJT = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejet,
-				( SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.MAND_UTR_VISA <> '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) as valideAutre,
-				(  SELECT  COUNT(*) over () found_rows from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.MAND_UTR_RJT <> '" . $_iUserId . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejetAutre,
-				 m1.MAND_UTR_VISA FROM T_MANDAT m1 WHERE m1.MAND_UTR_VISA = '" . $_iUserId . "' OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY";
+				 m1.MAND_UTR_VISA FROM EXECUTION".$_iAnneeExercice.".MANDAT m1 WHERE m1.MAND_UTR_VISA = '" . $_iUserId . "' OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY";
 	
 		$zQuery = $toDB->query($zSql);
 		$oRow = $zQuery->row();

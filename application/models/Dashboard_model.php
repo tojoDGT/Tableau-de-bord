@@ -31,7 +31,7 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 		
 
 		$toColumns = array( 
@@ -47,7 +47,7 @@ class Dashboard_model extends CI_Model {
 
 		//$zSql = "select * from (";
 
-		$zSql = "select COUNT(*) over () found_rows,t.* from T_ECRITURE t where 1=1 " ;
+		$zSql = "select COUNT(*) over () found_rows,t.* from EXECUTION".$_iAnneeExercice.".ECRITURE t where 1=1 " ;
 
 		if( !empty($oRequest['search']['value']) ) {   
 			$zSql.=" AND ( ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
@@ -101,17 +101,17 @@ class Dashboard_model extends CI_Model {
 	* @return liste en tableau d'objet
 	*/
 
-	public function getPropCode(){
+	public function getPropCode($_iAnneeExercice){
 		
 		global $db;
 
 		$oRequest = $_REQUEST;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
-		$zSql = "select t.PROP_CODE from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
+		$zSql = "select t.PROP_CODE from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
 
 		if( !empty($oRequest['PROP_CODE']) &&  sizeof($oRequest['PROP_CODE'])>0) {   
 			
@@ -147,18 +147,18 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return format Json
 	*/
-	public function getNombreMontantParMois($_iAnneeExercice='2023',$_iMode,$_zParamAffich="PROP_CODE"){
+	public function getNombreMontantParMois($_iAnneeExercice='2024',$_iMode,$_zParamAffich="PROP_CODE"){
 		
 		global $db;
 
 		$oRequest = $_REQUEST;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
 		$zSql = "select ".$_zParamAffich.",SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as Mois,ECRI_EXERCICE 
-				 from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
+				 from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
 				 AND t.PROP_CODE <> 'ERR' 
 				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
 				 GROUP BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM'),ECRI_EXERCICE
@@ -188,16 +188,16 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return format Json
 	*/
-	public function getValidePcParMois($_zPsCode,$_iAnneeExercice='2023',$_iTypeAffiche){
+	public function getValidePcParMois($_zPsCode,$_iAnneeExercice='2024',$_iTypeAffiche){
 		
 		global $db;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
 		$zSql = "SELECT  COUNT(m.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as MOIS
-				from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE = '".$_zPsCode."' AND MAND_VISA_VALIDE = 1 
 				GROUP BY to_char(ECRI_DT_VALID, 'MM')
 				ORDER BY to_char(ECRI_DT_VALID, 'MM') ASC" ;
@@ -221,16 +221,16 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return format Json
 	*/
-	public function getValidePcParMoisUser($_iUserId,$_iAnneeExercice='2023',$_iTypeAffiche){
+	public function getValidePcParMoisUser($_iUserId,$_iAnneeExercice='2024',$_iTypeAffiche){
 		
 		global $db;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
 		$zSql = "SELECT  COUNT(m.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as MOIS
-				from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.MAND_UTR_VISA = '".$_iUserId."' AND MAND_VISA_VALIDE = 1 
 				GROUP BY to_char(ECRI_DT_VALID, 'MM')
 				ORDER BY to_char(ECRI_DT_VALID, 'MM') ASC" ;
@@ -254,18 +254,18 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return format Json
 	*/
-	public function getRefusePcParMois($_zPsCode,$_iAnneeExercice='2023',$_iTypeAffiche){
+	public function getRefusePcParMois($_zPsCode,$_iAnneeExercice='2024',$_iTypeAffiche){
 		
 		global $db;
 
 		$oRequest = $_REQUEST;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
 		$zSql = " SELECT  COUNT(m.MAND_DT_RJT) as NOMBRE,to_char(MAND_DT_RJT, 'MM') as MOIS
-				  from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				  from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				  AND m.ENTITE = '".$_zPsCode."' AND MAND_VISA_VALIDE = 0 
 				  GROUP BY to_char(MAND_DT_RJT, 'MM')
 				  ORDER BY to_char(MAND_DT_RJT, 'MM') ASC" ;
@@ -290,18 +290,18 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return format Json
 	*/
-	public function getRefusePcParMoisUser($_iUserId,$_iAnneeExercice='2023',$_iTypeAffiche){
+	public function getRefusePcParMoisUser($_iUserId,$_iAnneeExercice='2024',$_iTypeAffiche){
 		
 		global $db;
 
 		$oRequest = $_REQUEST;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
 		$zSql = " SELECT  COUNT(m.MAND_DT_RJT) as NOMBRE,to_char(MAND_DT_RJT, 'MM') as MOIS
-				  from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				  from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				  AND m.MAND_UTR_RJT = '".$_iUserId."' AND MAND_VISA_VALIDE = 0 
 				  GROUP BY to_char(MAND_DT_RJT, 'MM')
 				  ORDER BY to_char(MAND_DT_RJT, 'MM') ASC" ;
@@ -394,18 +394,18 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return template HTML
 	*/
-	public function getNombreMontantParMoisEcriture($_iAnneeExercice='2023',$_iMode,$_zParamAffich="PROP_CODE"){
+	public function getNombreMontantParMoisEcriture($_iAnneeExercice='2024',$_iMode,$_zParamAffich="PROP_CODE"){
 		
 		global $db;
 
 		$oRequest = $_REQUEST;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
 		$zSql = "select ".$_zParamAffich.",SUM(MAND_MONTANT) as montant,COUNT(t.ECRI_NUM) as nombre,ECRI_EXERCICE 
-				 from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
+				 from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
 				 AND t.PROP_CODE <> 'ERR' 
 				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
 				 GROUP BY ".$_zParamAffich.",ECRI_EXERCICE
@@ -562,15 +562,15 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return tableau objet
 	*/
-	public function getMinAbrev(){
+	public function getMinAbrev($_iAnneeExercice){
 		
 		global $db;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
-		$zSql = "select MIN_ABREV from T_MANDAT GROUP BY MIN_ABREV ORDER BY MIN_ABREV" ;
+		$zSql = "select MIN_ABREV from EXECUTION".$_iAnneeExercice.".MANDAT GROUP BY MIN_ABREV ORDER BY MIN_ABREV" ;
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
@@ -584,15 +584,15 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return tableau objet
 	*/
-	public function getTypeMandat(){
+	public function getTypeMandat($_iAnneeExercice){
 		
 		global $db;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
-		$zSql = "select DISTINCT TYPE_MAND from T_MANDAT GROUP BY TYPE_MAND ORDER BY TYPE_MAND ASC" ;
+		$zSql = "select DISTINCT TYPE_MAND from EXECUTION".$_iAnneeExercice.".MANDAT GROUP BY TYPE_MAND ORDER BY TYPE_MAND ASC" ;
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
@@ -606,17 +606,17 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return tableau objet
 	*/
-	public function getAllDateExercice(){
+	public function getAllDateExercice($_iAnneeExercice){
 		
 		global $db;
 
 		$oRequest = $_REQUEST;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
-		$zSql = "select ECRI_EXERCICE from T_ECRITURE " ;
+		$zSql = "select ECRI_EXERCICE from EXECUTION".$_iAnneeExercice.".ECRITURE " ;
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$zSql.=" WHERE ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
@@ -645,7 +645,7 @@ class Dashboard_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
@@ -714,9 +714,9 @@ class Dashboard_model extends CI_Model {
            M.ASSIGNATAIRE,
            M.MANDATAIRE,
            V.OVPCPAYEUR
-      FROM T_MANDAT                M,
-           T_TITRE                 T,
-           T_ECRITURE              E,
+      FROM EXECUTION".$_iAnneeExercice.".MANDAT                M,
+           TITRE_XXI                 T,
+           EXECUTION".$_iAnneeExercice.".ECRITURE              E,
            T_VIREMENT  V
      WHERE 1=1
            AND M.COMPTE NOT IN ('6011','6131','6522','6521')
@@ -803,9 +803,9 @@ SELECT
          M.ASSIGNATAIRE,
            M.MANDATAIRE,
            '' OVPCPAYEUR
-      FROM T_MANDAT          M,
-           T_TITRE           T,
-           T_ECRITURE        E,
+      FROM EXECUTION".$_iAnneeExercice.".MANDAT          M,
+           TITRE_XXI           T,
+           EXECUTION".$_iAnneeExercice.".ECRITURE        E,
            T_TRANSFERT  TR
      WHERE 1=1
            AND M.COMPTE NOT IN ('6011','6131','6522','6521')
@@ -813,7 +813,7 @@ SELECT
            --AND M.SOA = '00-17-0-620-00000'
            AND M.ECRI_NUM = E.ECRI_NUM(+)
            AND M.ID_MAND = T.ID_MAND(+)
-           AND T.MAND_NUM_INFO = TR.DET_BT_MANDAT(+)
+           AND T.MAND_NUM_INFO = TR.DET_BEXECUTION".$_iAnneeExercice.".MANDAT(+)
 --           ) group by SUBSTR(SOA,4,2) ;" ;
 
 
@@ -836,13 +836,13 @@ SELECT
 		
 		global $db;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
 		$oRequest = $_REQUEST;
 
-		$zSql = "select count(PROP_CODE) as NB,SUM(MAND_MONTANT) as TOTAL, PROP_CODE,ECRI_EXERCICE from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
+		$zSql = "select count(PROP_CODE) as NB,SUM(MAND_MONTANT) as TOTAL, PROP_CODE,ECRI_EXERCICE from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$zSql.=" AND t.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
@@ -903,7 +903,7 @@ SELECT
 		
 		global $db;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
@@ -957,14 +957,14 @@ SELECT
 			}
 		}
 
-		$zSousRequete	 = " select COUNT(*) from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND m.MAND_REJET = 1 ";
+		$zSousRequete	 = " select COUNT(*) from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND m.MAND_REJET = 1 ";
 		$zSousRequete   .= $zSqlWhere ; 
 
 
-		$zSql = "select distinct (SELECT SUM(MAND_MONTANT) over () FROM T_MANDAT WHERE MAND_REJET<>1 ".$zSqlWhere2." OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) TOTAL,COUNT(*) over ()  as NB_SOA,SUM(MAND_MONTANT) over () NBTOTAL, (".$zSousRequete.") as rejete
+		$zSql = "select distinct (SELECT SUM(MAND_MONTANT) over () FROM EXECUTION".$_iAnneeExercice.".MANDAT WHERE MAND_REJET<>1 ".$zSqlWhere2." OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) TOTAL,COUNT(*) over ()  as NB_SOA,SUM(MAND_MONTANT) over () NBTOTAL, (".$zSousRequete.") as rejete
 		
 		
-		from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND m.MAND_REJET<>1 " ;
+		from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND m.MAND_REJET<>1 " ;
 
 		
 		$zSql .= $zSqlWhere;

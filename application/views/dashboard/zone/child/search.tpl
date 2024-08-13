@@ -14,11 +14,9 @@
 									<td class="middle" width="10">Année Exercice:</td>
 									<td class="noBottom">
 										<select class="form-control" id="ECRI_EXERCICE" name="ECRI_EXERCICE">
-												<option selected="selected" value="">Tous</option>
-													{foreach from=$toGetAllExercice item=$oGetAllExercice}
-													<option value="{$oGetAllExercice.ECRI_EXERCICE}">{$oGetAllExercice.ECRI_EXERCICE}</option>
-													{/foreach}
-												</select>
+												<option {if $iAnneeExercice=='2023'}selected="selected"{/if} value="2023">2023</option>
+												<option {if $iAnneeExercice=='2024'}selected="selected"{else}selected="selected"{/if} value="2024">2024</option>
+										</select>
 									</td>
 								</tr>
 						    	<tr>

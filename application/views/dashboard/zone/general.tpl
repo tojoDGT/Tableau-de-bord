@@ -15,9 +15,8 @@
 									  <div class="form-group">
 										<label>Année :</label>
 										<select id="iAnneeExercice" name="iAnneeExercice" class="custom-select">
-										  {foreach from=$toGetAllExercice item=$oGetAllExercice}
-											<option {if $iAnneeExercice==$oGetAllExercice.ECRI_EXERCICE}selected="selected"{/if} value="{$oGetAllExercice.ECRI_EXERCICE}">{$oGetAllExercice.ECRI_EXERCICE}</option>
-										  {/foreach}
+											<option {if $iAnneeExercice=='2024'}selected="selected"{/if} value="2024">2024</option>
+											<option {if $iAnneeExercice=='2024'}selected="selected"{/if} value="2024">2024</option>
 										</select>
 									  </div>
 								</div>

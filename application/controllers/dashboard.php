@@ -73,7 +73,9 @@ class Dashboard extends MY_Controller
 		
 		$toColonne = $this->demande->getSessionColonne();
 
-		$toGetAllExercice = $this->dashboard->getAllDateExercice() ; 
+		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2024);
+
+		$toGetAllExercice = array(); //$this->dashboard->getAllDateExercice($iAnneeExercice) ; 
 
 		//print_r ($toColonne);
 		
@@ -81,7 +83,7 @@ class Dashboard extends MY_Controller
 
 			case 'general':
 
-				$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2023);
+				
 				$iModeAffichage = $this->postGetValue ("iModeAffichage", 1);
 
 				$zReturn = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"PROP_CODE");
@@ -116,9 +118,9 @@ class Dashboard extends MY_Controller
 			case 'situation-des-dossiers':
 			case 'situation-des-op':
 
-				$toGetPropCode = $this->dashboard->getPropCode() ; 
-				$toMinAbrev = $this->dashboard->getMinAbrev() ; 
-				$toTypeMandat = $this->dashboard->getTypeMandat() ; 
+				$toGetPropCode = $this->dashboard->getPropCode($iAnneeExercice) ; 
+				$toMinAbrev = $this->dashboard->getMinAbrev($iAnneeExercice) ; 
+				$toTypeMandat = $this->dashboard->getTypeMandat($iAnneeExercice) ; 
 				
 				$zAnnee = "-1";
 				$zAfficheSerieStat = "";
@@ -229,7 +231,7 @@ class Dashboard extends MY_Controller
 
 		$toGetAllExercice = $this->dashboard->getAllDateExercice() ; 
 
-		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2023);
+		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2024);
 		
 		switch ($_zParam){
 
@@ -584,11 +586,11 @@ class Dashboard extends MY_Controller
 			case 'statistique':
 
 				$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
-				$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2023',1) ;
-				$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023',1) ;
+				$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',1) ;
+				$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',1) ;
 
-				$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2023',2) ;
-				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023',2) ;
+				$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',2) ;
+				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',2) ;
 
 				$oSmarty->assign("oGetInfo", $oGetInfo);
 				$oSmarty->assign("zAfficheValide", $zAfficheValide);
@@ -700,11 +702,11 @@ class Dashboard extends MY_Controller
 		$zPsCode = $this->postGetValue ("zPsCode", '');
 
 		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
-		$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2023',1) ;
-		$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023',1) ;
+		$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',1) ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',1) ;
 
-		$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2023',2) ;
-		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2023',2) ;
+		$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',2) ;
+		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',2) ;
 
 		//print_r ($oGetInfo);
 		
