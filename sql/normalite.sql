@@ -174,7 +174,7 @@ FROM
                    pc.pstp_libelle,pc.pstp_code,ecriture.ecri_exercice, SUBSTR (TRIM (lgecriture.lecr_cpt_general), 1, 1),
                    TRIM (lgecriture.lecr_cpt_general))
 ORDER BY classe, lecr_cpt_general) a, catia.compte p, catia.compte_tcompte t
-where a.lecr_cpt_general = p.compte_num and t.id_compte=p.id and t.id_tcompte = '3' and p.compte_owner='01'
+where a.lecr_cpt_general = p.compte_num and t.id_compte=p.id and t.id_tcompte = '3' and p.compte_owner='01' and p.exo='%ANNEE%'
 group by a.pstp_libelle,a.pstp_code,a.ecri_exercice, classe, p.compte_num
 order by classe, compte_num
 ) bal, catia.compte compte

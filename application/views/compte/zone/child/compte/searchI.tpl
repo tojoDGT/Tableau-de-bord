@@ -77,6 +77,7 @@
 											</select>
 										</td>
 									</tr>
+									<!--
 									<tr>
 										<td class="middle" width="10">Proprietaire : </td>
 										<td class="noBottom">
@@ -90,6 +91,7 @@
 											</select>
 										</td>
 									</tr>
+									-->
 								</tbody>
 							</table>
 						</div>

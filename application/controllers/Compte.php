@@ -209,7 +209,11 @@ class Compte extends MY_Controller
 
 			
 			case 3:
-				/*$toGetListe = $this->compte->getCompteAgent($iNombreTotal,$this) ;
+				$toGetListe = $this->compte->getComptenNonApurer($iAnneeExo,$iNombreTotal,$this) ;
+
+				/*echo "<pre>";
+				print_r ($toGetListe);
+				echo "</pre>";*/
 
 				$oDataAssign = array();
 				$iIncrement = 1;
@@ -217,16 +221,46 @@ class Compte extends MY_Controller
 					
 					$oDataTemp=array(); 
 
-					$oDataTemp[] = '';
-					$oDataTemp[] = $oGetListe['USERID'];
-					$oDataTemp[] = $oGetListe['LAST_NAME'];
-					$oDataTemp[] = $oGetListe['FIRST_NAME'];
-					$oDataTemp[] = $oGetListe['EMAIL_CANONICAL'];
-					$oDataTemp[] = $oGetListe['ACTIVITYNAME'];
+					$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
+					$oDataTemp[] = $oGetListe['EXERCICE'];
+					$oDataTemp[] = $oGetListe['ENTITE'];
+					$oDataTemp[] = $oGetListe['NUMERO_ECRITURE'];
+					$oDataTemp[] = $oGetListe['REFERENCE_ECRITURE'];
+					$oDataTemp[] = $oGetListe['DATE_ECRITURE'];
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['MONTANT_OPERATION']), 2, ',', ' ') . " Ar"; 
+					$oDataTemp[] = $oGetListe['LIBELLE_LIGNE'];
+					$oDataTemp[] = $oGetListe['LECR_NUM'];
+					$oDataTemp[] = $oGetListe['TIER_NOM'];
+					$oDataTemp[] = $oGetListe['SENS'];
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['RESTE_A_APURER']), 2, ',', ' ') . " Ar";
+					
+					$zSens		= "";
+					$zLibelle	= "";
+
+					switch ($oGetListe['SENS']){
+						case 'D':
+							$zSens		= "#dc3545";
+							$zLibelle	= "DEBITEUR";
+							break;
+
+						case 'C':
+							$zSens		= "#28a745";
+							$zLibelle	= "CREDITEUR";
+							
+							break;
+
+						default:
+							$zSens = "#007bff";
+							break;
+					}
+					
+					$oDataTemp[] = "<span style=\"color:".$zSens."\"><strong>" . $zLibelle . "</strong></span>";
 					
 					$oDataAssign[] = $oDataTemp;
 					$iIncrement++;
-				}*/
+				}
+
+				break;
 				break;
 
 			case 4:

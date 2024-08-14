@@ -23,9 +23,9 @@ select pc.pstp_libelle,pc.pstp_code, ecriture.ecri_exercice exercice, ecriture.e
                --AND TO_DATE (ecriture.ecri_dt_cecriture, 'DD/MM/RRRR')
                --       BETWEEN TO_DATE ($P{Date_Start}, 'DD/MM/RRRR')
                --           AND TO_DATE ($P{Date_End}, 'DD/MM/RRRR')
-               --AND UPPER(ecriture.prop_code) LIKE 'ETAT'
+               --AND UPPER(ecriture.prop_code) = 'ETAT'
                AND not exists (
-               select 'X' from catia.compte where compte.compte_num = lgecriture.lecr_cpt_general and compte.compte_owner = '01'
+               select 'X' from catia.compte where compte.compte_num = lgecriture.lecr_cpt_general and compte.compte_owner = '01' 
 		 and  exo='%ANNEE%'
                )
 ) norm

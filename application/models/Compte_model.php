@@ -249,6 +249,128 @@ class Compte_model extends CI_Model {
 
 	}
 
+
+	/** 
+	* function permettant d'afficher la liste de compte à ventiler
+	*
+	* @param integer $_iNbrTotal nombre total à afficher dans la pagination
+	* @param object $_this : controller
+	*
+	* @return liste en tableau d'objet
+	*/
+	public function getComptenNonApurer($_iAnneeExo,&$_iNbrTotal = 0,$_this=''){
+		
+		global $db;
+
+		$toRow = array();
+
+		$toDB = $this->load->database('catia',true);
+		
+
+		$toColumns = array( 
+			0  => 'PSTP_LIBELLE', 
+			1  => 'EXERCICE',
+			2  => 'ENTITE', 
+			3  => 'NUMERO_ECRITURE',
+			4  => 'REFERENCE_ECRITURE',
+			5  => 'DATE_ECRITURE',
+			6  => 'LIBELLE_ECRITURE', 
+			7  => 'TIER_CODE',
+			8  => 'LIBELLE_LIGNE', 
+			9  => 'SENS',
+			10  => 'MONTANT_OPERATION',
+			11  => 'LECR_NUM',
+			12  => 'TIER_NOM', 
+			13  => 'RESTE_A_APURER'
+		);
+
+		$oRequest = $_REQUEST;
+
+		//$zSql = "select * from (";
+
+		$zWhere = " WHERE 1=1 ";
+
+		if( !empty($oRequest['search']['value']) ) {   
+			$zWhere.=" AND ( PSTP_LIBELLE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  EXERCICE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  ENTITE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  NUMERO_ECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  REFERENCE_ECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  LIBELLE_ECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  TIER_CODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  TIER_NOM LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  LIBELLE_LIGNE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  SENS LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  LECR_NUM LIKE '%".$oRequest['search']['value']."%' ) ";
+		}
+
+		if( !empty($oRequest['PSTP_CODE']) && ($oRequest['PSTP_CODE']!="") ) {   
+			$zWhere.=" AND PSTP_CODE = '" . $oRequest['PSTP_CODE'] . "'";
+		}
+
+		if( !empty($oRequest['SENS']) && ($oRequest['SENS']!="") ) {   
+			$zWhere.=" AND SENS = '" . $oRequest['SENS'] . "'";
+		}
+
+		if( !empty($oRequest['LIBELLE_ECRITURE']) && ($oRequest['LIBELLE_ECRITURE']!="") ) {   
+			$zWhere.=" AND LIBELLE_ECRITURE LIKE '%" . $oRequest['LIBELLE_ECRITURE'] . "%'";
+		}
+
+		if( !empty($oRequest['LIBELLE_LIGNE']) && ($oRequest['LIBELLE_LIGNE']!="") ) {   
+			$zWhere.=" AND LIBELLE_LIGNE = '" . $oRequest['LIBELLE_LIGNE'] . "'";
+		}
+
+		if( !empty($oRequest['TIER_NOM']) && ($oRequest['TIER_NOM']!="") ) {   
+			$zWhere.=" AND TIER_NOM = '" . $oRequest['TIER_NOM'] . "'";
+		}
+
+		if($_iAnneeExo!=""){
+			$zWhere.=" AND EXERCICE = '" . $_iAnneeExo . "' ";
+		}
+
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/attente.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
+		
+		$zDebut = 0;
+		$zFin = 10;
+		if (sizeof($oRequest)>0){
+			
+			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
+				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+			} else {
+				$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
+			}
+
+			$zDebut = (int)$oRequest['start'] ;
+			$zFin =  (int)$oRequest['length'];
+		} else {
+			$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
+		}
+
+		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+
+
+		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
+		//echo $zSql;
+		//die();
+
+		//set_time_limit(200000000000);
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+		$toError = $this->db->error();
+
+		if(sizeof($toRow)>0){
+			$_iNbrTotal = $toRow[0]['FOUND_ROWS'] ;
+		}
+
+		return $toRow;
+
+	}
+
+
 	/** 
 	* function permettant d'afficher la liste des comptes inexistants
 	*

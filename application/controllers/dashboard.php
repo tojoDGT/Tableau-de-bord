@@ -229,9 +229,10 @@ class Dashboard extends MY_Controller
 		
 		$toColonne = $this->demande->getSessionColonne();
 
-		$toGetAllExercice = $this->dashboard->getAllDateExercice() ; 
-
 		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2024);
+		$toGetListePc = $this->utilisateur->posteComptable($iNombreTotal,$this,1) ;
+
+		$toGetAllExercice = array(); //$this->dashboard->getAllDateExercice() ; 
 		
 		switch ($_zParam){
 
@@ -239,9 +240,6 @@ class Dashboard extends MY_Controller
 				
 				$iSousMenuActifId = 6;
 				
-
-				$toGetListePc = $this->utilisateur->posteComptable($iNombreTotal,$this,1) ;
-
 				$zLibelle1 = "Normalité des comptes"; 
 				$oSmarty->assign('iAnneeExercice',  $iAnneeExercice);
 				$oSmarty->assign('toGetListePc',  $toGetListePc);
@@ -259,7 +257,6 @@ class Dashboard extends MY_Controller
 			case 'a-ventiler':
 				
 				$iSousMenuActifId = 7;
-				$toGetListePc = $this->utilisateur->posteComptable($iNombreTotal,$this,1) ;
 
 				$zLibelle1 = "Les comptes à ventiler"; 
 				$oSmarty->assign('iAnneeExercice',  $iAnneeExercice);
@@ -279,7 +276,13 @@ class Dashboard extends MY_Controller
 				$iSousMenuActifId = 8;
 
 				$zLibelle1 = "Compte en attente non apuré"; 
+				$oSmarty->assign('iAnneeExercice',  $iAnneeExercice);
 				$oSmarty->assign("zBasePath",base_url());
+
+				$oSmarty->assign('toGetListePc',  $toGetListePc);
+				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/searchV.tpl" );
+				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
+
 				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/apure.tpl" );
 
 				$oSmarty->assign('zListingTpl',  $zListingTpl);
@@ -466,8 +469,6 @@ class Dashboard extends MY_Controller
 			case '4':
 				break;
 
-			case '5':
-				break;
 
 
 
