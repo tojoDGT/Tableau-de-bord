@@ -94,9 +94,14 @@ class Compte_model extends CI_Model {
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zData = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
 
-		$zDateParam = date("d/m/".$_iAnneeExo) ;
+		$zDate = date("d/m/Y");
+		if( !empty($oRequest['zDate']) && ($oRequest['zDate']!="") ) {   
+			$zDate = $oRequest['zDate'];
+		}
 
-		$zSql = str_replace("%ZDATE%", trim($zDateParam), $zData) ; 
+		//$zDateParam = date("d/m/".$_iAnneeExo) ;
+
+		$zSql = str_replace("%ZDATE%", trim($zDate), $zData) ; 
 		
 		$zDebut = 0;
 		$zFin = 10;

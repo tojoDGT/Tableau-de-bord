@@ -244,6 +244,7 @@ class Dashboard extends MY_Controller
 				$oSmarty->assign('iAnneeExercice',  $iAnneeExercice);
 				$oSmarty->assign('toGetListePc',  $toGetListePc);
 				$oSmarty->assign("zBasePath",base_url());
+				$oSmarty->assign("zDate",date("d/m/Y"));
 				$oSmarty->assign('iTypeAfficheSearch',  1);
 				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/search.tpl" );
 				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
@@ -262,6 +263,7 @@ class Dashboard extends MY_Controller
 				$oSmarty->assign('iAnneeExercice',  $iAnneeExercice);
 				$oSmarty->assign("zBasePath",base_url());
 				$oSmarty->assign('toGetListePc',  $toGetListePc);
+				$oSmarty->assign("zDate",date("d/m/Y"));
 				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "compte/zone/child/compte/searchV.tpl" );
 				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
 

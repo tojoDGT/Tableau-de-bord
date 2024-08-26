@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DGT | Tableau de bord</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="{$zBasePath}assets/images/favicons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="{$zBasePath}assets/images/favicons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="{$zBasePath}assets/images/favicons/favicon-16x16.png">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DGT | Tableau de bord</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="{$zBasePath}assets/images/favicons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="{$zBasePath}assets/images/favicons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="{$zBasePath}assets/images/favicons/favicon-16x16.png">
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{$zBasePath}assets/common/plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="{$zBasePath}assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="{$zBasePath}assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="{$zBasePath}assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{$zBasePath}assets/common/dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="{$zBasePath}assets/common/dist/css/theme.css">
-  <link rel="stylesheet" href="{$zBasePath}assets/css/soi.css">
-  <link rel="stylesheet" href="{$zBasePath}assets/common/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <link rel="stylesheet" href="{$zBasePath}assets/css/tabsOrganigramme.css" rel="stylesheet">
+	<!-- Google Font: Source Sans Pro -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="{$zBasePath}assets/common/plugins/fontawesome-free/css/all.min.css">
+	<link rel="stylesheet" href="{$zBasePath}assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="{$zBasePath}assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+	<link rel="stylesheet" href="{$zBasePath}assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="{$zBasePath}assets/common/dist/css/adminlte.min.css">
+	<link rel="stylesheet" href="{$zBasePath}assets/common/dist/css/theme.css">
+	<link rel="stylesheet" href="{$zBasePath}assets/css/soi.css">
+	<link rel="stylesheet" href="{$zBasePath}assets/common/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+	<link rel="stylesheet" href="{$zBasePath}assets/css/tabsOrganigramme.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="{$zBasePath}assets/css/bootstrap-datepicker3.css"/>
+	<script src="{$zBasePath}assets/js/bootstrap-datepicker.js"></script>
   
 </head>
 <script>

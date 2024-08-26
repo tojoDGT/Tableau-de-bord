@@ -81,7 +81,7 @@
 					url : zBasePath + "compte/getAjax", // json datasource
 					data: function ( d ) {
 						d.iSwitch = 1,
-						d.iAnnee = $("#ECRI_EXERCICE").val(),
+						d.zDate = $("#zDate").val(),
 						d.CONCLUSION = $("#CONCLUSION").val(),
 						d.SENS = $("#SENS").val(),
 						d.COMPTE_NUM = $("#COMPTE_NUM").val(),

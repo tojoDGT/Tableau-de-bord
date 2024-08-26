@@ -29,13 +29,19 @@
 						<div class="col-md-3" style="display:inline-flex">
 							<table class="table tableRond table-top-countries">
 								<tbody>
-									<tr>
+									<!--<tr>
 										<td class="middle" width="10">Année Exercice:</td>
 										<td class="noBottom">
 											<select class="form-control" id="ECRI_EXERCICE" name="ECRI_EXERCICE">
 													<option {if $iAnneeExercice=='2023'}selected="selected"{/if} value="2023">2023</option>
 													<option {if $iAnneeExercice=='2024'}selected="selected"{/if} value="2024">2024</option>
 											</select>
+										</td>
+									</tr>-->
+									<tr>
+										<td class="middle" width="10">Date : </td>
+										<td class="noBottom">
+											<input class="datepicker form-control" placeholder="Veuillez entrer une date" readonly="readonly" value="{$zDate}" type="text" id="zDate" name="zDate">
 										</td>
 									</tr>
 								</tbody>
@@ -120,6 +126,13 @@ $(document).ready(function() {
 	$(".searchTbNormalite").on("click", function(){
 		$('#table_bd').DataTable().ajax.reload();
 	})
+
+	$( ".datepicker" ).datepicker({
+		dateFormat: "dd/mm/yy",
+		showOtherMonths: true,
+		selectOtherMonths: false,
+
+	});
 
 	$("#COMPTE_NUM").select2({
 		initSelection: function (element, callback) {

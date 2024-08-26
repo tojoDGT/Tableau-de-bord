@@ -69,7 +69,6 @@ class Compte extends MY_Controller
 		$oCandidat = array();
 
 		$iSwitch = $this->postGetValue ("iSwitch", 1); 
-		$iAnneeExo = $this->postGetValue ("iAnnee", 2023); 
 
 		$oSession = $_SESSION;
 
@@ -79,7 +78,11 @@ class Compte extends MY_Controller
 		switch ($iSwitch){
 
 			case 1:
-				$toGetListe = $this->compte->getCompteNormalite($iAnneeExo,$iNombreTotal,$this) ;
+				
+			$zDate = $this->postGetValue ("zDate", 2023); 
+			$toDate = explode("/", $zDate);
+			$iAnneeExo = $toDate[2]; 
+			$toGetListe = $this->compte->getCompteNormalite($iAnneeExo,$iNombreTotal,$this) ;
 
 				/*echo "<pre>";
 				print_r ($toGetListe);
@@ -155,6 +158,8 @@ class Compte extends MY_Controller
 				break;
 
 			case 2:
+				
+				$iAnneeExo = $this->postGetValue ("iAnnee", 2023); 
 				$toGetListe = $this->compte->getCompteAVentiler($iAnneeExo,$iNombreTotal,$this) ;
 
 				/*echo "<pre>";
@@ -209,6 +214,7 @@ class Compte extends MY_Controller
 
 			
 			case 3:
+				$iAnneeExo = $this->postGetValue ("iAnnee", 2023); 
 				$toGetListe = $this->compte->getComptenNonApurer($iAnneeExo,$iNombreTotal,$this) ;
 
 				/*echo "<pre>";
@@ -264,6 +270,8 @@ class Compte extends MY_Controller
 				break;
 
 			case 4:
+
+				$iAnneeExo = $this->postGetValue ("iAnnee", 2023); 
 				$toGetListe = $this->compte->getCompteInexistants($iAnneeExo,$iNombreTotal,$this) ;
 
 				/*echo "<pre>";
