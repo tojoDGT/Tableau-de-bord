@@ -60,7 +60,7 @@ class Demande_model extends CI_Model {
 
 		$toRow = array();
 
-		$toDB = $this->load->database('catia',true);
+		$toDB = $this->load->database('oracle',true);
 		
 		$toGetListeColonne = $this->getSessionColonne();
 
@@ -129,7 +129,7 @@ class Demande_model extends CI_Model {
 				    END                STATUT,
 					CONCAT (TO_CHAR(MAND_MONTANT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS MAND_MONTANT1
 
-		from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m,T_TRANSFERT  TR, TITRE_XXI tt WHERE t.ECRI_NUM = m.ECRI_NUM AND tt.MAND_NUM_INFO = m.MAND_NUM_INFO(+) AND tt.ID_MAND = m.ID_MAND AND m.MAND_NUM_INFO = TR.DET_BT_MANDAT(+)" ;
+		from T_ECRITURE t,T_MANDAT m,T_TRANSFERT  TR, T_TITRE tt WHERE t.ECRI_NUM = m.ECRI_NUM AND tt.MAND_NUM_INFO = m.MAND_NUM_INFO(+) AND tt.ID_MAND = m.ID_MAND AND m.MAND_NUM_INFO = TR.DET_BT_MANDAT(+)" ;
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$zSql.=" AND t.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
@@ -216,7 +216,7 @@ class Demande_model extends CI_Model {
 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
-		echo $zSql;
+		//echo $zSql;
 		//die();
 
 		//set_time_limit(200000000000);
@@ -306,7 +306,7 @@ class Demande_model extends CI_Model {
 					END MAND_MODE_PAIE,
 					CONCAT (TO_CHAR(MAND_MONTANT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS MAND_MONTANT1
 
-		from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM " ;
+		from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM " ;
 
 		if( isset($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
 			$zSql.=" AND m.ENTITE = '".$oRequest['zPsCode']."'  ";
@@ -390,7 +390,7 @@ class Demande_model extends CI_Model {
 
 		$toDB = $this->load->database('catia',true);
 
-		$zSql = "select COUNT(*) over () found_rows,m.* from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum . " AND m.MAND_NUM_INFO = " . $_iNumMandat;
+		$zSql = "select COUNT(*) over () found_rows,m.* from TESTSOI.T_ECRITURE t,TESTSOI.T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum . " AND m.MAND_NUM_INFO = " . $_iNumMandat;
 
 		if($_iMode != ""){
 			$zSql .= " AND m.MAND_MODE_PAIE = '" . $_iMode . "'";
@@ -459,7 +459,7 @@ class Demande_model extends CI_Model {
 		(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE t.BT_ENVOYEUR=pc.PSTP_CODE) as ENVOYEUR,
 		(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE t.BT_DESTINATAIRE=pc.PSTP_CODE) as DESTINATAIRE,
 		(SELECT LIBELLE_STATUS FROM T_STATUS st WHERE t.BT_STATUS=st.STATUS AND st.TYPE_STATUS='BT') as STATUT
-		from T_TRANSFERT t WHERE t.DET_BEXECUTION".$_iAnneeExercice.".MANDAT = '" . $_iNumMandat . "'";*/
+		from T_TRANSFERT t WHERE t.DET_BTESTSOI.MANDAT = '" . $_iNumMandat . "'";*/
 
 		$zSql = "  SELECT COUNT(*) over () found_rows,
 				   (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE M.ASSIGNATAIRE=pc.PSTP_CODE) as ENVOYEUR,
@@ -538,16 +538,16 @@ class Demande_model extends CI_Model {
 				 M.ASSIGNATAIRE,
 				   M.MANDATAIRE,
 				   '' OVPCPAYEUR
-			  FROM EXECUTION".$_iAnneeExercice.".MANDAT          M,
-				   TITRE_XXI           T,
-				   EXECUTION".$_iAnneeExercice.".ECRITURE        E,
+			  FROM TESTSOI.T_MANDAT          M,
+				   T_TITRE           T,
+				   TESTSOI.T_ECRITURE        E,
 				   T_TRANSFERT  TR
 			 WHERE 1=1
 				   AND M.COMPTE NOT IN ('6011','6131','6522','6521')
 				   AND M.MAND_MODE_PAIE = 'OO'
 				   AND M.ECRI_NUM = E.ECRI_NUM(+)
 				   AND M.ID_MAND = T.ID_MAND(+)
-				   AND T.MAND_NUM_INFO = TR.DET_BEXECUTION".$_iAnneeExercice.".MANDAT(+)";
+				   AND T.MAND_NUM_INFO = TR.DET_BTESTSOI.T_MANDAT(+)";
 
 		$zSql .= "  AND T.MAND_NUM_INFO = '" . $_iNumMandat . "'";
 
@@ -651,9 +651,9 @@ class Demande_model extends CI_Model {
 				   M.ASSIGNATAIRE,
 				   M.MANDATAIRE,
 				   V.OVPCPAYEUR
-			  FROM EXECUTION".$_iAnneeExercice.".MANDAT                M,
-				   TITRE_XXI                 T,
-				   EXECUTION".$_iAnneeExercice.".ECRITURE              E,
+			  FROM TESTSOI.T_MANDAT                M,
+				   T_TITRE                 T,
+				   TESTSOI.T_ECRITURE              E,
 				   T_VIREMENT  V
 			 WHERE 1=1
 				   AND M.COMPTE NOT IN ('6011','6131','6522','6521')
@@ -696,7 +696,7 @@ class Demande_model extends CI_Model {
 
 		$toDB = $this->load->database('catia',true);
 
-		$zSql = "select COUNT(*) over () found_rows,m.* from EXECUTION".$_iAnneeExercice.".ECRITURE t,T_LGECRITURE m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum;
+		$zSql = "select COUNT(*) over () found_rows,m.* from TESTSOI.T_ECRITURE t,T_LGECRITURE m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum;
 
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result();
