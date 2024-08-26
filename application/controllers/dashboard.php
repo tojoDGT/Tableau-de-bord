@@ -86,11 +86,13 @@ class Dashboard extends MY_Controller
 				
 				$iModeAffichage = $this->postGetValue ("iModeAffichage", 1);
 
-				$zReturn = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"PROP_CODE");
+				//$zReturn = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"PROP_CODE");
+				$zReturn = $this->dashboard->getNombreMontantParMoisPropCode($iAnneeExercice,$iModeAffichage,"SUBSTR (m.soa, 1, 2)");
 				$zReturnTypeMand = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
 				$zReturnMinAbrev = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
 				$zReturnModePaiement = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
-				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"PROP_CODE");
+				//$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"PROP_CODE");
+				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriturePropCode($iAnneeExercice,$iModeAffichage,"SUBSTR (m.soa, 1, 2)");
 				$zReturnPie = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
 
 				//$zReturnMinAbrev = $zReturnTypeMand; //$this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");

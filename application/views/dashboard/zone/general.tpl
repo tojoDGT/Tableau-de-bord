@@ -15,7 +15,7 @@
 									  <div class="form-group">
 										<label>Année :</label>
 										<select id="iAnneeExercice" name="iAnneeExercice" class="custom-select">
-											<option {if $iAnneeExercice=='2024'}selected="selected"{/if} value="2024">2024</option>
+											<option {if $iAnneeExercice=='2023'}selected="selected"{/if} value="2023">2023</option>
 											<option {if $iAnneeExercice=='2024'}selected="selected"{/if} value="2024">2024</option>
 										</select>
 									  </div>
@@ -241,7 +241,6 @@ h1, h2, h3, h4, h5, h6 {
     color: #ffff; 
 }
 </style>
-
 <script>
  $(function () {
 
@@ -277,7 +276,7 @@ h1, h2, h3, h4, h5, h6 {
     lineChartData.datasets[1].fill = false;
 	lineChartData.datasets[2].fill = false;
     lineChartData.datasets[3].fill = false;
-	lineChartData.datasets[4].fill = false;
+	//lineChartData.datasets[4].fill = false;
     lineChartOptions.datasetFill = false
 
 
@@ -309,9 +308,6 @@ h1, h2, h3, h4, h5, h6 {
 	 //-------------
     //- BAR CHART -
     //-------------
-
-
-	
 
 	var barChartData = {
 		  labels  : ['Janv', 'Févr', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil','Août', 'Sept', 'Oct', 'Nov', 'Déc'],
@@ -405,4 +401,5 @@ h1, h2, h3, h4, h5, h6 {
     })
   })
 </script>
+
 <script src="{$zBasePath}assets/common/js/app/main.js"></script>

@@ -22,8 +22,8 @@
 	<link rel="stylesheet" href="{$zBasePath}assets/common/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 	<link rel="stylesheet" href="{$zBasePath}assets/css/tabsOrganigramme.css" rel="stylesheet">
 
-	<link rel="stylesheet" href="{$zBasePath}assets/css/bootstrap-datepicker3.css"/>
-	<script src="{$zBasePath}assets/js/bootstrap-datepicker.js"></script>
+	<!--<link rel="stylesheet" href="{$zBasePath}assets/css/bootstrap-datepicker3.css"/>
+	<script src="{$zBasePath}assets/js/bootstrap-datepicker.js"></script>-->
   
 </head>
 <script>

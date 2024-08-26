@@ -122,7 +122,8 @@ class Dashboard_model extends CI_Model {
 			}
 			
 			if(sizeof($toPropCode)>0){
-				$zSql .=" AND t.PROP_CODE IN (".implode(",",$toPropCode).")";
+				//$zSql .=" AND t.PROP_CODE IN (".implode(",",$toPropCode).")";
+				$zSql .=" AND SUBSTR (m.soa, 1, 2) IN (".implode(",",$toPropCode).")";
 			}
 		}
 
@@ -137,6 +138,54 @@ class Dashboard_model extends CI_Model {
 
 
 		return $toRow;
+	}
+
+	/** 
+	* function permettant d'afficher le nombre / montant par mois dans la statistique
+	*
+	* @param integer $_iAnneeExercice Année de l'exercice
+	* @param string $_zParamAffich : propriétaire code
+	*
+	* @return format Json
+	*/
+	public function getNombreMontantParMoisPropCode($_iAnneeExercice='2024',$_iMode,$_zParamAffich="SUBSTR (m.soa, 1, 2)"){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('catia',true);
+
+		$toRow = array();
+
+		$zSql = "select ".$_zParamAffich.",
+				 (CASE 
+						WHEN SUBSTR (m.soa, 1, 2) ='40' THEN 'COMMUNE'
+						WHEN SUBSTR (m.soa, 1, 2) ='20' THEN 'REGION'
+						WHEN SUBSTR (m.soa, 1, 2) ='90' THEN 'EPN'
+						ELSE 'ETAT'
+				 END) as PROP_CODE,
+				 SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as Mois,ECRI_EXERCICE 
+				 from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
+				 AND t.PROP_CODE <> 'ERR' 
+				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
+				 AND SUBSTR (m.soa, 1, 2) IN ('90','06','40','20')
+				 GROUP BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM'),ECRI_EXERCICE
+				 ORDER BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM') ASC" ;
+
+		//echo $zSql . "\n\n<br>";
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+		/*echo "<pre>";
+		print_r ($toRow);
+		echo "</pre>";*/
+
+		$zReturn = $this->DispatchDataForChartJs($_iMode,$toRow,'PROP_CODE');
+
+
+		return $zReturn;
 	}
 
 	/** 
@@ -455,6 +504,47 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
+	public function getNombreMontantParMoisEcriturePropCode($_iAnneeExercice='2024',$_iMode,$_zParamAffich="PROP_CODE"){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('catia',true);
+
+		$toRow = array();
+
+		$zSql = "select ".$_zParamAffich.",
+				 (CASE 
+						WHEN SUBSTR (m.soa, 1, 2) ='40' THEN 'COMMUNE'
+						WHEN SUBSTR (m.soa, 1, 2) ='20' THEN 'REGION'
+						WHEN SUBSTR (m.soa, 1, 2) ='90' THEN 'EPN'
+						ELSE 'ETAT'
+				 END) as PROP_CODE,
+				 SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,ECRI_EXERCICE 
+				 from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
+				 AND t.PROP_CODE <> 'ERR' 
+				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
+				 AND SUBSTR (m.soa, 1, 2) IN ('90','06','40','20')
+				 GROUP BY ".$_zParamAffich.",ECRI_EXERCICE
+				 ORDER BY ".$_zParamAffich." ASC" ;
+	
+		
+		$zQuery = $toDB->query($zSql);
+
+		//echo $zSql;
+		$toRow = $zQuery->result_array();
+
+		/*echo "<pre>";
+		print_r ($toRow);
+		echo "</pre>";*/
+
+		$zReturn = $this->DispatchDataForChartJsDonut($_iMode,$toRow,"PROP_CODE");
+
+
+		return $zReturn;
+	}
+
 	/** 
 	* function privée permettant d'afficher en Json les retours de résultat
 	*
@@ -527,7 +617,9 @@ class Dashboard_model extends CI_Model {
 		$zAfficheSerieStat = "";
 		$toAffiche = array();
 
-		$toColor = array('#00c0ef', '#3c8dbc','#434348','#7cb5ec','#90ed7d', '#f7a35c', '#8085e9', '#00c0ef', '#3c8dbc' );
+		//$toColor = array('#00c0ef', '#3c8dbc','#434348','#7cb5ec','#90ed7d', '#f7a35c', '#8085e9', '#00c0ef', '#3c8dbc' );
+
+		$toColor = array('#7cb5ec','#3c8dbc','#90ed7d', '#434348', '#8085e9', '#00c0ef', '#3c8dbc');
 
 		$zTestPropCode = "-1";
 		foreach ($_toRow as $oRow){
@@ -554,11 +646,11 @@ class Dashboard_model extends CI_Model {
 			}
 		}
 
-		/*
-		echo "<pre>";
+		
+		/*echo "<pre>";
 		print_r ($toAffiche);
-		echo "</pre>";
-		*/
+		echo "</pre>";*/
+		
 
 		$iColor = 0;
 		foreach ($toAffiche as $zkey => $oRow){
@@ -580,7 +672,6 @@ class Dashboard_model extends CI_Model {
 
 			$iColor++;
 		}
-
 
 		//echo $zAfficheSerieStat;
 
@@ -895,7 +986,8 @@ SELECT
 			}
 			
 			if(sizeof($toPropCode)>0){
-				$zSql .=" AND t.PROP_CODE IN (".implode(",",$toPropCode).")";
+				//$zSql .=" AND t.PROP_CODE IN (".implode(",",$toPropCode).")";
+				$zSql .=" AND SUBSTR (m.soa, 1, 2) IN (".implode(",",$toPropCode).")";
 			}
 		}
 
@@ -968,7 +1060,8 @@ SELECT
 			}
 			
 			if(sizeof($toPropCode)>0){
-				$zSqlWhere .=" AND t.PROP_CODE IN (".implode(",",$toPropCode).")";
+				//$zSqlWhere .=" AND t.PROP_CODE IN (".implode(",",$toPropCode).")";
+				$zSqlWhere .=" AND SUBSTR (m.soa, 1, 2) IN (".implode(",",$toPropCode).")";
 			}
 		}
 
