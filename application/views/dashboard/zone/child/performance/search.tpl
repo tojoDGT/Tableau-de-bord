@@ -64,7 +64,7 @@
 											{foreach from=$toGetPropCode item=$oGetPropCode}
 											{if $iTest%7==0 && $iTest==0}<tr>{/if}
 											{if $iTest%7==0 || $iTest==0}<tr>{/if}
-											<td><input type="checkbox" checked="checked" name="PROP_CODE[]" value="{$oGetPropCode.PROP_CODE}" class="form-controla">&nbsp;&nbsp;{$oGetPropCode.PROP_CODE}</td>
+											<td><input type="checkbox" checked="checked" name="PROP_CODE[]" value="{$oGetPropCode.PROP_CODE}" class="form-controla">&nbsp;&nbsp;{$oGetPropCode.PROP_LIBELLE}</td>
 											{assign var=iTest value=$iTest+1}
 											{/foreach}
 											</tr>

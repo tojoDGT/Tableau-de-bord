@@ -101,7 +101,7 @@ class Dashboard_model extends CI_Model {
 	* @return liste en tableau d'objet
 	*/
 
-	public function getPropCode($_iAnneeExercice){
+	public function __getPropCode($_iAnneeExercice){
 		
 		global $db;
 
@@ -177,6 +177,36 @@ class Dashboard_model extends CI_Model {
 
 
 		return $zReturn;
+	}
+
+	public function getPropCode($_iAnneeExercice){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('catia',true);
+
+		$toRow = array();
+
+		$toValue = array("90","06","40","20");
+
+		$zSql = "select t.PROP_LIBELLE from EXECUTION".$_iAnneeExercice.".PROPRIETAIRE t" ;
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+		$toAssign = array();
+		for($iIncr=0;$iIncr<sizeof($toRow);$iIncr++){
+			$oAssign = array();
+			$oAssign['PROP_CODE'] = $toValue[$iIncr];
+			$oAssign['PROP_LIBELLE'] = $toRow[$iIncr]['PROP_LIBELLE'];
+			array_push($toAssign, $oAssign);
+		}
+
+		//print_r ($toAssign);
+
+		return $toAssign;
 	}
 
 	/** 
