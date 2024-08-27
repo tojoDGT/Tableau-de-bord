@@ -26,16 +26,16 @@ class Demande_model extends CI_Model {
 		$toColonne = array();
 		//unset($_SESSION["colonneAffiche"]);
 		if(empty($_SESSION["colonneAffiche"])){
-			array_push($toColonne, 'Identifiant-E.ECRI_NUM');
-			array_push($toColonne, 'IdentifiantNumInfo-M.MAND_NUM_INFO');
-			array_push($toColonne, 'TITULAIRE-T.TITULAIRE');
-			array_push($toColonne, 'Référence-E.ECRI_REF');
-			array_push($toColonne, 'Libellé-E.ECRI_LIB');
-			array_push($toColonne, 'Date-E.ECRI_DT_CECRITURE');
-			array_push($toColonne, 'Propriétaire-E.PROP_CODE');
-			array_push($toColonne, 'SOA-M.SOA');
-			array_push($toColonne, 'Mode-M.MAND_MODE_PAIE');
-			array_push($toColonne, 'Montant-M.MAND_MONTANT1');
+			array_push($toColonne, 'Identifiant-t.ECRI_NUM');
+			array_push($toColonne, 'IdentifiantNumInfo-m.MAND_NUM_INFO');
+			array_push($toColonne, 'TITULAIRE-tt.TITULAIRE');
+			array_push($toColonne, 'Référence-t.ECRI_REF');
+			array_push($toColonne, 'Libellé-t.ECRI_LIB');
+			array_push($toColonne, 'Date-t.ECRI_DT_CECRITURE');
+			array_push($toColonne, 'Propriétaire-t.PROP_CODE');
+			array_push($toColonne, 'SOA-m.SOA');
+			array_push($toColonne, 'Mode-m.MAND_MODE_PAIE');
+			array_push($toColonne, 'Montant-m.MAND_MONTANT1');
 
 			$_SESSION["colonneAffiche"] = serialize($toColonne);
 		} else {
@@ -60,7 +60,7 @@ class Demande_model extends CI_Model {
 
 		$toRow = array();
 
-		$toDB = $this->load->database('catia',true);
+		$toDB = $this->load->database('oracle',true);
 		
 		$toGetListeColonne = $this->getSessionColonne();
 
@@ -81,9 +81,6 @@ class Demande_model extends CI_Model {
 			$_iAnneeExercice = $oRequest['ECRI_EXERCICE'];
 		}
 
-
-		$zWhere = " ";
-
 		/*
 		echo "<pre>";
 		print_r ($toColumns);
@@ -91,7 +88,7 @@ class Demande_model extends CI_Model {
 
 		//$zSql = "select * from (";
 
-		/*$zSql = "	select COUNT(tt.TITULAIRE) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,tt.CODE_TIERS,
+		$zSql = "	select COUNT(tt.TITULAIRE) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,tt.CODE_TIERS,
 					(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE,
 				    (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE,
 					m.MAND_VISA_TEF,
@@ -132,27 +129,27 @@ class Demande_model extends CI_Model {
 				    END                STATUT,
 					CONCAT (TO_CHAR(MAND_MONTANT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS MAND_MONTANT1
 
-		from T_ECRITURE t,T_MANDAT m,T_TRANSFERT  TR, T_TITRE tt WHERE t.ECRI_NUM = m.ECRI_NUM AND tt.MAND_NUM_INFO = m.MAND_NUM_INFO(+) AND tt.ID_MAND = m.ID_MAND AND m.MAND_NUM_INFO = TR.DET_BT_MANDAT(+)" ;*/
+		from T_ECRITURE t,T_MANDAT m,T_TRANSFERT  TR, T_TITRE tt WHERE t.ECRI_NUM = m.ECRI_NUM AND tt.MAND_NUM_INFO = m.MAND_NUM_INFO(+) AND tt.ID_MAND = m.ID_MAND AND m.MAND_NUM_INFO = TR.DET_BT_MANDAT(+)" ;
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
-			$zWhere.=" AND E.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
+			$zSql.=" AND t.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
 		}
 
 		if( !empty($oRequest['MIN_ABREV']) &&  $oRequest['MIN_ABREV']!="") {   
-			$zWhere.=" AND M.MIN_ABREV = '".$oRequest['MIN_ABREV']."'  ";
+			$zSql.=" AND m.MIN_ABREV = '".$oRequest['MIN_ABREV']."'  ";
 		}
 
 
 		if( !empty($oRequest['TYPE_MAND']) &&  $oRequest['TYPE_MAND']!="") {   
-			$zWhere.=" AND M.TYPE_MAND = '".$oRequest['TYPE_MAND']."'  ";
+			$zSql.=" AND m.TYPE_MAND = '".$oRequest['TYPE_MAND']."'  ";
 		} 
 
 		if( !empty($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
-			$zWhere.=" AND M.ENTITE = '".$oRequest['zPsCode']."'  ";
+			$zSql.=" AND m.ENTITE = '".$oRequest['zPsCode']."'  ";
 		}
 
 		if( !empty($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']!="") {   
-			$zWhere.=" AND M.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
+			$zSql.=" AND m.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
 		}
 
 		if( !empty($oRequest['data']) &&  sizeof($oRequest['data'])>0) {   
@@ -166,7 +163,7 @@ class Demande_model extends CI_Model {
 			}
 			
 			if(sizeof($toPropCode)>0){
-				$zWhere .=" AND SUBSTR (M.soa, 1, 2) IN (".implode(",",$toPropCode).")";
+				$zSql .=" AND SUBSTR (m.soa, 1, 2) IN (".implode(",",$toPropCode).")";
 			}
 		}
 
@@ -184,25 +181,20 @@ class Demande_model extends CI_Model {
 			}
 			
 			if(sizeof($toMandMode)>0){
-				$zWhere .=" AND M.MAND_MODE_PAIE IN (".implode(",",$toMandMode).")";
+				$zSql .=" AND m.MAND_MODE_PAIE IN (".implode(",",$toMandMode).")";
 			}
 		}
 		
 		if( !empty($oRequest['search']['value']) ) {   
-			$zWhere.=" AND ( E.ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  T.TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_DT_CECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.PROP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  M.MAND_MODE_PAIE LIKE '%".$oRequest['search']['value']."%' ) ";
+			$zSql.=" AND ( t.ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  t.ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  tt.TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  t.ECRI_DT_CECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  t.PROP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  m.MAND_MODE_PAIE LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
-
-
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/mdt_vir_tb.sql"); 
-		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 		
 		$zDebut = 0;
 		$zFin = 10;
@@ -211,20 +203,20 @@ class Demande_model extends CI_Model {
 			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
 				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
 			} else {
-				$zSql.=" ORDER BY E.ECRI_NUM ASC ";
+				$zSql.=" ORDER BY t.ECRI_NUM ASC ";
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
 			$zFin =  (int)$oRequest['length'];
 		} else {
-			$zSql.=" ORDER BY E.ECRI_NUM ASC ";
+			$zSql.=" ORDER BY t.ECRI_NUM ASC ";
 		}
 
 		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
-		echo $zSql;
+		//echo $zSql;
 		//die();
 
 		//set_time_limit(200000000000);

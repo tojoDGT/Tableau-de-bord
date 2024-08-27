@@ -92,7 +92,7 @@ class Dashboard extends MY_Controller
 				$zReturnMinAbrev = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
 				$zReturnModePaiement = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
 				//$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"PROP_CODE");
-				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriturePropCode($iAnneeExercice,$iModeAffichage,"SUBSTR (m.soa, 1, 2)");
+				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"SUBSTR (m.soa, 1, 2)");
 				$zReturnPie = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
 
 				//$zReturnMinAbrev = $zReturnTypeMand; //$this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
@@ -341,17 +341,25 @@ class Dashboard extends MY_Controller
 
 		$zAfficheSerieStat = "";
 
-		$toGetPropCode = $this->dashboard->getPropCode() ; 
+		$iAnneeExercice = $this->postGetValue ("ECRI_EXERCICE", 2023);
 
-		$toGetAllExercice = $this->dashboard->getAllDateExercice() ;
+		$toGetPropCode = $this->dashboard->getPropCode($iAnneeExercice) ; 
+
+		//print_r ($toGetPropCode);
+
+		$toGetAllExercice = $this->dashboard->getAllDateExercice($iAnneeExercice) ;
 		
-		$iPointStart = date("Y");
+		$iPointStart = $iAnneeExercice;
 		
 		if(sizeof($toGetAllExercice)>0){
 			$iPointStart = $toGetAllExercice[0]['ECRI_EXERCICE'];
 		}
 
-		$toTableauResult = $this->dashboard->getGraph();
+		$toTableauResult = $this->dashboard->getGraph($iAnneeExercice);
+
+		echo "<pre>";
+		print_r ($toTableauResult);
+		echo "</pre>";
 
 		$zAfficheSerieStat = "";
 		$zCategorieAffiche = "";
@@ -366,7 +374,7 @@ class Dashboard extends MY_Controller
 					foreach($toGetPropCode as $oGetPropCode){
 									
 							$zAfficheSerieStat .= "{";
-							$zAfficheSerieStat .= "name: '".$oGetPropCode['PROP_CODE']."',";
+							$zAfficheSerieStat .= "name: '".$oGetPropCode['PROP_LIBELLE']."',";
 							
 							$tiNombre = array();
 
@@ -374,7 +382,7 @@ class Dashboard extends MY_Controller
 									$iNombre = 0; 
 									
 									foreach($toTableauResult as $oTableauResult){
-										if($oTableauResult["ECRI_EXERCICE"] == $oGetAllExercice["ECRI_EXERCICE"] && $oTableauResult["PROP_CODE"] == $oGetPropCode["PROP_CODE"]) {
+										if($oTableauResult["ECRI_EXERCICE"] == $oGetAllExercice["ECRI_EXERCICE"] && $oTableauResult["PROP_CODE"] == $oGetPropCode["PROP_LIBELLE"]) {
 											
 											
 											if( !empty($oRequest['iMode']) &&  $oRequest['iMode']==2) {   

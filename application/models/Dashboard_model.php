@@ -953,17 +953,18 @@ SELECT
 	*
 	* @return tableau objet
 	*/
-	public function getGraph(){
+	public function getGraph($_iAnneeExercice){
 		
 		global $db;
 
-		$toDB = $this->load->database('catia',true);
+		$toDB = $this->load->database('oracle',true);
 
 		$toRow = array();
 
 		$oRequest = $_REQUEST;
 
-		$zSql = "select count(PROP_CODE) as NB,SUM(MAND_MONTANT) as TOTAL, PROP_CODE,ECRI_EXERCICE from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
+		$zSql = "select count(PROP_CODE) as NB,
+		SUM(MAND_MONTANT) as TOTAL, PROP_CODE,ECRI_EXERCICE from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$zSql.=" AND t.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
