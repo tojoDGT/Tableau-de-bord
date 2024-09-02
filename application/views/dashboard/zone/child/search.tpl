@@ -72,8 +72,8 @@
 						    	<tr>
 									<td class="middle" width="10">Mode de Paiement :</td>
 									<td class="noBottom">
-										<input type="radio" class="MAND_MODE_PAIE" checked="checked" name="MAND_MODE_PAIE[]" value="">&nbsp;&nbsp;Tous
-										<input type="radio" class="MAND_MODE_PAIE" name="MAND_MODE_PAIE[]" value="VB">&nbsp;&nbsp;Virement bancaire
+										<!--<input type="radio" class="MAND_MODE_PAIE" checked="checked" name="MAND_MODE_PAIE[]" value="">&nbsp;&nbsp;Tous-->
+										<input type="radio" class="MAND_MODE_PAIE" checked="checked" name="MAND_MODE_PAIE[]" value="VB">&nbsp;&nbsp;Virement bancaire
 										<input type="radio" class="MAND_MODE_PAIE" name="MAND_MODE_PAIE[]" value="OO">&nbsp;&nbsp;Opération d'ordre
 										<input type="radio" class="MAND_MODE_PAIE" name="MAND_MODE_PAIE[]" value="BC">&nbsp;&nbsp;Bon de Caisse
 										<input type="radio" class="MAND_MODE_PAIE" name="MAND_MODE_PAIE[]" value="OP">&nbsp;&nbsp;Ordre de paiement

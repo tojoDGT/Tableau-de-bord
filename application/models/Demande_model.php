@@ -28,7 +28,7 @@ class Demande_model extends CI_Model {
 		if(empty($_SESSION["colonneAffiche"])){
 			array_push($toColonne, 'Identifiant-E.ECRI_NUM');
 			array_push($toColonne, 'IdentifiantNumInfo-M.MAND_NUM_INFO');
-			array_push($toColonne, 'TITULAIRE-T.TITULAIRE');
+			//array_push($toColonne, 'TITULAIRE-T.TITULAIRE');
 			array_push($toColonne, 'Référence-E.ECRI_REF');
 			array_push($toColonne, 'Libellé-E.ECRI_LIB');
 			array_push($toColonne, 'Date-E.ECRI_DT_CECRITURE');
@@ -224,7 +224,7 @@ class Demande_model extends CI_Model {
 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
-		echo $zSql;
+		//echo $zSql;
 		//die();
 
 		//set_time_limit(200000000000);
