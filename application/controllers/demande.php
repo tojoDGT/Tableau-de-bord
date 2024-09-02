@@ -141,11 +141,12 @@ class Demande extends MY_Controller
 		global $oSmarty ; 
 
 		$iEcriNum	= $this->postGetValue ("iEcriNum", 0);
+		$iAnneeExercice	= $this->postGetValue ("iExo", 2023);
 		$iNumMandat	= $this->postGetValue ("iNumMandat", 0); 
 		$iMode		= $this->postGetValue ("iModePaiement", 0);
 		$iOffset	= $this->postGetValue ("iOffset", 600);
 
-		$oGetDetail = $this->demande->GetDetail($iEcriNum, $iNumMandat, $iMode) ; 
+		$oGetDetail = $this->demande->GetDetail($iEcriNum, $iNumMandat, $iMode, $iAnneeExercice) ; 
 		
 		$oGetLECecriture = array(); //$this->demande->GetLEGecriture($iEcriNum) ; 
 		$oTransfert = array();
@@ -163,7 +164,7 @@ class Demande extends MY_Controller
 					
 				default :
 					// Virement
-					$oVirement = $this->demande->GetVirement($oGetDetail->MAND_NUM_INFO);
+					$oVirement = $this->demande->GetVirement($oGetDetail->MAND_NUM_INFO,$iAnneeExercice);
 					break;
 			}
 		}

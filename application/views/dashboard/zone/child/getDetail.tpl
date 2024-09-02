@@ -182,12 +182,12 @@
 								
 								<li class="text-muted"><h3>INFORMATIONS SUR LE VIREMENT</h3></li>	
 								{if sizeof($oVirement)>0}
-									<li class="text-muted"><b>Titulaire :</b> {$oVirement->TITULAIRE}</li>
-									<li class="text-muted"><b>Montant :</b><span class="badge badge-success" style="font-size: 15px;"> {$oVirement->MONTANT|number_format:1:",":"."} Ar</span></li>
-									<li class="text-muted"><b>Programme :</b> {$oVirement->PROGRAMME}</li>
-									<li class="text-muted"><b>Réference :</b> {$oVirement->REFERENCE}</li>
-									<li class="text-muted"><b>Code Tiers :</b> {$oVirement->CODE_TIERS}</li>
-									<li class="text-muted"><b>Date visa :</b> {$oVirement->DATE_VISA}</li>
+									<li class="text-muted"><b>Titulaire :</b> {$oVirement.TITULAIRE}</li>
+									<li class="text-muted"><b>Montant :</b><span class="badge badge-success" style="font-size: 15px;"> {$oVirement.MONTANT|number_format:1:",":"."} Ar</span></li>
+									<li class="text-muted"><b>Programme :</b> {$oVirement.PROGRAMME}</li>
+									<li class="text-muted"><b>Réference :</b> {$oVirement.NOTEREF}</li>
+									<li class="text-muted"><b>Code Tiers :</b> {$oVirement.TIER_CODE}</li>
+									<li class="text-muted"><b>Date visa :</b> {$oVirement.DATE_VISA}</li>
 									<br>
 									<div class="timeline">
 										  <!-- timeline time label -->
@@ -199,15 +199,15 @@
 										  <div>
 											<i class="fas fa-clock bg-gray"></i>
 											<div class="timeline-item">
-											  {if $oVirement->NOTEREF != ""}
-											  {assign var="zCreationString" value=$oVirement->NOTEDATEVALID}
+											  {if $oVirement.NOTEREF != ""}
+											  {assign var="zCreationString" value=$oVirement.NOTEDATEVALID}
 											  {assign var="zCreationSplit" value=" "|explode:$zCreationString}
 											  <span class="time"><i class="fas fa-clock"></i> {$zCreationSplit[1]}</span>
 											  <h3 class="timeline-header"><a href="#">Note</a>&nbsp;</h3>
 
 											  <div class="timeline-body">
-												<b>Réference :</b> {$oVirement->NOTEREF}<br>
-												<b>Statut :</b> <span class="badge badge-warning">{$oVirement->STATUTNOTE}</span><br>
+												<b>Réference :</b> {$oVirement.NOTEREF}<br>
+												<b>Statut :</b> <span class="badge badge-warning">{$oVirement.STATUTNOTE}</span><br>
 												<b>Validation :</b> {$zCreationSplit[0]}
 											  </div>
 											  {/if}
@@ -218,15 +218,15 @@
 										  <div>
 											<i class="fas fa-clock bg-green"></i>
 											<div class="timeline-item">
-											  {if $oVirement->DMDVIRREF != ""}
-											  {assign var="zCreationString" value=$oVirement->DMDVIRDATEVALID}
+											  {if $oVirement.DMDVIRREF != ""}
+											  {assign var="zCreationString" value=$oVirement.DMDVIRDATEVALID}
 											  {assign var="zCreationSplit" value=" "|explode:$zCreationString}
 											  <span class="time"><i class="fas fa-clock"></i> {$zCreationSplit[1]}</span>
 											  <h3 class="timeline-header no-border"><a href="#">Demande</a>&nbsp;</h3>
 											  <div class="timeline-body">
-												  <b>Réference :</b> {$oVirement->DMDVIRREF}<br>
+												  <b>Réference :</b> {$oVirement.DMDVIRREF}<br>
 												  <b>Statut :</b> <span>
-												  {if $oVirement->DMDVIRSTATUS==1}
+												  {if $oVirement.DMDVIRSTATUS==1}
 												  Validé
 												  {else}
 												  En cours de validation
@@ -241,16 +241,16 @@
 										  <!-- timeline item -->
 										  <div>
 											<i class="fas fa-clock bg-purple"></i>
-											{if $oVirement->OVREF != ""}
-											{assign var="teststring" value=$oVirement->OVDATEVALID}
+											{if $oVirement.OVREF != ""}
+											{assign var="teststring" value=$oVirement.DATEEXECUTIONOV}
 											{assign var="testsplit" value=" "|explode:$teststring}
 											<div class="timeline-item">
 											  <span class="time"><i class="fas fa-clock"></i> {$testsplit[1]}</span>
 											  <h3 class="timeline-header"><a href="#">Ordre de virement</a> (OV)</h3>
 											  <div class="timeline-body">
-												  <b>Réference :</b> {$oVirement->OVREF}<br>
-												  <b>Payeur :</b> {$oVirement->PAYEUR}<br>
-												  <b>Statut :</b> <span class="badge badge-warning">{$oVirement->STATUT}</span><br>
+												  <b>Réference :</b> {$oVirement.OVREF}<br>
+												  <b>Payeur :</b> {$oVirement.PCPAYEUR}<br>
+												  <b>Statut :</b> <span class="badge badge-warning">{$oVirement.STATUS}</span><br>
 												  <b>Validation :</b> {$testsplit[0]}
 											  </div>
 											 {/if}
@@ -263,8 +263,8 @@
 											<div class="text-muted"><h3>DELAI D'EXECUTION</h3></div>
 											<ul class="todo-list ui-sortable" data-widget="todo-list">
 											  <li>
-												{assign var=num1 value=$oVirement->NOTEDATEVALID|mktimedate}
-												{assign var=num2 value=$oVirement->OVDATEVALID|mktimedate}
+												{assign var=num1 value=$oVirement.NOTEDATEVALID|mktimedate}
+												{assign var=num2 value=$oVirement.DATEEXECUTIONOV|mktimedate}
 												{assign var=diff value=$num2-$num1}
 												{assign var=final value=$diff/86400}
 												

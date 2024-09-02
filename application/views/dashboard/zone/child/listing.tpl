@@ -47,6 +47,7 @@ $(document).ready(function() {
 			data: {
 				iEcriNum: d[1],
 				iNumMandat: d[2],
+				iExo: $('#ECRI_EXERCICE').val(),
 				iModePaiement: $("#sendSearch").find("input[name='MAND_MODE_PAIE[]']:checked").val()
 			},
 			beforeSend: function() {

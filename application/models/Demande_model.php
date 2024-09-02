@@ -405,7 +405,7 @@ class Demande_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function GetDetail($_iEcriNum, $_iNumMandat, $_iMode){
+	public function GetDetail($_iEcriNum, $_iNumMandat, $_iMode, $_iAnneeExercice='2023'){
 
 		global $db;
 
@@ -415,7 +415,7 @@ class Demande_model extends CI_Model {
 
 		$toDB = $this->load->database('catia',true);
 
-		$zSql = "select COUNT(*) over () found_rows,m.* from TESTSOI.T_ECRITURE t,TESTSOI.T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum . " AND m.MAND_NUM_INFO = " . $_iNumMandat;
+		$zSql = "select COUNT(*) over () found_rows,m.* from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum . " AND m.MAND_NUM_INFO = " . $_iNumMandat;
 
 		if($_iMode != ""){
 			$zSql .= " AND m.MAND_MODE_PAIE = '" . $_iMode . "'";
@@ -576,7 +576,8 @@ class Demande_model extends CI_Model {
 
 		$zSql .= "  AND T.MAND_NUM_INFO = '" . $_iNumMandat . "'";
 
-		//echo $zSql;
+		echo $zSql;
+		die();
 
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->row();
@@ -595,7 +596,7 @@ class Demande_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function GetVirement($_iNumMandat){
+	public function GetVirement($_iNumMandat,$_iAnnee="2023"){
 
 		global $db;
 
@@ -610,8 +611,8 @@ class Demande_model extends CI_Model {
 		(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE v.OVPCPAYEUR=pc.PSTP_CODE) as PAYEUR
 		from T_VIREMENT v WHERE v.INFONUMERO = '" . $_iNumMandat . "'";*/
 
-		$zSql = "  SELECT  V.*,   
-				   (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE v.OVPCPAYEUR=pc.PSTP_CODE) as PAYEUR,
+		/*$zSql = "  SELECT  V.*,   
+				   (SELECT PSTP_LIBELLE FROM EXECUTION".$_iAnnee.".POSTE_COMPTABLE_ORIGINAL pc WHERE v.OVPCPAYEUR=pc.PSTP_CODE) as PAYEUR,
 				   M.EXERCICE,
 				   M.SOA,
 				   M.COMPTE,
@@ -652,7 +653,7 @@ class Demande_model extends CI_Model {
 				   CASE
 					   WHEN NVL (v.OVREF, 'OV') <> 'OV' AND V.NOTESTATUS = '5'
 					   THEN
-						   TRUNC (V.OVDATEVALID)
+						   TRUNC (V.DATEEXECUTIONOV)
 					   WHEN NVL (e.ecri_valid, 0) = 1 AND m.mand_mode_paie = 'VB'
 					   THEN
 						   TRUNC (E.ECRI_DT_VALID)
@@ -676,10 +677,10 @@ class Demande_model extends CI_Model {
 				   M.ASSIGNATAIRE,
 				   M.MANDATAIRE,
 				   V.OVPCPAYEUR
-			  FROM TESTSOI.T_MANDAT                M,
-				   T_TITRE                 T,
-				   TESTSOI.T_ECRITURE              E,
-				   T_VIREMENT  V
+			  FROM EXECUTION".$_iAnnee.".MANDAT                M,
+				   EXECUTION".$_iAnnee.".TITRE_XXI                 T,
+				   EXECUTION".$_iAnnee.".ECRITURE              E,
+				   V_VIREMENT  V
 			 WHERE 1=1
 				   AND M.COMPTE NOT IN ('6011','6131','6522','6521')
 				   
@@ -688,14 +689,18 @@ class Demande_model extends CI_Model {
 				   AND M.ECRI_NUM = E.ECRI_NUM(+)
 				  
 				   AND T.NUMERO_TITRE = V.TITRENUMERO(+)
-				   AND M.MAND_MODE_PAIE = 'VB' ";
+				   AND M.MAND_MODE_PAIE IN ('VB','ME') ";*/
 
-		$zSql .= " AND v.INFONUMERO = '" . $_iNumMandat . "'";
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
+
+		$zSql .= " AND INFONUMERO = '" . $_iNumMandat . "'";
 
 		//echo $zSql;
 
 		$zQuery = $toDB->query($zSql);
-		$toRow = $zQuery->row();
+		$toRow = $zQuery->row_array();
 
 		/*echo "<pre>";
 		print_r ($toRow);

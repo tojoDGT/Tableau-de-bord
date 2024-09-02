@@ -1,4 +1,3 @@
-SELECT COUNT(*) over () found_rows,cv.* from (
 SELECT dtl.PCASSIGNATAIRE,
        /*DECODE (
            SUBSTR (dtl.SOA, 0, 2),
@@ -108,9 +107,9 @@ SELECT dtl.PCASSIGNATAIRE,
                           OR dtl.compte = '65142'
                           OR dtl.compte = '65143'
                           OR dtl.compte = '65144'))
-                 -- Intérêt de la dette
+                 -- IntÃ©rÃªt de la dette
                  OR (SUBSTR (dtl.compte, 0, 4) = '6611')
-                 -- Téléphone, mobile, Internet
+                 -- TÃ©lÃ©phone, mobile, Internet
                  OR (   SUBSTR (dtl.compte, 0, 4) = '6262'
                      OR SUBSTR (dtl.compte, 0, 4) = '6263'
                      OR SUBSTR (dtl.compte, 0, 4) = '6264')
@@ -139,7 +138,7 @@ SELECT dtl.PCASSIGNATAIRE,
                                                       'O',
                                                       'C',
                                                       'D'))
-                 -- Indemnités Chef FKT
+                 -- IndemnitÃ©s Chef FKT
                  OR (    dtl.PCASSIGNATAIRE = '10101.413'
                      AND dtl.INFONUMERO LIKE 'MEFKT%')
                  -- CIAD
@@ -160,24 +159,24 @@ SELECT dtl.PCASSIGNATAIRE,
                  OR (PCASSIGNATAIRE = '10101.000')
                  -- REGION
                  OR (dtl.SOA LIKE '20-1%')
-                 -- Produits alimentaires | Gaz | Autres combustibles | Frais de déplacement intérieur et extérieur
+                 -- Produits alimentaires | Gaz | Autres combustibles | Frais de dÃ©placement intÃ©rieur et extÃ©rieur
                  OR (dtl.compte = '6125')
                  OR (dtl.compte = '6132')
                  OR (dtl.compte = '6138')
                  OR (dtl.compte = '6231')
                  OR (dtl.compte = '6232')
-                 -- Frais postaux et location boîte postale | Services bancaires et assimilés
+                 -- Frais postaux et location boÃ®te postale | Services bancaires et assimilÃ©s
                  OR (dtl.compte = '6261')
                  OR (dtl.compte = '6266')
                  OR (dtl.compte = '6285')
-                 -- Bourses à Madagascar | Secours
+                 -- Bourses Ã  Madagascar | Secours
                  OR (dtl.compte = '6531')
                  OR (dtl.compte = '6533')
                  OR (dtl.compte = '6562')
-                 -- Consignations financières ou judiciaires
+                 -- Consignations financiÃ¨res ou judiciaires
                  OR (dtl.CPTPCDEP = '46212')
                  -- OR (dtl.CPTPCDEP = '46213')
-                 -- Recettes à repartir aux collectivités | ADC CENI | Dépenses de PP à virer par PP
+                 -- Recettes Ã  repartir aux collectivitÃ©s | ADC CENI | DÃ©penses de PP Ã  virer par PP
                  OR (dtl.CPTPCDEP = '4787188')
                  OR (SUBSTR (dtl.CPTPCDEP, 1, 5) = '46771')
                  OR (dtl.CPTPCDEP = '4786133')
@@ -208,6 +207,4 @@ SELECT dtl.PCASSIGNATAIRE,
        --AND TITRENUMERO NOT LIKE 'TTR%'
        AND DTL.NOTEID = nt.NOTEID
        AND NT.DMDVIRID = DV.DMDVIRID(+)
-       AND NT.OVID = OV.OVID(+);
-) cv
-%WHERE%
+       AND NT.OVID = OV.OVID(+)
