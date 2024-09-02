@@ -37,7 +37,7 @@
 				<div class="mb-2"><input type="checkbox" {if ASSIGNATAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="Assignataire-m.ASSIGNATAIRE1" class="mr-1" name="colonneAffiche[]" /><span>Assignataire</span></div>
 				<div class="mb-2"><input type="checkbox" {if MANDATAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="Mandataire-m.MANDATAIRE1" class="mr-1" name="colonneAffiche[]" /><span>Mandataire</span></div>
 				<div class="mb-2"><input type="checkbox" {if MAND_VISA_TEF|in_array:$oDataTempCol} checked="checked" {/if} value="Visa TEF-m.MAND_VISA_TEF" class="mr-1" name="colonneAffiche[]" /><span>Visa TEF</span></div>
-				<div class="mb-2"><input type="checkbox" {if MAND_NUM_INFO|in_array:$oDataTempCol} checked="checked" {/if} value="Numéro Info-m.MANDAT" class="mr-1" name="colonneAffiche[]" /><span>Numéro Info</span></div>
+				<div class="mb-2"><input type="checkbox" {if MAND_NUM_INFO|in_array:$oDataTempCol} checked="checked" {/if} value="Numéro Info-m.MANDAT1" class="mr-1" name="colonneAffiche[]" /><span>Numéro Info</span></div>
 				<div class="mb-2"><input type="checkbox" {if MAND_OBJET|in_array:$oDataTempCol} checked="checked" {/if} value="Objet du mandat-m.MAND_OBJET" class="mr-1" name="colonneAffiche[]" /><span>Objet du mandat</span></div>
 				<div class="mb-2"><input type="checkbox" {if MAND_DATE_RECUP|in_array:$oDataTempCol} checked="checked" {/if} value="Date Récupération-m.MAND_DATE_RECUP" class="mr-1" name="colonneAffiche[]" /><span>Date Récupération</span></div>
 				<div class="mb-2"><input type="checkbox" {if MAND_DATE_REEL_VISA|in_array:$oDataTempCol} checked="checked" {/if} value="Date réelle du Visa-m.MAND_DATE_REEL_VISA" class="mr-1" name="colonneAffiche[]" /><span>Date réelle du Visa</span></div>

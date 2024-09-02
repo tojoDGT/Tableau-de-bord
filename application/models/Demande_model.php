@@ -34,7 +34,7 @@ class Demande_model extends CI_Model {
 			array_push($toColonne, 'Date-E.ECRI_DT_CECRITURE');
 			array_push($toColonne, 'Propriétaire-E.PROP_CODE');
 			array_push($toColonne, 'SOA-M.SOA');
-			array_push($toColonne, 'Mode-M.MAND_MODE_PAIE');
+			array_push($toColonne, 'Mode-M.MAND_MODE_PAIE1');
 			array_push($toColonne, 'Montant-M.MAND_MONTANT1');
 
 			$_SESSION["colonneAffiche"] = serialize($toColonne);
@@ -170,6 +170,7 @@ class Demande_model extends CI_Model {
 			}
 		}
 
+		$toMandMode1 = array();
 		if( !empty($oRequest['data']) &&  sizeof($oRequest['data'])>0) {   
 
 		   $toMandMode = array();
@@ -178,12 +179,20 @@ class Demande_model extends CI_Model {
 					if($oData['value']!=""){
 						$zValue = "'". $oData['value'] . "'";
 						array_push($toMandMode, $zValue);
+						array_push($toMandMode1, $oData['value']);
 					}
 				}
 				
 			}
 			
 			if(sizeof($toMandMode)>0){
+
+				if(in_array("'VB'", $toMandMode)){
+					/* Money electronique */
+					$zValue = "'ME'";
+					array_push($toMandMode,$zValue);
+				}  
+
 				$zWhere .=" AND M.MAND_MODE_PAIE IN (".implode(",",$toMandMode).")";
 			}
 		}
@@ -201,6 +210,14 @@ class Demande_model extends CI_Model {
 
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/mdt_vir_tb.sql"); 
+		if(sizeof($toMandMode1)>0){
+			/* si transfert */
+			if(in_array("OO", $toMandMode1)){
+				$zData = @file_get_contents(APPLICATION_PATH ."sql/mdt_trsf_specl.sql"); 
+			}  
+		}
+
+		
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 		
