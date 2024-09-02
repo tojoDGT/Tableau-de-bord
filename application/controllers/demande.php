@@ -84,6 +84,8 @@ class Demande extends MY_Controller
 
 		$toGetListe = $this->demande->getDemande($iNombreTotal,$this) ; 
 
+		//print_r ($toGetListe);
+
 		$oDataAssign = array();
 		$iIncrement = 1;
 		foreach ($toGetListe as $oGetListe){
