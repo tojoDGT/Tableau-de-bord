@@ -159,7 +159,7 @@ class Demande extends MY_Controller
 			switch ($oGetDetail->MAND_MODE_PAIE){
 				case 'OO':
 					// Transfert
-					$oTransfert = $this->demande->GetTransfert($oGetDetail->MAND_NUM_INFO);
+					$oTransfert = $this->demande->GetTransfert($oGetDetail->MAND_NUM_INFO,$iAnneeExercice);
 					break;
 					
 				default :

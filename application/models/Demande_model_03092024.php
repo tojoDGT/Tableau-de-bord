@@ -84,6 +84,56 @@ class Demande_model extends CI_Model {
 
 		$zWhere = " ";
 
+		/*
+		echo "<pre>";
+		print_r ($toColumns);
+		echo "</pre>";*/
+
+		//$zSql = "select * from (";
+
+		/*$zSql = "	select COUNT(tt.TITULAIRE) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,tt.CODE_TIERS,
+					(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE,
+				    (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE,
+					m.MAND_VISA_TEF,
+					m.MAND_NUM_INFO,  
+					m.MAND_OBJET,
+					m.MAND_DATE_RECUP,
+					tt.TITULAIRE,
+					m.MAND_DATE_REEL_VISA,
+					CASE
+					WHEN m.MAND_MODE_PAIE = 'VB' THEN 'Virement bancaire'
+					WHEN m.MAND_MODE_PAIE = 'OO' THEN 'Opération d`ordre'
+					WHEN m.MAND_MODE_PAIE = 'BC' THEN 'Bon de Caisse'
+					WHEN m.MAND_MODE_PAIE = 'OP' THEN 'Ordre de paiement'
+					END MAND_MODE_PAIE,
+					CASE
+					   WHEN NVL (t.ecri_valid, 0) = 1 AND BT_REF IS NULL
+					   THEN
+						   'EN INSTANCE DE TRANSFERT'
+					   WHEN NVL (t.ecri_valid, 0) = 1 AND BT_REF IS NOT NULL
+					   THEN
+						   LIB_STATUS
+					   WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
+							AND NVL (m.mand_rejet, 0) = 0
+					   THEN
+						   'VISE'
+					   WHEN     m.MAND_COMPTE_CREDIT IS NULL
+							AND NVL (m.mand_rejet, 0) = 1
+					   THEN
+						   'REJETE (Motif:' || M.rejet_note || ')'
+					   WHEN M.MAND_DATE_TRAIT IS NULL
+					   THEN
+						   'RECUPERE AU NIVEAU GUICHET UNIQUE'
+					   WHEN NVL (m.mand_date_recup,
+								 TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
+							TO_DATE ('01/01/2019', 'DD/MM/RRRR')
+					   THEN
+						   'DOSSIER NON PARVENU AU TRESOR'
+				    END                STATUT,
+					CONCAT (TO_CHAR(MAND_MONTANT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS MAND_MONTANT1
+
+		from T_ECRITURE t,T_MANDAT m,T_TRANSFERT  TR, T_TITRE tt WHERE t.ECRI_NUM = m.ECRI_NUM AND tt.MAND_NUM_INFO = m.MAND_NUM_INFO(+) AND tt.ID_MAND = m.ID_MAND AND m.MAND_NUM_INFO = TR.DET_BT_MANDAT(+)" ;*/
+
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$zWhere.=" AND E.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
 		}
@@ -420,7 +470,7 @@ class Demande_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function GetTransfert($_iNumMandat, $_iAnnee="2023"){
+	public function GetTransfert($_iNumMandat){
 
 		global $db;
 
@@ -430,15 +480,104 @@ class Demande_model extends CI_Model {
 
 		$toDB = $this->load->database('catia',true);
 
+		/*$zSql = "select COUNT(*) over () found_rows,t.*,
+		(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE t.BT_ENVOYEUR=pc.PSTP_CODE) as ENVOYEUR,
+		(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE t.BT_DESTINATAIRE=pc.PSTP_CODE) as DESTINATAIRE,
+		(SELECT LIBELLE_STATUS FROM T_STATUS st WHERE t.BT_STATUS=st.STATUS AND st.TYPE_STATUS='BT') as STATUT
+		from T_TRANSFERT t WHERE t.DET_BTESTSOI.MANDAT = '" . $_iNumMandat . "'";*/
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/transfert_detail.sql"); 
-		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
+		/*$zSql = "  SELECT COUNT(*) over () found_rows,
+				   (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE M.ASSIGNATAIRE=pc.PSTP_CODE) as ENVOYEUR,
+				   (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE M.MANDATAIRE=pc.PSTP_CODE) as DESTINATAIRE,
+				   M.EXERCICE,
+				   M.SOA,
+				   M.COMPTE,
+				   M.MAND_VISA_TEF,
+				   M.MAND_NUM_INFO    NUMERO_MANDAT,
+				   T.NUMERO_TITRE     NUMERO_TITRE,
+				   T.CODE_TIERS       CODE_TIERS,
+				   T.TITULAIRE        TITULAIRE,
+				   M.MAND_OBJET,
+				   T.MONTANT          MONTANT,
+				   CONCAT (TO_CHAR(ECRI_MT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS ECRI_MT11,
+				   M.MAND_DATE_RECUP,
+				   M.MAND_DATE_REEL_VISA,
+				   CASE
+					   WHEN NVL (e.ecri_valid, 0) = 1 AND BT_REF IS NULL
+					   THEN
+						   'EN INSTANCE DE TRANSFERT'
+					   WHEN NVL (e.ecri_valid, 0) = 1 AND BT_REF IS NOT NULL
+					   THEN
+						   LIB_STATUS
+					   WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
+							AND NVL (m.mand_rejet, 0) = 0
+					   THEN
+						   'VISE'
+					   WHEN     m.MAND_COMPTE_CREDIT IS NULL
+							AND NVL (m.mand_rejet, 0) = 1
+					   THEN
+						   'REJETE (Motif:' || M.rejet_note || ')'
+					   WHEN M.MAND_DATE_TRAIT IS NULL
+					   THEN
+						   'RECUPERE AU NIVEAU GUICHET UNIQUE'
+					   WHEN NVL (m.mand_date_recup,
+								 TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
+							TO_DATE ('01/01/2019', 'DD/MM/RRRR')
+					   THEN
+						   'DOSSIER NON PARVENU AU TRESOR'
+				   END                STATUT,
+				   BT_REF             REFERENCE,
+				   CASE
+					   WHEN BT_STATUS = '0'
+					   THEN
+						   TRUNC (BT_ENV_EDIT_DATE)
+					   WHEN BT_STATUS = '2'
+					   THEN
+						   TRUNC (BT_ENV_VALID_DATE)
+					   WHEN BT_STATUS = '4'
+					   THEN
+						   TRUNC (BT_REC_DATE)
+					   WHEN BT_STATUS = '5'
+					   THEN
+						   TRUNC (BT_REC_VALID_DATE)
+					   WHEN NVL (e.ecri_valid, 0) = 1 AND BT_REF IS NULL
+					   THEN
+						   TRUNC (E.ECRI_DT_VALID)
+					   WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
+							AND NVL (m.mand_rejet, 0) = 0
+					   THEN
+						   TRUNC (M.MAND_DATE_VISA)
+					   WHEN     m.MAND_COMPTE_CREDIT IS NULL
+							AND NVL (m.mand_rejet, 0) = 1
+					   THEN
+						   TRUNC (M.MAND_DT_RJT)
+					   WHEN M.MAND_DATE_TRAIT IS NULL
+					   THEN
+						   TRUNC (M.MAND_DATE_RECUP)
+					   WHEN NVL (m.mand_date_recup,
+								 TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
+							TO_DATE ('01/01/2019', 'DD/MM/RRRR')
+					   THEN
+						   TRUNC (M.MAND_DATE_ORD)
+				 END                DATE_SITUATION,
+				 M.ASSIGNATAIRE,
+				   M.MANDATAIRE,
+				   '' OVPCPAYEUR
+			  FROM TESTSOI.T_MANDAT          M,
+				   T_TITRE           T,
+				   TESTSOI.T_ECRITURE        E,
+				   T_TRANSFERT  TR
+			 WHERE 1=1
+				   AND M.COMPTE NOT IN ('6011','6131','6522','6521')
+				   AND M.MAND_MODE_PAIE = 'OO'
+				   AND M.ECRI_NUM = E.ECRI_NUM(+)
+				   AND M.ID_MAND = T.ID_MAND(+)
+				   AND T.MAND_NUM_INFO = TR.DET_BTESTSOI.T_MANDAT(+)";*/
 
 		$zSql .= "  AND T.MAND_NUM_INFO = '" . $_iNumMandat . "'";
 
-		//echo $zSql;
-		//die();
+		echo $zSql;
+		die();
 
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->row();
