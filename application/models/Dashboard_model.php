@@ -1024,7 +1024,7 @@ SELECT
 	*
 	* @return tableau objet
 	*/
-	public function getStatGLobal(){
+	public function getStatGLobal($_iAnneeExercice){
 		
 		global $db;
 
