@@ -957,14 +957,14 @@ SELECT
 		
 		global $db;
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
 
 		$oRequest = $_REQUEST;
 
 		$zSql = "select count(PROP_CODE) as NB,
-		SUM(MAND_MONTANT) as TOTAL, PROP_CODE,ECRI_EXERCICE from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
+		SUM(MAND_MONTANT) as TOTAL, SUBSTR (m.soa, 1, 2) PROP_CODE,ECRI_EXERCICE from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$zSql.=" AND t.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
@@ -978,7 +978,7 @@ SELECT
 			$zSql.=" AND m.TYPE_MAND = '".$oRequest['TYPE_MAND']."'  ";
 		}
 
-		if( !empty($oRequest['PROP_CODE']) &&  sizeof($oRequest['PROP_CODE'])>0) {   
+		/*if( !empty($oRequest['PROP_CODE']) &&  sizeof($oRequest['PROP_CODE'])>0) {   
 			
 			$toPropCode = array();
 			foreach ($oRequest['PROP_CODE'] as $zPropCode){
@@ -990,7 +990,9 @@ SELECT
 				//$zSql .=" AND t.PROP_CODE IN (".implode(",",$toPropCode).")";
 				$zSql .=" AND SUBSTR (m.soa, 1, 2) IN (".implode(",",$toPropCode).")";
 			}
-		}
+		}*/
+
+		$zSql .=" AND SUBSTR (m.soa, 1, 2) IN ('90','06','40','20')";
 
 		if( !empty($oRequest['MAND_MODE_PAIE']) &&  sizeof($oRequest['MAND_MODE_PAIE'])>0) {   
 			
@@ -1007,7 +1009,7 @@ SELECT
 			}
 		}
 
-		$zSql .= " GROUP BY PROP_CODE,ECRI_EXERCICE ORDER BY ECRI_EXERCICE ASC ";
+		$zSql .= " GROUP BY SUBSTR (m.soa, 1, 2),ECRI_EXERCICE ORDER BY ECRI_EXERCICE ASC ";
 
 		//echo $zSql;
 		

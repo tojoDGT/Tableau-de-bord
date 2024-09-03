@@ -348,6 +348,8 @@ class Dashboard extends MY_Controller
 		//print_r ($toGetPropCode);
 
 		$toGetAllExercice = $this->dashboard->getAllDateExercice($iAnneeExercice) ;
+
+		//print_r ($toGetAllExercice);
 		
 		$iPointStart = $iAnneeExercice;
 		
@@ -357,9 +359,9 @@ class Dashboard extends MY_Controller
 
 		$toTableauResult = $this->dashboard->getGraph($iAnneeExercice);
 
-		echo "<pre>";
+		/*echo "<pre>";
 		print_r ($toTableauResult);
-		echo "</pre>";
+		echo "</pre>";*/
 
 		$zAfficheSerieStat = "";
 		$zCategorieAffiche = "";
@@ -382,7 +384,7 @@ class Dashboard extends MY_Controller
 									$iNombre = 0; 
 									
 									foreach($toTableauResult as $oTableauResult){
-										if($oTableauResult["ECRI_EXERCICE"] == $oGetAllExercice["ECRI_EXERCICE"] && $oTableauResult["PROP_CODE"] == $oGetPropCode["PROP_LIBELLE"]) {
+										if($oTableauResult["ECRI_EXERCICE"] == $oGetAllExercice["ECRI_EXERCICE"] && $oTableauResult["PROP_CODE"] == $oGetPropCode["PROP_CODE"]) {
 											
 											
 											if( !empty($oRequest['iMode']) &&  $oRequest['iMode']==2) {   
@@ -410,7 +412,7 @@ class Dashboard extends MY_Controller
 
 				foreach($toGetPropCode as $oGetPropCode){
 					$zAfficheSerieStat .= "[";
-					$zAfficheSerieStat .= "'".$oGetPropCode['PROP_CODE']."',";
+					$zAfficheSerieStat .= "'".$oGetPropCode['PROP_LIBELLE']."',";
 
 					$iNombre = 0; 
 					foreach($toGetAllExercice as $oGetAllExercice){
@@ -448,7 +450,7 @@ class Dashboard extends MY_Controller
 
 				foreach($toGetPropCode as $oGetPropCode){
 
-					$zCategorie = "'".$oGetPropCode['PROP_CODE']."'";
+					$zCategorie = "'".$oGetPropCode['PROP_LIBELLE']."'";
 					array_push ($toCategorie, $zCategorie);
 
 					
