@@ -23,7 +23,7 @@
 			<th class="dt-center sens">CREDIT</th>
 			<th class="dt-center oper">DEBIT</th>
 			<th class="dt-center oper">CREDIT</th>
-			<th class="dt-center">SENS EN COURS</th>
+			<th class="dt-center">SENS FIN</th>
 			<th class="dt-center">CONCLUSION</th>
         </tr>
 	</thead>

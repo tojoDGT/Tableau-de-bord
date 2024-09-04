@@ -75,7 +75,7 @@ class Compte_model extends CI_Model {
 		}
 
 		if( !empty($oRequest['SENS']) && ($oRequest['SENS']!="") ) {   
-			$zWhere.=" AND norm.SENS_ENCOURS = '" . $oRequest['SENS'] . "'";
+			$zWhere.=" AND norm.SENSOG = '" . $oRequest['SENS'] . "'";
 		}
 
 		if( !empty($oRequest['PSTP_CODE']) && ($oRequest['PSTP_CODE']!="") ) {   
@@ -87,7 +87,7 @@ class Compte_model extends CI_Model {
 		}
 
 		if($_iAnneeExo!=""){
-			$zWhere.=" AND norm.ECRI_EXERCICE = '" . $_iAnneeExo . "' ";
+			$zWhere.=" AND norm.EXERCICE = '" . $_iAnneeExo . "' ";
 		}
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/normalite.sql"); 

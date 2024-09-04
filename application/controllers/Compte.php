@@ -95,7 +95,7 @@ class Compte extends MY_Controller
 					$oDataTemp=array(); 
 
 					$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
-					$oDataTemp[] = $oGetListe['ECRI_EXERCICE'];
+					$oDataTemp[] = $oGetListe['EXERCICE'];
 					$oDataTemp[] = $oGetListe['COMPTE_NUM'];
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['BAL_ENTR_D']), 2, ',', ' ') . " Ar"; 
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['BAL_ENTR_C']), 2, ',', ' '). " Ar"; 
@@ -108,7 +108,7 @@ class Compte extends MY_Controller
 					
 					$zSens = "";
 
-					switch ($oGetListe['SENS_ENCOURS']){
+					switch ($oGetListe['SENSFIN']){
 						case 'DEBITEUR':
 							$zSens = "#dc3545";
 							
@@ -124,7 +124,7 @@ class Compte extends MY_Controller
 							break;
 					}
 					
-					$oDataTemp[] = "<span style=\"color:".$zSens."\"><strong>" . $oGetListe['SENS_ENCOURS'] . "</strong></span>";
+					$oDataTemp[] = "<span style=\"color:".$zSens."\"><strong>" . $oGetListe['SENSFIN'] . "</strong></span>";
 					//$oDataTemp[] = $oGetListe['SENSOG'];
 
 					$zBadge = "badge-danger";

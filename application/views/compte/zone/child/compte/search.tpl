@@ -90,7 +90,7 @@
 										<td class="noBottom">
 											<select class="form-control" id="SENS" name="SENS">
 													<option selected="selected" value="">Tous</option>
-													<option value="NEUTRE">NEUTRE</option>
+													<option value="N">NEUTRE</option>
 													<option value="DEBITEUR">DEBITEUR</option>
 													<option value="CREDITEUR">CREDITEUR</option>	
 											</select>
