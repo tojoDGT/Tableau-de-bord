@@ -10,7 +10,7 @@ and NVL (l.ecri_type, '99') NOT IN
                                                                  ('00', '08') 
 ) 
 SELECT COUNT(*) over () found_rows,norm.* from (
-select pc.pstp_libelle, ecriture.ecri_exercice exercice, ecriture.ecri_ref as reference_ecriture,ecriture.lecr_cpt_general compte,ecriture.ecri_lib libelle_ecriture,
+select pc.pstp_libelle,pc.pstp_code, ecriture.ecri_exercice exercice, ecriture.ecri_ref as reference_ecriture,ecriture.lecr_cpt_general compte,ecriture.ecri_lib libelle_ecriture,
         ecriture.ecri_dt_cecriture date_ecriture,--ecriture.ecri_oper_saisie operateur,
         --ecriture.ecri_mt_debit ecriture_mt,decode (ecriture.ecri_valid,1,'VALIDE','NON VALIDE') status,
         ecriture.prop_code proprietaire,
