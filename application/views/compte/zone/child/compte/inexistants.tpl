@@ -15,7 +15,7 @@
 			<th class="dt-center oper">REFERENCE</th>
 			<th class="dt-center oper">LIBELLE</th>
 			<th class="dt-center oper">DATE</th>
-			<th class="dt-center">STATUT</th>
+			<th class="dt-center">TYPE ECRITURE</th>
 			<th class="dt-center">PROPRIETAIRE</th>
 			<th class="dt-center">LIBELLE LIGNE</th>
 			<th class="dt-center">MONTANT OPERATION</th>

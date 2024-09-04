@@ -1,31 +1,36 @@
+WITH LGECRITUREBAL AS (
+SELECT l.*, 'BALANCE D''ENTREE' TYPE_ECRITURE  FROM execution%ANNEE%.T_LGECRITURE_CTRL l WHERE  entite = '10101.100' and ECRI_NUM = (
+SELECT max(ecri_num) FROM execution%ANNEE%.T_LGECRITURE_CTRL l WHERE  NVL (l.ecri_type, 'XX') = '00' and l.entite = '10101.100')
+union all
+SELECT l.*, 'FIN DE GESTION' TYPE_ECRITURE  FROM execution%ANNEE%.T_LGECRITURE_CTRL l WHERE entite = '10101.100' and ECRI_NUM = (
+SELECT max(ecri_num) FROM execution%ANNEE%.T_LGECRITURE_CTRL l WHERE  NVL (l.ecri_type, 'XX') = '08' and l.entite = '10101.100') 
+union all
+SELECT l.*, 'OPERATION DE LA GESTION' TYPE_ECRITURE  FROM execution%ANNEE%.T_LGECRITURE_CTRL l WHERE entite = '10101.100'
+and NVL (l.ecri_type, '99') NOT IN
+                                                                 ('00', '08') 
+) 
 SELECT COUNT(*) over () found_rows,norm.* from (
-select pc.pstp_libelle,pc.pstp_code, ecriture.ecri_exercice exercice, ecriture.ecri_ref as reference_ecriture,ecriture.ecri_lib libelle_ecriture,
-        ecriture.ecri_dt_cecriture date_ecriture,ecriture.ecri_oper_saisie operateur,
-        decode (ecriture.ecri_valid,1,'VALIDE','NON VALIDE') status,
+select pc.pstp_libelle, ecriture.ecri_exercice exercice, ecriture.ecri_ref as reference_ecriture,ecriture.lecr_cpt_general compte,ecriture.ecri_lib libelle_ecriture,
+        ecriture.ecri_dt_cecriture date_ecriture,--ecriture.ecri_oper_saisie operateur,
+        --ecriture.ecri_mt_debit ecriture_mt,decode (ecriture.ecri_valid,1,'VALIDE','NON VALIDE') status,
         ecriture.prop_code proprietaire,
-        case when NVL (ecriture.ecri_type, 'XX') = '00' THEN 'BALANCE D'' ENTREE'
-        when NVL (ecriture.ecri_type, 'XX') = '08' THEN 'FIN DE GESTION'
-        when NVL (ecriture.ecri_type, '99') NOT IN
-                                                                 ('00', '08') THEN 'OPERATION DE LA GESTION'
-        end as type_ecriture,
-        lgecriture.ECRI_LIB libelle_ligne,lgecriture.lecr_mt montant_operation,
-        lgecriture.lecr_sens sens,lgecriture.lecr_cpt_general compte
+        type_ecriture,
+        ecriture.ecri_lib libelle_ligne,ecriture.lecr_mt montant_operation,
+        ecriture.lecr_sens sens--distinct ecriture.ecri_ref,ecri_num
 
-              FROM EXECUTION%ANNEE%.T_lgecriture_ctrl lgecriture, EXECUTION%ANNEE%.ecriture ecriture, CATIA.POSTE_COMPTABLE pc
-             WHERE lgecriture.ecri_num = ecriture.ecri_num
-               -- AND ecriture.ecri_exercice = '%ANNEE%' 
-			   AND ecriture.ENTITE = lgecriture.entite
-			   -- AND ecriture.ENTITE = $P{poste_comptable}
-			   -- AND lgecriture.entite = $P{poste_comptable}
-			   -- AND ecriture.ENTITE = pc.pstp_code
-			   AND lgecriture.entite = pc.pstp_code
-               -- AND ecriture.ecri_exercice >= '2014'
-               --AND TO_DATE (ecriture.ecri_dt_cecriture, 'DD/MM/RRRR')
-               --       BETWEEN TO_DATE ($P{Date_Start}, 'DD/MM/RRRR')
-               --           AND TO_DATE ($P{Date_End}, 'DD/MM/RRRR')
-               --AND UPPER(ecriture.prop_code) = 'ETAT'
+              FROM LGECRITUREBAL ecriture, CATIA.POSTE_COMPTABLE pc
+             WHERE 
+				-- lgecriture.ecri_num = ecriture.ecri_num
+			    -- ecriture.exercice = '%ANNEE%'
+			    ecriture.entite = pc.PSTP_CODE
+               AND 
+               ecriture.ecri_dt_cecriture
+                      BETWEEN TO_DATE ('01/01/%ANNEE%', 'DD/MM/RRRR')
+                          AND TO_DATE ('%ZDATE%', 'DD/MM/RRRR')
+               AND ecriture.prop_code = 'ETAT'
+               AND  SUBSTR (ecriture.LECR_CPT_GENERAL, 1, 1) != '8'
                AND not exists (
-               select 'X' from catia.compte where compte.compte_num = lgecriture.lecr_cpt_general and compte.compte_owner = '01' 
+               select 'X' from catia.compte where compte.compte_num = ecriture.lecr_cpt_general and compte.compte_owner = '01'
 		 and  exo='%ANNEE%'
                )
 ) norm

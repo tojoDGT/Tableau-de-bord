@@ -447,9 +447,15 @@ class Compte_model extends CI_Model {
 			$zWhere.=" AND EXERCICE = '" . $_iAnneeExo . "' ";
 		}
 
-		$zWhere.=" AND STATUS != 'VALIDE' ";
+		//$zWhere.=" AND STATUS != 'VALIDE' ";
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/inexistant.sql"); 
+
+		$zDate = date("d/m/Y");
+
+		//$zDateParam = date("d/m/".$_iAnneeExo) ;
+
+		$zData = str_replace("%ZDATE%", trim($zDate), $zData) ; 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
 		

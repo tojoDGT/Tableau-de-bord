@@ -290,7 +290,7 @@ class Compte extends MY_Controller
 					$oDataTemp[] = $oGetListe['REFERENCE_ECRITURE'];
 					$oDataTemp[] = $oGetListe['LIBELLE_ECRITURE'];
 					$oDataTemp[] = $oGetListe['DATE_ECRITURE'];
-					$oDataTemp[] = $oGetListe['STATUS'];
+					$oDataTemp[] = $oGetListe['TYPE_ECRITURE'];
 					$oDataTemp[] = $oGetListe['PROPRIETAIRE'];
 					$oDataTemp[] = $oGetListe['LIBELLE_LIGNE'];
 					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['MONTANT_OPERATION']), 2, ',', ' ') . " Ar";
