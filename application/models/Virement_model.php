@@ -3,13 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
 * @package DGT
-* @subpackage le modèle concenrnant les demandes
+* @subpackage le modèle concenrnant les virements
 * @author RANDRIANANTENAINA Tojo Michaël
 */
-class Demande_model extends CI_Model {
+class Virement_model extends CI_Model {
 
 	/**  
-	* Classe qui concerne le modèle demande
+	* Classe qui concerne le modèle virement
 	* @package  DGT  
 	* @subpackage entité */ 
 	function __construct(){
@@ -28,7 +28,6 @@ class Demande_model extends CI_Model {
 		if(empty($_SESSION["colonneAffiche"])){
 			array_push($toColonne, 'Identifiant-E.ECRI_NUM');
 			array_push($toColonne, 'IdentifiantNumInfo-M.MAND_NUM_INFO');
-			//array_push($toColonne, 'TITULAIRE-T.TITULAIRE');
 			array_push($toColonne, 'Référence-E.ECRI_REF');
 			array_push($toColonne, 'Libellé-E.ECRI_LIB');
 			array_push($toColonne, 'Date-E.ECRI_DT_CECRITURE');
@@ -47,14 +46,14 @@ class Demande_model extends CI_Model {
 
 	
 	/** 
-	* function permettant d'afficher la liste des demandes
+	* function permettant d'afficher la liste des virements
 	*
 	* @param integer $_iNbrTotal nombre total à afficher dans la pagination
 	* @param object $_this : controller
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function getDemande(&$_iNbrTotal = 0,$_this=''){
+	public function getVirement(&$_iNbrTotal = 0,$_this=''){
 		
 		global $db;
 
@@ -201,8 +200,8 @@ class Demande_model extends CI_Model {
 
 		$toError = $this->db->error();
 
-		
-		/*echo "<pre>";
+		/*
+		echo "<pre>";
 		print_r ($toRow);
 		echo "</pre>";*/
 
@@ -224,7 +223,7 @@ class Demande_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function getDossier(&$_iNbrTotal = 0,$_this='',$_iAnneeExercice='2023'){
+	public function getDossier(&$_iNbrTotal = 0,$_this=''){
 		
 		global $db;
 
@@ -266,8 +265,8 @@ class Demande_model extends CI_Model {
 		//$zSql = "select * from (";
 
 		$zSql = "	select COUNT(*) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,REJET_NOTE,MAND_DT_RJT,
-					(SELECT PSTP_LIBELLE FROM EXECUTION".$_iAnneeExercice.".POSTE_COMPTABLE_ORIGINAL pc WHERE M.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE,
-					(SELECT PSTP_LIBELLE FROM EXECUTION".$_iAnneeExercice.".POSTE_COMPTABLE_ORIGINAL pc WHERE M.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE,
+					(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE,
+				    (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE,
 					m.MAND_VISA_TEF,
 					m.MAND_NUM_INFO,  
 					m.MAND_OBJET,
@@ -281,7 +280,7 @@ class Demande_model extends CI_Model {
 					END MAND_MODE_PAIE,
 					CONCAT (TO_CHAR(MAND_MONTANT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS MAND_MONTANT1
 
-		from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM " ;
+		from T_ECRITURE t,T_MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM " ;
 
 		if( isset($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
 			$zSql.=" AND m.ENTITE = '".$oRequest['zPsCode']."'  ";
@@ -461,102 +460,15 @@ class Demande_model extends CI_Model {
 
 		global $db;
 
-		//error_reporting(E_ALL);
 
-		$toRow = array();
-
-		$toDB = $this->load->database('catia',true);
-
-		/*$zSql = "select COUNT(*) over () found_rows,v.*,
-		(SELECT LIBELLE_STATUS FROM T_STATUS st WHERE v.NOTESTATUS=st.STATUS AND st.TYPE_STATUS='VB') as STATUTNOTE,
-		(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE v.OVPCPAYEUR=pc.PSTP_CODE) as PAYEUR
-		from T_VIREMENT v WHERE v.INFONUMERO = '" . $_iNumMandat . "'";*/
-
-		/*$zSql = "  SELECT  V.*,   
-				   (SELECT PSTP_LIBELLE FROM EXECUTION".$_iAnnee.".POSTE_COMPTABLE_ORIGINAL pc WHERE v.OVPCPAYEUR=pc.PSTP_CODE) as PAYEUR,
-				   M.EXERCICE,
-				   M.SOA,
-				   M.COMPTE,
-				   M.MAND_VISA_TEF,
-				   M.MAND_NUM_INFO    NUMERO_MANDAT,
-				   T.NUMERO_TITRE     NUMERO_TITRE,
-				   T.CODE_TIERS       CODE_TIERS,
-				   T.TITULAIRE        TITULAIRE,
-				   M.MAND_OBJET,
-				   T.MONTANT          MONTANT,
-				   M.MAND_DATE_RECUP,
-				   M.MAND_DATE_REEL_VISA,
-				   CASE
-					   WHEN NVL (v.OVREF, 'OV') <> 'OV' AND V.NOTESTATUS = '5'
-					   THEN
-						   'VIRE'
-					   WHEN NVL (e.ecri_valid, 0) = 1 AND m.mand_mode_paie = 'VB'
-					   THEN
-						   'EN INSTANCE DE VIREMENT'
-					   WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
-							AND NVL (m.mand_rejet, 0) = 0
-					   THEN
-						   'VISE'
-					   WHEN     m.MAND_COMPTE_CREDIT IS NULL
-							AND NVL (m.mand_rejet, 0) = 1
-					   THEN
-						   'REJETE'
-					   WHEN M.MAND_DATE_TRAIT IS NULL
-					   THEN
-						   'RECUPERE AU NIVEAU GUICHET UNIQUE'
-					   WHEN NVL (m.mand_date_recup,
-								 TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
-							TO_DATE ('01/01/2019', 'DD/MM/RRRR')
-					   THEN
-						   'DOSSIER NON PARVENU AU TRESOR'
-				   END                STATUT,
-				   V.OVREF            REFERENCE,
-				   CASE
-					   WHEN NVL (v.OVREF, 'OV') <> 'OV' AND V.NOTESTATUS = '5'
-					   THEN
-						   TRUNC (V.DATEEXECUTIONOV)
-					   WHEN NVL (e.ecri_valid, 0) = 1 AND m.mand_mode_paie = 'VB'
-					   THEN
-						   TRUNC (E.ECRI_DT_VALID)
-					   WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
-							AND NVL (m.mand_rejet, 0) = 0
-					   THEN
-						   TRUNC (M.MAND_DATE_VISA)
-					   WHEN     m.MAND_COMPTE_CREDIT IS NULL
-							AND NVL (m.mand_rejet, 0) = 1
-					   THEN
-						   TRUNC (M.MAND_DT_RJT)
-					   WHEN M.MAND_DATE_TRAIT IS NULL
-					   THEN
-						   TRUNC (M.MAND_DATE_RECUP)
-					   WHEN NVL (m.mand_date_recup,
-								 TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
-							TO_DATE ('01/01/2019', 'DD/MM/RRRR')
-					   THEN
-						   TRUNC (M.MAND_DATE_ORD)
-				   END                DATE_SITUATION,
-				   M.ASSIGNATAIRE,
-				   M.MANDATAIRE,
-				   V.OVPCPAYEUR
-			  FROM EXECUTION".$_iAnnee.".MANDAT                M,
-				   EXECUTION".$_iAnnee.".TITRE_XXI                 T,
-				   EXECUTION".$_iAnnee.".ECRITURE              E,
-				   V_VIREMENT  V
-			 WHERE 1=1
-				   AND M.COMPTE NOT IN ('6011','6131','6522','6521')
-				   
-				   AND M.ID_MAND = T.ID_MAND
-				   AND M.ENTITE = T.ENTITE
-				   AND M.ECRI_NUM = E.ECRI_NUM(+)
-				  
-				   AND T.NUMERO_TITRE = V.TITRENUMERO(+)
-				   AND M.MAND_MODE_PAIE IN ('VB','ME') ";*/
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
 
-		$zSql .= " WHERE MANDAT = '" . $_iNumMandat . "'";
+		if($_iNumMandat!=""){
+			$zSql .= " AND INFONUMERO = '" . $_iNumMandat . "'";
+		}
 
 		//echo $zSql;
 
@@ -566,6 +478,71 @@ class Demande_model extends CI_Model {
 		/*echo "<pre>";
 		print_r ($toRow);
 		echo "</pre>";*/
+
+		return $toRow;
+	}
+
+	/** 
+	* function permettant d'afficher le detail d'un virement
+	*
+	* @param integer $_iNumMandat : numéro du mandat
+	*
+	* @return liste en tableau d'objet
+	*/
+	public function GetVirement($_iNumMandat,$_iAnnee="2023"){
+
+		global $db;
+
+
+
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
+
+		if($_iNumMandat!=""){
+			$zWhere = " WHERE INFONUMERO = '" . $_iNumMandat . "'";
+		}
+
+
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
+
+		//echo $zSql;
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->row();
+
+		/*echo "<pre>";
+		print_r ($toRow);
+		echo "</pre>";*/
+
+		return $toRow;
+	}
+
+
+	/** 
+	* function permettant d'afficher le detail d'un virement
+	*
+	* @param integer $_iNumMandat : numéro du mandat
+	*
+	* @return liste en tableau d'objet
+	*/
+	public function GetVirementListe(&$_iNbrTotal = 0,$_this=''){
+
+		global $db;
+
+		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2024);
+
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($iAnneeExercice), $zData) ; 
+
+		//echo $zSql;
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->row_array();
+
+		echo "<pre>";
+		print_r ($toRow);
+		echo "</pre>";
 
 		return $toRow;
 	}

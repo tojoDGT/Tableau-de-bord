@@ -22,7 +22,7 @@ class Utilisateur_model extends CI_Model {
 		global $db;
 
 
-		$toDB = $this->load->database('specl',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toColumns = array( 
 			0  => 'USERID', 
@@ -33,7 +33,7 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM ".$toDB->database.".V_USERS u WHERE 1=1 ";
+		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM specl.V_USERS u WHERE 1=1 ";
 
 		if( !empty($oRequest['search']['value']) ) {   
 			$zSql.=" AND ( USERID LIKE '%".$oRequest['search']['value']."%'  ";
@@ -80,11 +80,11 @@ class Utilisateur_model extends CI_Model {
 	}
 
 
-	public function getUtilisateurPc(&$_iNbrTotal = 0,$_this='',$_zPostCode){
+	public function getUtilisateurPc(&$_iNbrTotal = 0,$_this='',$_zPostCode, $_iAnneeExercice='2023'){
 		global $db;
 
 
-		$toDB = $this->load->database('specl',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toColumns = array( 
 			0  => 'USERID', 
@@ -95,7 +95,7 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM ".$toDB->database.".V_USERS u WHERE 1=1
+		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM specl.V_USERS u WHERE 1=1
 				AND USERID IN (select DISTINCT MAND_UTR_VISA from EXECUTION".$_iAnneeExercice.".MANDAT WHERE ENTITE='".$_zPostCode."'
 				AND MAND_UTR_VISA IS NOT NULL)";
 
@@ -151,11 +151,11 @@ class Utilisateur_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet des utilisateurs
 	*/
-	public function getUtilisateurAgent(&$_iNbrTotal = 0,$_this=''){
+	public function getUtilisateurAgent(&$_iNbrTotal = 0,$_this='', $_iAnneeExercice='2023'){
 		global $db;
 
 
-		$toDB = $this->load->database('specl',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toColumns = array( 
 			0  => 'USERID', 
@@ -166,7 +166,7 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM ".$toDB->database.".V_USERS u WHERE 1=1
+		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM specl.V_USERS u WHERE 1=1
 				AND USERID IN (select DISTINCT MAND_UTR_VISA from EXECUTION".$_iAnneeExercice.".MANDAT WHERE MAND_UTR_VISA IS NOT NULL)";
 
 		if( !empty($oRequest['search']['value']) ) {   
@@ -220,13 +220,13 @@ class Utilisateur_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet des utilisateurs
 	*/
-	public function getInfoPostComptable($_zPsCode = 0){
+	public function getInfoPostComptable($_zPsCode = 0, $_iAnneeExercice='2023'){
 		global $db;
 
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
-		//$zSql=" SELECT  * FROM T_POSTE_COMPTABLE p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "'";
+		//$zSql=" SELECT  * FROM EXECUTION".$_iAnnee.".POSTE_COMPTABLE_ORIGINAL  p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "'";
 
 		 
 		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
@@ -237,8 +237,9 @@ class Utilisateur_model extends CI_Model {
 				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) as valideAutre,
 				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejetAutre,
-				p.* FROM T_POSTE_COMPTABLE p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "' ";
+				p.* FROM EXECUTION".$_iAnneeExercice.".POSTE_COMPTABLE_ORIGINAL  p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "' ";
 	
+		//echo $zSql;
 		$zQuery = $toDB->query($zSql);
 		$oRow = $zQuery->row();
 
@@ -253,11 +254,11 @@ class Utilisateur_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet des utilisateurs
 	*/
-	public function getInfoPostComptableUser($_iUserId = 0){
+	public function getInfoPostComptableUser($_iUserId = 0, $_iAnneeExercice='2023'){
 		global $db;
 
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.MAND_UTR_VISA = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) valide,
@@ -284,11 +285,11 @@ class Utilisateur_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet des postes comptables
 	*/
-	public function posteComptable(&$_iNbrTotal = 0,$_this='',$iLimit=0){
+	public function posteComptable(&$_iNbrTotal = 0,$_this='',$iLimit=0,$_iAnnee='2023'){
 		global $db;
 
 
-		$toDB = $this->load->database('oracle',true);
+		$toDB = $this->load->database('catia',true);
 
 		$toColumns = array( 
 			0  => 'PSTP_CODE', 
@@ -297,7 +298,7 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,p.* FROM T_POSTE_COMPTABLE p WHERE p.PSTP_TYPE = 0 ";
+		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,p.* FROM EXECUTION".$_iAnnee.".POSTE_COMPTABLE_ORIGINAL  p WHERE p.PSTP_TYPE = 0 ";
 
 		if( !empty($oRequest['search']['value']) ) {   
 			$zSql.=" AND ( PSTP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
@@ -354,7 +355,7 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql=" SELECT DISTINCT * FROM ".$toDB->database.".V_USERS u WHERE USERID = '" . $_iUserId . "'";
+		$zSql=" SELECT DISTINCT * FROM specl.V_USERS u WHERE USERID = '" . $_iUserId . "'";
 
 		//echo $zSql;
 

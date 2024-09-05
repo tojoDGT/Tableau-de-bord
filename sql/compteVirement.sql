@@ -1,3 +1,4 @@
+SELECT COUNT(*) over () found_rows,norm.* from (
 SELECT dtl.PCASSIGNATAIRE,
        /*DECODE (
            SUBSTR (dtl.SOA, 0, 2),
@@ -208,3 +209,5 @@ SELECT dtl.PCASSIGNATAIRE,
        AND DTL.NOTEID = nt.NOTEID
        AND NT.DMDVIRID = DV.DMDVIRID(+)
        AND NT.OVID = OV.OVID(+)
+) norm
+%WHERE%

@@ -17,12 +17,12 @@
   <aside class="control-sidebar control-sidebar-dark">
 			<!-- Control sidebar content goes here -->
 			<form id="sendSearch" name="sendSearch" action="{$zBasePath}dashboard/changeCol" method="post">
-			<input type="zReturnUrl" name="zReturnUrl" value="{$zReturnUrl}">
+			<input type="hidden" id="zReturnUrl" name="zReturnUrl" value="{$zReturnUrl}">
 			<div class="p-3 control-sidebar-content" style="">
 				<h5>COLONNE A AFFICHER</h5>
 				<hr class="mb-2" />
-				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="Identifiant-ECRINUM" class="mr-1" name="colonneAffiche[]" /><span>Identifiant</span></div>
-				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="IdentifiantNumInfo-MANDAT1" class="mr-1" name="colonneAffiche[]" /><span>Identifiant Mandat</span></div>
+				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="Identifiant-ECRI_NUM" class="mr-1" name="colonneAffiche[]" /><span>Identifiant</span></div>
+				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="IdentifiantNumInfo-MAND_NUM_INFO" class="mr-1" name="colonneAffiche[]" /><span>Identifiant Mandat</span></div>
 				{*<div class="mb-2"><input type="checkbox" {if TITULAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="TITULAIRE-tt.TITULAIRE" class="mr-1" name="colonneAffiche[]" /><span>TITULAIRE</span></div>
 				<div class="mb-2"><input type="checkbox" {if CODE_TIERS|in_array:$oDataTempCol} checked="checked" {/if} value="CODE TIERS-tt.CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>CODE TIERS</span></div>*}
 				<div class="mb-2"><input type="checkbox" {if ECRI_REF|in_array:$oDataTempCol} checked="checked" {/if} value="Référence-E.ECRI_REF" class="mr-1" name="colonneAffiche[]" /><span>Réference</span></div>

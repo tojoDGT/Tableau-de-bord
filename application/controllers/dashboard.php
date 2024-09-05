@@ -168,7 +168,6 @@ class Dashboard extends MY_Controller
 				
 				break;
 
-
 			case 'performance-des-pc':
 				$iMenuActifId = 2;
 				$iSousMenuActifId = 4;
@@ -190,6 +189,24 @@ class Dashboard extends MY_Controller
 
 				$oSmarty->assign('zListingTpl',  $zListingTpl);
 				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/performance-des-pc.tpl";
+				break;
+
+			case 'compte-virement':
+				$iMenuActifId = 2;
+				$iSousMenuActifId = 10;
+
+				$zLibelle1 = "Compte de virement"; 
+
+				$oSmarty->assign("zBasePath",base_url());
+				$oSmarty->assign('toColonne',  $toColonne);
+				$oSmarty->assign('iTypeAfficheSearch',  3);
+				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/compteVirement/search.tpl" );
+				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/compteVirement/listing.tpl" );
+
+				$oSmarty->assign('zListingTpl',  $zListingTpl);
+				
+				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/child/compteVirement/compteVirement.tpl";
 				break;
 		}
 		
