@@ -16,7 +16,7 @@
 			<th class="dt-center oper">LIBELLE</th>
 			<th class="dt-center oper">DATE</th>
 			<!-- <th class="dt-center oper">MONTANT</th>-->
-			<th class="dt-center">STATUT</th>
+			<!-- <th class="dt-center">STATUT</th> -->
 			<th class="dt-center">PROPRIETAIRE</th>
 			<th class="dt-center">LIBELLE LIGNE</th>
 			<th class="dt-center">MONTANT OPERATION</th>
@@ -36,7 +36,7 @@
 				"searching": true,
 				"footer": true,
 				"columnDefs": [
-					{ className: "dt-center", "targets": [ 1,10 ] },
+					{ className: "dt-center", "targets": [ 1,9 ] },
 					{ className: "oper1", "targets": [ 3,4,5 ] },
 					{ className: "details-control", "targets": [ 0 ] },
 					{ orderable: false, targets: [0] },
