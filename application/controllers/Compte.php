@@ -237,8 +237,7 @@ class Compte extends MY_Controller
 					$oDataTemp[] = $oGetListe['LIBELLE_LIGNE'];
 					$oDataTemp[] = $oGetListe['LECR_NUM'];
 					$oDataTemp[] = $oGetListe['TIER_NOM'];
-					$oDataTemp[] = $oGetListe['SENS'];
-					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['RESTE_A_APURER']), 2, ',', ' ') . " Ar";
+					
 					
 					$zSens		= "";
 					$zLibelle	= "";
@@ -261,6 +260,9 @@ class Compte extends MY_Controller
 					}
 					
 					$oDataTemp[] = "<span style=\"color:".$zSens."\"><strong>" . $zLibelle . "</strong></span>";
+
+					/*$oDataTemp[] = $oGetListe['SENS'];*/
+					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['RESTE_A_APURER']), 2, ',', ' ') . " Ar";
 					
 					$oDataAssign[] = $oDataTemp;
 					$iIncrement++;
