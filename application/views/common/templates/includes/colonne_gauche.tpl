@@ -72,7 +72,7 @@
 	  <li class="nav-item">
 		<a href="{$zBasePath}dashboard/compte/non-apure" class="nav-link {if $oData.iSousMenuActifId==8}active{/if}">
 		  <i class="far fa-circle nav-icon text-yellow"></i>
-		  <p>En attente non apuré</p>
+		  <p>En attente > 3 mois</p>
 		</a>
 	  </li>
 	  <li class="nav-item">

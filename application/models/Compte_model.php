@@ -94,7 +94,7 @@ class Compte_model extends CI_Model {
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zData = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
 
-		$zDate = date("d/m/Y");
+		$zDate = date("d/m/".trim($_iAnneeExo));
 		if( !empty($oRequest['zDate']) && ($oRequest['zDate']!="") ) {   
 			$zDate = $oRequest['zDate'];
 		}
@@ -333,8 +333,16 @@ class Compte_model extends CI_Model {
 			$zWhere.=" AND EXERCICE = '" . $_iAnneeExo . "' ";
 		}
 
+		$zDate = date("d/m/".trim($_iAnneeExo));
+		if( !empty($oRequest['zDate']) && ($oRequest['zDate']!="") ) {   
+			$zDate = $oRequest['zDate'];
+		}
+
+		//$zDateParam = date("d/m/".$_iAnneeExo) ;
+
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/attente.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%ZDATE%", trim($zDate), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
 		
 		$zDebut = 0;
