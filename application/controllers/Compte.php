@@ -178,7 +178,7 @@ class Compte extends MY_Controller
 					$oDataTemp[] = $oGetListe['REFERENCE_ECRITURE'];
 					$oDataTemp[] = $oGetListe['LIBELLE_ECRITURE'];
 					$oDataTemp[] = $oGetListe['DATE_ECRITURE'];
-					$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['ECRITURE_MT']), 2, ',', ' ') . " Ar"; 
+					//$oDataTemp[] = number_format(str_replace(",",".",$oGetListe['ECRITURE_MT']), 2, ',', ' ') . " Ar"; 
 					$oDataTemp[] = $oGetListe['STATUS'];
 					$oDataTemp[] = $oGetListe['PROPRIETAIRE'];
 					$oDataTemp[] = $oGetListe['LIBELLE_LIGNE'];

@@ -5,7 +5,7 @@
 	<thead>
 		<tr>
 			<th colspan="3"></th>
-			<th colspan="4" class="dt-center solde oper">ECRITURE</th>
+			<th colspan="3" class="dt-center solde oper">ECRITURE</th>
 			<th colspan="6" class="dt-center total"></th>
         </tr>
 		<tr>
@@ -15,7 +15,7 @@
 			<th class="dt-center oper">REFERENCE</th>
 			<th class="dt-center oper">LIBELLE</th>
 			<th class="dt-center oper">DATE</th>
-			<th class="dt-center oper">MONTANT</th>
+			<!-- <th class="dt-center oper">MONTANT</th>-->
 			<th class="dt-center">STATUT</th>
 			<th class="dt-center">PROPRIETAIRE</th>
 			<th class="dt-center">LIBELLE LIGNE</th>
@@ -36,8 +36,8 @@
 				"searching": true,
 				"footer": true,
 				"columnDefs": [
-					{ className: "dt-center", "targets": [ 1,11 ] },
-					{ className: "oper1", "targets": [ 3,4,5,6 ] },
+					{ className: "dt-center", "targets": [ 1,10 ] },
+					{ className: "oper1", "targets": [ 3,4,5 ] },
 					{ className: "details-control", "targets": [ 0 ] },
 					{ orderable: false, targets: [0] },
 				 ],
