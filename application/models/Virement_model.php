@@ -85,78 +85,30 @@ class Virement_model extends CI_Model {
 
 		$zWhere = " ";
 
-		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
-			$zWhere.=" AND E.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
+		if( !empty($oRequest['EXERCICE']) &&  $oRequest['EXERCICE']!="") {   
+			$zWhere.=" AND EXERCICE = '".$oRequest['EXERCICE']."'  ";
 		}
 
-		if( !empty($oRequest['MIN_ABREV']) &&  $oRequest['MIN_ABREV']!="") {   
-			$zWhere.=" AND M.MIN_ABREV = '".$oRequest['MIN_ABREV']."'  ";
+		if( !empty($oRequest['TITULAIRE']) &&  $oRequest['TITULAIRE']!="") {   
+			$zWhere.=" AND TITULAIRE = '".$oRequest['TITULAIRE']."'  ";
 		}
 
 
-		if( !empty($oRequest['TYPE_MAND']) &&  $oRequest['TYPE_MAND']!="") {   
-			$zWhere.=" AND M.TYPE_MAND = '".$oRequest['TYPE_MAND']."'  ";
+		if( !empty($oRequest['CATEG_DEPENSE']) &&  $oRequest['CATEG_DEPENSE']!="") {   
+			$zWhere.=" AND CATEG_DEPENSE= '".$oRequest['CATEG_DEPENSE']."'  ";
 		} 
 
-		if( !empty($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
-			$zWhere.=" AND M.ENTITE = '".$oRequest['zPsCode']."'  ";
-		}
-
-		if( !empty($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']!="") {   
-			$zWhere.=" AND M.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
-		}
-
-		if( !empty($oRequest['data']) &&  sizeof($oRequest['data'])>0) {   
-			
-			$toPropCode = array();
-			foreach ($oRequest['data'] as $oData){
-				if($oData['name']=='PROP_CODE[]'){
-					$zValue = "'". $oData['value'] . "'";
-					array_push($toPropCode, $zValue);
-				}
-			}
-			
-			if(sizeof($toPropCode)>0){
-				$zWhere .=" AND SUBSTR (M.soa, 1, 2) IN (".implode(",",$toPropCode).")";
-			}
-		}
-
 		$toMandMode1 = array();
-		if( !empty($oRequest['data']) &&  sizeof($oRequest['data'])>0) {   
-
-		   $toMandMode = array();
-			foreach ($oRequest['data'] as $oData){
-				if($oData['name']=='MAND_MODE_PAIE[]'){
-					if($oData['value']!=""){
-						$zValue = "'". $oData['value'] . "'";
-						array_push($toMandMode, $zValue);
-						array_push($toMandMode1, $oData['value']);
-					}
-				}
-				
-			}
-			
-			if(sizeof($toMandMode)>0){
-
-				if(in_array("'VB'", $toMandMode)){
-					/* Money electronique */
-					$zValue = "'ME'";
-					array_push($toMandMode,$zValue);
-				}  
-
-				$zWhere .=" AND M.MAND_MODE_PAIE IN (".implode(",",$toMandMode).")";
-			}
-		}
 		
 		if( !empty($oRequest['search']['value']) ) {   
-			$zWhere.=" AND ( E.ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  T.TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_DT_CECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.PROP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  M.MAND_MODE_PAIE LIKE '%".$oRequest['search']['value']."%' ) ";
+			$zWhere.=" AND ( PCASSIGNATAIRE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  PCPAYEUR LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  ENTITECODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  EXERCICE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  DEPENSEOBJET LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  CATEG_DEPENSE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  MONTANT LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
 
