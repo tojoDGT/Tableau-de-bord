@@ -98,55 +98,17 @@ class Virement extends MY_Controller
 			
 			$oDataTemp=array(); 
 
-			$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
+			$oDataTemp[] = '';
+			$oDataTemp[] = $oGetListe['PCASSIGNATAIRE'];
+			$oDataTemp[] = $oGetListe['PCPAYEUR'];
+			$oDataTemp[] = $oGetListe['ENTITECODE'];
+
 			$oDataTemp[] = $oGetListe['EXERCICE'];
-			$oDataTemp[] = $oGetListe['COMPTE_NUM'];
-			
-			
-			$zSens = "";
+			$oDataTemp[] = $oGetListe['DEPENSEOBJET'];
+			$oDataTemp[] = $oGetListe['TITULAIRE'];
 
-			switch ($oGetListe['SENSFIN']){
-				case 'DEBITEUR':
-					$zSens = "#dc3545";
-					
-					break;
-
-				case 'CREDITEUR':
-					$zSens = "#28a745";
-					
-					break;
-
-				default:
-					$zSens = "#007bff";
-					break;
-			}
-			
-			$oDataTemp[] = "<span style=\"color:".$zSens."\"><strong>" . $oGetListe['SENSFIN'] . "</strong></span>";
-
-			$zBadge = "badge-danger";
-			$zFa = "far fa-thumbs-up";
-			switch ($oGetListe['CONCLUSION']){
-
-				case 'SOLDE ANORMAL':
-				case 'COMPTE INEXISTANT':
-					$zBadge = "badge-danger";
-					$zFa = "fas fa-exclamation-circle";
-					break;
-
-				case 'COMPTE REDRESSE':
-					$zBadge = "badge-warning";
-					$zFa = "fas fa-exclamation-circle";
-					break;
-
-				case 'SOLDE NORMAL':
-					$zBadge = "badge-success";
-					$zFa = "far fa-thumbs-up";
-					break;
-			}
-			
-			$zConclusion = "<small style=\"padding:10px;\" class=\"badge ".$zBadge."\"><i class=\"far ".$zFa."\"></i> ".$oGetListe['CONCLUSION']."</small>";
-			
-			$oDataTemp[] = $zConclusion;
+			$oDataTemp[] = $oGetListe['CATEG_DEPENSE'];
+			$oDataTemp[] = $oGetListe['MONTANT'];
 			
 			$oDataAssign[] = $oDataTemp;
 			$iIncrement++;

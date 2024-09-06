@@ -4,12 +4,13 @@
 <table id="table_bd" class="table  table-bordered table-hover" style="margin-left:10px;width:100%;min-height: 300px;">
 	<thead>
 		<tr>
+		    <th>&nbsp;</th>
 			<th>PCASSIGNATAIRE</th>
 			<th class="dt-center">PCPAYEUR</th>
 			<th class="dt-center">ENTITECODE</th>
 			<th class="dt-center">EXERCICE</th>
-			<th class="dt-center">SOA</th>
-			<th class="dt-center">PROGRAMME</th>
+			<th class="dt-center">OBJET</th>
+			<th class="dt-center">TITULAIRE</th>
 			<th class="dt-center">CATEGORIE</th>
 			<th class="dt-center">MONTANT</th>	
         </tr>
@@ -62,7 +63,7 @@ $(document).ready(function() {
 		"searching": true,
 		"footer": true, 
 		"columnDefs": [
-			{ className: "dt-Visible", "targets": [ 1,2 ] },
+			{ className: "dt-Visible1", "targets": [ 1,2 ] },
 			{ className: "details-control", "targets": [ 0 ] }
 		 ],
 		"language": {

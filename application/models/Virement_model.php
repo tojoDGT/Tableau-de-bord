@@ -53,25 +53,27 @@ class Virement_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function getVirement(&$_iNbrTotal = 0,$_this=''){
+	public function GetVirementListe(&$_iNbrTotal = 0,$_this=''){
 		
 		global $db;
 
 		$toRow = array();
 
 		$toDB = $this->load->database('catia',true);
-		
-		$toGetListeColonne = $this->getSessionColonne();
-
+	
 			
-		$toColumns=array(); 
+		$toColumns = array( 
+				0  => 'PCASSIGNATAIRE', 
+				1  => 'PCPAYEUR',
+				2  => 'ENTITECODE', 
+				3  => 'EXERCICE',
+				4  => 'DEPENSEOBJET',
+				5  => 'MONTANT', 
+				4  => 'DATERECUPDOSSIER',
+				5  => 'PROGRAMME', 
+				6  => 'NUMERO_COMPTE'
+		);
 
-		foreach ($toGetListeColonne as $zColonne){
-			$oColonne = explode("-", $zColonne);
-			if($oColonne[1] != ""){
-				array_push($toColumns, $oColonne[1]);
-			}
-		}
 
 		$oRequest = $_REQUEST;
 
@@ -158,14 +160,7 @@ class Virement_model extends CI_Model {
 		}
 
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/mdt_vir_tb.sql"); 
-		if(sizeof($toMandMode1)>0){
-			/* si transfert */
-			if(in_array("OO", $toMandMode1)){
-				$zData = @file_get_contents(APPLICATION_PATH ."sql/mdt_trsf_specl.sql"); 
-			}  
-		}
-
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
 		
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
@@ -177,13 +172,13 @@ class Virement_model extends CI_Model {
 			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
 				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
 			} else {
-				$zSql.=" ORDER BY E.ECRI_NUM ASC ";
+				$zSql.=" ORDER BY PCPAYEUR ASC ";
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
 			$zFin =  (int)$oRequest['length'];
 		} else {
-			$zSql.=" ORDER BY E.ECRI_NUM ASC ";
+			$zSql.=" ORDER BY PCPAYEUR ASC ";
 		}
 
 		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
@@ -449,103 +444,8 @@ class Virement_model extends CI_Model {
 		return $toRow;
 	}
 
-	/** 
-	* function permettant d'afficher le detail d'un virement
-	*
-	* @param integer $_iNumMandat : numéro du mandat
-	*
-	* @return liste en tableau d'objet
-	*/
-	public function GetVirement($_iNumMandat,$_iAnnee="2023"){
 
-		global $db;
-
-
-
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
-		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
-
-		if($_iNumMandat!=""){
-			$zSql .= " AND INFONUMERO = '" . $_iNumMandat . "'";
-		}
-
-		//echo $zSql;
-
-		$zQuery = $toDB->query($zSql);
-		$toRow = $zQuery->row();
-
-		/*echo "<pre>";
-		print_r ($toRow);
-		echo "</pre>";*/
-
-		return $toRow;
-	}
-
-	/** 
-	* function permettant d'afficher le detail d'un virement
-	*
-	* @param integer $_iNumMandat : numéro du mandat
-	*
-	* @return liste en tableau d'objet
-	*/
-	public function GetVirement($_iNumMandat,$_iAnnee="2023"){
-
-		global $db;
-
-
-
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
-
-		if($_iNumMandat!=""){
-			$zWhere = " WHERE INFONUMERO = '" . $_iNumMandat . "'";
-		}
-
-
-		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
-
-		//echo $zSql;
-
-		$zQuery = $toDB->query($zSql);
-		$toRow = $zQuery->row();
-
-		/*echo "<pre>";
-		print_r ($toRow);
-		echo "</pre>";*/
-
-		return $toRow;
-	}
-
-
-	/** 
-	* function permettant d'afficher le detail d'un virement
-	*
-	* @param integer $_iNumMandat : numéro du mandat
-	*
-	* @return liste en tableau d'objet
-	*/
-	public function GetVirementListe(&$_iNbrTotal = 0,$_this=''){
-
-		global $db;
-
-		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", 2024);
-
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
-		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ANNEE%", trim($iAnneeExercice), $zData) ; 
-
-		//echo $zSql;
-
-		$zQuery = $toDB->query($zSql);
-		$toRow = $zQuery->row_array();
-
-		echo "<pre>";
-		print_r ($toRow);
-		echo "</pre>";
-
-		return $toRow;
-	}
+	
 
 	/** 
 	* function permettant d'afficher le detail d'un LEGEcriture
