@@ -253,7 +253,12 @@ WITH
                 AND DTL.NOTEID = nt.NOTEID
                 AND NT.DMDVIRID = DV.DMDVIRID(+)
                 AND NT.OVID = OV.OVID(+))
-SELECT *
+SELECT COUNT(*) over () found_rows,
+c.denomination,t.code_tiers,c.ville,
+t.ID,CONCAT (TO_CHAR(t.montant,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS montant,t.compte_tiers,
+d.objet,d.date_dossier,d.peri_exercice,
+tt.titulaire,
+p.*,virement.*
   FROM nonepn.titre                       t,
        nonepn.dossier                     d,
        ctiers.compte_tiers                c,
@@ -272,8 +277,11 @@ SELECT *
        AND d.compte_tiers NOT IN ('46-14-7-A26-10101', '46-14-7-A25-10101')
        AND d.peri_exercice >= '2023'
        AND valid = '1'
-       AND t.numero_titre = virement.titrenumero (+)
+-- AND t.numero_titre = virement.titrenumero
+AND t.numero_titre = virement.titrenumero (+)
 --and a2.CAISSE = cais.cais_code 
 --and a2.num_chq = cais.cais_code||d.id
 --and not exists (select 1 from virement.ctrlvir_view_dtl@dblccad where titrenumero=t.numero_titre)
 --and not exists (select 1 from virement.vir_autorise@dblccad where infonumero=t.numero_titre) 
+
+%WHERE%

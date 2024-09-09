@@ -180,15 +180,14 @@ class Virement_model extends CI_Model {
 	
 			
 		$toColumns = array( 
-				0  => 'PCASSIGNATAIRE', 
-				1  => 'PCPAYEUR',
-				2  => 'ENTITECODE', 
-				3  => 'EXERCICE',
-				4  => 'DEPENSEOBJET',
-				5  => 'MONTANT', 
-				4  => 'DATERECUPDOSSIER',
-				5  => 'PROGRAMME', 
-				6  => 'NUMERO_COMPTE'
+				0  => 'TITULAIRE', 
+				1  => 'OBJET',
+				2  => 'DATE_DOSSIER', 
+				3  => 'PERI_EXERCICE',
+				4  => 'DENOMINATION',
+				5  => 'PSTP_LIBELLE', 
+				4  => 'CATEG_DEPENSE',
+				5  => 'MONTANT'
 		);
 
 
@@ -199,15 +198,14 @@ class Virement_model extends CI_Model {
 			$_iAnneeExercice = $oRequest['ECRI_EXERCICE'];
 		}
 
-
 		$zWhere = " ";
 
-		if( !empty($oRequest['EXERCICE']) &&  $oRequest['EXERCICE']!="") {   
-			$zWhere.=" AND EXERCICE = '".$oRequest['EXERCICE']."'  ";
+		if( !empty($oRequest['PERI_EXERCICE']) &&  $oRequest['PERI_EXERCICE']!="") {   
+			$zWhere.=" AND PERI_EXERCICE = '".$oRequest['PERI_EXERCICE']."'  ";
 		}
 
 		if( !empty($oRequest['TITULAIRE']) &&  $oRequest['TITULAIRE']!="") {   
-			$zWhere.=" AND TITULAIRE = '".$oRequest['TITULAIRE']."'  ";
+			$zWhere.=" AND TITULAIRE LIKE '%".$oRequest['TITULAIRE']."%'  ";
 		}
 
 
@@ -218,14 +216,14 @@ class Virement_model extends CI_Model {
 		$toMandMode1 = array();
 		
 		if( !empty($oRequest['search']['value']) ) {   
-			$zWhere.=" AND ( PCASSIGNATAIRE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  PCPAYEUR LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  ENTITECODE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  EXERCICE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  DEPENSEOBJET LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  CATEG_DEPENSE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  MONTANT LIKE '%".$oRequest['search']['value']."%' ) ";
+			$zWhere.=" AND ( TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  VILLE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  OBJET LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  DATE_DOSSIER LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  PERI_EXERCICE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  DENOMINATION LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  PSTP_LIBELLE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  CATEG_DEPENSE LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
 
@@ -241,13 +239,13 @@ class Virement_model extends CI_Model {
 			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
 				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
 			} else {
-				$zSql.=" ORDER BY PCPAYEUR ASC ";
+				$zSql.=" ORDER BY DATE_DOSSIER DESC ";
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
 			$zFin =  (int)$oRequest['length'];
 		} else {
-			$zSql.=" ORDER BY PCPAYEUR ASC ";
+			$zSql.=" ORDER BY DATE_DOSSIER DESC ";
 		}
 
 		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";

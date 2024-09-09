@@ -6,6 +6,7 @@
 		<tr>
 		    <th>&nbsp;</th>
 			<th>TITULAIRE</th>
+			<th>VILLE</th>
 			<th class="dt-center">OBJET</th>
 			<th class="dt-center">DATE DOSSIER</th>
 			<th class="dt-center">EXERCICE</th>

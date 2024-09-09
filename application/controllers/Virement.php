@@ -120,6 +120,9 @@ class Virement extends MY_Controller
 
 					$toGetListe = $this->virement->GetVirementListe_op46($iNombreTotal,$this) ; 
 
+					/*echo "<pre>";
+					print_r ($toGetListe);
+					echo "</pre>";*/
 
 					$oDataAssign = array();
 					$iIncrement = 1;
@@ -132,12 +135,13 @@ class Virement extends MY_Controller
 
 						$oDataTemp[] = '';
 						$oDataTemp[] = $oGetListe['TITULAIRE'];
+						$oDataTemp[] = $oGetListe['VILLE'];
 						$oDataTemp[] = $oGetListe['OBJET'];
 						$oDataTemp[] = $oGetListe['DATE_DOSSIER'];
 						$oDataTemp[] = $oGetListe['PERI_EXERCICE'];
-						$oDataTemp[] = $oGetListe['SIGLE'];
+						$oDataTemp[] = $oGetListe['DENOMINATION'];
 						$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
-						$oDataTemp[] = $oGetListe['CATEG_DEPENSE'];
+						$oDataTemp[] = is_null($oGetListe['CATEG_DEPENSE'])?'<span style="color:red">En cours de virement</span>':$oGetListe['CATEG_DEPENSE'];
 						$oDataTemp[] = $oGetListe['MONTANT'];
 						$oDataAssign[] = $oDataTemp;
 						$iIncrement++;
