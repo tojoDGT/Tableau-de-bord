@@ -22,10 +22,16 @@
 		  <p>Situation des dossiers</p>
 		</a>
 	  </li>
-	   <li class="nav-item">
+	  <li class="nav-item">
 		<a href="{$zBasePath}dashboard/stat/compte-virement" class="nav-link {if $oData.iSousMenuActifId==10}active{/if}">
 		  <i class="far fa-circle nav-icon text-red"></i>
 		  <p>Compte de virement</p>
+		</a>
+	  </li>
+	  <li class="nav-item">
+		<a href="{$zBasePath}dashboard/stat/op_46" class="nav-link {if $oData.iSousMenuActifId==11}active{/if}">
+		  <i class="far fa-circle nav-icon text-red"></i>
+		  <p>Opération 46</p>
 		</a>
 	  </li>
 	  <li class="nav-item">

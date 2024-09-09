@@ -208,6 +208,24 @@ class Dashboard extends MY_Controller
 				
 				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/child/compteVirement/compteVirement.tpl";
 				break;
+
+			case 'op_46':
+				$iMenuActifId = 2;
+				$iSousMenuActifId = 11;
+
+				$zLibelle1 = "Opération 46, Virement"; 
+
+				$oSmarty->assign("zBasePath",base_url());
+				$oSmarty->assign('toColonne',  $toColonne);
+				$oSmarty->assign('iTypeAfficheSearch',  3);
+				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/OP_46/search.tpl" );
+				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
+				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/OP_46/listing.tpl" );
+
+				$oSmarty->assign('zListingTpl',  $zListingTpl);
+				
+				$zPathTpl = ADMIN_TEMPLATE_PATH . "dashboard/zone/child/OP_46/OP_46.tpl";
+				break;
 		}
 		
 		

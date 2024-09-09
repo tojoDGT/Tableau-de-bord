@@ -163,6 +163,123 @@ class Virement_model extends CI_Model {
 	}
 
 	/** 
+	* function permettant d'afficher la liste des virements opérations 46
+	*
+	* @param integer $_iNbrTotal nombre total à afficher dans la pagination
+	* @param object $_this : controller
+	*
+	* @return liste en tableau d'objet
+	*/
+	public function GetVirementListe_op46(&$_iNbrTotal = 0,$_this=''){
+		
+		global $db;
+
+		$toRow = array();
+
+		$toDB = $this->load->database('catia',true);
+	
+			
+		$toColumns = array( 
+				0  => 'PCASSIGNATAIRE', 
+				1  => 'PCPAYEUR',
+				2  => 'ENTITECODE', 
+				3  => 'EXERCICE',
+				4  => 'DEPENSEOBJET',
+				5  => 'MONTANT', 
+				4  => 'DATERECUPDOSSIER',
+				5  => 'PROGRAMME', 
+				6  => 'NUMERO_COMPTE'
+		);
+
+
+		$oRequest = $_REQUEST;
+
+		$_iAnneeExercice = 2023;
+		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
+			$_iAnneeExercice = $oRequest['ECRI_EXERCICE'];
+		}
+
+
+		$zWhere = " ";
+
+		if( !empty($oRequest['EXERCICE']) &&  $oRequest['EXERCICE']!="") {   
+			$zWhere.=" AND EXERCICE = '".$oRequest['EXERCICE']."'  ";
+		}
+
+		if( !empty($oRequest['TITULAIRE']) &&  $oRequest['TITULAIRE']!="") {   
+			$zWhere.=" AND TITULAIRE = '".$oRequest['TITULAIRE']."'  ";
+		}
+
+
+		if( !empty($oRequest['CATEG_DEPENSE']) &&  $oRequest['CATEG_DEPENSE']!="") {   
+			$zWhere.=" AND CATEG_DEPENSE= '".$oRequest['CATEG_DEPENSE']."'  ";
+		} 
+
+		$toMandMode1 = array();
+		
+		if( !empty($oRequest['search']['value']) ) {   
+			$zWhere.=" AND ( PCASSIGNATAIRE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  PCPAYEUR LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  ENTITECODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  EXERCICE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  DEPENSEOBJET LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  CATEG_DEPENSE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  MONTANT LIKE '%".$oRequest['search']['value']."%' ) ";
+		}
+
+
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/46_virement.sql"); 
+		
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
+		
+		$zDebut = 0;
+		$zFin = 10;
+		if (sizeof($oRequest)>0){
+			
+			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
+				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+			} else {
+				$zSql.=" ORDER BY PCPAYEUR ASC ";
+			}
+
+			$zDebut = (int)$oRequest['start'] ;
+			$zFin =  (int)$oRequest['length'];
+		} else {
+			$zSql.=" ORDER BY PCPAYEUR ASC ";
+		}
+
+		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+
+
+		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
+		//echo $zSql;
+		//die();
+
+		//set_time_limit(200000000000);
+
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+		$toError = $this->db->error();
+
+		/*
+		echo "<pre>";
+		print_r ($toRow);
+		echo "</pre>";*/
+
+		//$_iNbrTotal = 0;
+
+		if(sizeof($toRow)>0){
+			$_iNbrTotal = $toRow[0]['FOUND_ROWS'] ;
+		}
+
+		return $toRow;
+
+	}
+
+	/** 
 	* function permettant d'afficher la liste des dossiers
 	*
 	* @param integer $_iNbrTotal nombre total à afficher dans la pagination

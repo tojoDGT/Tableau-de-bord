@@ -76,42 +76,74 @@ class Virement extends MY_Controller
 		//print_r($oRequest);
 		//die();
 
-		$toColonne = $this->virement->getSessionColonne();
+		switch ($iTypeAfficheSearch){
 
-		//print_r ($toColonne);
+				case 1:
 
-		$iNombreTotal = 0;
+					$toColonne = $this->virement->getSessionColonne(1);
 
-		$toGetListe = $this->virement->GetVirementListe($iNombreTotal,$this) ; 
+					$iNombreTotal = 0;
 
-		//print_r ($toGetListe);
+					$toGetListe = $this->virement->GetVirementListe($iNombreTotal,$this) ; 
 
-		$oDataAssign = array();
-		$iIncrement = 1;
-		/*echo "<pre>";
-		print_r ($toGetListe);
-		echo "</pre>";*/
+					$oDataAssign = array();
+					$iIncrement = 1;
 
-		$oDataAssign = array();
-		$iIncrement = 1;
-		foreach ($toGetListe as $oGetListe){
-			
-			$oDataTemp=array(); 
 
-			$oDataTemp[] = '';
-			$oDataTemp[] = $oGetListe['PCASSIGNATAIRE'];
-			$oDataTemp[] = $oGetListe['PCPAYEUR'];
-			$oDataTemp[] = $oGetListe['ENTITECODE'];
+					$oDataAssign = array();
+					$iIncrement = 1;
+					foreach ($toGetListe as $oGetListe){
+						
+						$oDataTemp=array(); 
 
-			$oDataTemp[] = $oGetListe['EXERCICE'];
-			$oDataTemp[] = $oGetListe['DEPENSEOBJET'];
-			$oDataTemp[] = $oGetListe['TITULAIRE'];
+						$oDataTemp[] = '';
+						$oDataTemp[] = $oGetListe['PCASSIGNATAIRE'];
+						$oDataTemp[] = $oGetListe['PCPAYEUR'];
+						$oDataTemp[] = $oGetListe['ENTITECODE'];
+						$oDataTemp[] = $oGetListe['EXERCICE'];
+						$oDataTemp[] = $oGetListe['DEPENSEOBJET'];
+						$oDataTemp[] = $oGetListe['TITULAIRE'];
+						$oDataTemp[] = $oGetListe['CATEG_DEPENSE'];
+						$oDataTemp[] = $oGetListe['MONTANT'];
+						
+						$oDataAssign[] = $oDataTemp;
+						$iIncrement++;
+					}
 
-			$oDataTemp[] = $oGetListe['CATEG_DEPENSE'];
-			$oDataTemp[] = $oGetListe['MONTANT'];
-			
-			$oDataAssign[] = $oDataTemp;
-			$iIncrement++;
+				break;
+
+				case 2:
+
+					$toColonne = $this->virement->getSessionColonne(2);
+
+					$iNombreTotal = 0;
+
+					$toGetListe = $this->virement->GetVirementListe_op46($iNombreTotal,$this) ; 
+
+
+					$oDataAssign = array();
+					$iIncrement = 1;
+
+					$oDataAssign = array();
+					$iIncrement = 1;
+					foreach ($toGetListe as $oGetListe){
+						
+						$oDataTemp=array(); 
+
+						$oDataTemp[] = '';
+						$oDataTemp[] = $oGetListe['TITULAIRE'];
+						$oDataTemp[] = $oGetListe['OBJET'];
+						$oDataTemp[] = $oGetListe['DATE_DOSSIER'];
+						$oDataTemp[] = $oGetListe['PERI_EXERCICE'];
+						$oDataTemp[] = $oGetListe['SIGLE'];
+						$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
+						$oDataTemp[] = $oGetListe['CATEG_DEPENSE'];
+						$oDataTemp[] = $oGetListe['MONTANT'];
+						$oDataAssign[] = $oDataTemp;
+						$iIncrement++;
+					}
+
+				break;
 		}
 
 		//print_r ($oDataTemp);
