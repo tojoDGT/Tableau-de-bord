@@ -425,7 +425,7 @@ class Virement_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function GetDetail($_iTypeAfficheSearch,$_id, $_iNumMandat, $_iAnneeExercice='2023'){
+	public function GetDetail($_iTypeAfficheSearch, $_id, $_iNumMandat, $_iAnneeExercice='2023'){
 
 		global $db;
 
@@ -437,24 +437,26 @@ class Virement_model extends CI_Model {
 
 		switch ($_iTypeAfficheSearch){
 			case 1:
-				//$oGetDetail = $this->virement->GetDetail($iNumMandat, $iMode, $iAnneeExercice) ; 
+				
+				$zWhere = " WHERE MANDAT =  '" . $_iNumMandat . "'";
+				$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
+				
 				break;
 				
 			case 2:
 
-				$zPath = "OP_46";
-				//$zSql = "select COUNT(*) over () found_rows,m.* from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum . " AND m.MAND_NUM_INFO = " . $_iNumMandat;
 
 				$zWhere = " AND t.ID =  " . $_id;
 				$zColonne = " * ";
 
 				$zData = @file_get_contents(APPLICATION_PATH ."sql/46_virement.sql"); 
-		
-				$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 				$zData = str_replace("%COLUMN%", trim($zColonne), $zData) ; 
-				$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
+		
 				break;
 		}
+
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 
 		//echo $zSql;
 

@@ -5,6 +5,7 @@
 	<thead>
 		<tr>
 		    <th>&nbsp;</th>
+			<th>&nbsp;</th>
 			<th>PCASSIGNATAIRE</th>
 			<th class="dt-center">PCPAYEUR</th>
 			<th class="dt-center">ENTITECODE</th>
@@ -39,10 +40,9 @@ $(document).ready(function() {
 			url: zBasePath + "virement/getDetail", // json datasource
 			type: 'POST',
 			data: {
-				iEcriNum: d[1],
-				iNumMandat: d[2],
+				iNumMandat: d[1],
 				iExo: $('#ECRI_EXERCICE').val(),
-				iModePaiement: $("#sendSearch").find("input[name='MAND_MODE_PAIE[]']:checked").val()
+				iTypeAfficheSearch:1
 			},
 			beforeSend: function() {
 				

@@ -97,6 +97,7 @@ class Virement extends MY_Controller
 						$oDataTemp=array(); 
 
 						$oDataTemp[] = '';
+						$oDataTemp[] = $oGetListe['MANDAT'];
 						$oDataTemp[] = $oGetListe['PCASSIGNATAIRE'];
 						$oDataTemp[] = $oGetListe['PCPAYEUR'];
 						$oDataTemp[] = $oGetListe['ENTITECODE'];
@@ -177,6 +178,7 @@ class Virement extends MY_Controller
 		global $oSmarty ; 
 
 		$iTitreId			= $this->postGetValue ("iTitreId", 0);
+		$iNumMandat			= $this->postGetValue ("iNumMandat", 0);
 		$iAnneeExercice		= $this->postGetValue ("iExo", 2023);
 		$iTypeAfficheSearch	= $this->postGetValue ("iTypeAfficheSearch", 0);
 		$iOffset			= $this->postGetValue ("iOffset", 600);
@@ -185,22 +187,13 @@ class Virement extends MY_Controller
 		$oTransfert = array();
 		$oVirement = array();
 
-		//echo $oGetDetail->MAND_NUM_INFO;
-		$zPath = "compteVirement";
-		switch ($iTypeAfficheSearch){
-			case 1:
-				//$oGetDetail = $this->virement->GetDetail($iNumMandat, $iMode, $iAnneeExercice) ; 
-				break;
-				
-			case 2:
+		$zPath = ($iTypeAfficheSearch==1)?"compteVirement":"OP_46";
 
-				$zPath = "OP_46";
-				$oGetDetail = $this->virement->GetDetail($iTypeAfficheSearch,$iTitreId, $iAnneeExercice) ; 
-				break;
-		}
+		$oGetDetail = $this->virement->GetDetail($iTypeAfficheSearch,$iTitreId,$iNumMandat, $iAnneeExercice) ; 
 
 		$oSmarty->assign("zBasePath",base_url());
 		$oSmarty->assign("iTitreId",$iTitreId);
+		$oSmarty->assign("iNumMandat",$iNumMandat);
 		$oSmarty->assign("oVirement",$oVirement);
 		$oSmarty->assign("oTransfert",$oTransfert);
 		$oSmarty->assign("oGetDetail",$oGetDetail);
