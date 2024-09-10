@@ -134,6 +134,7 @@ class Virement extends MY_Controller
 						$oDataTemp=array(); 
 
 						$oDataTemp[] = '';
+						$oDataTemp[] = $oGetListe['ID'];
 						$oDataTemp[] = $oGetListe['TITULAIRE'];
 						$oDataTemp[] = $oGetListe['VILLE'];
 						$oDataTemp[] = $oGetListe['OBJET'];
@@ -175,46 +176,38 @@ class Virement extends MY_Controller
 		
 		global $oSmarty ; 
 
-		$iEcriNum	= $this->postGetValue ("iEcriNum", 0);
-		$iAnneeExercice	= $this->postGetValue ("iExo", 2023);
-		$iNumMandat	= $this->postGetValue ("iNumMandat", 0); 
-		$iMode		= $this->postGetValue ("iModePaiement", 0);
-		$iOffset	= $this->postGetValue ("iOffset", 600);
-
-		$oGetDetail = $this->virement->GetDetail($iEcriNum, $iNumMandat, $iMode, $iAnneeExercice) ; 
+		$iTitreId			= $this->postGetValue ("iTitreId", 0);
+		$iAnneeExercice		= $this->postGetValue ("iExo", 2023);
+		$iTypeAfficheSearch	= $this->postGetValue ("iTypeAfficheSearch", 0);
+		$iOffset			= $this->postGetValue ("iOffset", 600);
 		
 		$oGetLECecriture = array(); //$this->virement->GetLEGecriture($iEcriNum) ; 
 		$oTransfert = array();
 		$oVirement = array();
 
 		//echo $oGetDetail->MAND_NUM_INFO;
+		$zPath = "compteVirement";
+		switch ($iTypeAfficheSearch){
+			case 1:
+				//$oGetDetail = $this->virement->GetDetail($iNumMandat, $iMode, $iAnneeExercice) ; 
+				break;
+				
+			case 2:
 
-		if(isset($oGetDetail)){
-			
-			switch ($oGetDetail->MAND_MODE_PAIE){
-				case 'OO':
-					// Transfert
-					$oTransfert = $this->virement->GetTransfert($oGetDetail->MAND_NUM_INFO,$iAnneeExercice);
-					break;
-					
-				default :
-					// Virement
-					$oVirement = $this->virement->GetVirement($oGetDetail->MAND_NUM_INFO,$iAnneeExercice);
-					break;
-			}
+				$zPath = "OP_46";
+				$oGetDetail = $this->virement->GetDetail($iTypeAfficheSearch,$iTitreId, $iAnneeExercice) ; 
+				break;
 		}
 
 		$oSmarty->assign("zBasePath",base_url());
-		$oSmarty->assign("iTransfert",$iTransfert);
-		$oSmarty->assign("iEcriNum",$iEcriNum);
+		$oSmarty->assign("iTitreId",$iTitreId);
 		$oSmarty->assign("oVirement",$oVirement);
 		$oSmarty->assign("oTransfert",$oTransfert);
-		$oSmarty->assign("iModePaiement",$iMode);
 		$oSmarty->assign("oGetDetail",$oGetDetail);
 		$oSmarty->assign("iOffset",$iOffset);
-		$oSmarty->assign("oGetLECecriture",$oGetLECecriture);
 
-		$zDetailEcriture = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/getDetail.tpl" );
+
+		$zDetailEcriture = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/".$zPath."/getDetail.tpl" );
 		
 		echo $zDetailEcriture ;  
 			

@@ -5,6 +5,7 @@
 	<thead>
 		<tr>
 		    <th>&nbsp;</th>
+			<th>&nbsp;</th>
 			<th>TITULAIRE</th>
 			<th>VILLE</th>
 			<th class="dt-center">OBJET</th>
@@ -40,10 +41,9 @@ $(document).ready(function() {
 			url: zBasePath + "virement/getDetail", // json datasource
 			type: 'POST',
 			data: {
-				iEcriNum: d[1],
-				iNumMandat: d[2],
+				iTitreId: d[1],
 				iExo: $('#ECRI_EXERCICE').val(),
-				iModePaiement: $("#sendSearch").find("input[name='MAND_MODE_PAIE[]']:checked").val()
+				iTypeAfficheSearch:2
 			},
 			beforeSend: function() {
 				

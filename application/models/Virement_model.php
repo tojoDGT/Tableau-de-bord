@@ -219,6 +219,7 @@ class Virement_model extends CI_Model {
 			$zWhere.=" AND ( TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
 			$zWhere.=" OR  VILLE LIKE '%".$oRequest['search']['value']."%'  ";
 			$zWhere.=" OR  OBJET LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  t.ID LIKE '%".$oRequest['search']['value']."%'  ";
 			$zWhere.=" OR  DATE_DOSSIER LIKE '%".$oRequest['search']['value']."%'  ";
 			$zWhere.=" OR  PERI_EXERCICE LIKE '%".$oRequest['search']['value']."%'  ";
 			$zWhere.=" OR  DENOMINATION LIKE '%".$oRequest['search']['value']."%'  ";
@@ -226,10 +227,18 @@ class Virement_model extends CI_Model {
 			$zWhere.=" OR  CATEG_DEPENSE LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
+		$zColonne = "	COUNT(*) over () found_rows,
+						c.denomination,t.code_tiers,c.ville,
+						t.ID,CONCAT (TO_CHAR(t.montant,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS montant,t.compte_tiers,
+						d.objet,d.date_dossier,d.peri_exercice,
+						tt.titulaire,
+						p.*,virement.* ";
+
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/46_virement.sql"); 
 		
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%COLUMN%", trim($zColonne), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 		
 		$zDebut = 0;
@@ -416,7 +425,7 @@ class Virement_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function GetDetail($_iEcriNum, $_iNumMandat, $_iMode, $_iAnneeExercice='2023'){
+	public function GetDetail($_iTypeAfficheSearch,$_id, $_iNumMandat, $_iAnneeExercice='2023'){
 
 		global $db;
 
@@ -426,10 +435,25 @@ class Virement_model extends CI_Model {
 
 		$toDB = $this->load->database('catia',true);
 
-		$zSql = "select COUNT(*) over () found_rows,m.* from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum . " AND m.MAND_NUM_INFO = " . $_iNumMandat;
+		switch ($_iTypeAfficheSearch){
+			case 1:
+				//$oGetDetail = $this->virement->GetDetail($iNumMandat, $iMode, $iAnneeExercice) ; 
+				break;
+				
+			case 2:
 
-		if($_iMode != ""){
-			$zSql .= " AND m.MAND_MODE_PAIE = '" . $_iMode . "'";
+				$zPath = "OP_46";
+				//$zSql = "select COUNT(*) over () found_rows,m.* from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum . " AND m.MAND_NUM_INFO = " . $_iNumMandat;
+
+				$zWhere = " AND t.ID =  " . $_id;
+				$zColonne = " * ";
+
+				$zData = @file_get_contents(APPLICATION_PATH ."sql/46_virement.sql"); 
+		
+				$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+				$zData = str_replace("%COLUMN%", trim($zColonne), $zData) ; 
+				$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
+				break;
 		}
 
 		//echo $zSql;

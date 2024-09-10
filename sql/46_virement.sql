@@ -253,12 +253,7 @@ WITH
                 AND DTL.NOTEID = nt.NOTEID
                 AND NT.DMDVIRID = DV.DMDVIRID(+)
                 AND NT.OVID = OV.OVID(+))
-SELECT COUNT(*) over () found_rows,
-c.denomination,t.code_tiers,c.ville,
-t.ID,CONCAT (TO_CHAR(t.montant,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS montant,t.compte_tiers,
-d.objet,d.date_dossier,d.peri_exercice,
-tt.titulaire,
-p.*,virement.*
+SELECT %COLUMN%
   FROM nonepn.titre                       t,
        nonepn.dossier                     d,
        ctiers.compte_tiers                c,
