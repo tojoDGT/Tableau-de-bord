@@ -34,7 +34,7 @@
 								  <i class="fas fa-chart-pie mr-1"></i>
 								  Resultats
 								</h3>
-								<div class="card-tools">
+								<!--<div class="card-tools">
 								  <ul class="nav nav-pills ml-auto">
 									<li class="nav-item">
 									  <a class="nav-link active" id="getListing" href="#listing-search" data-toggle="tab">Liste et détail</a>
@@ -46,7 +46,7 @@
 									  <a class="nav-link" id="getStatGLobal" href="#stat-global" data-toggle="tab">Statistique Global</a>
 									</li>
 								  </ul>
-								</div>
+								</div>-->
 							  </div><!-- /.card-header -->
 							  <div class="card-body">
 								<div class="tab-content p-0">

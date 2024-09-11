@@ -39,9 +39,12 @@
 										</td>
 									</tr>-->
 									<tr>
-										<td class="middle" width="10">Date : </td>
+										<td class="middle" width="10">Année Exercice:</td>
 										<td class="noBottom">
-											<input class="datepicker form-control" placeholder="Veuillez entrer une date" readonly="readonly" value="{$zDate}" type="text" id="zDate" name="zDate">
+											<select class="form-control" id="ECRI_EXERCICE" name="ECRI_EXERCICE">
+													<option {if $iAnneeExercice=='2023'}selected="selected"{/if} value="2023">2023</option>
+													<option {if $iAnneeExercice=='2024'}selected="selected"{else}selected="selected"{/if} value="2024">2024</option>
+											</select>
 										</td>
 									</tr>
 								</tbody>
@@ -50,52 +53,14 @@
 						<div class="col-md-4" style="display:inline-flex">
 							<table class="table tableRond table-top-countries">
 								<tbody>
-									<tr>
-										<td class="middle" width="10">Poste Comptable : </td>
-										<td class="noBottom">
-											<select class="form-control" id="PSTP_CODE" name="PSTP_CODE">
-												<option value="">Tous</option>
-												{foreach from=$toGetListePc item=$oGetListePc}
-												<option value="{$oGetListePc.PSTP_CODE}">{$oGetListePc.PSTP_LIBELLE}</option>
-												{/foreach}
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td class="middle" width="10">Compte num : </td>
-										<td class="noBottom">
-											<input style="font-size:13px" placeholder="Veuillez rechercher un compte" type="text" id="COMPTE_NUM" name="COMPTE_NUM">
-										</td>
-									</tr>
+									
 								</tbody>
 							</table>
 						</div>
 						<div class="col-md-4" style="display:inline-flex">
 							<table class="table tableRond table-top-countries">
 								<tbody>
-									<tr>
-										<td class="middle" width="10">Conclusion : </td>
-										<td class="noBottom">
-											<select class="form-control" id="CONCLUSION" name="CONCLUSION">
-													<option selected="selected" value="">Tous</option>
-													<option value="SOLDE ANORMAL">SOLDE ANORMAL</option>
-													<option value="COMPTE INEXISTANT">COMPTE INEXISTANT</option>
-													<option value="COMPTE REDRESSE">COMPTE REDRESSE</option>
-													<option value="SOLDE NORMAL">SOLDE NORMAL</option>	
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td class="middle" width="10">Sens en cours : </td>
-										<td class="noBottom">
-											<select class="form-control" id="SENS" name="SENS">
-													<option selected="selected" value="">Tous</option>
-													<option value="N">NEUTRE</option>
-													<option value="DEBITEUR">DEBITEUR</option>
-													<option value="CREDITEUR">CREDITEUR</option>	
-											</select>
-										</td>
-									</tr>
+									
 								</tbody>
 							</table>
 						</div>
