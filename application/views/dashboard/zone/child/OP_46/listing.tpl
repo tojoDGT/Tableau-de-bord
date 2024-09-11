@@ -99,9 +99,11 @@ $(document).ready(function() {
 		"ajax":{
 			url : zBasePath + "virement/getAjax", 
 			data: function ( d ) {
-				d.ECRI_EXERCICE			= $('#ECRI_EXERCICE').val();
-				d.MIN_ABREV				= $('#MIN_ABREV').val();
-				d.TYPE_MAND				= $('#TYPE_MAND').val();
+				d.PERI_EXERCICE			= $('#PERI_EXERCICE').val();
+				d.PERI_MOIS				= $('#PERI_MOIS').val();
+				d.PSTP_CODE				= $('#PSTP_CODE').val();
+				d.SIGLE					= $('#SIGLE').val();
+				d.CATEG_DEPENSE			= $('#CATEG_DEPENSE').val();
 				d.iTypeAfficheSearch	= 2;
 				d.data					= $("#sendSearch").serializeArray();
 			},

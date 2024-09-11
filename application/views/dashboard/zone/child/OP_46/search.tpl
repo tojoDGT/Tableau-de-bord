@@ -29,19 +29,33 @@
 						<div class="col-md-3" style="display:inline-flex">
 							<table class="table tableRond table-top-countries">
 								<tbody>
-									<!--<tr>
-										<td class="middle" width="10">Année Exercice:</td>
+									<tr>
+										<td class="middle" width="10">Mois:</td>
 										<td class="noBottom">
-											<select class="form-control" id="ECRI_EXERCICE" name="ECRI_EXERCICE">
-													<option {if $iAnneeExercice=='2023'}selected="selected"{/if} value="2023">2023</option>
-													<option {if $iAnneeExercice=='2024'}selected="selected"{/if} value="2024">2024</option>
+											<select class="form-control" id="PERI_MOIS" name="PERI_MOIS">
+													<option selected="selected"value="">TOUS</option>
+													<option value="01">Janvier</option>
+													<option value="02">Février</option>
+													<option value="03">Mars</option>
+													<option value="04">Avril</option>
+													<option value="05">Mai</option>
+													<option value="06">Juin</option>
+													<option value="07">Juillet</option>
+													<option value="08">Août</option>
+													<option value="09">Septembre</option>
+													<option value="10">Octobre</option>
+													<option value="11">Novembre</option>
+													<option value="12">Décembre</option>
 											</select>
 										</td>
-									</tr>-->
+									</tr>
 									<tr>
-										<td class="middle" width="10">Date : </td>
+										<td class="middle" width="10">Année Exercice:</td>
 										<td class="noBottom">
-											<input class="datepicker form-control" placeholder="Veuillez entrer une date" readonly="readonly" value="{$zDate}" type="text" id="zDate" name="zDate">
+											<select class="form-control" id="PERI_EXERCICE" name="PERI_EXERCICE">
+													<option {if $iAnneeExercice=='2023'}selected="selected"{/if} value="2023">2023</option>
+													<option {if $iAnneeExercice=='2024'}selected="selected"{else}selected="selected"{/if} value="2024">2024</option>
+											</select>
 										</td>
 									</tr>
 								</tbody>
@@ -55,16 +69,21 @@
 										<td class="noBottom">
 											<select class="form-control" id="PSTP_CODE" name="PSTP_CODE">
 												<option value="">Tous</option>
-												{foreach from=$toGetListePc item=$oGetListePc}
-												<option value="{$oGetListePc.PSTP_CODE}">{$oGetListePc.PSTP_LIBELLE}</option>
+												{foreach from=$toGetListePstp item=$oGetListePstp}
+												<option value="{$oGetListePstp.PSTP_CODE}">{$oGetListePstp.PSTP_LIBELLE}</option>
 												{/foreach}
 											</select>
 										</td>
 									</tr>
 									<tr>
-										<td class="middle" width="10">Compte num : </td>
+										<td class="middle" width="10">SIGLE : </td>
 										<td class="noBottom">
-											<input style="font-size:13px" placeholder="Veuillez rechercher un compte" type="text" id="COMPTE_NUM" name="COMPTE_NUM">
+											<select class="form-control" id="SIGLE" name="SIGLE">
+												<option value="">Tous</option>
+												{foreach from=$toGetListeSigle item=$oGetListeSigle}
+												<option value="{$oGetListeSigle.SIGLE}">{$oGetListeSigle.SIGLE}</option>
+												{/foreach}
+											</select>
 										</td>
 									</tr>
 								</tbody>
@@ -74,25 +93,12 @@
 							<table class="table tableRond table-top-countries">
 								<tbody>
 									<tr>
-										<td class="middle" width="10">Conclusion : </td>
+										<td class="middle" width="10">CATEGORIE : </td>
 										<td class="noBottom">
-											<select class="form-control" id="CONCLUSION" name="CONCLUSION">
+											<select class="form-control" id="CATEG_DEPENSE" name="CATEG_DEPENSE">
 													<option selected="selected" value="">Tous</option>
-													<option value="SOLDE ANORMAL">SOLDE ANORMAL</option>
-													<option value="COMPTE INEXISTANT">COMPTE INEXISTANT</option>
-													<option value="COMPTE REDRESSE">COMPTE REDRESSE</option>
-													<option value="SOLDE NORMAL">SOLDE NORMAL</option>	
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td class="middle" width="10">Sens en cours : </td>
-										<td class="noBottom">
-											<select class="form-control" id="SENS" name="SENS">
-													<option selected="selected" value="">Tous</option>
-													<option value="N">NEUTRE</option>
-													<option value="DEBITEUR">DEBITEUR</option>
-													<option value="CREDITEUR">CREDITEUR</option>	
+													<option value="DEPENSE">EN DEPENSE</option>
+													<option value="-1">EN COURS DE DEPENSE</option>
 											</select>
 										</td>
 									</tr>

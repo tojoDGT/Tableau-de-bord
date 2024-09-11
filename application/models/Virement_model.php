@@ -162,6 +162,54 @@ class Virement_model extends CI_Model {
 
 	}
 
+
+	/** 
+	* function permettant d'afficher la liste des propriétaires codes
+	*
+	*
+	* @return liste en tableau d'objet
+	*/
+
+	public function getSigle($_zChamp){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('catia',true);
+
+		$toRow = array();
+
+		$zSql = " SELECT distinct ".$_zChamp."
+				  FROM nonepn.titre                       t,
+					   nonepn.dossier                     d,
+					   ctiers.compte_tiers                c,
+					   CTIERS.TIERS                       tt,
+					   nonepn.ctiers_rga                  cais,
+					   catia.poste_comptable@dblccad  p    
+				 WHERE     t.dossier_id = d.id
+					   AND t.compte_tiers = d.compte_tiers
+					   AND c.id_ct = d.compte_tiers
+					   AND tt.code_tiers = t.code_tiers
+					   AND p.pstp_code = c.comptable_gestionnaire
+					   AND d.compte_tiers = cais.compte_tiers
+					   AND d.mode_reglement = 'VB'
+					   AND d.compte_tiers NOT IN ('46-14-7-A26-10101', '46-14-7-A25-10101')
+					   AND d.peri_exercice >= '2023'
+					   AND valid = '1'
+			     group by ".$_zChamp."
+				 ORDER BY ".$_zChamp." ASC" ;
+
+
+		//echo $zSql;
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+
+		return $toRow;
+	}
+
 	/** 
 	* function permettant d'afficher la liste des virements opérations 46
 	*
@@ -194,23 +242,34 @@ class Virement_model extends CI_Model {
 		$oRequest = $_REQUEST;
 
 		$_iAnneeExercice = 2023;
-		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
-			$_iAnneeExercice = $oRequest['ECRI_EXERCICE'];
-		}
 
 		$zWhere = " ";
 
 		if( !empty($oRequest['PERI_EXERCICE']) &&  $oRequest['PERI_EXERCICE']!="") {   
 			$zWhere.=" AND PERI_EXERCICE = '".$oRequest['PERI_EXERCICE']."'  ";
+			$_iAnneeExercice = $oRequest['PERI_EXERCICE'];
 		}
 
-		if( !empty($oRequest['TITULAIRE']) &&  $oRequest['TITULAIRE']!="") {   
-			$zWhere.=" AND TITULAIRE LIKE '%".$oRequest['TITULAIRE']."%'  ";
+		if( !empty($oRequest['PERI_MOIS']) &&  $oRequest['PERI_MOIS']!="") {   
+			$zWhere.=" AND PERI_MOIS = '".$oRequest['PERI_MOIS']."'  ";
+		}
+
+		if( !empty($oRequest['PSTP_CODE']) &&  $oRequest['PSTP_CODE']!="") {   
+			$zWhere.=" AND PSTP_CODE = '".$oRequest['PSTP_CODE']."'  ";
+		}
+
+		if( !empty($oRequest['SIGLE']) &&  $oRequest['SIGLE']!="") {   
+			$zWhere.=" AND c.SIGLE = '".$oRequest['SIGLE']."'  ";
 		}
 
 
 		if( !empty($oRequest['CATEG_DEPENSE']) &&  $oRequest['CATEG_DEPENSE']!="") {   
-			$zWhere.=" AND CATEG_DEPENSE= '".$oRequest['CATEG_DEPENSE']."'  ";
+
+			if($oRequest['CATEG_DEPENSE']=='-1'){
+				$zWhere.=" AND CATEG_DEPENSE IS NULL ";
+			} else {
+				$zWhere.=" AND CATEG_DEPENSE= '".$oRequest['CATEG_DEPENSE']."'  ";
+			}
 		} 
 
 		$toMandMode1 = array();

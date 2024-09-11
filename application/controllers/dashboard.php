@@ -19,6 +19,7 @@ class Dashboard extends MY_Controller
 		$this->load->model('Dashboard_model', 'dashboard');
 		$this->load->model('Demande_model', 'demande');
 		$this->load->model('Utilisateur_model', 'utilisateur');
+		$this->load->model('Virement_model', 'Virement');
 
 		if(empty($this->session->userdata['USERID'])){ redirect('Login');}
 
@@ -197,8 +198,11 @@ class Dashboard extends MY_Controller
 
 				$zLibelle1 = "Compte de virement"; 
 
+				$toGetListePc = $this->utilisateur->posteComptable($iNombreTotal,$this,1) ;
+
 				$oSmarty->assign("zBasePath",base_url());
 				$oSmarty->assign('toColonne',  $toColonne);
+				$oSmarty->assign('toGetListePc',  $toGetListePc);
 				$oSmarty->assign('iTypeAfficheSearch',  3);
 				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/compteVirement/search.tpl" );
 				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
@@ -213,11 +217,18 @@ class Dashboard extends MY_Controller
 				$iMenuActifId = 2;
 				$iSousMenuActifId = 11;
 
-				$zLibelle1 = "Opération 46, Virement"; 
+				$zLibelle1 = "Opération 46, Virement";  
+
+				$toGetListePc = $this->utilisateur->posteComptable($iNombreTotal,$this,1) ;
+				$toGetListeSigle = $this->Virement->getSigle("c.sigle") ;
+				$toGetListePstp = $this->Virement->getSigle("p.pstp_code,p.pstp_libelle") ;
 
 				$oSmarty->assign("zBasePath",base_url());
 				$oSmarty->assign('toColonne',  $toColonne);
 				$oSmarty->assign('iTypeAfficheSearch',  3);
+				$oSmarty->assign('toGetListePc',  $toGetListePc);
+				$oSmarty->assign('toGetListeSigle',  $toGetListeSigle);
+				$oSmarty->assign('toGetListePstp',  $toGetListePstp);
 				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/OP_46/search.tpl" );
 				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
 				$zListingTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/OP_46/listing.tpl" );
