@@ -3,6 +3,8 @@
 <script src="{$zBasePath}assets/code/highcharts-3d.js"></script>
 <script src="{$zBasePath}assets/code/modules/exporting.js"></script>
 <script src="{$zBasePath}assets/code/modules/export-data.js"></script>
+<script src="{$zBasePath}assets/js/datedropper-javascript.js"></script>
+<script src="{$zBasePath}assets/js/datedropper-javascript-lang-FR.js"></script>
 <section class="content">
 	<div class="container-fluid">
 			<div class="row">	
@@ -76,6 +78,14 @@
 	
 $(document).ready(function() {
 
+	new dateDropper({ 
+		selector: '.datedropper-range-fiche', 
+		range: true, 
+		format : 'dd/mm/y',
+		lang : 'fr',
+		defaultDate: true,
+		doubleView: true
+	})
 	$('#getGraph').on('click', function () {
 
 		$("#nombreMontant").show();

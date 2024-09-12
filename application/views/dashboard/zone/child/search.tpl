@@ -86,7 +86,24 @@
 										<input type="radio" name="iMode" value="2">&nbsp;&nbsp;Montant
 									</td>
 								</tr>
-							</tr>
+								<tr>							
+									<td colspan="2">
+											<div id="changeDate" style="display:inline-flex" class="col-sm-6">
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Date récupération</label>
+														<div class="cal-icon"><input type="text" name="date_recup" id="date_recup" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="2024/09/09" data-dd-opt-double-view="true" autocomplete="off" value="" placeholder="du..." class="form-control datedropper-range-fiche" data-dd-opt-range-start="2024/09/09" data-dd-opt-range-end="2024/09/10"></div>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Date Visa</label>
+														<div class="cal-icon"><input type="text" name="date_visa" id="date_visa" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="2024/09/10" autocomplete="off" value="" placeholder="au..." class="form-control datedropper-range-fiche"  data-dd-opt-range-start="2024/09/09" data-dd-opt-range-end="2024/09/10"></div>
+													</div>
+												</div>
+											</div>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 						</div>
@@ -182,6 +199,7 @@ input[type=radio] {
 <script>
 $(document).ready(function() {
 	    
+		
 		$("#getListing").on("click", function(){
 			$("#nombreMontant").hide();
 			$('#table_bd').DataTable().ajax.reload();

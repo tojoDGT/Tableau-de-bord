@@ -85,7 +85,7 @@
 <!-- ChartJS -->
 <script src="{$zBasePath}assets/common/bower_components/chart.js/Chart.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{$zBasePath}assets/common/dist/js/pages/dashboard2.js"></script>
+<!-- <script src="{$zBasePath}assets/common/dist/js/pages/dashboard2.js"></script> -->
 
 <script src="{$zBasePath}assets/common/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
