@@ -95,8 +95,30 @@ class Demande extends MY_Controller
 			$oDataTemp[] = '';
 
 			foreach ($toColonne as $oColonne){
-				$oColonne = explode(".", $oColonne);
-				$oDataTemp[] = $oGetListe[$oColonne[1]];
+				$oColonne = explode("-", $oColonne);
+
+				if($oColonne[1]=="STATUT"){
+					switch ($oGetListe['STATUT']){
+						case 'REJET':
+							$zSens = "#dc3545";
+							
+							break;
+
+						case 'ADMIS EN DEPENSE':
+							$zSens = "#28a745";
+							
+							break;
+
+						default:
+							$zSens = "#007bff";
+							break;
+					}
+					
+					$oDataTemp[] = "<span style=\"color:".$zSens."\">" . $oGetListe['STATUT'] . "</span>";
+				} else {
+
+					$oDataTemp[] = $oGetListe[$oColonne[1]];
+				}
 			}
 
 			// cas REGULARISATION

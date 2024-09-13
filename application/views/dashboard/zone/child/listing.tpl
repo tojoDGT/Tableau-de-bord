@@ -107,6 +107,8 @@ $(document).ready(function() {
 				d.ECRI_EXERCICE			= $('#ECRI_EXERCICE').val();
 				d.MIN_ABREV				= $('#MIN_ABREV').val();
 				d.TYPE_MAND				= $('#TYPE_MAND').val();
+				d.STATUT				= $('#STATUT').val();
+				d.mand_mode_paie		= $('input[name="MAND_MODE_PAIE"]:checked').val();
 				d.iTypeAfficheSearch	= {/literal}{$iTypeAfficheSearch}{literal};
 				d.data					= $("#sendSearch").serializeArray();
 				d.date_recup			= $('#date_recup').val();

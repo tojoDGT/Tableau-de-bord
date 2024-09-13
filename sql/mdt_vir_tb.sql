@@ -1,4 +1,5 @@
-SELECT  COUNT(*) over () found_rows, M.ASSIGNATAIRE,
+SELECT  COUNT(*) over () found_rows,norm.*
+from (SELECT M.ASSIGNATAIRE,
        MIN_CODE,
 	   E.ECRI_NUM,
 	   M.MAND_NUM_INFO,
@@ -62,7 +63,7 @@ SELECT  COUNT(*) over () found_rows, M.ASSIGNATAIRE,
            THEN
                'EN INSTANCE DE VISA COMPTA'
            ELSE
-               'INSTANCE DE PRISE EN CHARGE'
+               'EN INSTANCE DE PRISE EN CHARGE'
        END                 STATUT,
        V.NOTEREF,
        NOTEMT,
@@ -94,4 +95,5 @@ SELECT  COUNT(*) over () found_rows, M.ASSIGNATAIRE,
        AND M.ENTITE = E.ENTITE(+)
        AND M.MAND_NUM_INFO = V.MANDAT(+)
        AND M.EXERCICE = v.exercice(+)
+ ) norm  
 %WHERE%

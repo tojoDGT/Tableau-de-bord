@@ -23,25 +23,27 @@
 				<hr class="mb-2" />
 				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="Identifiant-ECRI_NUM" class="mr-1" name="colonneAffiche[]" /><span>Identifiant</span></div>
 				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="IdentifiantNumInfo-MAND_NUM_INFO" class="mr-1" name="colonneAffiche[]" /><span>Identifiant Mandat</span></div>
-				{*<div class="mb-2"><input type="checkbox" {if TITULAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="TITULAIRE-tt.TITULAIRE" class="mr-1" name="colonneAffiche[]" /><span>TITULAIRE</span></div>
-				<div class="mb-2"><input type="checkbox" {if CODE_TIERS|in_array:$oDataTempCol} checked="checked" {/if} value="CODE TIERS-tt.CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>CODE TIERS</span></div>*}
-				<div class="mb-2"><input type="checkbox" {if ECRI_REF|in_array:$oDataTempCol} checked="checked" {/if} value="Référence-E.ECRI_REF" class="mr-1" name="colonneAffiche[]" /><span>Réference</span></div>
-				<div class="mb-2"><input type="checkbox" {if ECRI_LIB|in_array:$oDataTempCol} checked="checked" {/if} value="Libellé-E.ECRI_LIB" class="mr-1" name="colonneAffiche[]" /><span>Libellé</span></div>
-				<div class="mb-2"><input type="checkbox" {if ECRI_DT_CECRITURE|in_array:$oDataTempCol} checked="checked" {/if} value="Date-E.ECRI_DT_CECRITURE" class="mr-1" name="colonneAffiche[]" /><span>Date</span></div>
-				<div class="mb-2"><input type="checkbox" {if PROP_CODE|in_array:$oDataTempCol} checked="checked" {/if} value="Propriétaire-t.PROP_CODE" class="mr-1" name="colonneAffiche[]" /><span>Propriété</span></div>
-				<div class="mb-2"><input type="checkbox" {if MAND_MODE_PAIE|in_array:$oDataTempCol} checked="checked" {/if} value="Mode-m.MAND_MODE_PAIE" class="mr-1" name="colonneAffiche[]" /><span>Mode de paiement</span></div>
-				<div class="mb-2"><input type="checkbox" {if SOA|in_array:$oDataTempCol} checked="checked" {/if} value="SOA-m.SOA" class="mr-1" name="colonneAffiche[]" /><span>SOA</span></div>
-				<div class="mb-2"><input type="checkbox" {if COMPTE|in_array:$oDataTempCol} checked="checked" {/if} value="COMPTE-m.COMPTE" class="mr-1" name="colonneAffiche[]" /><span>COMPTE</span></div>
-				<div class="mb-2"><input type="checkbox" {if MISSION|in_array:$oDataTempCol} checked="checked" {/if} value="MISSION-m.MISSION" class="mr-1" name="colonneAffiche[]" /><span>MISSION</span></div>
+				{*<div class="mb-2"><input type="checkbox" {if TITULAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="TITULAIRE-TITULAIRE" class="mr-1" name="colonneAffiche[]" /><span>TITULAIRE</span></div>
+				<div class="mb-2"><input type="checkbox" {if CODE_TIERS|in_array:$oDataTempCol} checked="checked" {/if} value="CODE TIERS-CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>CODE TIERS</span></div>*}
+				<div class="mb-2"><input type="checkbox" {if ECRI_REF|in_array:$oDataTempCol} checked="checked" {/if} value="Référence-ECRI_REF" class="mr-1" name="colonneAffiche[]" /><span>Réference</span></div>
+				<div class="mb-2"><input type="checkbox" {if ECRI_REF|in_array:$oDataTempCol} checked="checked" {/if} value="Code tiers-MAND_CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>Code tiers</span></div>
+				<div class="mb-2"><input type="checkbox" {if ECRI_REF|in_array:$oDataTempCol} checked="checked" {/if} value="Statut-STATUT" class="mr-1" name="colonneAffiche[]" /><span>Statut</span></div>
+				<div class="mb-2"><input type="checkbox" {if ECRI_LIB|in_array:$oDataTempCol} checked="checked" {/if} value="Libellé-ECRI_LIB" class="mr-1" name="colonneAffiche[]" /><span>Libellé</span></div>
+				<div class="mb-2"><input type="checkbox" {if ECRI_DT_CECRITURE|in_array:$oDataTempCol} checked="checked" {/if} value="Date-ECRI_DT_CECRITURE" class="mr-1" name="colonneAffiche[]" /><span>Date</span></div>
+				<div class="mb-2"><input type="checkbox" {if PROP_CODE|in_array:$oDataTempCol} checked="checked" {/if} value="Propriétaire-PROP_CODE" class="mr-1" name="colonneAffiche[]" /><span>Propriété</span></div>
+				<div class="mb-2"><input type="checkbox" {if MAND_MODE_PAIE|in_array:$oDataTempCol} checked="checked" {/if} value="Mode-MAND_MODE_PAIE" class="mr-1" name="colonneAffiche[]" /><span>Mode de paiement</span></div>
+				<div class="mb-2"><input type="checkbox" {if SOA|in_array:$oDataTempCol} checked="checked" {/if} value="SOA-SOA" class="mr-1" name="colonneAffiche[]" /><span>SOA</span></div>
+				<div class="mb-2"><input type="checkbox" {if COMPTE|in_array:$oDataTempCol} checked="checked" {/if} value="COMPTE-COMPTE" class="mr-1" name="colonneAffiche[]" /><span>COMPTE</span></div>
+				<div class="mb-2"><input type="checkbox" {if MISSION|in_array:$oDataTempCol} checked="checked" {/if} value="MISSION-MISSION" class="mr-1" name="colonneAffiche[]" /><span>MISSION</span></div>
 
-				<div class="mb-2"><input type="checkbox" {if ASSIGNATAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="Assignataire-m.ASSIGNATAIRE1" class="mr-1" name="colonneAffiche[]" /><span>Assignataire</span></div>
-				<div class="mb-2"><input type="checkbox" {if MANDATAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="Mandataire-m.MANDATAIRE1" class="mr-1" name="colonneAffiche[]" /><span>Mandataire</span></div>
-				<div class="mb-2"><input type="checkbox" {if MAND_VISA_TEF|in_array:$oDataTempCol} checked="checked" {/if} value="Visa TEF-m.MAND_VISA_TEF" class="mr-1" name="colonneAffiche[]" /><span>Visa TEF</span></div>
-				<div class="mb-2"><input type="checkbox" {if MAND_NUM_INFO|in_array:$oDataTempCol} checked="checked" {/if} value="Numéro Info-m.MANDAT1" class="mr-1" name="colonneAffiche[]" /><span>Numéro Info</span></div>
-				<div class="mb-2"><input type="checkbox" {if MAND_OBJET|in_array:$oDataTempCol} checked="checked" {/if} value="Objet du mandat-m.MAND_OBJET" class="mr-1" name="colonneAffiche[]" /><span>Objet du mandat</span></div>
-				<div class="mb-2"><input type="checkbox" {if MAND_DATE_RECUP|in_array:$oDataTempCol} checked="checked" {/if} value="Date Récupération-m.MAND_DATE_RECUP" class="mr-1" name="colonneAffiche[]" /><span>Date Récupération</span></div>
-				<div class="mb-2"><input type="checkbox" {if MAND_DATE_REEL_VISA|in_array:$oDataTempCol} checked="checked" {/if} value="Date réelle du Visa-m.MAND_DATE_REEL_VISA" class="mr-1" name="colonneAffiche[]" /><span>Date réelle du Visa</span></div>
-				<div class="mb-2"><input type="checkbox" {if MAND_MONTANT1|in_array:$oDataTempCol} checked="checked" {/if} value="Montant-m.MAND_MONTANT1" class="mr-1" name="colonneAffiche[]" /><span>Montant</span></div>
+				<div class="mb-2"><input type="checkbox" {if ASSIGNATAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="Assignataire-ASSIGNATAIRE1" class="mr-1" name="colonneAffiche[]" /><span>Assignataire</span></div>
+				<div class="mb-2"><input type="checkbox" {if MANDATAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="Mandataire-MANDATAIRE1" class="mr-1" name="colonneAffiche[]" /><span>Mandataire</span></div>
+				<div class="mb-2"><input type="checkbox" {if MAND_VISA_TEF|in_array:$oDataTempCol} checked="checked" {/if} value="Visa TEF-MAND_VISA_TEF" class="mr-1" name="colonneAffiche[]" /><span>Visa TEF</span></div>
+				<div class="mb-2"><input type="checkbox" {if MAND_NUM_INFO|in_array:$oDataTempCol} checked="checked" {/if} value="Numéro Info-MANDAT1" class="mr-1" name="colonneAffiche[]" /><span>Numéro Info</span></div>
+				<div class="mb-2"><input type="checkbox" {if MAND_OBJET|in_array:$oDataTempCol} checked="checked" {/if} value="Objet du mandat-MAND_OBJET" class="mr-1" name="colonneAffiche[]" /><span>Objet du mandat</span></div>
+				<div class="mb-2"><input type="checkbox" {if MAND_DATE_RECUP|in_array:$oDataTempCol} checked="checked" {/if} value="Date Récupération-MAND_DATE_RECUP" class="mr-1" name="colonneAffiche[]" /><span>Date Récupération</span></div>
+				<div class="mb-2"><input type="checkbox" {if MAND_DATE_REEL_VISA|in_array:$oDataTempCol} checked="checked" {/if} value="Date réelle du Visa-MAND_DATE_REEL_VISA" class="mr-1" name="colonneAffiche[]" /><span>Date réelle du Visa</span></div>
+				<div class="mb-2"><input type="checkbox" {if MAND_MONTANT1|in_array:$oDataTempCol} checked="checked" {/if} value="Montant-MAND_MONTANT1" class="mr-1" name="colonneAffiche[]" /><span>Montant</span></div>
 				<hr class="mb-2" />
 				<div style="text-align: center;"> <input type="submit" class="changerCol btn btn-info" value="Changer" autocomplete="off"></div>
 			</div>

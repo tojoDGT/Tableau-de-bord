@@ -73,10 +73,10 @@
 									<td class="middle" width="10">Mode de Paiement :</td>
 									<td class="noBottom">
 										<!--<input type="radio" class="MAND_MODE_PAIE" checked="checked" name="MAND_MODE_PAIE[]" value="">&nbsp;&nbsp;Tous-->
-										<input type="radio" class="MAND_MODE_PAIE" checked="checked" name="MAND_MODE_PAIE[]" value="VB">&nbsp;&nbsp;Virement bancaire
-										<input type="radio" class="MAND_MODE_PAIE" name="MAND_MODE_PAIE[]" value="OO">&nbsp;&nbsp;Opération d'ordre
-										<input type="radio" class="MAND_MODE_PAIE" name="MAND_MODE_PAIE[]" value="BC">&nbsp;&nbsp;Bon de Caisse
-										<input type="radio" class="MAND_MODE_PAIE" name="MAND_MODE_PAIE[]" value="OP">&nbsp;&nbsp;Ordre de paiement
+										<input type="radio" class="MAND_MODE_PAIE" checked="checked" name="MAND_MODE_PAIE" value="VB">&nbsp;&nbsp;Virement bancaire
+										<input type="radio" class="MAND_MODE_PAIE" name="MAND_MODE_PAIE" value="OO">&nbsp;&nbsp;Opération d'ordre
+										<input type="radio" class="MAND_MODE_PAIE" name="MAND_MODE_PAIE" value="BC">&nbsp;&nbsp;Bon de Caisse
+										<input type="radio" class="MAND_MODE_PAIE" name="MAND_MODE_PAIE" value="OP">&nbsp;&nbsp;Ordre de paiement
 									</td>
 								</tr>
 								<tr id="nombreMontant" style="display:none">
@@ -88,7 +88,7 @@
 								</tr>
 								<tr>							
 									<td colspan="2">
-											<div id="changeDate" style="display:inline-flex" class="col-sm-6">
+											<div id="changeDate" style="display:inline-flex" class="col-sm-10">
 												<div class="col-sm-6">
 													<div class="form-group">
 														<label>Date récupération</label>
@@ -103,6 +103,20 @@
 												</div>
 											</div>
 									</td>
+								</tr>
+								<tr>
+										<td class="middle" width="10">STATUT : </td>
+										<td class="noBottom">
+											<select style="width:75%" class="form-control" id="STATUT" name="STATUT">
+													<option selected="selected" value="">Tous</option>
+													<option value="ADMIS EN DEPENSE">ADMIS EN DEPENSE</option>
+													<option value="EN INSTANCE DE VISA COMPTA">EN INSTANCE DE VISA COMPTA</option>
+													<option value="INSTANCE DE PRISE EN CHARGE">INSTANCE DE PRISE EN CHARGE</option>
+													<option value="REJET">REJET</option>	
+													<option value="COUVERTURE VALIDE">COUVERTURE VALIDE</option>	
+
+											</select>
+										</td>
 								</tr>
 							</tbody>
 						</table>

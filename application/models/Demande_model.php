@@ -26,16 +26,18 @@ class Demande_model extends CI_Model {
 		$toColonne = array();
 		//unset($_SESSION["colonneAffiche"]);
 		if(empty($_SESSION["colonneAffiche"])){
-			array_push($toColonne, 'Identifiant-E.ECRI_NUM');
-			array_push($toColonne, 'IdentifiantNumInfo-M.MAND_NUM_INFO');
+			array_push($toColonne, 'Identifiant-ECRI_NUM');
+			array_push($toColonne, 'IdentifiantNumInfo-MAND_NUM_INFO');
 			//array_push($toColonne, 'TITULAIRE-T.TITULAIRE');
-			array_push($toColonne, 'Référence-E.ECRI_REF');
-			array_push($toColonne, 'Libellé-E.ECRI_LIB');
-			array_push($toColonne, 'Date-E.ECRI_DT_CECRITURE');
-			array_push($toColonne, 'Propriétaire-E.PROP_CODE');
-			array_push($toColonne, 'SOA-M.SOA');
-			array_push($toColonne, 'Mode-M.MAND_MODE_PAIE1');
-			array_push($toColonne, 'Montant-M.MAND_MONTANT1');
+			array_push($toColonne, 'Référence-ECRI_REF');
+			array_push($toColonne, 'Code tiers-MAND_CODE_TIERS');
+			array_push($toColonne, 'Statut-STATUT');
+			array_push($toColonne, 'Libellé-ECRI_LIB');
+			array_push($toColonne, 'Date-ECRI_DT_CECRITURE');
+			array_push($toColonne, 'Propriétaire-PROP_CODE');
+			array_push($toColonne, 'SOA-SOA');
+			array_push($toColonne, 'Mode-MAND_MODE_PAIE1');
+			array_push($toColonne, 'Montant-MAND_MONTANT1');
 
 			$_SESSION["colonneAffiche"] = serialize($toColonne);
 		} else {
@@ -81,28 +83,32 @@ class Demande_model extends CI_Model {
 			$_iAnneeExercice = $oRequest['ECRI_EXERCICE'];
 		}
 
-
-		$zWhere = " ";
+		$zWhere = " WHERE 1=1 ";
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
-			$zWhere.=" AND E.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
+			$zWhere.=" AND EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
 		}
 
 		if( !empty($oRequest['MIN_ABREV']) &&  $oRequest['MIN_ABREV']!="") {   
-			$zWhere.=" AND M.MIN_ABREV = '".$oRequest['MIN_ABREV']."'  ";
+			$zWhere.=" AND MIN_ABREV = '".$oRequest['MIN_ABREV']."'  ";
 		}
 
 
 		if( !empty($oRequest['TYPE_MAND']) &&  $oRequest['TYPE_MAND']!="") {   
-			$zWhere.=" AND M.TYPE_MAND = '".$oRequest['TYPE_MAND']."'  ";
+			$zWhere.=" AND TYPE_MAND = '".$oRequest['TYPE_MAND']."'  ";
+		} 
+
+
+		if( !empty($oRequest['STATUT']) &&  $oRequest['STATUT']!="") {   
+			$zWhere.=" AND STATUT = '".$oRequest['STATUT']."'  ";
 		} 
 
 		if( !empty($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
-			$zWhere.=" AND M.ENTITE = '".$oRequest['zPsCode']."'  ";
+			$zWhere.=" AND ENTITE = '".$oRequest['zPsCode']."'  ";
 		}
 
 		if( !empty($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']!="") {   
-			$zWhere.=" AND M.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
+			$zWhere.=" AND MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
 		}
 
 		if( !empty($oRequest['date_recup']) &&  $oRequest['date_recup']!="") {   
@@ -115,7 +121,7 @@ class Demande_model extends CI_Model {
 				$zDateVisa =  $oDate->format('d/m/Y');
 			}
 
-			$zWhere.=" AND M.MAND_DATE_RECUP >= to_date('".$zDateRecup."', 'DD/MM/RRRR') AND  M.MAND_DATE_REEL_VISA <= to_date('".$zDateVisa."', 'DD/MM/RRRR')";
+			$zWhere.=" AND MAND_DATE_RECUP >= to_date('".$zDateRecup."', 'DD/MM/RRRR') AND  MAND_DATE_REEL_VISA <= to_date('".$zDateVisa."', 'DD/MM/RRRR')";
 		}
 
 		if( !empty($oRequest['data']) &&  sizeof($oRequest['data'])>0) {   
@@ -129,7 +135,7 @@ class Demande_model extends CI_Model {
 			}
 			
 			if(sizeof($toPropCode)>0){
-				$zWhere .=" AND SUBSTR (M.soa, 1, 2) IN (".implode(",",$toPropCode).")";
+				$zWhere .=" AND SUBSTR (soa, 1, 2) IN (".implode(",",$toPropCode).")";
 			}
 		}
 
@@ -138,7 +144,7 @@ class Demande_model extends CI_Model {
 
 		   $toMandMode = array();
 			foreach ($oRequest['data'] as $oData){
-				if($oData['name']=='MAND_MODE_PAIE[]'){
+				if($oData['name']=='MAND_MODE_PAIE'){
 					if($oData['value']!=""){
 						$zValue = "'". $oData['value'] . "'";
 						array_push($toMandMode, $zValue);
@@ -156,19 +162,19 @@ class Demande_model extends CI_Model {
 					array_push($toMandMode,$zValue);
 				}  
 
-				$zWhere .=" AND M.MAND_MODE_PAIE IN (".implode(",",$toMandMode).")";
+				$zWhere .=" AND MAND_MODE_PAIE IN (".implode(",",$toMandMode).")";
 			}
 		}
 		
 		if( !empty($oRequest['search']['value']) ) {   
-			$zWhere.=" AND ( E.ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  T.TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_DT_CECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.PROP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  E.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  M.MAND_MODE_PAIE LIKE '%".$oRequest['search']['value']."%' ) ";
+			$zWhere.=" AND ( ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  ECRI_DT_CECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  PROP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  MAND_MODE_PAIE LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
 
@@ -191,13 +197,13 @@ class Demande_model extends CI_Model {
 			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
 				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
 			} else {
-				$zSql.=" ORDER BY E.ECRI_NUM ASC ";
+				$zSql.=" ORDER BY ECRI_NUM ASC ";
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
 			$zFin =  (int)$oRequest['length'];
 		} else {
-			$zSql.=" ORDER BY E.ECRI_NUM ASC ";
+			$zSql.=" ORDER BY ECRI_NUM ASC ";
 		}
 
 		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
