@@ -92,13 +92,13 @@
 												<div class="col-sm-6">
 													<div class="form-group">
 														<label>Date récupération</label>
-														<div class="cal-icon"><input type="text" name="date_recup" id="date_recup" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="2024/09/09" data-dd-opt-double-view="true" autocomplete="off" value="" placeholder="du..." class="form-control datedropper-range-fiche" data-dd-opt-range-start="2024/09/09" data-dd-opt-range-end="2024/09/10"></div>
+														<div class="cal-icon"><input type="text" name="date_recup" id="date_recup" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="{$zDate}" data-dd-opt-double-view="true" autocomplete="off" value="" placeholder="du..." class="form-control datedropper-range-fiche" data-dd-opt-range-start="{$zDate}" data-dd-opt-range-end="{$zDateDemain}"></div>
 													</div>
 												</div>
 												<div class="col-sm-6">
 													<div class="form-group">
 														<label>Date Visa</label>
-														<div class="cal-icon"><input type="text" name="date_visa" id="date_visa" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="2024/09/10" autocomplete="off" value="" placeholder="au..." class="form-control datedropper-range-fiche"  data-dd-opt-range-start="2024/09/09" data-dd-opt-range-end="2024/09/10"></div>
+														<div class="cal-icon"><input type="text" name="date_visa" id="date_visa" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="{$zDateDemain}" autocomplete="off" value="" placeholder="au..." class="form-control datedropper-range-fiche"  data-dd-opt-range-start="{$zDate}" data-dd-opt-range-end="{$zDateDemain}"></div>
 													</div>
 												</div>
 											</div>

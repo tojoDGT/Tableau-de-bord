@@ -109,6 +109,8 @@ $(document).ready(function() {
 				d.TYPE_MAND				= $('#TYPE_MAND').val();
 				d.iTypeAfficheSearch	= {/literal}{$iTypeAfficheSearch}{literal};
 				d.data					= $("#sendSearch").serializeArray();
+				d.date_recup			= $('#date_recup').val();
+				d.date_visa				= $('#date_visa').val();
 			},
 			type: "post", 
 			error: function (request, error) {

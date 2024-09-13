@@ -105,6 +105,19 @@ class Demande_model extends CI_Model {
 			$zWhere.=" AND M.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
 		}
 
+		if( !empty($oRequest['date_recup']) &&  $oRequest['date_recup']!="") {   
+			$zDateRecup = $oRequest['date_recup'] ; 
+			$zDateVisa = $oRequest['date_visa'] ; 
+
+			if ($zDateRecup == $zDateVisa){
+				$oDate = new DateTime($_this->date_fr_to_en($zDateVisa,"/","-"));
+				$oDate->modify('+1 day');
+				$zDateVisa =  $oDate->format('d/m/Y');
+			}
+
+			$zWhere.=" AND M.MAND_DATE_RECUP >= to_date('".$zDateRecup."', 'DD/MM/RRRR') AND  M.MAND_DATE_REEL_VISA <= to_date('".$zDateVisa."', 'DD/MM/RRRR')";
+		}
+
 		if( !empty($oRequest['data']) &&  sizeof($oRequest['data'])>0) {   
 			
 			$toPropCode = array();

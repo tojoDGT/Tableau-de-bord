@@ -124,12 +124,19 @@ class Dashboard extends MY_Controller
 				$toGetPropCode = $this->dashboard->getPropCode($iAnneeExercice) ; 
 				$toMinAbrev = $this->dashboard->getMinAbrev($iAnneeExercice) ; 
 				$toTypeMandat = $this->dashboard->getTypeMandat($iAnneeExercice) ; 
+
+				$oDate = new DateTime(date('Y/m/d'));
+
+				$oDate->modify('+1 day');
+				$zDateDemain =  $oDate->format('Y/m/d');
 				
 				$zAnnee = "-1";
 				$zAfficheSerieStat = "";
 
 				$oSmarty->assign('toGetPropCode',  $toGetPropCode);
 				$oSmarty->assign('toMinAbrev',  $toMinAbrev);
+				$oSmarty->assign('zDate',  date("Y/m/d"));
+				$oSmarty->assign('zDateDemain',  $zDateDemain);
 				$oSmarty->assign('toTypeMandat',  $toTypeMandat);
 				$oSmarty->assign('toGetAllExercice',  $toGetAllExercice);
 				$oSmarty->assign('zBasePath',  base_url());
