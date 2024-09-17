@@ -206,6 +206,11 @@ class Demande_model extends CI_Model {
 			$zSql.=" ORDER BY ECRI_NUM ASC ";
 		}
 
+		if ($zFin ==0){
+
+			$zFin = 100;
+		}
+
 		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
 
 
@@ -617,4 +622,291 @@ class Demande_model extends CI_Model {
 
 		return $toRow;
 	}
+
+
+	public function setExcelExportDossier ($_toListe) {
+
+		require(APPLICATION_PATH ."/Classes/PHPExcel.php");
+
+		/** Error reporting */
+		//error_reporting(E_ALL);
+		//ini_set('display_errors', TRUE);
+		//ini_set('display_startup_errors', TRUE);
+		//date_default_timezone_set('Europe/London');
+
+		define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
+
+		$objPHPExcel = new PHPExcel();
+
+		// Set document properties
+		echo date('H:i:s') , " Set document properties" , EOL;
+		$objPHPExcel->getProperties()->setCreator("TOJO MICHAEL DGT")
+									 ->setLastModifiedBy("TOJO MICHAEL DGT")
+									 ->setTitle("EXPORT DOSSIER")
+									 ->setSubject("EXPORT DOSSIER")
+									 ->setDescription("EXPORT DOSSIER")
+									 ->setKeywords("office PHPExcel php")
+									 ->setCategory("EXPORT DOSSIER");
+
+
+		// Add some data
+
+		$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('A2', 'DCP');
+
+
+		$default_style = array(
+			'font' => array(
+				'name' => 'Verdana',
+				'color' => array('rgb' => '000000'),
+				'size' => 10
+			),
+			'alignment' => array(
+				'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+			),
+			'borders' => array(
+				'allborders' => array(
+					'style' => PHPExcel_Style_Border::BORDER_THIN,
+					'color' => array('rgb' => '000000')
+				)
+			)
+			 
+		);
+
+
+		$default_style_ligne2 = array(
+			'font' => array(
+				'name' => 'Verdana',
+				'color' => array('rgb' => '584d44'),
+				'size' => 10
+			),
+			'alignment' => array(
+				'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+			),
+			'borders' => array(
+				'allborders' => array(
+					'style' => PHPExcel_Style_Border::BORDER_THIN,
+					'color' => array('rgb' => '000000')
+				)
+			),
+			 'fill' => array(
+					'type' => PHPExcel_Style_Fill::FILL_SOLID,
+					'color' => array('rgb' => 'FFD700')
+			 )
+			 
+		);
+
+		$tHead1 = array(						
+						'ASSIGNATAIRE'						=> 	'ASSIGNATAIRE', 
+						'MINISTERE'							=> 	'MINISTERE', 
+						'MINISTERE CODE'					=> 	'MINISTERE CODE',
+						'ECRITURE NUMERO'					=> 	'ECRITURE NUMERO', 
+						'NUMERO MANDAT'						=> 	'NUMERO MANDAT', 
+						'ECRITURE LIBELLE'					=> 	'ECRITURE LIBELLE',
+						'MANDATAIRE'						=> 	'MANDATAIRE', 
+						'MODE DE PAIEMENT'					=> 	'MODE DE PAIEMENT',
+						'INTITULE'							=> 	'INTITULE',
+						'ENTITE'							=> 	'ENTITE', 
+						'PROPRIETAIRE CODE'					=> 	'PROPIETAIRE CODE', 
+						'VISA VALIDE'						=> 	'VISA VALIDE', 
+						'MIN_CODE'							=> 	'MIN_CODE',
+						'COMPTE'							=> 	'COMPTE', 
+						'VISA TEF'							=> 	'VISA TEF', 
+						'MANDAT OBJET'						=> 	'MANDAT OBJET',
+						'MANDAT DATE RECUPERATION'			=> 	'MANDAT DATE RECUPERATION', 
+						'MANDAT DATE REEL VISA'				=> 	'MANDAT DATE REEL VISA',
+						'MANDAT NUMERO BE'					=> 	'MANDAT NUMERO BE',
+						'MONTANT'							=> 	'MONTANT', 
+						'DATE ECRITURE'						=> 	'DATE ECRITURE', 
+						'MANDAT DATE VISA'					=> 	'MANDAT DATE VISA', 
+						'MANDAT DATE TRAITEMENT'			=> 	'MANDAT DATE TRAITEMENT',
+						'ECRITURE REFERENCE'				=> 	'ECRITURE REFERENCE', 
+						'STATUT'							=> 	'STATUT', 
+						'REJET NOTE'						=> 	'REJET NOTE',
+						'STATUT PAIEMENT'					=> 	'STATUT PAIEMENT', 
+						'NOTE REFERENCE'					=> 	'NOTE REFERENCE',
+						'DEMANDE DE VIREMENT REFERENCE'		=> 	'DEMANDE DE VIREMENT REFERENCE',
+						'OV EXO'							=> 	'OV EXO', 
+						'OV REF'							=> 	'OV REF', 
+						'OV PC PAYEUR'						=> 	'OV PC PAYEUR', 
+						'DATE EXECUTION OV'					=> 	'DATE EXECUTION OV',
+						'CATEGORIE DEPENSE'					=> 	'CATEGORIE DEPENSE', 
+						'STATUT NOTE'						=> 	'STATUT NOTE'
+					  );
+
+
+		$objPHPExcel->getActiveSheet()->mergeCells("A1:J1");
+		$objPHPExcel->getActiveSheet()->getStyle('A1:J1')->applyFromArray($default_style);
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, 1, utf8_encode('REPOBLIKAN\'I MADAGASIKARA'));
+
+		$objPHPExcel->getActiveSheet()->mergeCells("A2:J2");
+		$objPHPExcel->getActiveSheet()->getStyle('A2:J2')->applyFromArray($default_style);
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, 2, utf8_encode('Fitiavana - Tanindrazana - Fandrosoana'));
+
+
+		$iRow = 5 ; 
+		$iCol = 0;
+		foreach ($tHead1 as $zValue) {
+			$objPHPExcel->getActiveSheet()->getStyle('A5:AI5')->applyFromArray($default_style_ligne2);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($iCol, $iRow, utf8_encode($zValue));
+			$iCol++;
+		}
+
+		$iRow0 = 2 ; 
+		$iCol0 = 2;
+		$oArrayColumn = array();
+
+		for($col = 'A'; $col !== 'ZZ'; $col++) {
+			$objPHPExcel->getActiveSheet()
+				->getColumnDimension($col)
+				->setAutoSize(true);
+		}
+
+		//$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn('E')->setWidth('900');
+
+		$style = array(
+			'alignment' => array(
+				'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+			),
+			'borders' => array(
+				  'allborders' => array(
+					  'style' => PHPExcel_Style_Border::BORDER_THIN
+				  )
+			  )
+		);
+
+
+		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+		$objPHPExcel->setActiveSheetIndex(0);
+
+		$tHead1 = array(						
+						'ASSIGNATAIRE'						=> 	'ASSIGNATAIRE', 
+						'MINISTERE'							=> 	'MINISTERE', 
+						'MINISTERE CODE'					=> 	'MINISTERE CODE',
+						'ECRITURE NUMERO'					=> 	'ECRITURE NUMERO', 
+						'NUMERO MANDAT'						=> 	'NUMERO MANDAT', 
+						'ECRITURE LIBELLE'					=> 	'ECRITURE LIBELLE',
+						'MANDATAIRE'						=> 	'MANDATAIRE', 
+						'MODE DE PAIEMENT'					=> 	'MODE DE PAIEMENT',
+						'INTITULE'							=> 	'INTITULE',
+						'ENTITE'							=> 	'ENTITE', 
+						'PROPRIETAIRE CODE'					=> 	'PROPIETAIRE CODE', 
+						'VISA VALIDE'						=> 	'VISA VALIDE', 
+						'MIN_CODE'							=> 	'MIN_CODE',
+						'COMPTE'							=> 	'COMPTE', 
+						'VISA TEF'							=> 	'VISA TEF', 
+						'MANDAT OBJET'						=> 	'MANDAT OBJET',
+						'MANDAT DATE RECUPERATION'			=> 	'MANDAT DATE RECUPERATION', 
+						'MANDAT DATE REEL VISA'				=> 	'MANDAT DATE REEL VISA',
+						'MANDAT NUMERO BE'					=> 	'MANDAT NUMERO BE',
+						'MONTANT'							=> 	'MONTANT', 
+						'DATE ECRITURE'						=> 	'DATE ECRITURE', 
+						'MANDAT DATE VISA'					=> 	'MANDAT DATE VISA', 
+						'MANDAT DATE TRAITEMENT'			=> 	'MANDAT DATE TRAITEMENT',
+						'ECRITURE REFERENCE'				=> 	'ECRITURE REFERENCE', 
+						'STATUT'							=> 	'STATUT', 
+						'REJET NOTE'						=> 	'REJET NOTE',
+						'STATUT PAIEMENT'					=> 	'STATUT PAIEMENT', 
+						'NOTE REFERENCE'					=> 	'NOTE REFERENCE',
+						'DEMANDE DE VIREMENT REFERENCE'		=> 	'DEMANDE DE VIREMENT REFERENCE',
+						'OV EXO'							=> 	'OV EXO', 
+						'OV REF'							=> 	'OV REF', 
+						'OV PC PAYEUR'						=> 	'OV PC PAYEUR', 
+						'DATE EXECUTION OV'					=> 	'DATE EXECUTION OV',
+						'CATEGORIE DEPENSE'					=> 	'CATEGORIE DEPENSE', 
+						'STATUT NOTE'						=> 	'STATUT NOTE'
+					  );
+
+		$iRowDynamic = 6 ; 
+		foreach ($_toListe as $oListe) {
+
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $iRowDynamic, $oListe['ASSIGNATAIRE1']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $iRowDynamic, $oListe['MIN_LIBELLE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(2, $iRowDynamic, $oListe['MIN_CODE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $iRowDynamic, $oListe['ECRINUM']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, $iRowDynamic, $oListe['MAND_NUM_INFO']);
+			//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $iRowDynamic, $oListe['COMPTE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $iRowDynamic, $oListe['ECRI_LIB']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(6, $iRowDynamic, $oListe['MANDATAIRE1']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, $iRowDynamic, $oListe['MAND_MODE_PAIE1']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(8, $iRowDynamic, $oListe['INTITULE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $iRowDynamic, $oListe['ENTITE']);
+
+
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $iRowDynamic, $oListe['PROP_CODE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $iRowDynamic, $oListe['MAND_VISA_VALIDE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(12, $iRowDynamic, $oListe['MIN_CODE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(13, $iRowDynamic, $oListe['COMPTE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(14, $iRowDynamic, $oListe['MAND_VISA_TEF']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(15, $iRowDynamic, wordwrap($oListe['MAND_OBJET'], 150));
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(16, $iRowDynamic, $oListe['MAND_DATE_RECUP']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(17, $iRowDynamic, $oListe['MAND_DATE_REEL_VISA']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(18, $iRowDynamic, $oListe['MAND_NUMERO_BMAND']);
+
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(19, $iRowDynamic, $oListe['MAND_MONTANT1']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(20, $iRowDynamic, $oListe['ECRI_DT_CECRITURE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(21, $iRowDynamic, $oListe['MAND_DATE_VISA']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(22, $iRowDynamic, $oListe['MAND_DATE_TRAIT']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(23, $iRowDynamic, $oListe['ECRI_REF']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(24, $iRowDynamic, $oListe['STATUT']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(25, $iRowDynamic, $oListe['REJET_NOTE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(26, $iRowDynamic, $oListe['STATUT_PAIEMENT']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(27, $iRowDynamic, $oListe['NOTEREF']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(28, $iRowDynamic, $oListe['DMDVIRREF']);
+
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(29, $iRowDynamic, $oListe['OVEXO']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(30, $iRowDynamic, $oListe['OVREF']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(34, $iRowDynamic, $oListe['OVPCPAYEUR']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(32, $iRowDynamic, $oListe['DATEEXECUTIONOV']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(33, $iRowDynamic, $oListe['CATEG_DEPENSE']);
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(34, $iRowDynamic, $oListe['STATUTS_NOTE']);
+
+			/*$objPHPExcel->getActiveSheet()->getStyle('A'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('B'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('C'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('D'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('E'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('F'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('G'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('H'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('I'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('J'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('K'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('L'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('M'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('N'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('O'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('P'.$iRowDynamic)->getAlignment()->setWrapText(true);*/
+			$objPHPExcel->getActiveSheet()->getStyle('P'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			/*$objPHPExcel->getActiveSheet()->getStyle('R'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('S'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('T'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('U'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('V'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('W'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('X'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('Y'.$iRowDynamic)->getAlignment()->setWrapText(true);
+			$objPHPExcel->getActiveSheet()->getStyle('Z'.$iRowDynamic)->getAlignment()->setWrapText(true);*/
+			$iRowDynamic++;
+
+		}
+		
+
+		$callStartTime = microtime(true);
+
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+
+		ob_end_clean();
+
+		header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		header("Content-Disposition: attachment; filename=export-dcp-".date("YmdHms").".xlsx");
+		header("Cache-Control: max-age=0");
+
+		$objWriter->save("php://output");
+
+		exit();
+	}
+
 }

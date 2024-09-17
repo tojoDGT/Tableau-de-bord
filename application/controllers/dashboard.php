@@ -176,6 +176,23 @@ class Dashboard extends MY_Controller
 				
 				break;
 
+			case 'export-des-dossiers':
+
+				//print_r ($_POST);
+
+				$toRow = $this->demande->getDemande($iNombreTotal,$this) ; 
+
+				$this->demande->setExcelExportDossier($toRow);
+
+				/*echo "<pre>";
+				print_r ($toRow);
+				echo "</pre>";
+
+				die();
+*/
+
+				break;
+
 			case 'performance-des-pc':
 				$iMenuActifId = 2;
 				$iSousMenuActifId = 4;

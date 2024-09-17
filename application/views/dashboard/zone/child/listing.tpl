@@ -176,6 +176,10 @@ hr {
 	font-size: 80%;
     font-weight: 900;
 }
+
+.partielSearchHeader2 {
+	background: linear-gradient(to bottom, #30a03f 5%, #126311 100%);
+}
 .dt-width {
 	width:150px;
 }

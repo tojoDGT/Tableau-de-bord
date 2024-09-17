@@ -8,7 +8,7 @@ if(isset($_SESSION["colonneAffiche"])){
 	$toColonne = unserialize($_SESSION["colonneAffiche"]);
 	
 	foreach ($toColonne as $oColonne){
-		$oColonne = explode(".", $oColonne);
+		$oColonne = explode("-", $oColonne);
 		array_push($oDataTempCol, $oColonne[1]);
 	}
 }

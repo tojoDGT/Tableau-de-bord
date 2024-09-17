@@ -4,7 +4,7 @@
 		<div class="au-card au-card--bg-blue ">
 			<div class="au-card-inner">
 				<div class="table-responsive" style="padding:15px;">
-					<form id="sendSearch" name="sendSearch" action="post">
+					<form id="sendSearch" name="sendSearch" target="_blank" method="post" action="{$zBasePath}dashboard/stat/export-des-dossiers">
 					<input type="hidden" id="iAjax" name="iAjax" value="1">
 					<input type="hidden" id="iModeGraph" name="iModeGraph" value="1">
 						<div class="col-md-4" style="display:inline-flex">
@@ -42,10 +42,18 @@
 									</td>
 								</tr>
 								<tr>
-									<td class="middle" width="10">SOA : </td>
-									<td class="noBottom">
-										<input type="text" id="SOA" name="SOA" class="form-control">
-									</td>
+										<td class="middle" width="10">STATUT : </td>
+										<td class="noBottom">
+											<select class="form-control" id="STATUT" name="STATUT">
+													<option selected="selected" value="">Tous</option>
+													<option value="ADMIS EN DEPENSE">ADMIS EN DEPENSE</option>
+													<option value="EN INSTANCE DE VISA COMPTA">EN INSTANCE DE VISA COMPTA</option>
+													<option value="EN INSTANCE DE PRISE EN CHARGE">EN INSTANCE DE PRISE EN CHARGE</option>
+													<option value="REJET">REJET</option>	
+													<option value="COUVERTURE VALIDE">COUVERTURE VALIDE</option>	
+
+											</select>
+										</td>
 								</tr>
 							</tbody>
 						</table>
@@ -104,25 +112,15 @@
 											</div>
 									</td>
 								</tr>
-								<tr>
-										<td class="middle" width="10">STATUT : </td>
-										<td class="noBottom">
-											<select style="width:75%" class="form-control" id="STATUT" name="STATUT">
-													<option selected="selected" value="">Tous</option>
-													<option value="ADMIS EN DEPENSE">ADMIS EN DEPENSE</option>
-													<option value="EN INSTANCE DE VISA COMPTA">EN INSTANCE DE VISA COMPTA</option>
-													<option value="INSTANCE DE PRISE EN CHARGE">INSTANCE DE PRISE EN CHARGE</option>
-													<option value="REJET">REJET</option>	
-													<option value="COUVERTURE VALIDE">COUVERTURE VALIDE</option>	
-
-											</select>
-										</td>
-								</tr>
+								
 							</tbody>
 						</table>
 						</div>
-						<div style="text-align: center;"> <input type="button" class="searchTb partielSearchHeader partielSearchHeader1" value="Rechercher" autocomplete="off"></div>
-						</form>	
+						<div style="text-align: center;"> 
+							<input type="button" class="searchTb partielSearchHeader partielSearchHeader1" value="Rechercher" autocomplete="off">
+							<input type="submit" class="partielSearchHeader partielSearchHeader1 partielSearchHeader2" value="Exporter" autocomplete="off">
+						</div>
+					</form>	
 				</div>
 			</div>
 		</div>
@@ -207,17 +205,24 @@ input[type=checkbox] {
 input[type=radio] {
 	margin: 4px 3px 3px 30px;
 }
+
+.partielSearchHeader2:hover{
+	color:white;
+}
 </style>
 </table>
 {literal}
 <script>
 $(document).ready(function() {
-	    
-		
+	   
 		$("#getListing").on("click", function(){
 			$("#nombreMontant").hide();
 			$('#table_bd').DataTable().ajax.reload();
 		})
+
+		/*$(".partielSearchHeader2").on("click", function(){
+			$("#sendSearch").submit();
+		})*/
 
 		$(".searchTb").on("click", function(){
 			

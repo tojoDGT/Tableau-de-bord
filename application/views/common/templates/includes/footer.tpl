@@ -26,8 +26,8 @@
 				{*<div class="mb-2"><input type="checkbox" {if TITULAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="TITULAIRE-TITULAIRE" class="mr-1" name="colonneAffiche[]" /><span>TITULAIRE</span></div>
 				<div class="mb-2"><input type="checkbox" {if CODE_TIERS|in_array:$oDataTempCol} checked="checked" {/if} value="CODE TIERS-CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>CODE TIERS</span></div>*}
 				<div class="mb-2"><input type="checkbox" {if ECRI_REF|in_array:$oDataTempCol} checked="checked" {/if} value="Référence-ECRI_REF" class="mr-1" name="colonneAffiche[]" /><span>Réference</span></div>
-				<div class="mb-2"><input type="checkbox" {if ECRI_REF|in_array:$oDataTempCol} checked="checked" {/if} value="Code tiers-MAND_CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>Code tiers</span></div>
-				<div class="mb-2"><input type="checkbox" {if ECRI_REF|in_array:$oDataTempCol} checked="checked" {/if} value="Statut-STATUT" class="mr-1" name="colonneAffiche[]" /><span>Statut</span></div>
+				<div class="mb-2"><input type="checkbox" {if MAND_CODE_TIERS|in_array:$oDataTempCol} checked="checked" {/if} value="Code tiers-MAND_CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>Code tiers</span></div>
+				<div class="mb-2"><input type="checkbox" {if STATUT|in_array:$oDataTempCol} checked="checked" {/if} value="Statut-STATUT" class="mr-1" name="colonneAffiche[]" /><span>Statut</span></div>
 				<div class="mb-2"><input type="checkbox" {if ECRI_LIB|in_array:$oDataTempCol} checked="checked" {/if} value="Libellé-ECRI_LIB" class="mr-1" name="colonneAffiche[]" /><span>Libellé</span></div>
 				<div class="mb-2"><input type="checkbox" {if ECRI_DT_CECRITURE|in_array:$oDataTempCol} checked="checked" {/if} value="Date-ECRI_DT_CECRITURE" class="mr-1" name="colonneAffiche[]" /><span>Date</span></div>
 				<div class="mb-2"><input type="checkbox" {if PROP_CODE|in_array:$oDataTempCol} checked="checked" {/if} value="Propriétaire-PROP_CODE" class="mr-1" name="colonneAffiche[]" /><span>Propriété</span></div>
