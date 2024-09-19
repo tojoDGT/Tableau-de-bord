@@ -6,6 +6,11 @@
 				<div class="table-responsive" style="padding:15px;">
 					<form id="sendSearch" name="sendSearch" target="_blank" method="post" action="{$zBasePath}dashboard/stat/export-des-dossiers">
 					<input type="hidden" id="iAjax" name="iAjax" value="1">
+					<input type="hidden" id="iDepart" name="iDepart" value="1">
+					<input type="hidden" id="zFileExport" name="zFileExport" value="">
+					<input type="hidden" id="iNbrTotal" name="iNbrTotal" value="">
+					<input type="hidden" id="iStart" name="iStart" value="0">
+					<input type="hidden" id="iLength" name="iLength" value="10">
 					<input type="hidden" id="iModeGraph" name="iModeGraph" value="1">
 						<div class="col-md-4" style="display:inline-flex">
 						<table class="table tableRond table-top-countries">
@@ -116,9 +121,12 @@
 							</tbody>
 						</table>
 						</div>
+						<div class="progress">
+							<div class="progress-bar" id="progressBar"></div>
+						</div>
 						<div style="text-align: center;"> 
 							<input type="button" class="searchTb partielSearchHeader partielSearchHeader1" value="Rechercher" autocomplete="off">
-							<input type="submit" class="partielSearchHeader partielSearchHeader1 partielSearchHeader2" value="Exporter" autocomplete="off">
+							<input type="button" class="partielSearchHeader partielSearchHeader1 partielSearchHeader2" value="Exporter" onClick="valider()" autocomplete="off">
 						</div>
 					</form>	
 				</div>
@@ -196,6 +204,21 @@
 </style>
 {/if}
 <style>
+
+.progress {
+	margin: 20px 0 0 0;
+	width: 300px;
+	border: 1px solid #ddd;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.progress-bar {
+	width: 0%;
+	height: 20px;
+	background-color: #4CAF50;
+}
+
 .middle{
 	vertical-align:middle!important;
 }
@@ -213,6 +236,122 @@ input[type=radio] {
 </table>
 {literal}
 <script>
+
+function valider(){
+
+	
+	var form = document.forms[1];
+	var formData = new FormData(form);
+
+	var zUrl = form.action ; 
+
+	var $form = $("#sendSearch");
+	var formdata = (window.FormData) ? new FormData($form[0]) : null;
+	var data = (formdata !== null) ? formdata : $form.serialize();
+	$.ajax({
+		url: $form.attr('action'),
+		type: $form.attr('method'),
+		dataType:'json',
+		contentType: false, // obligatoire pour de l'upload
+		processData: false, // obligatoire pour de l'upload
+		data: data,
+		success: function (data, textStatus, jqXHR) {
+
+			$("#iDepart").val(0);
+			$("#zFileExport").val(data.name);
+			$("#iNbrTotal").val(data.iNombreTotal);
+			$("#iStart").val(data.iStart);
+			$("#iLength").val(10);
+
+		}
+	}).done(function(data){
+		if(data.done==1){
+			/*$("#iDepart").val(1);
+			$("#zFileExport").val('');
+			$("#iNbrTotal").val('');
+			$("#iStart").val(0);
+			$("#iLength").val(10);*/
+
+			var $a = $("<a>");
+			$a.attr("href",data.file);
+			$("body").append($a);
+			$a.attr("download",data.name);
+			var progressBar = document.getElementById('progressBar');
+			progressBar.style.width = '100%';
+			progressBar.innerHTML = '100%';
+			$a[0].click();
+			$a.remove();
+		} else {
+			$("#iDepart").val(0);
+			$("#zFileExport").val(data.name);
+			$("#iNbrTotal").val(data.iNombreTotal);
+			$("#iStart").val(data.iStart);
+			$("#iLength").val(10);
+			var progressBar = document.getElementById('progressBar');
+			progressBar.style.width = data.iPercent + '%';
+			progressBar.innerHTML = data.iPercent + '%';
+			valider();
+		}
+	});
+
+	/*$.ajax({
+		url : zUrl,
+		type : "POST",
+		data: {
+				ECRI_EXERCICE			= $('#ECRI_EXERCICE').val();
+				MIN_ABREV				= $('#MIN_ABREV').val();
+				TYPE_MAND				= $('#TYPE_MAND').val();
+				STATUT					= $('#STATUT').val();
+				mand_mode_paie			= $('input[name="MAND_MODE_PAIE"]:checked').val();
+				iTypeAfficheSearch		= 1;
+				data					= $("#sendSearch").serializeArray();
+				date_recup				= $('#date_recup').val();
+				date_visa				= $('#date_visa').val();
+		},
+		dataType:'json'
+		
+	}).done(function(data){
+		if(data.done==1){
+			var $a = $("<a>");
+			$a.attr("href",data.file);
+			$("body").append($a);
+			$a.attr("download",data.name);
+			var progressBar = document.getElementById('progressBar');
+			progressBar.style.width = '100%';
+			progressBar.innerHTML = '100%';
+			$a[0].click();
+			$a.remove();
+		}
+	});*/
+
+	//alert(form.action);
+}
+
+function __valider(){
+
+	var form = document.forms[1];
+	var formData = new FormData(form);
+
+	var xhr = new XMLHttpRequest();
+
+	xhr.upload.addEventListener('progress', function(event) {
+		if (event.lengthComputable) {
+			var percent = Math.round((event.loaded / event.total) * 100);
+			var progressBar = document.getElementById('progressBar');
+			progressBar.style.width = percent + '%';
+			progressBar.innerHTML = percent + '%';
+		}
+	});
+
+	xhr.addEventListener('load', function(event) {
+		var uploadStatus = document.getElementById('uploadStatus');
+		uploadStatus.innerHTML = event.target.responseText;
+	});
+
+	xhr.open('POST', form.action, true);
+	xhr.send(formData);
+}
+
 $(document).ready(function() {
 	   
 		$("#getListing").on("click", function(){
@@ -220,8 +359,8 @@ $(document).ready(function() {
 			$('#table_bd').DataTable().ajax.reload();
 		})
 
-		/*$(".partielSearchHeader2").on("click", function(){
-			$("#sendSearch").submit();
+		/*$(".partielSearchHeader2").on("submit", function(){
+			alert("ok");
 		})*/
 
 		$(".searchTb").on("click", function(){

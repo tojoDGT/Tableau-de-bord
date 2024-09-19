@@ -180,9 +180,11 @@ class Dashboard extends MY_Controller
 
 				//print_r ($_POST);
 
+				$iNombreTotal = 0;
+
 				$toRow = $this->demande->getDemande($iNombreTotal,$this) ; 
 
-				$this->demande->setExcelExportDossier($toRow);
+				$this->demande->setExcelExportDossier($iNombreTotal,$toRow,$_REQUEST);
 
 				/*echo "<pre>";
 				print_r ($toRow);
