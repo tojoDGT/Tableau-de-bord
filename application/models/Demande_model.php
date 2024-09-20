@@ -686,7 +686,7 @@ class Demande_model extends CI_Model {
 		if($oRequest['iDepart']==0) {   
 			
 			//$iDone = 1;
-			$iStart += 10 ; 
+			$iStart += $iLength ; 
 			$iPaginationEnCours = ceil($iStart/$iLength);
 
 			$iPercent = (($iPaginationEnCours)/$iNombrePagination*100);
@@ -774,7 +774,7 @@ class Demande_model extends CI_Model {
 		} else {
 
 			$iDepart = 0;	
-			$iStart += 10 ; 
+			$iStart += $iLength ; 
 			$objPHPExcel = new PHPExcel();
 
 			echo date('H:i:s') , " Set document properties" , EOL;

@@ -10,13 +10,15 @@
 					<input type="hidden" id="zFileExport" name="zFileExport" value="">
 					<input type="hidden" id="iNbrTotal" name="iNbrTotal" value="">
 					<input type="hidden" id="iStart" name="iStart" value="0">
-					<input type="hidden" id="iLength" name="iLength" value="10">
+					<input type="hidden" id="iLength" name="iLength" value="100">
 					<input type="hidden" id="iModeGraph" name="iModeGraph" value="1">
 						<div class="col-md-12" style="display:inline-flex">
 							<div class="col-md-5" style="display:inline-flex">
 							</div>
-							<div class="col-md-3" style="display:inline-flex">
-									<div class="progress" style="display:none;">
+							<div class="col-md-3 OnProgress" style="display:none;color:white">
+									<div class="texteProgress">Téléchargement, veuillez patienter.....</div>
+									<div class="progress">
+										
 										<div class="progress-bar" id="progressBar"></div>
 									</div>
 							</div>			
@@ -220,6 +222,10 @@
 	border-radius: 5px;
 }
 
+.texteProgress {
+	padding-left:28px;
+}
+
 .progress-bar {
 	width: 0%;
 	height: 20px;
@@ -246,7 +252,7 @@ input[type=radio] {
 
 function valider(){
 
-	$(".progress").show();
+	$(".OnProgress").show();
 	var form = document.forms[1];
 	var formData = new FormData(form);
 
@@ -288,7 +294,7 @@ function valider(){
 			progressBar.innerHTML = '100%';
 			$a[0].click();
 			$a.remove();
-			$(".progress").hide();
+			$(".OnProgress").hide();
 		} else {
 			$("#iDepart").val(0);
 			$("#zFileExport").val(data.name);
