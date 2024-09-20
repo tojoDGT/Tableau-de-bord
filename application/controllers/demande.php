@@ -163,7 +163,7 @@ class Demande extends MY_Controller
 		global $oSmarty ; 
 
 		$iEcriNum	= $this->postGetValue ("iEcriNum", 0);
-		$iAnneeExercice	= $this->postGetValue ("iExo", 2023);
+		$iAnneeExercice	= $this->postGetValue ("iExo", 2024);
 		$iNumMandat	= $this->postGetValue ("iNumMandat", 0); 
 		$iMode		= $this->postGetValue ("iModePaiement", 0);
 		$iOffset	= $this->postGetValue ("iOffset", 600);

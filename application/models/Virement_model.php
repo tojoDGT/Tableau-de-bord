@@ -77,7 +77,7 @@ class Virement_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$_iAnneeExercice = 2023;
+		$_iAnneeExercice = 2024;
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$_iAnneeExercice = $oRequest['ECRI_EXERCICE'];
 		}
@@ -484,7 +484,7 @@ class Virement_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function GetDetail($_iTypeAfficheSearch, $_id, $_iNumMandat, $_iAnneeExercice='2023'){
+	public function GetDetail($_iTypeAfficheSearch, $_id, $_iNumMandat, $_iAnneeExercice='2024'){
 
 		global $db;
 
@@ -566,7 +566,7 @@ class Virement_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function GetTransfert($_iNumMandat, $_iAnnee="2023"){
+	public function GetTransfert($_iNumMandat, $_iAnnee="2024"){
 
 		global $db;
 

@@ -80,7 +80,7 @@ class Utilisateur_model extends CI_Model {
 	}
 
 
-	public function getUtilisateurPc(&$_iNbrTotal = 0,$_this='',$_zPostCode, $_iAnneeExercice='2023'){
+	public function getUtilisateurPc(&$_iNbrTotal = 0,$_this='',$_zPostCode, $_iAnneeExercice='2024'){
 		global $db;
 
 
@@ -151,7 +151,7 @@ class Utilisateur_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet des utilisateurs
 	*/
-	public function getUtilisateurAgent(&$_iNbrTotal = 0,$_this='', $_iAnneeExercice='2023'){
+	public function getUtilisateurAgent(&$_iNbrTotal = 0,$_this='', $_iAnneeExercice='2024'){
 		global $db;
 
 
@@ -220,7 +220,7 @@ class Utilisateur_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet des utilisateurs
 	*/
-	public function getInfoPostComptable($_zPsCode = 0, $_iAnneeExercice='2023'){
+	public function getInfoPostComptable($_zPsCode = 0, $_iAnneeExercice='2024'){
 		global $db;
 
 
@@ -254,7 +254,7 @@ class Utilisateur_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet des utilisateurs
 	*/
-	public function getInfoPostComptableUser($_iUserId = 0, $_iAnneeExercice='2023'){
+	public function getInfoPostComptableUser($_iUserId = 0, $_iAnneeExercice='2024'){
 		global $db;
 
 
@@ -285,7 +285,7 @@ class Utilisateur_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet des postes comptables
 	*/
-	public function posteComptable(&$_iNbrTotal = 0,$_this='',$iLimit=0,$_iAnnee='2023'){
+	public function posteComptable(&$_iNbrTotal = 0,$_this='',$iLimit=0,$_iAnnee='2024'){
 		global $db;
 
 

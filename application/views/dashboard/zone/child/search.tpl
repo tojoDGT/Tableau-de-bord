@@ -12,6 +12,15 @@
 					<input type="hidden" id="iStart" name="iStart" value="0">
 					<input type="hidden" id="iLength" name="iLength" value="10">
 					<input type="hidden" id="iModeGraph" name="iModeGraph" value="1">
+						<div class="col-md-12" style="display:inline-flex">
+							<div class="col-md-5" style="display:inline-flex">
+							</div>
+							<div class="col-md-3" style="display:inline-flex">
+									<div class="progress" style="display:none;">
+										<div class="progress-bar" id="progressBar"></div>
+									</div>
+							</div>			
+						</div>
 						<div class="col-md-4" style="display:inline-flex">
 						<table class="table tableRond table-top-countries">
 							<tbody>
@@ -121,9 +130,6 @@
 							</tbody>
 						</table>
 						</div>
-						<div class="progress">
-							<div class="progress-bar" id="progressBar"></div>
-						</div>
 						<div style="text-align: center;"> 
 							<input type="button" class="searchTb partielSearchHeader partielSearchHeader1" value="Rechercher" autocomplete="off">
 							<input type="button" class="partielSearchHeader partielSearchHeader1 partielSearchHeader2" value="Exporter" onClick="valider()" autocomplete="off">
@@ -208,6 +214,7 @@
 .progress {
 	margin: 20px 0 0 0;
 	width: 300px;
+	height:2rem!important;
 	border: 1px solid #ddd;
 	padding: 5px;
 	border-radius: 5px;
@@ -239,7 +246,7 @@ input[type=radio] {
 
 function valider(){
 
-	
+	$(".progress").show();
 	var form = document.forms[1];
 	var formData = new FormData(form);
 
@@ -265,7 +272,7 @@ function valider(){
 
 		}
 	}).done(function(data){
-		if(data.done==1){
+		if(data.done==1 || data.iPercent==100){
 			/*$("#iDepart").val(1);
 			$("#zFileExport").val('');
 			$("#iNbrTotal").val('');
@@ -281,6 +288,7 @@ function valider(){
 			progressBar.innerHTML = '100%';
 			$a[0].click();
 			$a.remove();
+			$(".progress").hide();
 		} else {
 			$("#iDepart").val(0);
 			$("#zFileExport").val(data.name);
@@ -293,38 +301,6 @@ function valider(){
 			valider();
 		}
 	});
-
-	/*$.ajax({
-		url : zUrl,
-		type : "POST",
-		data: {
-				ECRI_EXERCICE			= $('#ECRI_EXERCICE').val();
-				MIN_ABREV				= $('#MIN_ABREV').val();
-				TYPE_MAND				= $('#TYPE_MAND').val();
-				STATUT					= $('#STATUT').val();
-				mand_mode_paie			= $('input[name="MAND_MODE_PAIE"]:checked').val();
-				iTypeAfficheSearch		= 1;
-				data					= $("#sendSearch").serializeArray();
-				date_recup				= $('#date_recup').val();
-				date_visa				= $('#date_visa').val();
-		},
-		dataType:'json'
-		
-	}).done(function(data){
-		if(data.done==1){
-			var $a = $("<a>");
-			$a.attr("href",data.file);
-			$("body").append($a);
-			$a.attr("download",data.name);
-			var progressBar = document.getElementById('progressBar');
-			progressBar.style.width = '100%';
-			progressBar.innerHTML = '100%';
-			$a[0].click();
-			$a.remove();
-		}
-	});*/
-
-	//alert(form.action);
 }
 
 function __valider(){

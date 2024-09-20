@@ -413,7 +413,7 @@ class Dashboard extends MY_Controller
 
 		$zAfficheSerieStat = "";
 
-		$iAnneeExercice = $this->postGetValue ("ECRI_EXERCICE", 2023);
+		$iAnneeExercice = $this->postGetValue ("ECRI_EXERCICE", 2024);
 
 		$toGetPropCode = $this->dashboard->getPropCode($iAnneeExercice) ; 
 
@@ -638,7 +638,7 @@ class Dashboard extends MY_Controller
 
 		$oRequest = $_REQUEST;
 
-		$iAnneeExercice = $this->postGetValue ("ECRI_EXERCICE", 2023);
+		$iAnneeExercice = $this->postGetValue ("ECRI_EXERCICE", 2024);
 
 		$zAfficheSerieStat = "";
 		$oResult = $this->dashboard->getStatGLobal($iAnneeExercice);

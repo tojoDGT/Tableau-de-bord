@@ -82,7 +82,7 @@ class Demande_model extends CI_Model {
 
 		//print_r ($oRequest);
 
-		$_iAnneeExercice = 2023;
+		$_iAnneeExercice = 2024;
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$_iAnneeExercice = $oRequest['ECRI_EXERCICE'];
 		}
@@ -276,7 +276,7 @@ class Demande_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function getDossier(&$_iNbrTotal = 0,$_this='',$_iAnneeExercice='2023'){
+	public function getDossier(&$_iNbrTotal = 0,$_this='',$_iAnneeExercice='2024'){
 		
 		global $db;
 
@@ -407,7 +407,7 @@ class Demande_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function GetDetail($_iEcriNum, $_iNumMandat, $_iMode, $_iAnneeExercice='2023'){
+	public function GetDetail($_iEcriNum, $_iNumMandat, $_iMode, $_iAnneeExercice='2024'){
 
 		global $db;
 
@@ -472,7 +472,7 @@ class Demande_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function GetTransfert($_iNumMandat, $_iAnnee="2023"){
+	public function GetTransfert($_iNumMandat, $_iAnnee="2024"){
 
 		global $db;
 
@@ -509,7 +509,7 @@ class Demande_model extends CI_Model {
 	*
 	* @return liste en tableau d'objet
 	*/
-	public function GetVirement($_iNumMandat,$_iAnnee="2023"){
+	public function GetVirement($_iNumMandat,$_iAnnee="2024"){
 
 		global $db;
 
@@ -706,8 +706,8 @@ class Demande_model extends CI_Model {
 			$iRowDynamic = $iStartLine +1 ; 
 			foreach ($_toListe as $oListe) {
 
-				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $iRowDynamic, "tojo" . $oListe['ASSIGNATAIRE1']);
-				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $iRowDynamic, "tojo" . $oListe['MIN_LIBELLE']);
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $iRowDynamic, $oListe['ASSIGNATAIRE1']);
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $iRowDynamic, $oListe['MIN_LIBELLE']);
 				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(2, $iRowDynamic, $oListe['MIN_CODE']);
 				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $iRowDynamic, $oListe['ECRINUM']);
 				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, $iRowDynamic, $oListe['MAND_NUM_INFO']);
@@ -763,7 +763,7 @@ class Demande_model extends CI_Model {
 				'name' => $zFileName,
 				'iNombreTotal' => $_iNombreTotal,
 				'iStart' => $iStart,
-				'iPercent' => $iPercent,
+				'iPercent' => ceil($iPercent),
 				'done' => $iDone,
 				'file' => base_url() ."assets/excel/".$zFileName
 			);
@@ -1017,7 +1017,7 @@ class Demande_model extends CI_Model {
 			$zResponse =  array(
 				'status' => TRUE,
 				'name' => $zFileName,
-				'iPercent' => $iPercent,
+				'iPercent' => ceil($iPercent),
 				'iNombreTotal' => $_iNombreTotal,
 				'iStart' => $iStart,
 				'done' => $iDone,

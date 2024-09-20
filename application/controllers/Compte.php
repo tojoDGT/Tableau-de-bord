@@ -79,7 +79,7 @@ class Compte extends MY_Controller
 
 			case 1:
 				
-			$zDate = $this->postGetValue ("zDate", 2023); 
+			$zDate = $this->postGetValue ("zDate", 2024); 
 			$toDate = explode("/", $zDate);
 			$iAnneeExo = $toDate[2]; 
 			$toGetListe = $this->compte->getCompteNormalite($iAnneeExo,$iNombreTotal,$this) ;
@@ -159,7 +159,7 @@ class Compte extends MY_Controller
 
 			case 2:
 				
-				$iAnneeExo = $this->postGetValue ("iAnnee", 2023); 
+				$iAnneeExo = $this->postGetValue ("iAnnee", 2024); 
 				$toGetListe = $this->compte->getCompteAVentiler($iAnneeExo,$iNombreTotal,$this) ;
 
 				/*echo "<pre>";
@@ -214,7 +214,7 @@ class Compte extends MY_Controller
 
 			
 			case 3:
-				$iAnneeExo = $this->postGetValue ("iAnnee", 2023); 
+				$iAnneeExo = $this->postGetValue ("iAnnee", 2024); 
 				$toGetListe = $this->compte->getComptenNonApurer($iAnneeExo,$iNombreTotal,$this) ;
 
 				/*echo "<pre>";
@@ -273,7 +273,7 @@ class Compte extends MY_Controller
 
 			case 4:
 
-				$iAnneeExo = $this->postGetValue ("iAnnee", 2023); 
+				$iAnneeExo = $this->postGetValue ("iAnnee", 2024); 
 				$toGetListe = $this->compte->getCompteInexistants($iAnneeExo,$iNombreTotal,$this) ;
 
 				/*echo "<pre>";
@@ -349,11 +349,11 @@ class Compte extends MY_Controller
 		$iUserId = $this->postGetValue ("iUserId", 0);
 
 		$oGetInfo = $this->compte->getInfoPostComptableUser($iUserId) ;
-		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2023',1) ;
-		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2023',1) ;
+		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',1) ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',1) ;
 
-		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2023',2) ;
-		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2023',2) ;
+		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',2) ;
+		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',2) ;
 
 		//print_r ($oGetInfo);
 		

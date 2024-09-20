@@ -179,7 +179,7 @@ class Virement extends MY_Controller
 
 		$iTitreId			= $this->postGetValue ("iTitreId", 0);
 		$iNumMandat			= $this->postGetValue ("iNumMandat", 0);
-		$iAnneeExercice		= $this->postGetValue ("iExo", 2023);
+		$iAnneeExercice		= $this->postGetValue ("iExo", 2024);
 		$iTypeAfficheSearch	= $this->postGetValue ("iTypeAfficheSearch", 0);
 		$iOffset			= $this->postGetValue ("iOffset", 600);
 		

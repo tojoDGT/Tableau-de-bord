@@ -135,11 +135,11 @@ class Utilisateur extends MY_Controller
 		$iUserId = $this->postGetValue ("iUserId", 0);
 
 		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId) ;
-		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2023',1) ;
-		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2023',1) ;
+		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',1) ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',1) ;
 
-		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2023',2) ;
-		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2023',2) ;
+		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',2) ;
+		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',2) ;
 
 		//print_r ($oGetInfo);
 		
