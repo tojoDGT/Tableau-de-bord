@@ -32,10 +32,13 @@ class Virement_model extends CI_Model {
 					array_push($toColonneVirement, '-MANDAT');
 					array_push($toColonneVirement, 'PCASSIGNATAIRE-PCASSIGNATAIRE');
 					array_push($toColonneVirement, 'PCPAYEUR-PCPAYEUR');
+					array_push($toColonneVirement, 'STATUT-STATUS');
+					array_push($toColonneVirement, 'DATE DE VIREMENT-DMDVIRDATEVALID');
+					array_push($toColonneVirement, 'TYPE BUDGET DEPENSE-TYPE_BUDG_DEP');
 					array_push($toColonneVirement, 'EXERCICE-EXERCICE');
 					array_push($toColonneVirement, 'OBJET-DEPENSEOBJET');
 					array_push($toColonneVirement, 'TITULAIRE-TITULAIRE');
-					array_push($toColonneVirement, 'CATEGORIE-CATEG_DEPENSE');
+					array_push($toColonneVirement, 'CATEGORIE DEPENSE-CATEG_DEPENSE');
 					array_push($toColonneVirement, 'MONTANT-MONTANT');
 
 					$_SESSION["colonneAfficheVirement"] = serialize($toColonneVirement);

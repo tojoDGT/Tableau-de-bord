@@ -49,10 +49,15 @@
 				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="IdentifiantNumInfo-MANDAT" class="mr-1" name="colonneAffiche[]" /><span>Identifiant</span></div>
 				<div class="mb-2"><input type="checkbox" {if PCASSIGNATAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="PCASSIGNATAIRE-PCASSIGNATAIRE" class="mr-1" name="colonneAffiche[]" /><span>PCASSIGNATAIRE</span></div>
 				<div class="mb-2"><input type="checkbox" {if PCPAYEUR|in_array:$oDataTempCol} checked="checked" {/if} value="PCPAYEUR-PCPAYEUR" class="mr-1" name="colonneAffiche[]" /><span>PCPAYEUR</span></div>
+
+				<div class="mb-2"><input type="checkbox" {if STATUS|in_array:$oDataTempCol} checked="checked" {/if} value="STATUT-STATUS" class="mr-1" name="colonneAffiche[]" /><span>STATUT</span></div>
+				<div class="mb-2"><input type="checkbox" {if DMDVIRDATEVALID|in_array:$oDataTempCol} checked="checked" {/if} value="DATE DE VIREMENT-DMDVIRDATEVALID" class="mr-1" name="colonneAffiche[]" /><span>DATE DE VIREMENT</span></div>
+				<div class="mb-2"><input type="checkbox" {if TYPE_BUDG_DEP|in_array:$oDataTempCol} checked="checked" {/if} value="TYPE BUDGET DEPENSE-TYPE_BUDG_DEP" class="mr-1" name="colonneAffiche[]" /><span>TYPE BUDGET DEPENSE</span></div>
+
 				<div class="mb-2"><input type="checkbox" {if EXERCICE|in_array:$oDataTempCol} checked="checked" {/if} value="EXERCICE-EXERCICE" class="mr-1" name="colonneAffiche[]" /><span>EXERCICE</span></div>
 				<div class="mb-2"><input type="checkbox" {if DEPENSEOBJET|in_array:$oDataTempCol} checked="checked" {/if} value="OBJET-DEPENSEOBJET" class="mr-1" name="colonneAffiche[]" /><span>OBJET</span></div>
 				<div class="mb-2"><input type="checkbox" {if TITULAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="TITULAIRE-TITULAIRE" class="mr-1" name="colonneAffiche[]" /><span>TITULAIRE</span></div>
-				<div class="mb-2"><input type="checkbox" {if CATEG_DEPENSE|in_array:$oDataTempCol} checked="checked" {/if} value="CATEGORIE-CATEG_DEPENSE" class="mr-1" name="colonneAffiche[]" /><span>CATEGORIE</span></div>
+				<div class="mb-2"><input type="checkbox" {if CATEG_DEPENSE|in_array:$oDataTempCol} checked="checked" {/if} value="CATEGORIE-CATEG_DEPENSE" class="mr-1" name="colonneAffiche[]" /><span>CATEGORIE DEPENSE</span></div>
 				<div class="mb-2"><input type="checkbox" {if MONTANT|in_array:$oDataTempCol} checked="checked" {/if} value="MONTANT-MONTANT" class="mr-1" name="colonneAffiche[]" /><span>MONTANT</span></div>
 			</div>
 			{else}
