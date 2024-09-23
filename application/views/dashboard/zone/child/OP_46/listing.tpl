@@ -5,16 +5,10 @@
 	<thead>
 		<tr>
 		    <th>&nbsp;</th>
-			<th>&nbsp;</th>
-			<th>TITULAIRE</th>
-			<th>VILLE</th>
-			<th class="dt-center">OBJET</th>
-			<th class="dt-center">DATE DOSSIER</th>
-			<th class="dt-center">EXERCICE</th>
-			<th class="dt-center">SIGLE</th>
-			<th class="dt-center">POSTE</th>
-			<th class="dt-center">CATEGORIE</th>
-			<th class="dt-center">MONTANT</th>	
+			{foreach from=$toColonne item=$oColonne}
+			{assign var="zAfficheSplit" value="-"|explode:$oColonne}
+			<th>{$zAfficheSplit[0]}</th>
+			{/foreach}
         </tr>
 	</thead>
 	<tbody>

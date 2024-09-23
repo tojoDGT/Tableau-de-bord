@@ -21,27 +21,57 @@ class Virement_model extends CI_Model {
 	*
 	* @return liste des colonnes à afficher
 	*/
-	public function getSessionColonne ()
+	public function getSessionColonne ($_iParamReturn)
 	{
 		$toColonne = array();
-		//unset($_SESSION["colonneAffiche"]);
-		if(empty($_SESSION["colonneAffiche"])){
-			array_push($toColonne, 'Identifiant-E.ECRI_NUM');
-			array_push($toColonne, 'IdentifiantNumInfo-M.MAND_NUM_INFO');
-			array_push($toColonne, 'Référence-E.ECRI_REF');
-			array_push($toColonne, 'Libellé-E.ECRI_LIB');
-			array_push($toColonne, 'Date-E.ECRI_DT_CECRITURE');
-			array_push($toColonne, 'Propriétaire-E.PROP_CODE');
-			array_push($toColonne, 'SOA-M.SOA');
-			array_push($toColonne, 'Mode-M.MAND_MODE_PAIE1');
-			array_push($toColonne, 'Montant-M.MAND_MONTANT1');
+		switch ($_iParamReturn){
 
-			$_SESSION["colonneAffiche"] = serialize($toColonne);
-		} else {
-			$toColonne = unserialize($_SESSION["colonneAffiche"]);
+			case 1:
+				$toColonneVirement = array();
+				if(empty($_SESSION["colonneAfficheVirement"])){
+					array_push($toColonneVirement, '-MANDAT');
+					array_push($toColonneVirement, 'PCASSIGNATAIRE-PCASSIGNATAIRE');
+					array_push($toColonneVirement, 'PCPAYEUR-PCPAYEUR');
+					array_push($toColonneVirement, 'EXERCICE-EXERCICE');
+					array_push($toColonneVirement, 'OBJET-DEPENSEOBJET');
+					array_push($toColonneVirement, 'TITULAIRE-TITULAIRE');
+					array_push($toColonneVirement, 'CATEGORIE-CATEG_DEPENSE');
+					array_push($toColonneVirement, 'MONTANT-MONTANT');
+
+					$_SESSION["colonneAfficheVirement"] = serialize($toColonneVirement);
+				} else {
+					$toColonneVirement = unserialize($_SESSION["colonneAfficheVirement"]);
+				}
+
+				$toColonne = $toColonneVirement ; 
+				break;
+
+			case 2:
+
+				$toColonneOP46 = array();
+				if(empty($_SESSION["colonneAfficheOP46"])){
+					array_push($toColonneOP46, '-ID');
+					array_push($toColonneOP46, 'TITULAIRE-TITULAIRE');
+					array_push($toColonneOP46, 'VILLE-VILLE');
+					array_push($toColonneOP46, 'OBJET-OBJET');
+					array_push($toColonneOP46, 'DATE DOSSIER-DATE_DOSSIER');
+					array_push($toColonneOP46, 'EXERCICE-PERI_EXERCICE');
+					array_push($toColonneOP46, 'SIGLE-DENOMINATION');
+					array_push($toColonneOP46, 'POSTE-PSTP_LIBELLE');
+					array_push($toColonneOP46, 'CATEGORIE-CATEG_DEPENSE');
+					array_push($toColonneOP46, 'MONTANT-MONTANT');
+
+					$_SESSION["colonneAfficheOP46"] = serialize($toColonneOP46);
+				} else {
+					$toColonneOP46 = unserialize($_SESSION["colonneAfficheOP46"]);
+				}
+
+				$toColonne = $toColonneOP46 ; 
+
+				break;
 		}
 
-		return $toColonne;
+		return $toColonne ; 
 	}
 
 	

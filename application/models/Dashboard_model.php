@@ -123,7 +123,7 @@ class Dashboard_model extends CI_Model {
 			
 			if(sizeof($toPropCode)>0){
 				//$zSql .=" AND t.PROP_CODE IN (".implode(",",$toPropCode).")";
-				$zSql .=" AND SUBSTR (m.soa, 1, 2) IN (".implode(",",$toPropCode).")";
+				$zSql .=" AND SUBSTR (m.soa, 1, 1) IN (".implode(",",$toPropCode).")";
 			}
 		}
 
@@ -148,7 +148,7 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return format Json
 	*/
-	public function getNombreMontantParMoisPropCode($_iAnneeExercice='2024',$_iMode,$_zParamAffich="SUBSTR (m.soa, 1, 2)"){
+	public function getNombreMontantParMoisPropCode($_iAnneeExercice='2024',$_iMode,$_zParamAffich="SUBSTR (m.soa, 1, 1)"){
 		
 		global $db;
 
@@ -160,16 +160,16 @@ class Dashboard_model extends CI_Model {
 
 		$zSql = "select ".$_zParamAffich.",
 				 (CASE 
-						WHEN SUBSTR (m.soa, 1, 2) ='40' THEN 'COMMUNE'
-						WHEN SUBSTR (m.soa, 1, 2) ='20' THEN 'REGION'
-						WHEN SUBSTR (m.soa, 1, 2) ='90' THEN 'EPN'
+						WHEN SUBSTR (m.soa, 1, 1) ='4' THEN 'COMMUNE'
+						WHEN SUBSTR (m.soa, 1, 1) ='2' THEN 'REGION'
+						WHEN SUBSTR (m.soa, 1, 1) ='9' THEN 'EPN'
 						ELSE 'ETAT'
 				 END) as PROP_CODE,
 				 SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as Mois,ECRI_EXERCICE 
 				 from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
 				 AND t.PROP_CODE <> 'ERR' 
 				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
-				 AND SUBSTR (m.soa, 1, 2) IN ('90','06','40','20')
+				 AND SUBSTR (m.soa, 1, 1) IN ('9','0','4','2')
 				 GROUP BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM'),ECRI_EXERCICE
 				 ORDER BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM') ASC" ;
 
@@ -238,7 +238,7 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$toValue = array("90","06","40","20");
+		$toValue = array("9","0","4","2");
 
 		$zSql = "select t.PROP_LIBELLE from EXECUTION".$_iAnneeExercice.".PROPRIETAIRE t" ;
 
@@ -516,16 +516,16 @@ class Dashboard_model extends CI_Model {
 
 		$zSql = "select ".$_zParamAffich.",
 				 (CASE 
-						WHEN SUBSTR (m.soa, 1, 2) ='40' THEN 'COMMUNE'
-						WHEN SUBSTR (m.soa, 1, 2) ='20' THEN 'REGION'
-						WHEN SUBSTR (m.soa, 1, 2) ='90' THEN 'EPN'
+						WHEN SUBSTR (m.soa, 1, 1) ='4' THEN 'COMMUNE'
+						WHEN SUBSTR (m.soa, 1, 1) ='2' THEN 'REGION'
+						WHEN SUBSTR (m.soa, 1, 1) ='9' THEN 'EPN'
 						ELSE 'ETAT'
 				 END) as PROP_CODE,
 				 SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,ECRI_EXERCICE 
 				 from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
 				 AND t.PROP_CODE <> 'ERR' 
 				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
-				 AND SUBSTR (m.soa, 1, 2) IN ('90','06','40','20')
+				 AND SUBSTR (m.soa, 1, 1) IN ('9','0','4','2')
 				 GROUP BY ".$_zParamAffich.",ECRI_EXERCICE
 				 ORDER BY ".$_zParamAffich." ASC" ;
 	
@@ -570,16 +570,41 @@ class Dashboard_model extends CI_Model {
 
 		$zTestPropCode = "-1";
 		foreach ($_toRow as $oRow){
-			array_push($toAfficheLibelle, "'".$oRow[$_zParamAffich]."'");
+			
+			$zLibelle = "";
+			switch ($oRow[strtoupper($_zParamAffich)]){
+
+				case 0:
+					$zLibelle = "ETAT";
+					break;
+
+				case 9:
+					$zLibelle = "EPN";
+					break;
+
+				case 4:
+					$zLibelle = "COMMUNE";
+					break;
+
+				case 2:
+					$zLibelle = "REGION";
+					break;
+
+				default:
+					$zLibelle = $oRow[strtoupper($_zParamAffich)];
+					break;
+	
+			}
+			
+			array_push($toAfficheLibelle, "'".$zLibelle."'");
 			array_push($toAfficheNombre, "'".$oRow["NOMBRE"]."'");
 			array_push($toAfficheMontant, "'".str_replace(",",".",$oRow['MONTANT'])."'");
 		}
 
-		/*
-		echo "<pre>";
-		print_r ($toAfficheMontant);
-		echo "</pre>";*/
 		
+		/*echo "<pre>";
+		print_r ($toAfficheLibelle);
+		echo "</pre>";*/
 
 		$zAfficheSerieStat .= "labels: [";
 		$zAfficheSerieStat .= implode(",",$toAfficheLibelle);
@@ -964,7 +989,7 @@ SELECT
 		$oRequest = $_REQUEST;
 
 		$zSql = "select count(PROP_CODE) as NB,
-		SUM(MAND_MONTANT) as TOTAL, SUBSTR (m.soa, 1, 2) PROP_CODE,ECRI_EXERCICE from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
+		SUM(MAND_MONTANT) as TOTAL, SUBSTR (m.soa, 1, 1) PROP_CODE,ECRI_EXERCICE from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$zSql.=" AND t.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
@@ -992,7 +1017,7 @@ SELECT
 			}
 		}*/
 
-		$zSql .=" AND SUBSTR (m.soa, 1, 2) IN ('90','06','40','20')";
+		$zSql .=" AND SUBSTR (m.soa, 1, 1) IN ('9','0','4','2')";
 
 		if( !empty($oRequest['MAND_MODE_PAIE']) &&  sizeof($oRequest['MAND_MODE_PAIE'])>0) {   
 			
@@ -1009,7 +1034,7 @@ SELECT
 			}
 		}
 
-		$zSql .= " GROUP BY SUBSTR (m.soa, 1, 2),ECRI_EXERCICE ORDER BY ECRI_EXERCICE ASC ";
+		$zSql .= " GROUP BY SUBSTR (m.soa, 1, 1),ECRI_EXERCICE ORDER BY ECRI_EXERCICE ASC ";
 
 		//echo $zSql;
 		
@@ -1064,7 +1089,7 @@ SELECT
 			
 			if(sizeof($toPropCode)>0){
 				//$zSqlWhere .=" AND t.PROP_CODE IN (".implode(",",$toPropCode).")";
-				$zSqlWhere .=" AND SUBSTR (m.soa, 1, 2) IN (".implode(",",$toPropCode).")";
+				$zSqlWhere .=" AND SUBSTR (m.soa, 1, 1) IN (".implode(",",$toPropCode).")";
 			}
 		}
 

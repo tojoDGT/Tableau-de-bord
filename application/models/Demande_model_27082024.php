@@ -163,7 +163,7 @@ class Demande_model extends CI_Model {
 			}
 			
 			if(sizeof($toPropCode)>0){
-				$zSql .=" AND SUBSTR (m.soa, 1, 2) IN (".implode(",",$toPropCode).")";
+				$zSql .=" AND SUBSTR (m.soa, 1, 1) IN (".implode(",",$toPropCode).")";
 			}
 		}
 

@@ -92,20 +92,16 @@ class Virement extends MY_Controller
 
 					$oDataAssign = array();
 					$iIncrement = 1;
+					
 					foreach ($toGetListe as $oGetListe){
 						
 						$oDataTemp=array(); 
-
 						$oDataTemp[] = '';
-						$oDataTemp[] = $oGetListe['MANDAT'];
-						$oDataTemp[] = $oGetListe['PCASSIGNATAIRE'];
-						$oDataTemp[] = $oGetListe['PCPAYEUR'];
-						$oDataTemp[] = $oGetListe['ENTITECODE'];
-						$oDataTemp[] = $oGetListe['EXERCICE'];
-						$oDataTemp[] = $oGetListe['DEPENSEOBJET'];
-						$oDataTemp[] = $oGetListe['TITULAIRE'];
-						$oDataTemp[] = $oGetListe['CATEG_DEPENSE'];
-						$oDataTemp[] = $oGetListe['MONTANT'];
+
+						foreach ($toColonne as $oColonne){
+							$oColonne = explode("-", $oColonne);
+							$oDataTemp[] = $oGetListe[$oColonne[1]];
+						}
 						
 						$oDataAssign[] = $oDataTemp;
 						$iIncrement++;
@@ -127,24 +123,22 @@ class Virement extends MY_Controller
 
 					$oDataAssign = array();
 					$iIncrement = 1;
-
-					$oDataAssign = array();
-					$iIncrement = 1;
+	
 					foreach ($toGetListe as $oGetListe){
 						
 						$oDataTemp=array(); 
 
 						$oDataTemp[] = '';
-						$oDataTemp[] = $oGetListe['ID'];
-						$oDataTemp[] = $oGetListe['TITULAIRE'];
-						$oDataTemp[] = $oGetListe['VILLE'];
-						$oDataTemp[] = $oGetListe['OBJET'];
-						$oDataTemp[] = $oGetListe['DATE_DOSSIER'];
-						$oDataTemp[] = $oGetListe['PERI_EXERCICE'];
-						$oDataTemp[] = $oGetListe['DENOMINATION'];
-						$oDataTemp[] = $oGetListe['PSTP_LIBELLE'];
-						$oDataTemp[] = is_null($oGetListe['CATEG_DEPENSE'])?'<span style="color:red">En cours de virement</span>':$oGetListe['CATEG_DEPENSE'];
-						$oDataTemp[] = $oGetListe['MONTANT'];
+
+						foreach ($toColonne as $oColonne){
+							$oColonne = explode("-", $oColonne);
+
+							if($oColonne[1]=="CATEG_DEPENSE"){
+								$oDataTemp[] = is_null($oGetListe['CATEG_DEPENSE'])?'<span style="color:red">En cours de virement</span>':$oGetListe['CATEG_DEPENSE'];
+							} else {
+								$oDataTemp[] = $oGetListe[$oColonne[1]];
+							}
+						}
 						$oDataAssign[] = $oDataTemp;
 						$iIncrement++;
 					}

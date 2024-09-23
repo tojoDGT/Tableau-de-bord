@@ -88,12 +88,12 @@ class Dashboard extends MY_Controller
 				$iModeAffichage = $this->postGetValue ("iModeAffichage", 1);
 
 				//$zReturn = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"PROP_CODE");
-				$zReturn = $this->dashboard->getNombreMontantParMoisPropCode($iAnneeExercice,$iModeAffichage,"SUBSTR (m.soa, 1, 2)");
+				$zReturn = $this->dashboard->getNombreMontantParMoisPropCode($iAnneeExercice,$iModeAffichage,"SUBSTR (m.soa, 1, 1)");
 				$zReturnTypeMand = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
 				$zReturnMinAbrev = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
 				$zReturnModePaiement = $this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MAND_MODE_PAIE");
 				//$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"PROP_CODE");
-				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"SUBSTR (m.soa, 1, 2)");
+				$zReturnDonut = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"SUBSTR(m.soa,1,1)");
 				$zReturnPie = $this->dashboard->getNombreMontantParMoisEcriture($iAnneeExercice,$iModeAffichage,"TYPE_MAND");
 
 				//$zReturnMinAbrev = $zReturnTypeMand; //$this->dashboard->getNombreMontantParMois($iAnneeExercice,$iModeAffichage,"MIN_ABREV");
@@ -191,7 +191,7 @@ class Dashboard extends MY_Controller
 				echo "</pre>";
 
 				die();
-*/
+				*/
 
 				break;
 
@@ -226,6 +226,8 @@ class Dashboard extends MY_Controller
 
 				$toGetListePc = $this->utilisateur->posteComptable($iNombreTotal,$this,1) ;
 
+				$toColonne = $this->Virement->getSessionColonne(1);
+
 				$oSmarty->assign("zBasePath",base_url());
 				$oSmarty->assign('toColonne',  $toColonne);
 				$oSmarty->assign('toGetListePc',  $toGetListePc);
@@ -244,6 +246,8 @@ class Dashboard extends MY_Controller
 				$iSousMenuActifId = 11;
 
 				$zLibelle1 = "Opération 46, Virement";  
+
+				$toColonne = $this->Virement->getSessionColonne(2);
 
 				$toGetListePc = $this->utilisateur->posteComptable($iNombreTotal,$this,1) ;
 				$toGetListeSigle = $this->Virement->getSigle("c.sigle") ;

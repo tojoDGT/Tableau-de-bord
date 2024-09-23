@@ -108,7 +108,7 @@ class Demande_model extends CI_Model {
 			}
 			
 			if(sizeof($toPropCode)>0){
-				$zWhere .=" AND SUBSTR (soa, 1, 2) IN (".implode(",",$toPropCode).")";
+				$zWhere .=" AND SUBSTR (soa, 1, 1) IN (".implode(",",$toPropCode).")";
 			}
 		}
 
@@ -154,7 +154,7 @@ class Demande_model extends CI_Model {
 			}
 			
 			if(sizeof($toPropCode)>0){
-				$zWhere .=" AND SUBSTR (soa, 1, 2) IN (".implode(",",$toPropCode).")";
+				$zWhere .=" AND SUBSTR (soa, 1, 1) IN (".implode(",",$toPropCode).")";
 			}
 		}
 

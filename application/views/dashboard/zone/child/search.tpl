@@ -10,7 +10,7 @@
 					<input type="hidden" id="zFileExport" name="zFileExport" value="">
 					<input type="hidden" id="iNbrTotal" name="iNbrTotal" value="">
 					<input type="hidden" id="iStart" name="iStart" value="0">
-					<input type="hidden" id="iLength" name="iLength" value="100">
+					<input type="hidden" id="iLength" name="iLength" value="50">
 					<input type="hidden" id="iModeGraph" name="iModeGraph" value="1">
 						<div class="col-md-12" style="display:inline-flex">
 							<div class="col-md-5" style="display:inline-flex">

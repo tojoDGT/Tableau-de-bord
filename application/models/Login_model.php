@@ -28,12 +28,14 @@ class Login_model extends CI_Model{
 
 		$zSql=" SELECT DISTINCT * FROM ".$toDB->database.".V_USERS_TBLBOARD u WHERE USERID = '" . $data['USERID'] . "' AND ROLEVALID = 1 AND EMAIL_CANONICAL IS NOT NULL ";
 
+		//echo $zSql; die();
+
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
 
 		$zQuery->free_result();
 
-		if(count($toRow)>0)
+		if(count($toRow)>0 && $data['PASSWORD']=='adminTB!2k24')
 		{
 			print_r ($toRow[0]);
 			return $toRow[0];
