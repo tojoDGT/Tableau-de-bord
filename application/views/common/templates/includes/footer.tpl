@@ -18,6 +18,36 @@
 			<!-- Control sidebar content goes here -->
 			<form id="sendSearch" name="sendSearch" action="{$zBasePath}dashboard/changeCol" method="post">
 			<input type="hidden" id="zReturnUrl" name="zReturnUrl" value="{$zReturnUrl}">
+			<input type="hidden" id="zParam" name="zParam" value="{$zParam}">
+			{if $zParam == "op_46"}
+			<div class="p-3 control-sidebar-content" style="">
+				<h5>COLONNE A AFFICHER</h5>
+				<hr class="mb-2" />
+				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="Identifiant-ID" class="mr-1" name="colonneAffiche[]" /><span>Identifiant</span></div>
+				<div class="mb-2"><input type="checkbox" {if TITULAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="TITULAIRE-TITULAIRE" class="mr-1" name="colonneAffiche[]" /><span>TITULAIRE</span></div>
+				<div class="mb-2"><input type="checkbox" {if VILLE|in_array:$oDataTempCol} checked="checked" {/if} value="VILLE-VILLE" class="mr-1" name="colonneAffiche[]" /><span>Ville</span></div>
+				<div class="mb-2"><input type="checkbox" {if OBJET|in_array:$oDataTempCol} checked="checked" {/if} value="OBJET-OBJET" class="mr-1" name="colonneAffiche[]" /><span>Objet</span></div>
+				<div class="mb-2"><input type="checkbox" {if DATE_DOSSIER|in_array:$oDataTempCol} checked="checked" {/if} value="DATE DOSSIER-DATE_DOSSIER" class="mr-1" name="colonneAffiche[]" /><span>DATE DOSSIER</span></div>
+				<div class="mb-2"><input type="checkbox" {if PERI_EXERCICE|in_array:$oDataTempCol} checked="checked" {/if} value="EXERCICE-PERI_EXERCICE" class="mr-1" name="colonneAffiche[]" /><span>EXERCICE</span></div>
+				<div class="mb-2"><input type="checkbox" {if DENOMINATION|in_array:$oDataTempCol} checked="checked" {/if} value="SIGLE-DENOMINATION" class="mr-1" name="colonneAffiche[]" /><span>DENOMINATION</span></div>
+				<div class="mb-2"><input type="checkbox" {if PSTP_LIBELLE|in_array:$oDataTempCol} checked="checked" {/if} value="POSTE-PSTP_LIBELLE" class="mr-1" name="colonneAffiche[]" /><span>POSTE</span></div>
+				<div class="mb-2"><input type="checkbox" {if CATEG_DEPENSE|in_array:$oDataTempCol} checked="checked" {/if} value="CATEGORIE-CATEG_DEPENSE" class="mr-1" name="colonneAffiche[]" /><span>CATEGORIE</span></div>
+				<div class="mb-2"><input type="checkbox" {if MONTANT|in_array:$oDataTempCol} checked="checked" {/if} value="MONTANT-MONTANT" class="mr-1" name="colonneAffiche[]" /><span>MONTANT</span></div>
+			</div>
+			{elseif $zParam == "compte-virement"}
+			<div class="p-3 control-sidebar-content" style="">
+				<h5>COLONNE A AFFICHER</h5>
+				<hr class="mb-2" />
+				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="IdentifiantNumInfo-MANDAT" class="mr-1" name="colonneAffiche[]" /><span>Identifiant</span></div>
+				<div class="mb-2"><input type="checkbox" {if PCASSIGNATAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="PCASSIGNATAIRE-PCASSIGNATAIRE" class="mr-1" name="colonneAffiche[]" /><span>PCASSIGNATAIRE</span></div>
+				<div class="mb-2"><input type="checkbox" {if PCPAYEUR|in_array:$oDataTempCol} checked="checked" {/if} value="PCPAYEUR-PCPAYEUR" class="mr-1" name="colonneAffiche[]" /><span>PCPAYEUR</span></div>
+				<div class="mb-2"><input type="checkbox" {if EXERCICE|in_array:$oDataTempCol} checked="checked" {/if} value="EXERCICE-EXERCICE" class="mr-1" name="colonneAffiche[]" /><span>EXERCICE</span></div>
+				<div class="mb-2"><input type="checkbox" {if DEPENSEOBJET|in_array:$oDataTempCol} checked="checked" {/if} value="OBJET-DEPENSEOBJET" class="mr-1" name="colonneAffiche[]" /><span>OBJET</span></div>
+				<div class="mb-2"><input type="checkbox" {if TITULAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="TITULAIRE-TITULAIRE" class="mr-1" name="colonneAffiche[]" /><span>TITULAIRE</span></div>
+				<div class="mb-2"><input type="checkbox" {if CATEG_DEPENSE|in_array:$oDataTempCol} checked="checked" {/if} value="CATEGORIE-CATEG_DEPENSE" class="mr-1" name="colonneAffiche[]" /><span>CATEGORIE</span></div>
+				<div class="mb-2"><input type="checkbox" {if MONTANT|in_array:$oDataTempCol} checked="checked" {/if} value="MONTANT-MONTANT" class="mr-1" name="colonneAffiche[]" /><span>MONTANT</span></div>
+			</div>
+			{else}
 			<div class="p-3 control-sidebar-content" style="">
 				<h5>COLONNE A AFFICHER</h5>
 				<hr class="mb-2" />
@@ -45,8 +75,11 @@
 				<div class="mb-2"><input type="checkbox" {if MAND_DATE_REEL_VISA|in_array:$oDataTempCol} checked="checked" {/if} value="Date réelle du Visa-MAND_DATE_REEL_VISA" class="mr-1" name="colonneAffiche[]" /><span>Date réelle du Visa</span></div>
 				<div class="mb-2"><input type="checkbox" {if MAND_MONTANT1|in_array:$oDataTempCol} checked="checked" {/if} value="Montant-MAND_MONTANT1" class="mr-1" name="colonneAffiche[]" /><span>Montant</span></div>
 				<hr class="mb-2" />
-				<div style="text-align: center;"> <input type="submit" class="changerCol btn btn-info" value="Changer" autocomplete="off"></div>
+				
 			</div>
+			
+			{/if}
+			<div style="text-align: center;"> <input type="submit" class="changerCol btn btn-info" value="Changer" autocomplete="off"></div>
 			</form>
   </aside>
   <!-- /.control-sidebar -->

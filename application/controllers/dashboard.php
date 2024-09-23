@@ -36,16 +36,35 @@ class Dashboard extends MY_Controller
 		$toColonne = array();
 		unset($_SESSION["colonneAffiche"]);
 		$zReturnUrl = $this->postGetValue ("zReturnUrl", 0);
-		if(empty($_SESSION["colonneAffiche"])){
-			
-			$toColonnePost = $this->postGetValue ("colonneAffiche", 0);
+		$zParam = $this->postGetValue ("zParam", 0);
 
-			foreach ($toColonnePost as $zColonnePost){
-				array_push($toColonne, $zColonnePost);
-			}
+		$toColonnePost = $this->postGetValue ("colonneAffiche", 0);
 
-			$_SESSION["colonneAffiche"] = serialize($toColonne);
-		} 
+		foreach ($toColonnePost as $zColonnePost){
+			array_push($toColonne, $zColonnePost);
+		}
+
+		switch ($zParam){
+
+			case 'op_46':
+
+				$_SESSION["colonneAfficheOP46"] = serialize($toColonne);
+
+				break;
+
+			case 'compte-virement':
+
+				$_SESSION["colonneAfficheVirement"] = serialize($toColonne);
+
+				break;
+
+			default:
+
+				$_SESSION["colonneAffiche"] = serialize($toColonne);
+
+				break;
+		}
+		
 
 		$toUrl = explode("index.php/", $zReturnUrl);
 
@@ -273,6 +292,7 @@ class Dashboard extends MY_Controller
 		$oData['zBasePath']			= base_url();
 		$oData['zLibelle']			= $zLibelle;
 		$oData['zLibelle1']			= $zLibelle1;
+		$oData['zParam']			= $_zParam;
 		
 		$oData['iMenuActifId']		= $iMenuActifId;
 		$oData['iSousMenuActifId']  = $iSousMenuActifId;
