@@ -28,10 +28,18 @@
 				<div class="mb-2"><input type="checkbox" {if VILLE|in_array:$oDataTempCol} checked="checked" {/if} value="VILLE-VILLE" class="mr-1" name="colonneAffiche[]" /><span>Ville</span></div>
 				<div class="mb-2"><input type="checkbox" {if OBJET|in_array:$oDataTempCol} checked="checked" {/if} value="OBJET-OBJET" class="mr-1" name="colonneAffiche[]" /><span>Objet</span></div>
 				<div class="mb-2"><input type="checkbox" {if DATE_DOSSIER|in_array:$oDataTempCol} checked="checked" {/if} value="DATE DOSSIER-DATE_DOSSIER" class="mr-1" name="colonneAffiche[]" /><span>DATE DOSSIER</span></div>
+
+				<div class="mb-2"><input type="checkbox" {if STATUS|in_array:$oDataTempCol} checked="checked" {/if} value="STATUT-STATUS" class="mr-1" name="colonneAffiche[]" /><span>STATUT</span></div>
+				<div class="mb-2"><input type="checkbox" {if CATEG_DEPENSE|in_array:$oDataTempCol} checked="checked" {/if} value="CATEGORIE DEPENSE-CATEG_DEPENSE" class="mr-1" name="colonneAffiche[]" /><span>CATEGORIE DEPENSE</span></div>
+				<div class="mb-2"><input type="checkbox" {if DMDVIRDATEVALID|in_array:$oDataTempCol} checked="checked" {/if} value="DATE DE VIREMENT-DMDVIRDATEVALID" class="mr-1" name="colonneAffiche[]" /><span>DATE DE VIREMENT</span></div>
+				<div class="mb-2"><input type="checkbox" {if PCPAYEUR|in_array:$oDataTempCol} checked="checked" {/if} value="PCPAYEUR-PCPAYEUR" class="mr-1" name="colonneAffiche[]" /><span>PCPAYEUR</span></div>
+				<div class="mb-2"><input type="checkbox" {if PCASSIGNATAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="PCASSIGNATAIRE-PCASSIGNATAIRE" class="mr-1" name="colonneAffiche[]" /><span>PCASSIGNATAIRE</span></div>
+
+
 				<div class="mb-2"><input type="checkbox" {if PERI_EXERCICE|in_array:$oDataTempCol} checked="checked" {/if} value="EXERCICE-PERI_EXERCICE" class="mr-1" name="colonneAffiche[]" /><span>EXERCICE</span></div>
-				<div class="mb-2"><input type="checkbox" {if DENOMINATION|in_array:$oDataTempCol} checked="checked" {/if} value="SIGLE-DENOMINATION" class="mr-1" name="colonneAffiche[]" /><span>DENOMINATION</span></div>
+				<div class="mb-2"><input type="checkbox" {if DENOMINATION|in_array:$oDataTempCol} checked="checked" {/if} value="DENOMINATION-DENOMINATION" class="mr-1" name="colonneAffiche[]" /><span>DENOMINATION</span></div>
 				<div class="mb-2"><input type="checkbox" {if PSTP_LIBELLE|in_array:$oDataTempCol} checked="checked" {/if} value="POSTE-PSTP_LIBELLE" class="mr-1" name="colonneAffiche[]" /><span>POSTE</span></div>
-				<div class="mb-2"><input type="checkbox" {if CATEG_DEPENSE|in_array:$oDataTempCol} checked="checked" {/if} value="CATEGORIE-CATEG_DEPENSE" class="mr-1" name="colonneAffiche[]" /><span>CATEGORIE</span></div>
+				<div class="mb-2"><input type="checkbox" {if CATEGORIE|in_array:$oDataTempCol} checked="checked" {/if} value="CATEGORIE-CATEGORIE" class="mr-1" name="colonneAffiche[]" /><span>CATEGORIE</span></div>
 				<div class="mb-2"><input type="checkbox" {if MONTANT|in_array:$oDataTempCol} checked="checked" {/if} value="MONTANT-MONTANT" class="mr-1" name="colonneAffiche[]" /><span>MONTANT</span></div>
 			</div>
 			{elseif $zParam == "compte-virement"}

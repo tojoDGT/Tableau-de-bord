@@ -58,7 +58,7 @@ $(document).ready(function() {
 		"searching": true,
 		"footer": true, 
 		"columnDefs": [
-			{ className: "dt-Visible1", "targets": [ 1,2 ] },
+			{ className: "dt-Visible", "targets": [ 1 ] },
 			{ className: "details-control", "targets": [ 0 ] }
 		 ],
 		"language": {

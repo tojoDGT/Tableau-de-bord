@@ -55,10 +55,17 @@ class Virement_model extends CI_Model {
 					array_push($toColonneOP46, 'VILLE-VILLE');
 					array_push($toColonneOP46, 'OBJET-OBJET');
 					array_push($toColonneOP46, 'DATE DOSSIER-DATE_DOSSIER');
+
+					array_push($toColonneOP46, 'STATUT-STATUS');
+					array_push($toColonneOP46, 'CATEGORIE DEPENSE-CATEG_DEPENSE');
+					array_push($toColonneOP46, 'DATE DE VIREMENT-DMDVIRDATEVALID');
+					array_push($toColonneOP46, 'PCPAYEUR-PCPAYEUR');
+					array_push($toColonneOP46, 'PCASSIGNATAIRE-PCASSIGNATAIRE');
+
 					array_push($toColonneOP46, 'EXERCICE-PERI_EXERCICE');
-					array_push($toColonneOP46, 'SIGLE-DENOMINATION');
+					array_push($toColonneOP46, 'DENOMINATION-DENOMINATION');
 					array_push($toColonneOP46, 'POSTE-PSTP_LIBELLE');
-					array_push($toColonneOP46, 'CATEGORIE-CATEG_DEPENSE');
+					array_push($toColonneOP46, 'CATEGORIE-CATEGORIE');
 					array_push($toColonneOP46, 'MONTANT-MONTANT');
 
 					$_SESSION["colonneAfficheOP46"] = serialize($toColonneOP46);

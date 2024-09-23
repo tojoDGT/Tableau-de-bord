@@ -58,7 +58,7 @@ $(document).ready(function() {
 		"searching": true,
 		"footer": true, 
 		"columnDefs": [
-			{ className: "dt-Visible1", "targets": [ 1,2 ] },
+			{ className: "dt-Visible", "targets": [ 1 ] },
 			{ className: "details-control", "targets": [ 0 ] }
 		 ],
 		"language": {
@@ -167,7 +167,7 @@ hr {
 	width:150px;
 }
 .dt-Visible {
-	display:none;
+	display:none!important;
 }
 .dataTable > thead > tr > th[class*="details-control"]:before,
 .dataTable > thead > tr > th[class*="details-control"]:after {
