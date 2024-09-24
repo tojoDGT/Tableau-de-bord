@@ -95,11 +95,14 @@ $(document).ready(function() {
 			data: function ( d ) {
 				d.PERI_EXERCICE			= $('#PERI_EXERCICE').val();
 				d.PERI_MOIS				= $('#PERI_MOIS').val();
-				d.PSTP_CODE				= $('#PSTP_CODE').val();
-				d.SIGLE					= $('#SIGLE').val();
+				d.PCASSIGNATAIRE		= $('#PCASSIGNATAIRE').val();
+				d.PCPAYEUR				= $('#PCPAYEUR').val();
+				d.STATUS				= $('#STATUS').val();
 				d.CATEG_DEPENSE			= $('#CATEG_DEPENSE').val();
 				d.iTypeAfficheSearch	= 2;
 				d.data					= $("#sendSearch").serializeArray();
+				d.DATE_DEB				= $('#date_debut').val();
+				d.DATE_FIN				= $('#date_fin').val();
 			},
 			type: "post", 
 			error: function (request, error) {

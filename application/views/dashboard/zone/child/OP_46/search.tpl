@@ -1,5 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{$zBasePath}assets/css/select2.css">
 <script type="text/javascript" src="{$zBasePath}assets/js/select2.js"></script>
+<script src="{$zBasePath}assets/js/datedropper-javascript.js"></script>
+<script src="{$zBasePath}assets/js/datedropper-javascript-lang-FR.js"></script>
 {literal}
 <style>
 	.select2-container {
@@ -24,12 +26,112 @@
 			<div class="au-card-inner">
 				<div class="table-responsive" style="padding:15px;">
 					<form id="sendSearch" name="sendSearch" action="post">
-					<input type="hidden" id="iAjax" name="iAjax" value="1">
-					<input type="hidden" id="iModeGraph" name="iModeGraph" value="1">
-						<div class="col-md-3" style="display:inline-flex">
+						<input type="hidden" id="zDate" name="zDate" value="{$zDate}">
+						<input type="hidden" id="zDateLast" name="zDateLast" value="{$zDateLast}">
+						<div class="col-md-12" style="display:inline-flex">
+							<div class="col-md-5" style="display:inline-flex">
+							</div>
+							<div class="col-md-3 OnProgress" style="display:none;color:white">
+									<div class="texteProgress">Téléchargement, veuillez patienter.....</div>
+									<div class="progress">
+										
+										<div class="progress-bar" id="progressBar"></div>
+									</div>
+							</div>			
+						</div>
+						<div class="col-md-4" style="display:inline-flex">
+						<table class="table tableRond table-top-countries">
+							<tbody>
+								
+						    	<tr>
+									<td class="middle" width="10">PC Payeur : </td>
+									<td class="noBottom">
+										<select class="form-control" id="PCPAYEUR" name="PCPAYEUR">
+										<option selected="selected" value="">Tous</option>
+											{foreach from=$toGetListePcPayeur item=$oGetListePcPayeur}
+											<option value="{$oGetListePcPayeur.PSTP_CODE}">{$oGetListePcPayeur.PSTP_LIBELLE}</option>
+											{/foreach}
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="middle" width="10">PC Assignataire: </td>
+									<td class="noBottom">
+										<select class="form-control" id="PCASSIGNATAIRE" name="PCASSIGNATAIRE">
+											<option selected="selected" value="">Tous</option>
+											{foreach from=$toGetListePcAssignataire item=$oGetListePcAssignataire}
+											<option value="{$oGetListePcAssignataire.PSTP_CODE}">{$oGetListePcAssignataire.PSTP_LIBELLE}</option>
+											{/foreach}
+										</select>
+									</td>
+								</tr>
+								<tr>
+										<td class="middle" width="10">DENOMINATION : </td>
+										<td class="noBottom">
+											<select class="form-control" id="SIGLE" name="SIGLE">
+												<option value="">Tous</option>
+												{foreach from=$toGetListeSigle item=$oGetListeSigle}
+												<option value="{$oGetListeSigle.DENOMINATION}">{$oGetListeSigle.DENOMINATION}</option>
+												{/foreach}
+											</select>
+										</td>
+									</tr>
+							</tbody>
+						</table>
+						</div>
+						<div class="col-md-4" style="display:inline-flex">
 							<table class="table tableRond table-top-countries">
-								<tbody>
-									<tr>
+							<tbody>
+								<tr>
+									<td class="middle" width="10">Catégorie dépense : </td>
+									<td class="noBottom">
+										<select class="form-control" id="CATEG_DEPENSE" name="CATEG_DEPENSE">
+												<option selected="selected" value="">Tous</option>
+												<option value="DEPENSE OBLIGATOIRE">DEPENSE OBLIGATOIRE</option>
+												<option value="DEPENSE AUTORISEE">DEPENSE AUTORISEE</option>
+												<option value="DEPENSE">DEPENSE</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="middle" width="10">STATUT : </td>
+									<td class="noBottom">
+										<select class="form-control" id="STATUS" name="STATUS">
+											<option selected="selected" value="">Tous</option>
+											{foreach from=$toGetStatutVirement item=$oGetStatutVirement}
+											<option value="{$oGetStatutVirement.NOTESTATUSLIBELLE}">{$oGetStatutVirement.NOTESTATUSLIBELLE}</option>
+											{/foreach}
+										</select>
+									</td>
+								</tr>
+								<tr>	
+									<td colspan="2" class="noBottom">
+											<div id="changeDate" style="display:inline-flex" class="col-sm-10">
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Date demande de virement valide</label>
+														<div class="cal-icon"><input type="text" name="date_debut" id="date_debut" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="{$zDate}" data-dd-opt-double-view="true" autocomplete="off" value="" placeholder="du..." class="form-control datedropper-range-fiche" data-dd-opt-range-start="{$zDate}" data-dd-opt-range-end="{$zDateDemain}"></div>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>&nbsp;</label>
+														<div class="cal-icon"><input type="text" name="date_fin" id="date_fin" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="{$zDateDemain}" autocomplete="off" value="" placeholder="au..." class="form-control datedropper-range-fiche"  data-dd-opt-range-start="{$zDate}" data-dd-opt-range-end="{$zDateDemain}"></div>
+													</div>
+												</div>
+												<input type="button" class="viderDate changerCol btn btn-info" style="height:40px;margin-top:28px;" value="vider les dates" autocomplete="off">
+											</div>
+											
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+
+						<div class="col-md-4" style="display:inline-flex;max-width:32%">
+							<table class="table tableRond table-top-countries">
+							<tbody>
+								<tr>
 										<td class="middle" width="10">Mois:</td>
 										<td class="noBottom">
 											<select class="form-control" id="PERI_MOIS" name="PERI_MOIS">
@@ -49,64 +151,24 @@
 											</select>
 										</td>
 									</tr>
-									<tr>
-										<td class="middle" width="10">Année Exercice:</td>
-										<td class="noBottom">
-											<select class="form-control" id="PERI_EXERCICE" name="PERI_EXERCICE">
-													<option {if $iAnneeExercice=='2023'}selected="selected"{/if} value="2023">2023</option>
-													<option {if $iAnneeExercice=='2024'}selected="selected"{else}selected="selected"{/if} value="2024">2024</option>
-											</select>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+								<tr>
+									<td class="middle" width="10">Année Exercice:</td>
+									<td class="noBottom">
+										<select class="form-control" id="PERI_EXERCICE" name="PERI_EXERCICE" onChange="changeDate(this.value);">
+												<option {if $iAnneeExercice=='2023'}selected="selected"{/if} value="2023">2023</option>
+												<option {if $iAnneeExercice=='2024'}selected="selected"{else}selected="selected"{/if} value="2024">2024</option>
+										</select>
+									</td>
+								</tr>
+								
+								
+							</tbody>
+						</table>
 						</div>
-						<div class="col-md-4" style="display:inline-flex">
-							<table class="table tableRond table-top-countries">
-								<tbody>
-									<tr>
-										<td class="middle" width="10">Poste Comptable : </td>
-										<td class="noBottom">
-											<select class="form-control" id="PSTP_CODE" name="PSTP_CODE">
-												<option value="">Tous</option>
-												{foreach from=$toGetListePstp item=$oGetListePstp}
-												<option value="{$oGetListePstp.PSTP_CODE}">{$oGetListePstp.PSTP_LIBELLE}</option>
-												{/foreach}
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td class="middle" width="10">SIGLE : </td>
-										<td class="noBottom">
-											<select class="form-control" id="SIGLE" name="SIGLE">
-												<option value="">Tous</option>
-												{foreach from=$toGetListeSigle item=$oGetListeSigle}
-												<option value="{$oGetListeSigle.SIGLE}">{$oGetListeSigle.SIGLE}</option>
-												{/foreach}
-											</select>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+						<div style="text-align: center;"> 
+							<input type="button" class="searchTb partielSearchHeader partielSearchHeader1" value="Rechercher" autocomplete="off">
 						</div>
-						<div class="col-md-4" style="display:inline-flex">
-							<table class="table tableRond table-top-countries">
-								<tbody>
-									<tr>
-										<td class="middle" width="10">CATEGORIE : </td>
-										<td class="noBottom">
-											<select class="form-control" id="CATEG_DEPENSE" name="CATEG_DEPENSE">
-													<option selected="selected" value="">Tous</option>
-													<option value="DEPENSE">EN DEPENSE</option>
-													<option value="-1">EN COURS DE DEPENSE</option>
-											</select>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div style="text-align: center;"> <input type="button" class="searchTbNormalite partielSearchHeader partielSearchHeader1" value="Rechercher" autocomplete="off"></div>
-						</form>	
+					</form>	
 				</div>
 			</div>
 		</div>
@@ -127,10 +189,45 @@ input[type=radio] {
 </table>
 {literal}
 <script>
+
+function changeDate(_iAnnee){
+	$('#date_debut').val('');
+	$('#date_fin').val('');
+	$("#date_debut").attr("data-dd-opt-default-date",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_debut").attr("data-dd-opt-range-start",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_debut").attr("data-dd-opt-range-end",_iAnnee+"/"+$("#zDateLast").val());
+
+	$("#date_fin").attr("data-dd-opt-default-date",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_fin").attr("data-dd-opt-range-start",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_fin").attr("data-dd-opt-range-end",_iAnnee+"/"+$("#zDateLast").val());
+
+	new dateDropper({ 
+		selector: '.datedropper-range-fiche', 
+		range: true, 
+		format : 'dd/mm/y',
+		lang : 'fr',
+		defaultDate: true,
+		doubleView: true
+	})
+}
 $(document).ready(function() {
 	    
-	$(".searchTbNormalite").on("click", function(){
+	new dateDropper({ 
+		selector: '.datedropper-range-fiche', 
+		range: true, 
+		format : 'dd/mm/y',
+		lang : 'fr',
+		defaultDate: true,
+		doubleView: true
+	})
+
+	$(".searchTb").on("click", function(){
 		$('#table_bd').DataTable().ajax.reload();
+	})
+
+	$(".viderDate").on("click", function(){
+		$('#date_debut').val('');
+		$('#date_fin').val('');
 	})
 
 	$( ".datepicker" ).datepicker({

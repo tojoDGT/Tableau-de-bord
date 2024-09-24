@@ -98,7 +98,9 @@ $(document).ready(function() {
 				d.CATEG_DEPENSE			= $('#CATEG_DEPENSE').val();
 				d.TYPE_BUDGET_DEP		= $('#TYPE_BUDGET_DEP').val();
 				d.STATUS				= $('#STATUS').val();
+				d.DENOMINATION			= $('#DENOMINATION').val();
 				d.EXERCICE				= $('#EXERCICE').val();
+				d.iTypeAfficheSearch	= 1;
 				d.DATE_DEB				= $('#date_debut').val();
 				d.DATE_FIN				= $('#date_fin').val();
 				

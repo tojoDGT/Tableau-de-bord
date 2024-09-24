@@ -5,8 +5,10 @@ SELECT *
        nonepn.dossier                     d,
        nonepn.ctiers_rga                  cais,
        chqop.t_chqop_tresor@dblcca2       a2,
-       virement.ctrlvir_view_dtl@dblccad  sit
+       virement.ctrlvir_view_dtl@dblccad  sit,
+       ctiers.compte_tiers ti
  WHERE     t.dossier_id = d.id
+        AND d.compte_tiers = ti.id_ct
        AND t.compte_tiers = d.compte_tiers
        AND d.compte_tiers = cais.compte_tiers
        AND d.mode_reglement = 'VB'
@@ -253,7 +255,7 @@ WITH
                 AND DTL.NOTEID = nt.NOTEID
                 AND NT.DMDVIRID = DV.DMDVIRID(+)
                 AND NT.OVID = OV.OVID(+))
-SELECT %COLUMN%
+SELECT *
   FROM nonepn.titre                       t,
        nonepn.dossier                     d,
        ctiers.compte_tiers                c,
@@ -264,7 +266,7 @@ SELECT %COLUMN%
         ,virement                                  
        --,virement.ctrlvir_view_dtl@dblccad  v
  WHERE     t.dossier_id = d.id
-    AND d.compte_tiers = ti.id_ct
+    AND d.compte_tiers = ti.id_
        AND t.compte_tiers = d.compte_tiers
        AND c.id_ct = d.compte_tiers
        AND tt.code_tiers = t.code_tiers
@@ -278,6 +280,4 @@ SELECT %COLUMN%
 --and a2.CAISSE = cais.cais_code 
 --and a2.num_chq = cais.cais_code||d.id
 --and not exists (select 1 from virement.ctrlvir_view_dtl@dblccad where titrenumero=t.numero_titre)
---and not exists (select 1 from virement.vir_autorise@dblccad where infonumero=t.numero_titre) 
-
-%WHERE%
+--and not exists (select 1 from virement.vir_autorise@dblccad where infonumero=t.numero_titre)

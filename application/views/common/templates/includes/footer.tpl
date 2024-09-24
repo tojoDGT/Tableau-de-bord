@@ -39,7 +39,7 @@
 				<div class="mb-2"><input type="checkbox" {if PERI_EXERCICE|in_array:$oDataTempCol} checked="checked" {/if} value="EXERCICE-PERI_EXERCICE" class="mr-1" name="colonneAffiche[]" /><span>EXERCICE</span></div>
 				<div class="mb-2"><input type="checkbox" {if DENOMINATION|in_array:$oDataTempCol} checked="checked" {/if} value="DENOMINATION-DENOMINATION" class="mr-1" name="colonneAffiche[]" /><span>DENOMINATION</span></div>
 				<div class="mb-2"><input type="checkbox" {if PSTP_LIBELLE|in_array:$oDataTempCol} checked="checked" {/if} value="POSTE-PSTP_LIBELLE" class="mr-1" name="colonneAffiche[]" /><span>POSTE</span></div>
-				<div class="mb-2"><input type="checkbox" {if CATEGORIE|in_array:$oDataTempCol} checked="checked" {/if} value="CATEGORIE-CATEGORIE" class="mr-1" name="colonneAffiche[]" /><span>CATEGORIE</span></div>
+				<div class="mb-2"><input type="checkbox" {if CODE_TIERS|in_array:$oDataTempCol} checked="checked" {/if} value="CODE TIERS-CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>CODE TIERS</span></div>
 				<div class="mb-2"><input type="checkbox" {if MONTANT|in_array:$oDataTempCol} checked="checked" {/if} value="MONTANT-MONTANT" class="mr-1" name="colonneAffiche[]" /><span>MONTANT</span></div>
 			</div>
 			{elseif $zParam == "compte-virement"}

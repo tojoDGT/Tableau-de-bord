@@ -54,21 +54,20 @@ class Virement_model extends CI_Model {
 				$toColonneOP46 = array();
 				if(empty($_SESSION["colonneAfficheOP46"])){
 					array_push($toColonneOP46, '-ID');
+					array_push($toColonneOP46, 'DATE DE VIREMENT-DMDVIRDATEVALID');
 					array_push($toColonneOP46, 'TITULAIRE-TITULAIRE');
 					array_push($toColonneOP46, 'VILLE-VILLE');
 					array_push($toColonneOP46, 'OBJET-OBJET');
 					array_push($toColonneOP46, 'DATE DOSSIER-DATE_DOSSIER');
-
 					array_push($toColonneOP46, 'STATUT-STATUS');
 					array_push($toColonneOP46, 'CATEGORIE DEPENSE-CATEG_DEPENSE');
-					array_push($toColonneOP46, 'DATE DE VIREMENT-DMDVIRDATEVALID');
 					array_push($toColonneOP46, 'PCPAYEUR-PCPAYEUR');
 					array_push($toColonneOP46, 'PCASSIGNATAIRE-PCASSIGNATAIRE');
 
 					array_push($toColonneOP46, 'EXERCICE-PERI_EXERCICE');
 					array_push($toColonneOP46, 'DENOMINATION-DENOMINATION');
 					array_push($toColonneOP46, 'POSTE-PSTP_LIBELLE');
-					array_push($toColonneOP46, 'CATEGORIE-CATEGORIE');
+					array_push($toColonneOP46, 'CODE TIERS-CODE_TIERS');
 					array_push($toColonneOP46, 'MONTANT-MONTANT');
 
 					$_SESSION["colonneAfficheOP46"] = serialize($toColonneOP46);
@@ -348,17 +347,22 @@ class Virement_model extends CI_Model {
 		$toRow = array();
 
 		$toDB = $this->load->database('catia',true);
-	
 			
 		$toColumns = array( 
-				0  => 'TITULAIRE', 
-				1  => 'OBJET',
-				2  => 'DATE_DOSSIER', 
-				3  => 'PERI_EXERCICE',
-				4  => 'DENOMINATION',
-				5  => 'PSTP_LIBELLE', 
+				0  => 'DMDVIRDATEVALID', 
+				1  => 'TITULAIRE',
+				2  => 'VILLE', 
+				3  => 'OBJET',
+				4  => 'DATE_DOSSIER',
+				5  => 'STATUS', 
 				4  => 'CATEG_DEPENSE',
-				5  => 'MONTANT'
+				5  => 'PCPAYEUR',
+				6  => 'PCASSIGNATAIRE',
+				7  => 'PERI_EXERCICE',
+				8  => 'DENOMINATION',
+				9  => 'PSTP_LIBELLE',
+				10  => 'CATEGORIE',
+				11  => 'MONTANT'
 		);
 
 
@@ -377,12 +381,37 @@ class Virement_model extends CI_Model {
 			$zWhere.=" AND PERI_MOIS = '".$oRequest['PERI_MOIS']."'  ";
 		}
 
-		if( !empty($oRequest['PSTP_CODE']) &&  $oRequest['PSTP_CODE']!="") {   
-			$zWhere.=" AND PSTP_CODE = '".$oRequest['PSTP_CODE']."'  ";
+		if( !empty($oRequest['PCPAYEUR']) &&  $oRequest['PCPAYEUR']!="") {   
+			$zWhere.=" AND PCPAYEUR = '".$oRequest['PCPAYEUR']."'  ";
 		}
 
-		if( !empty($oRequest['SIGLE']) &&  $oRequest['SIGLE']!="") {   
-			$zWhere.=" AND c.SIGLE = '".$oRequest['SIGLE']."'  ";
+		if( !empty($oRequest['PCASSIGNATAIRE']) &&  $oRequest['PCASSIGNATAIRE']!="") {   
+			$zWhere.=" AND PCASSIGNATAIRE = '".$oRequest['PCASSIGNATAIRE']."'  ";
+		}
+
+		if( !empty($oRequest['DENOMINATION']) &&  $oRequest['DENOMINATION']!="") {   
+			$zWhere.=" AND DENOMINATION = '".$oRequest['DENOMINATION']."'  ";
+		}
+
+		if( !empty($oRequest['STATUS']) &&  $oRequest['STATUS']!="") {   
+			$zWhere.=" AND virement.STATUS = '".$oRequest['STATUS']."'  ";
+		}
+
+		if( !empty($oRequest['CATEG_DEPENSE']) &&  $oRequest['CATEG_DEPENSE']!="") {   
+			$zWhere.=" AND CATEG_DEPENSE= '".$oRequest['CATEG_DEPENSE']."'  ";
+		} 
+
+		if( !empty($oRequest['DATE_DEB']) &&  $oRequest['DATE_FIN']!="") {   
+			$zDateDebVrmt = $oRequest['DATE_DEB'] ; 
+			$zDateFinVrmt = $oRequest['DATE_FIN'] ; 
+
+			if ($zDateDebVrmt == $zDateFinVrmt){
+				$oDate = new DateTime($_this->date_fr_to_en($zDateFinVrmt,"/","-"));
+				$oDate->modify('+1 day');
+				$zDateFinVrmt =  $oDate->format('d/m/Y');
+			}
+
+			$zWhere.="  AND DMDVIRDATEVALID BETWEEN '".$zDateDebVrmt."' AND '".$zDateFinVrmt."' ";
 		}
 
 
@@ -430,13 +459,15 @@ class Virement_model extends CI_Model {
 			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
 				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
 			} else {
-				$zSql.=" ORDER BY DATE_DOSSIER DESC ";
+				$zSql.=" ORDER BY DMDVIRDATEVALID ASC ";
 			}
+
+			//$zSql.=" ORDER BY DMDVIRDATEVALID ASC ";
 
 			$zDebut = (int)$oRequest['start'] ;
 			$zFin =  (int)$oRequest['length'];
 		} else {
-			$zSql.=" ORDER BY DATE_DOSSIER DESC ";
+			$zSql.=" ORDER BY DMDVIRDATEVALID ASC ";
 		}
 
 		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";

@@ -287,8 +287,12 @@ class Dashboard extends MY_Controller
 				$toColonne = $this->Virement->getSessionColonne(2);
 
 				$toGetListePc = $this->utilisateur->posteComptable($iNombreTotal,$this,1) ;
-				$toGetListeSigle = $this->Virement->getSigle("c.sigle") ;
+				$toGetListeSigle = $this->Virement->getSigle("DENOMINATION") ;
 				$toGetListePstp = $this->Virement->getSigle("p.pstp_code,p.pstp_libelle") ;
+
+				$toGetListePcPayeur = $this->Virement->getPstLibelle("PCPAYEUR") ;
+				$toGetListePcAssignataire = $this->Virement->getPstLibelle("PCASSIGNATAIRE") ;
+				$toGetStatutVirement = $this->Virement->getStatutVirement() ;
 
 				$oDate = new DateTime(date('Y/m/d'));
 
@@ -300,6 +304,9 @@ class Dashboard extends MY_Controller
 				$oSmarty->assign('iTypeAfficheSearch',  3);
 				$oSmarty->assign('toGetListePc',  $toGetListePc);
 				$oSmarty->assign('toGetListeSigle',  $toGetListeSigle);
+				$oSmarty->assign('toGetListePcPayeur',  $toGetListePcPayeur);
+				$oSmarty->assign('toGetListePcAssignataire',  $toGetListePcAssignataire);
+				$oSmarty->assign('toGetStatutVirement',  $toGetStatutVirement);
 				$oSmarty->assign('zDate',  date("Y/m/d"));
 				$oSmarty->assign('zDateDemain',  $zDateDemain);
 				$oSmarty->assign('toGetListePstp',  $toGetListePstp);
