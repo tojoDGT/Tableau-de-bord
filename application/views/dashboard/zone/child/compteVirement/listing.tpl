@@ -93,11 +93,15 @@ $(document).ready(function() {
 		"ajax":{
 			url : zBasePath + "virement/getAjax", 
 			data: function ( d ) {
-				d.ECRI_EXERCICE			= $('#ECRI_EXERCICE').val();
-				d.MIN_ABREV				= $('#MIN_ABREV').val();
-				d.TYPE_MAND				= $('#TYPE_MAND').val();
-				d.iTypeAfficheSearch	= 1;
-				d.data					= $("#sendSearch").serializeArray();
+				d.PCPAYEUR				= $('#PCPAYEUR').val();
+				d.PCASSIGNATAIRE		= $('#PCASSIGNATAIRE').val();
+				d.CATEG_DEPENSE			= $('#CATEG_DEPENSE').val();
+				d.TYPE_BUDGET_DEP		= $('#TYPE_BUDGET_DEP').val();
+				d.STATUS				= $('#STATUS').val();
+				d.EXERCICE				= $('#EXERCICE').val();
+				d.DATE_DEB				= $('#date_debut').val();
+				d.DATE_FIN				= $('#date_fin').val();
+				
 			},
 			type: "post", 
 			error: function (request, error) {

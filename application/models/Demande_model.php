@@ -76,8 +76,6 @@ class Demande_model extends CI_Model {
 			}
 		}
 
-		
-
 		$oRequest = $_REQUEST;
 
 		//print_r ($oRequest);

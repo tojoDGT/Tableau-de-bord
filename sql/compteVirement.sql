@@ -32,6 +32,29 @@ SELECT dtl.PCASSIGNATAIRE,
                'EPN'
            ELSE
                'AUTRES'
+       END                       type_budg_dep1,
+	   CASE
+
+           WHEN SUBSTR (NVL(dtl.SOA,titrenumero), 0, 2) = '00'
+           THEN
+               'BUDGET GENERAL'
+           WHEN SUBSTR (NVL(dtl.SOA,titrenumero), 0, 2) = '01'
+           THEN
+               'BUDGET ANNEXE'
+           WHEN SUBSTR (NVL(dtl.SOA,titrenumero), 0, 2) = '02'
+           THEN
+               'COMPTE PARTICULIER DU TRESOR'
+           WHEN SUBSTR (NVL(dtl.SOA,titrenumero), 0, 2) = '20'
+           THEN
+               'REGION'
+           WHEN SUBSTR (NVL(dtl.SOA,titrenumero), 0, 2) = '40'
+           THEN
+               'COMMUNE'
+           WHEN SUBSTR (NVL(dtl.SOA,titrenumero), 0, 2) = '90'
+           THEN
+               'EPN'
+           ELSE
+               'AUTRES'
        END                       type_budg_dep,
        dtl.PCPAYEUR,
        dtl.ENTITECODE,
@@ -201,7 +224,7 @@ SELECT dtl.PCASSIGNATAIRE,
        VIREMENT.CV_DEMANDEVIREMENT  dv,
        VIREMENT.CV_ORDREVIREMENT    ov
  WHERE     1 = 1
-       AND DTL.EXERCICE >= '%ANNEE%'
+       AND DTL.EXERCICE = '%ANNEE%'
        AND ntst.NOTESTATUSID = NT.NOTESTATUS
        AND (NT.NOTESTATUS <> -2 OR NT.NOTESTATUS <> 6)
        --AND dtl.INFONUMERO like 'OP%'

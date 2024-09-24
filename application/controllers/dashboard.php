@@ -247,9 +247,27 @@ class Dashboard extends MY_Controller
 
 				$toColonne = $this->Virement->getSessionColonne(1);
 
+				$toGetListePcPayeur = $this->Virement->getPstLibelle("PCPAYEUR") ;
+				$toGetListePcAssignataire = $this->Virement->getPstLibelle("PCASSIGNATAIRE") ;
+				$toGetStatutVirement = $this->Virement->getStatutVirement() ;
+
+				$oDate = new DateTime(date('Y/m/d'));
+
+				$oDate->modify('+1 day');
+				$zDateDemain =  $oDate->format('Y/m/d');
+
+				$oDate->modify('-1 Year');
+				$zDateLast =  $oDate->format('m/d');
+
 				$oSmarty->assign("zBasePath",base_url());
 				$oSmarty->assign('toColonne',  $toColonne);
 				$oSmarty->assign('toGetListePc',  $toGetListePc);
+				$oSmarty->assign('toGetListePcPayeur',  $toGetListePcPayeur);
+				$oSmarty->assign('toGetListePcAssignataire',  $toGetListePcAssignataire);
+				$oSmarty->assign('toGetStatutVirement',  $toGetStatutVirement);
+				$oSmarty->assign('zDate',  date("Y/m/d"));
+				$oSmarty->assign('zDateDemain',  $zDateDemain);
+				$oSmarty->assign('zDateLast',  $zDateLast);
 				$oSmarty->assign('iTypeAfficheSearch',  3);
 				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/compteVirement/search.tpl" );
 				$oSmarty->assign('zSearchTpl',  $zSearchTpl);
@@ -272,11 +290,18 @@ class Dashboard extends MY_Controller
 				$toGetListeSigle = $this->Virement->getSigle("c.sigle") ;
 				$toGetListePstp = $this->Virement->getSigle("p.pstp_code,p.pstp_libelle") ;
 
+				$oDate = new DateTime(date('Y/m/d'));
+
+				$oDate->modify('+1 day');
+				$zDateDemain =  $oDate->format('Y/m/d');
+
 				$oSmarty->assign("zBasePath",base_url());
 				$oSmarty->assign('toColonne',  $toColonne);
 				$oSmarty->assign('iTypeAfficheSearch',  3);
 				$oSmarty->assign('toGetListePc',  $toGetListePc);
 				$oSmarty->assign('toGetListeSigle',  $toGetListeSigle);
+				$oSmarty->assign('zDate',  date("Y/m/d"));
+				$oSmarty->assign('zDateDemain',  $zDateDemain);
 				$oSmarty->assign('toGetListePstp',  $toGetListePstp);
 				$zSearchTpl = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/OP_46/search.tpl" );
 				$oSmarty->assign('zSearchTpl',  $zSearchTpl);

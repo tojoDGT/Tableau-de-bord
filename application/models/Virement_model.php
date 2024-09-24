@@ -118,25 +118,48 @@ class Virement_model extends CI_Model {
 		$oRequest = $_REQUEST;
 
 		$_iAnneeExercice = 2024;
-		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
-			$_iAnneeExercice = $oRequest['ECRI_EXERCICE'];
+		if( !empty($oRequest['EXERCICE']) &&  $oRequest['EXERCICE']!="") {   
+			$_iAnneeExercice = $oRequest['EXERCICE'];
 		}
 
-
-		$zWhere = " ";
+		$zWhere = " WHERE 1=1 ";
 
 		if( !empty($oRequest['EXERCICE']) &&  $oRequest['EXERCICE']!="") {   
 			$zWhere.=" AND EXERCICE = '".$oRequest['EXERCICE']."'  ";
 		}
 
-		if( !empty($oRequest['TITULAIRE']) &&  $oRequest['TITULAIRE']!="") {   
-			$zWhere.=" AND TITULAIRE = '".$oRequest['TITULAIRE']."'  ";
+		if( !empty($oRequest['PCPAYEUR']) &&  $oRequest['PCPAYEUR']!="") {   
+			$zWhere.=" AND PCPAYEUR = '".$oRequest['PCPAYEUR']."'  ";
 		}
 
+		if( !empty($oRequest['PCASSIGNATAIRE']) &&  $oRequest['PCASSIGNATAIRE']!="") {   
+			$zWhere.=" AND PCASSIGNATAIRE = '".$oRequest['PCASSIGNATAIRE']."'  ";
+		}
+
+		if( !empty($oRequest['TYPE_BUDGET_DEP']) &&  $oRequest['TYPE_BUDGET_DEP']!="") {   
+			$zWhere.=" AND TYPE_BUDG_DEP = '".$oRequest['TYPE_BUDGET_DEP']."'  ";
+		}
+
+		if( !empty($oRequest['STATUS']) &&  $oRequest['STATUS']!="") {   
+			$zWhere.=" AND STATUS = '".$oRequest['STATUS']."'  ";
+		}
 
 		if( !empty($oRequest['CATEG_DEPENSE']) &&  $oRequest['CATEG_DEPENSE']!="") {   
 			$zWhere.=" AND CATEG_DEPENSE= '".$oRequest['CATEG_DEPENSE']."'  ";
 		} 
+
+		if( !empty($oRequest['DATE_DEB']) &&  $oRequest['DATE_FIN']!="") {   
+			$zDateDebVrmt = $oRequest['DATE_DEB'] ; 
+			$zDateFinVrmt = $oRequest['DATE_FIN'] ; 
+
+			if ($zDateDebVrmt == $zDateFinVrmt){
+				$oDate = new DateTime($_this->date_fr_to_en($zDateFinVrmt,"/","-"));
+				$oDate->modify('+1 day');
+				$zDateFinVrmt =  $oDate->format('d/m/Y');
+			}
+
+			$zWhere.="  AND DMDVIRDATEVALID BETWEEN '".$zDateDebVrmt."' AND '".$zDateFinVrmt."' ";
+		}
 
 		$toMandMode1 = array();
 		
@@ -200,6 +223,66 @@ class Virement_model extends CI_Model {
 
 		return $toRow;
 
+	}
+
+
+	/** 
+	* function permettant d'afficher la liste des PCPAYEUR / PCASSIGNATAIRE
+	*
+	*
+	* @return liste en tableau d'objet
+	*/
+
+	public function getPstLibelle($_zChamp){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('catia',true);
+
+		$toRow = array();
+
+		$zSql = "	SELECT DISTINCT ".$_zChamp.",PSTP_CODE,PSTP_LIBELLE from VIREMENT.CV_NOTEDTL,
+					catia.poste_comptable@dblccad  p
+					WHERE p.pstp_code = ".$_zChamp."
+					GROUP BY ".$_zChamp.",PSTP_CODE,PSTP_LIBELLE
+					ORDER BY PSTP_CODE" ;
+
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+
+		return $toRow;
+	}
+
+
+	/** 
+	* function permettant d'afficher la liste des status de virement
+	*
+	*
+	* @return liste en tableau d'objet
+	*/
+
+	public function getStatutVirement(){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('catia',true);
+
+		$toRow = array();
+
+		$zSql = " SELECT DISTINCT NOTESTATUSLIBELLE FROM  VIREMENT.CV_NOTESTATUS   " ;
+
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+
+		return $toRow;
 	}
 
 
