@@ -66,8 +66,8 @@
 				<hr class="mb-2" />
 				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="Identifiant-ECRI_NUM" class="mr-1" name="colonneAffiche[]" /><span>Identifiant</span></div>
 				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="IdentifiantNumInfo-MAND_NUM_INFO" class="mr-1" name="colonneAffiche[]" /><span>Identifiant Mandat</span></div>
-				{*<div class="mb-2"><input type="checkbox" {if TITULAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="TITULAIRE-TITULAIRE" class="mr-1" name="colonneAffiche[]" /><span>TITULAIRE</span></div>
-				<div class="mb-2"><input type="checkbox" {if CODE_TIERS|in_array:$oDataTempCol} checked="checked" {/if} value="CODE TIERS-CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>CODE TIERS</span></div>*}
+				<div class="mb-2"><input type="checkbox" {if STATUT_PAIEMENT|in_array:$oDataTempCol} checked="checked" {/if} value="STATUT DE PAIEMENT-STATUT_PAIEMENT" class="mr-1" name="colonneAffiche[]" /><span>STATUT DE PAIEMENT</span></div>
+				{*<div class="mb-2"><input type="checkbox" {if CODE_TIERS|in_array:$oDataTempCol} checked="checked" {/if} value="CODE TIERS-CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>CODE TIERS</span></div>*}
 				<div class="mb-2"><input type="checkbox" {if ECRI_REF|in_array:$oDataTempCol} checked="checked" {/if} value="Référence-ECRI_REF" class="mr-1" name="colonneAffiche[]" /><span>Réference</span></div>
 				<div class="mb-2"><input type="checkbox" {if MAND_CODE_TIERS|in_array:$oDataTempCol} checked="checked" {/if} value="Code tiers-MAND_CODE_TIERS" class="mr-1" name="colonneAffiche[]" /><span>Code tiers</span></div>
 				<div class="mb-2"><input type="checkbox" {if STATUT|in_array:$oDataTempCol} checked="checked" {/if} value="Statut-STATUT" class="mr-1" name="colonneAffiche[]" /><span>Statut</span></div>

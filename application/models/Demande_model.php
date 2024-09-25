@@ -28,7 +28,7 @@ class Demande_model extends CI_Model {
 		if(empty($_SESSION["colonneAffiche"])){
 			array_push($toColonne, 'Identifiant-ECRI_NUM');
 			array_push($toColonne, 'IdentifiantNumInfo-MAND_NUM_INFO');
-			//array_push($toColonne, 'TITULAIRE-T.TITULAIRE');
+			array_push($toColonne, 'STATUT DE PAIEMENT-STATUT_PAIEMENT');
 			array_push($toColonne, 'Référence-ECRI_REF');
 			array_push($toColonne, 'Code tiers-MAND_CODE_TIERS');
 			array_push($toColonne, 'Statut-STATUT');
