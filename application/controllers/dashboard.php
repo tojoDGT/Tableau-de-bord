@@ -148,11 +148,15 @@ class Dashboard extends MY_Controller
 
 				$oDate->modify('+1 day');
 				$zDateDemain =  $oDate->format('Y/m/d');
+
+				$oDate->modify('-1 Year');
+				$zDateLast =  $oDate->format('m/d');
 				
 				$zAnnee = "-1";
 				$zAfficheSerieStat = "";
 
 				$oSmarty->assign('toGetPropCode',  $toGetPropCode);
+				$oSmarty->assign('zDateLast',  $zDateLast);
 				$oSmarty->assign('toMinAbrev',  $toMinAbrev);
 				$oSmarty->assign('zDate',  date("Y/m/d"));
 				$oSmarty->assign('zDateDemain',  $zDateDemain);

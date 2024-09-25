@@ -5,6 +5,7 @@
 			<div class="au-card-inner">
 				<div class="table-responsive" style="padding:15px;">
 					<form id="sendSearch" name="sendSearch" target="_blank" method="post" action="{$zBasePath}dashboard/stat/export-des-dossiers">
+					<input type="hidden" id="zDateLast" name="zDateLast" value="{$zDateLast}">
 					<input type="hidden" id="iAjax" name="iAjax" value="1">
 					<input type="hidden" id="iDepart" name="iDepart" value="1">
 					<input type="hidden" id="zFileExport" name="zFileExport" value="">
@@ -29,7 +30,7 @@
 								<tr>
 									<td class="middle" width="10">Année Exercice:</td>
 									<td class="noBottom">
-										<select class="form-control" id="ECRI_EXERCICE" name="ECRI_EXERCICE">
+										<select class="form-control" id="ECRI_EXERCICE" name="ECRI_EXERCICE" onChange="changeDate(this.value);">
 												<option {if $iAnneeExercice=='2023'}selected="selected"{/if} value="2023">2023</option>
 												<option {if $iAnneeExercice=='2024'}selected="selected"{else}selected="selected"{/if} value="2024">2024</option>
 										</select>
@@ -270,7 +271,47 @@ input[type=radio] {
 </table>
 {literal}
 <script>
+function changeDate(_iAnnee){
+	$('#date_debut_rec').val('');
+	$('#date_fin_rec').val('');
+	$("#date_debut_rec").attr("data-dd-opt-default-date",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_debut_rec").attr("data-dd-opt-range-start",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_debut_rec").attr("data-dd-opt-range-end",_iAnnee+"/"+$("#zDateLast").val());
 
+	$("#date_fin_rec").attr("data-dd-opt-default-date",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_fin_rec").attr("data-dd-opt-range-start",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_fin_rec").attr("data-dd-opt-range-end",_iAnnee+"/"+$("#zDateLast").val());
+
+
+	$('#date_debut_visa').val('');
+	$('#date_fin_visa').val('');
+	$("#date_debut_visa").attr("data-dd-opt-default-date",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_debut_visa").attr("data-dd-opt-range-start",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_debut_visa").attr("data-dd-opt-range-end",_iAnnee+"/"+$("#zDateLast").val());
+
+	$("#date_fin_visa").attr("data-dd-opt-default-date",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_fin_visa").attr("data-dd-opt-range-start",_iAnnee+"/"+$("#zDateLast").val());
+	$("#date_fin_visa").attr("data-dd-opt-range-end",_iAnnee+"/"+$("#zDateLast").val());
+
+	new dateDropper({ 
+		selector: '.datedropper-range-recup', 
+		range: true, 
+		format : 'dd/mm/y',
+		lang : 'fr',
+		defaultDate: true,
+		doubleView: true
+	})
+
+	new dateDropper({ 
+		selector: '.datedropper-range-visa', 
+		range: true, 
+		format : 'dd/mm/y',
+		lang : 'fr',
+		defaultDate: true,
+		doubleView: true
+	})
+
+}
 function valider(){
 
 	$(".OnProgress").show();
