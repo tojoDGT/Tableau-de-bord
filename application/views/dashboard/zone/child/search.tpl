@@ -325,31 +325,6 @@ function valider(){
 	});
 }
 
-function __valider(){
-
-	var form = document.forms[1];
-	var formData = new FormData(form);
-
-	var xhr = new XMLHttpRequest();
-
-	xhr.upload.addEventListener('progress', function(event) {
-		if (event.lengthComputable) {
-			var percent = Math.round((event.loaded / event.total) * 100);
-			var progressBar = document.getElementById('progressBar');
-			progressBar.style.width = percent + '%';
-			progressBar.innerHTML = percent + '%';
-		}
-	});
-
-	xhr.addEventListener('load', function(event) {
-		var uploadStatus = document.getElementById('uploadStatus');
-		uploadStatus.innerHTML = event.target.responseText;
-	});
-
-	xhr.open('POST', form.action, true);
-	xhr.send(formData);
-}
-
 $(document).ready(function() {
 	   
 		$("#getListing").on("click", function(){
