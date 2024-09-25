@@ -128,18 +128,36 @@ class Demande_model extends CI_Model {
 			$zWhere.=" AND MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
 		}
 
-		if( !empty($oRequest['date_recup']) &&  $oRequest['date_recup']!="") {   
-			$zDateRecup = $oRequest['date_recup'] ; 
-			$zDateVisa = $oRequest['date_visa'] ; 
+		if( !empty($oRequest['date_debut_rec']) &&  $oRequest['date_fin_rec']!="") {   
+			$zDateDebRec = $oRequest['date_debut_rec'] ; 
+			$zDateFinRec = $oRequest['date_fin_rec'] ; 
 
-			if ($zDateRecup == $zDateVisa){
-				$oDate = new DateTime($_this->date_fr_to_en($zDateVisa,"/","-"));
+			if ($zDateDebRec == $zDateFinRec){
+				$oDate = new DateTime($_this->date_fr_to_en($zDateFinRec,"/","-"));
 				$oDate->modify('+1 day');
-				$zDateVisa =  $oDate->format('d/m/Y');
+				$zDateFinRec =  $oDate->format('d/m/Y');
 			}
 
-			$zWhere.=" AND MAND_DATE_RECUP >= to_date('".$zDateRecup."', 'DD/MM/RRRR') AND  MAND_DATE_REEL_VISA <= to_date('".$zDateVisa."', 'DD/MM/RRRR')";
+			$zWhere.="  AND MAND_DATE_RECUP BETWEEN '".$zDateDebRec."' AND '".$zDateFinRec."' ";
 		}
+
+		//print_r ($oRequest);
+
+
+		if( !empty($oRequest['date_debut_visa']) &&  $oRequest['date_fin_visa']!="") {   
+			$zDateDebVisa = $oRequest['date_debut_visa'] ; 
+			$zDateFinVisa = $oRequest['date_fin_visa'] ; 
+
+			if ($zDateDebVisa == $zDateFinVisa){
+				$oDate = new DateTime($_this->date_fr_to_en($zDateFinVisa,"/","-"));
+				$oDate->modify('+1 day');
+				$zDateFinVisa =  $oDate->format('d/m/Y');
+			}
+
+			$zWhere.="  AND MAND_DATE_REEL_VISA BETWEEN '".$zDateDebVisa."' AND '".$zDateFinVisa."' ";
+		}
+
+
 
 		if( !empty($oRequest['data']) &&  sizeof($oRequest['data'])>0) {   
 			

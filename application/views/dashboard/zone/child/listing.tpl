@@ -111,8 +111,10 @@ $(document).ready(function() {
 				d.mand_mode_paie		= $('input[name="MAND_MODE_PAIE"]:checked').val();
 				d.iTypeAfficheSearch	= {/literal}{$iTypeAfficheSearch}{literal};
 				d.data					= $("#sendSearch").serializeArray();
-				d.date_recup			= $('#date_recup').val();
-				d.date_visa				= $('#date_visa').val();
+				d.date_debut_rec		= $('#date_debut_rec').val();
+				d.date_fin_rec			= $('#date_fin_rec').val();
+				d.date_debut_visa		= $('#date_debut_visa').val();
+				d.date_fin_visa			= $('#date_fin_visa').val();
 			},
 			type: "post", 
 			error: function (request, error) {

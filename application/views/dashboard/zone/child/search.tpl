@@ -110,22 +110,43 @@
 										<input type="radio" name="iMode" value="2">&nbsp;&nbsp;Montant
 									</td>
 								</tr>
-								<tr>							
-									<td colspan="2">
+								<tr>	
+									<td colspan="2" class="noBottom">
 											<div id="changeDate" style="display:inline-flex" class="col-sm-10">
 												<div class="col-sm-6">
 													<div class="form-group">
-														<label>Date récupération</label>
-														<div class="cal-icon"><input type="text" name="date_recup" id="date_recup" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="{$zDate}" data-dd-opt-double-view="true" autocomplete="off" value="" placeholder="du..." class="form-control datedropper-range-fiche" data-dd-opt-range-start="{$zDate}" data-dd-opt-range-end="{$zDateDemain}"></div>
+														<label>Date de recupération</label>
+														<div class="cal-icon"><input type="text" name="date_debut_rec" id="date_debut_rec" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="{$zDate}" data-dd-opt-double-view="true" autocomplete="off" value="" placeholder="du..." class="form-control datedropper-range-recup" data-dd-opt-range-start="{$zDate}" data-dd-opt-range-end="{$zDateDemain}"></div>
 													</div>
 												</div>
 												<div class="col-sm-6">
 													<div class="form-group">
-														<label>Date Visa</label>
-														<div class="cal-icon"><input type="text" name="date_visa" id="date_visa" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="{$zDateDemain}" autocomplete="off" value="" placeholder="au..." class="form-control datedropper-range-fiche"  data-dd-opt-range-start="{$zDate}" data-dd-opt-range-end="{$zDateDemain}"></div>
+														<label>&nbsp;</label>
+														<div class="cal-icon"><input type="text" name="date_fin_rec" id="date_fin_rec" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="{$zDateDemain}" autocomplete="off" value="" placeholder="au..." class="form-control datedropper-range-recup"  data-dd-opt-range-start="{$zDate}" data-dd-opt-range-end="{$zDateDemain}"></div>
 													</div>
 												</div>
+												<input type="button" cible="1" class="viderDate changerCol btn btn-info" style="height:40px;margin-top:28px;" value="vider les dates" autocomplete="off">
 											</div>
+											
+									</td>
+								</tr><tr>	
+									<td colspan="2" class="noBottom">
+											<div id="changeDate" style="display:inline-flex" class="col-sm-10">
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Date visa</label>
+														<div class="cal-icon"><input type="text" name="date_debut_visa" id="date_debut_visa" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="{$zDate}" data-dd-opt-double-view="true" autocomplete="off" value="" placeholder="du..." class="form-control datedropper-range-visa" data-dd-opt-range-start="{$zDate}" data-dd-opt-range-end="{$zDateDemain}"></div>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>&nbsp;</label>
+														<div class="cal-icon"><input type="text" name="date_fin_visa" id="date_fin_visa" data-dd-opt-format="dd/mm/y" data-dd-opt-default-date="{$zDateDemain}" autocomplete="off" value="" placeholder="au..." class="form-control datedropper-range-visa"  data-dd-opt-range-start="{$zDate}" data-dd-opt-range-end="{$zDateDemain}"></div>
+													</div>
+												</div>
+												<input type="button" cible="2" class="viderDate changerCol btn btn-info" style="height:40px;margin-top:28px;" value="vider les dates" autocomplete="off">
+											</div>
+											
 									</td>
 								</tr>
 								
@@ -265,8 +286,8 @@ function valider(){
 		url: $form.attr('action'),
 		type: $form.attr('method'),
 		dataType:'json',
-		contentType: false, // obligatoire pour de l'upload
-		processData: false, // obligatoire pour de l'upload
+		contentType: false, 
+		processData: false, 
 		data: data,
 		success: function (data, textStatus, jqXHR) {
 
@@ -279,11 +300,6 @@ function valider(){
 		}
 	}).done(function(data){
 		if(data.done==1 || data.iPercent==100){
-			/*$("#iDepart").val(1);
-			$("#zFileExport").val('');
-			$("#iNbrTotal").val('');
-			$("#iStart").val(0);
-			$("#iLength").val(10);*/
 
 			var $a = $("<a>");
 			$a.attr("href",data.file);
@@ -341,9 +357,42 @@ $(document).ready(function() {
 			$('#table_bd').DataTable().ajax.reload();
 		})
 
-		/*$(".partielSearchHeader2").on("submit", function(){
-			alert("ok");
-		})*/
+		new dateDropper({ 
+			selector: '.datedropper-range-recup', 
+			range: true, 
+			format : 'dd/mm/y',
+			lang : 'fr',
+			defaultDate: true,
+			doubleView: true
+		})
+
+		new dateDropper({ 
+			selector: '.datedropper-range-visa', 
+			range: true, 
+			format : 'dd/mm/y',
+			lang : 'fr',
+			defaultDate: true,
+			doubleView: true
+		})
+
+		$(".viderDate").on("click", function(){
+			
+			var iCible = $(this).attr("cible");
+			
+			switch (iCible)
+			{
+				case '1':
+					$('#date_debut_rec').val('');
+					$('#date_fin_rec').val('');
+					break;
+
+				case '2':
+					$('#date_debut_visa').val('');
+					$('#date_fin_visa').val('');
+					break;
+			}
+			
+		})
 
 		$(".searchTb").on("click", function(){
 			
