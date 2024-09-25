@@ -688,11 +688,16 @@ class Demande_model extends CI_Model {
 		$iStart			= $oRequest['iStart'];
 		$iLength		= $oRequest['iLength'];
 
-		$iNombrePagination = ceil($_iNombreTotal /$iLength);
+		if ($iStart==0 && $_iNombreTotal < $iLength){
+			$iPercent = 100;
+		} else {
 
-		$iPaginationEnCours = ceil($iStart/$iLength);
+			$iNombrePagination = ceil($_iNombreTotal /$iLength);
 
-		$iPercent = (($iPaginationEnCours)/$iNombrePagination*100);
+			$iPaginationEnCours = ceil($iStart/$iLength);
+
+			$iPercent = (($iPaginationEnCours)/$iNombrePagination*100);
+		}
 			
 		$iDone = 0;
 		if($iNombrePagination == $iPaginationEnCours){
@@ -779,6 +784,7 @@ class Demande_model extends CI_Model {
 				'name' => $zFileName,
 				'iNombreTotal' => $_iNombreTotal,
 				'iStart' => $iStart,
+				'iLength'	=> $iLength,
 				'iPercent' => ceil($iPercent),
 				'done' => $iDone,
 				'file' => base_url() ."assets/excel/".$zFileName
@@ -1035,7 +1041,8 @@ class Demande_model extends CI_Model {
 				'name' => $zFileName,
 				'iPercent' => ceil($iPercent),
 				'iNombreTotal' => $_iNombreTotal,
-				'iStart' => $iStart,
+				'iStart'	=> $iStart,
+				'iLength'	=> $iLength,
 				'done' => $iDone,
 				'file' => base_url() ."assets/excel/".$zFileName
 			);

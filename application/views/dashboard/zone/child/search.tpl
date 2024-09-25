@@ -11,7 +11,7 @@
 					<input type="hidden" id="zFileExport" name="zFileExport" value="">
 					<input type="hidden" id="iNbrTotal" name="iNbrTotal" value="">
 					<input type="hidden" id="iStart" name="iStart" value="0">
-					<input type="hidden" id="iLength" name="iLength" value="50">
+					<input type="hidden" id="iLength" name="iLength" value="400">
 					<input type="hidden" id="iModeGraph" name="iModeGraph" value="1">
 						<div class="col-md-12" style="display:inline-flex">
 							<div class="col-md-5" style="display:inline-flex">
@@ -156,7 +156,7 @@
 						</div>
 						<div style="text-align: center;"> 
 							<input type="button" class="searchTb partielSearchHeader partielSearchHeader1" value="Rechercher" autocomplete="off">
-							<input type="button" class="partielSearchHeader partielSearchHeader1 partielSearchHeader2" value="Exporter" onClick="valider()" autocomplete="off">
+							<input type="button" class="partielSearchHeader partielSearchHeader1 partielSearchHeader2" value="Exporter" onClick="initialisation();valider()" autocomplete="off">
 						</div>
 					</form>	
 				</div>
@@ -312,11 +312,19 @@ function changeDate(_iAnnee){
 	})
 
 }
+
+function initialisation(){
+	var progressBar = document.getElementById('progressBar');
+	progressBar.style.width = '0%';
+	progressBar.innerHTML = '0%';
+}
 function valider(){
 
 	$(".OnProgress").show();
 	var form = document.forms[1];
 	var formData = new FormData(form);
+
+	$(".partielSearchHeader2").hide();
 
 	var zUrl = form.action ; 
 
@@ -336,10 +344,11 @@ function valider(){
 			$("#zFileExport").val(data.name);
 			$("#iNbrTotal").val(data.iNombreTotal);
 			$("#iStart").val(data.iStart);
-			$("#iLength").val(10);
+			$("#iLength").val(data.iLength);
 
 		}
 	}).done(function(data){
+		
 		if(data.done==1 || data.iPercent==100){
 
 			var $a = $("<a>");
@@ -349,15 +358,21 @@ function valider(){
 			var progressBar = document.getElementById('progressBar');
 			progressBar.style.width = '100%';
 			progressBar.innerHTML = '100%';
+			$("#iDepart").val(1);
+			$("#zFileExport").val('');
+			$("#iNbrTotal").val('');
+			$("#iStart").val(0);
+			$("#iLength").val(data.iLength);
 			$a[0].click();
 			$a.remove();
 			$(".OnProgress").hide();
+			$(".partielSearchHeader2").show();
 		} else {
 			$("#iDepart").val(0);
 			$("#zFileExport").val(data.name);
 			$("#iNbrTotal").val(data.iNombreTotal);
 			$("#iStart").val(data.iStart);
-			$("#iLength").val(10);
+			$("#iLength").val(data.iLength);
 			var progressBar = document.getElementById('progressBar');
 			progressBar.style.width = data.iPercent + '%';
 			progressBar.innerHTML = data.iPercent + '%';
