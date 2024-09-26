@@ -18,6 +18,7 @@ class Utilisateur extends MY_Controller
 		parent:: __construct();
 		$this->load->model('Utilisateur_model', 'utilisateur');
 		$this->load->model('Dashboard_model', 'dashboard');
+		$this->load->model('Demande_model', 'demande');
 
 		if(empty($this->session->userdata['USERID'])){ redirect('Login');}
 
@@ -176,40 +177,9 @@ class Utilisateur extends MY_Controller
 
 		$oRequest = $_REQUEST;
 
-		/*
-		
-		$zType = $this->postGetValue ("iType", 'statistique');
-		$zPsCode = $this->postGetValue ("zPsCode", '');
-
-		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
-		$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',1) ;
-		$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',1) ;
-
-		$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',2) ;
-		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',2) ;
-
-		//print_r ($oGetInfo);
-		
-		$oSmarty->assign("oGetInfo", $oGetInfo);
-		$oSmarty->assign("zAfficheValide", $zAfficheValide);
-		$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
-		$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
-		$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
-		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
-
-		$oSmarty->assign("zBasePath", base_url());
-		$oSmarty->assign('zTplAffiche',  $zTplAffiche);
-		$zHtmlGraph = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/parametre.tpl" );
-
-
-		echo $zHtmlGraph;*/
-
-		global $oSmarty ; 
-
-
 		$iUserId = $this->postGetValue ("iUserId", 0);
 
-		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,'2023') ;
+		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,'2024') ;
 		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',1) ;
 		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',1) ;
 
@@ -234,6 +204,59 @@ class Utilisateur extends MY_Controller
 		
 		
 		echo $zHtmlGraph;
+			
+    }
+
+	/** 
+	* function get statitistique global
+	*
+	* @return template HTML
+	*/
+	public function getTabsAgentActive(){
+
+		global $oSmarty ; 
+
+		$oRequest = $_REQUEST;
+
+		$zType = $this->postGetValue ("iType", 'statistique');
+		$iUserId = $this->postGetValue ("iUserId", '');
+
+		$oSmarty->assign("zBasePath", base_url());
+		$oSmarty->assign("iUserId", $iUserId);
+		switch ($zType){
+
+			case 'statistique':
+
+				$iUserId = $this->postGetValue ("iUserId", 0);
+
+				$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,'2024') ;
+				$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',1) ;
+				$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',1) ;
+
+				$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',2) ;
+				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',2) ;
+
+				$oSmarty->assign("oGetInfo", $oGetInfo);
+				$oSmarty->assign("zAfficheValide", $zAfficheValide);
+				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
+				$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
+				$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
+				break;
+
+			case 'valider':
+			case 'refuser':
+				$toColonne = $this->demande->getSessionColonne();
+				$oSmarty->assign("zBasePath", base_url());
+				$oSmarty->assign("zPsCode", $zPsCode);
+				$oSmarty->assign("toColonne", $toColonne);
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/".$zType.".tpl" );
+				break;
+
+		}
+
+
+		echo $zTplAffiche;
 			
     }
 

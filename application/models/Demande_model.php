@@ -355,6 +355,11 @@ class Demande_model extends CI_Model {
 			$zSql.=" AND m.ENTITE = '".$oRequest['zPsCode']."'  ";
 		}
 
+
+		if( isset($oRequest['iUserId']) &&  $oRequest['iUserId']!="") {   
+			$zSql.=" AND m.MAND_UTR_VISA = '".$oRequest['iUserId']."'  ";
+		}
+
 		if( isset($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']!="") {   
 			$zSql.=" AND m.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
 		}

@@ -90,7 +90,7 @@
 						"ajax":{
 							url : "{$zBasePath}dashboard/getDossierValideRefusAjax", 
 							data: function ( d ) {
-								d.zPsCode			= '{$zPsCode}',
+								d.iUserId			= '{$iUserId}',
 								d.MAND_VISA_VALIDE	= '1'
 								
 							},

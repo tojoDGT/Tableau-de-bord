@@ -11,7 +11,7 @@
                                 <div class="row">
                                     <h6>&nbsp;</h6>
                                 </div>
-                                <div class="col-lg-5 col-sm-7 col-md-5 col-xl-4" style="float:left;margin-top:10px;">
+                                <div class="col-lg-10 col-sm-10 col-md-6 col-xl-6" style="float:left;margin-top:10px;">
                                     <div class="card">
                                         <br>
                                         <!-- Placez l'image ici pour qu'elle ne soit pas affectée par le scroll -->
@@ -22,9 +22,9 @@
                                         <div class="card-body" style="align-center;">
                                             <div class="pro-deadline m-b-15">
                                                 <div class="sub-title">
-                                                    <br>Nombre de dossier validés : <strong style="color:#28a745!important">{$oGetInfo->VALIDE}</strong>
+                                                    <br>Nombre de dossier validé : <a href="#" onclick="$('#tab3').click()"><strong style="color:#28a745!important">{$oGetInfo->VALIDE}</strong></a>
                                                 </div>
-                                                <div class="sub-title">Nombre de dossier rejetés : <strong style="color:#dc3545!important">{$oGetInfo->REJET}</strong></div>
+                                                <div class="sub-title">Nombre de dossier rejetés : <a onclick="$('#tab4').click()" href="#"><strong style="color:#dc3545!important">{$oGetInfo->REJET}</strong></a></div>
                                             </div>
 
                                             <p>
@@ -63,10 +63,10 @@
                                                 
                                             </div>
 											-->
-                                        </div>
+										</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12" style="margin-top:10px;">
+                                <div class="col-lg-6" style="float:left;margin-top:10px;">
 									<div class="card">
 										<div class="card-body" style="align-center;">
 											 <canvas id="structurePyramidChart"></canvas>
