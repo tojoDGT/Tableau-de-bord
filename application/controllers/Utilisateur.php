@@ -178,13 +178,14 @@ class Utilisateur extends MY_Controller
 		$oRequest = $_REQUEST;
 
 		$iUserId = $this->postGetValue ("iUserId", 0);
+		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", '2024');
 
-		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,'2024') ;
-		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',1) ;
-		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',1) ;
+		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,$iAnneeExercice) ;
+		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,1) ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,1) ;
 
-		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',2) ;
-		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',2) ;
+		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,2) ;
+		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 
 		/*print_r ($oGetInfo);*/
 		
@@ -208,6 +209,31 @@ class Utilisateur extends MY_Controller
     }
 
 	/** 
+	* function permettant d'afficher l'onglet relatif à un poste comptable
+	*
+	* @return template HTML
+	*/
+	public function getInfoCount(){
+
+		global $oSmarty ; 
+
+		$oRequest = $_REQUEST;
+
+		$iUserId = $this->postGetValue ("iUserId", 0);
+		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", '2024');
+
+		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,$iAnneeExercice) ;
+
+		$zResponse =  array(
+				'VALIDE' => $oGetInfo->VALIDE,
+				'REJET' => $oGetInfo->REJET,
+		);
+
+		echo json_encode($zResponse);
+			
+    }
+
+	/** 
 	* function get statitistique global
 	*
 	* @return template HTML
@@ -219,7 +245,8 @@ class Utilisateur extends MY_Controller
 		$oRequest = $_REQUEST;
 
 		$zType = $this->postGetValue ("iType", 'statistique');
-		$iUserId = $this->postGetValue ("iUserId", '');
+		$iUserId = $this->postGetValue ("iUserId", ''); 
+		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", '2024');
 
 		$oSmarty->assign("zBasePath", base_url());
 		$oSmarty->assign("iUserId", $iUserId);
@@ -229,63 +256,12 @@ class Utilisateur extends MY_Controller
 
 				$iUserId = $this->postGetValue ("iUserId", 0);
 
-				$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,'2024') ;
-				$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',1) ;
-				$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',1) ;
+				$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,$iAnneeExercice) ;
+				$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,1) ;
+				$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,1) ;
 
-				$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',2) ;
-				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',2) ;
-
-				$oSmarty->assign("oGetInfo", $oGetInfo);
-				$oSmarty->assign("zAfficheValide", $zAfficheValide);
-				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
-				$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
-				$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
-				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
-				break;
-
-			case 'valider':
-			case 'refuser':
-				$toColonne = $this->demande->getSessionColonne();
-				$oSmarty->assign("zBasePath", base_url());
-				$oSmarty->assign("zPsCode", $zPsCode);
-				$oSmarty->assign("toColonne", $toColonne);
-				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/".$zType.".tpl" );
-				break;
-
-		}
-
-
-		echo $zTplAffiche;
-			
-    }
-
-	/** 
-	* function get statitistique global
-	*
-	* @return template HTML
-	*/
-	public function getTabsPcActive(){
-
-		global $oSmarty ; 
-
-		$oRequest = $_REQUEST;
-
-		$zType = $this->postGetValue ("iType", 'statistique');
-		$zPsCode = $this->postGetValue ("zPsCode", '');
-
-		$oSmarty->assign("zBasePath", base_url());
-		$oSmarty->assign("zPsCode", $zPsCode);
-		switch ($zType){
-
-			case 'statistique':
-
-				$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
-				$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',1) ;
-				$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',1) ;
-
-				$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',2) ;
-				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',2) ;
+				$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,2) ;
+				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 
 				$oSmarty->assign("oGetInfo", $oGetInfo);
 				$oSmarty->assign("zAfficheValide", $zAfficheValide);
@@ -293,10 +269,6 @@ class Utilisateur extends MY_Controller
 				$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
 				$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
 				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
-				break;
-
-			case 'agents':
-				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/agents.tpl" );
 				break;
 
 			case 'valider':
@@ -328,13 +300,14 @@ class Utilisateur extends MY_Controller
 
 
 		$iUserId = $this->postGetValue ("iUserId", 0);
+		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", '2024');
 
-		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId) ;
-		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',1) ;
-		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',1) ;
+		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,$iAnneeExercice) ;
+		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,1) ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,1) ;
 
-		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',2) ;
-		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',2) ;
+		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,2) ;
+		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 
 		//print_r ($oGetInfo);
 		

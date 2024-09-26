@@ -92,7 +92,8 @@
 							url : "{$zBasePath}dashboard/getDossierValideRefusAjax", 
 							data: function ( d ) {
 								d.iUserId			= '{$iUserId}',
-								d.MAND_VISA_VALIDE	= '0'
+								d.MAND_VISA_VALIDE	= '0',
+								d.iAnneeExercice	= $('#iAnneeExercice').val();
 								
 							},
 							type: "post", 

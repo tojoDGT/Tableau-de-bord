@@ -786,11 +786,12 @@ class Dashboard extends MY_Controller
 
 		$iTypeAfficheSearch	= $this->postGetValue ("iTypeAfficheSearch", 1);
 		$iVisaValid	= $this->postGetValue ("MAND_VISA_VALIDE", 1);
+		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", '2024');
 
 
 		$iNombreTotal = 0;
 
-		$toGetListe = $this->demande->getDossier($iNombreTotal,$this) ; 
+		$toGetListe = $this->demande->getDossier($iNombreTotal,$this,$iAnneeExercice) ; 
 
 		/*print_r($toGetListe);
 		die();*/
