@@ -209,31 +209,6 @@ class Utilisateur extends MY_Controller
     }
 
 	/** 
-	* function permettant d'afficher l'onglet relatif à un poste comptable
-	*
-	* @return template HTML
-	*/
-	public function getInfoCount(){
-
-		global $oSmarty ; 
-
-		$oRequest = $_REQUEST;
-
-		$iUserId = $this->postGetValue ("iUserId", 0);
-		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", '2024');
-
-		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,$iAnneeExercice) ;
-
-		$zResponse =  array(
-				'VALIDE' => $oGetInfo->VALIDE,
-				'REJET' => $oGetInfo->REJET,
-		);
-
-		echo json_encode($zResponse);
-			
-    }
-
-	/** 
 	* function get statitistique global
 	*
 	* @return template HTML
@@ -250,6 +225,8 @@ class Utilisateur extends MY_Controller
 
 		$oSmarty->assign("zBasePath", base_url());
 		$oSmarty->assign("iUserId", $iUserId);
+
+		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,$iAnneeExercice) ;
 		switch ($zType){
 
 			case 'statistique':
@@ -283,7 +260,13 @@ class Utilisateur extends MY_Controller
 		}
 
 
-		echo $zTplAffiche;
+		$zResponse =  array(
+				'VALIDE' => $oGetInfo->VALIDE,
+				'REJET' => $oGetInfo->REJET,
+				'TEMPALTE' => $zTplAffiche,
+		);
+
+		echo json_encode($zResponse);
 			
     }
 

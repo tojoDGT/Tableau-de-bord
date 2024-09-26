@@ -35,31 +35,7 @@
 <script type="text/javascript">
 		
 		function ChargementOnglet(_iAnnee){
-			
-			$('input[name="pcss3t"]:checked').click();
-			var iType = $(this).attr("data-info"); 
-			var iUserId = '{$iUserId}';
-			var iAnneeExercice = $('#iAnneeExercice').val();
-
-			$.ajax({
-				url: zBasePath + "Utilisateur/getInfoCount",
-				method: "POST",
-				data: {
-					iType : iType,
-					iUserId : iUserId,
-					iAnneeExercice : iAnneeExercice,
-					ajax : 1
-				},
-				success: function(data, textStatus, jqXHR) {
-						var data = JSON.parse(data);
-						$("#dossierValide").html(data.VALIDE);
-						$("#dossierRefus").html(data.REJET);
-						
-				},
-				async: true
-
-			});
-			
+			$('input[name="pcss3t"]:checked').click();	
 		}
 		
 		$(".radioTabs").off("click").on("click", function(){
@@ -78,7 +54,10 @@
 					ajax : 1
 				},
 				success: function(data, textStatus, jqXHR) {
-						$("#contentPaneTabs").html(data);
+						var data = JSON.parse(data);
+						$("#dossierValide").html(data.VALIDE);
+						$("#dossierRefus").html(data.REJET);
+						$("#contentPaneTabs").html(data.TEMPALTE);
 				},
 				async: true
 
