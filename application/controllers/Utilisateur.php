@@ -79,14 +79,72 @@ class Utilisateur extends MY_Controller
 		switch ($iPc){
 			case 0:
 				$toGetListe = $this->utilisateur->getUtilisateur($iNombreTotal,$this) ;
+
+				$oDataAssign = array();
+				$iIncrement = 1;
+				foreach ($toGetListe as $oGetListe){
+					
+					$oDataTemp=array(); 
+
+					$oDataTemp[] = '';
+					$oDataTemp[] = $oGetListe['USERID'];
+					$oDataTemp[] = $oGetListe['LAST_NAME'];
+					$oDataTemp[] = $oGetListe['FIRST_NAME'];
+					$oDataTemp[] = $oGetListe['EMAIL_CANONICAL'];
+					$oDataTemp[] = $oGetListe['ACTIVITYNAME'];
+					
+					$oDataAssign[] = $oDataTemp;
+					$iIncrement++;
+				}
+
 				break;
 
 			case 1:
 				$toGetListe = $this->utilisateur->getUtilisateurPc($iNombreTotal,$this,$zPsCode) ;
+
+				$oDataAssign = array();
+				$iIncrement = 1;
+				foreach ($toGetListe as $oGetListe){
+					
+					$oDataTemp=array(); 
+
+					$oDataTemp[] = '';
+					$oDataTemp[] = $oGetListe['USERID'];
+					$oDataTemp[] = $oGetListe['LAST_NAME'];
+					$oDataTemp[] = $oGetListe['FIRST_NAME'];
+					$oDataTemp[] = $oGetListe['EMAIL_CANONICAL'];
+					$oDataTemp[] = $oGetListe['ACTIVITYNAME'];
+					
+					$oDataAssign[] = $oDataTemp;
+					$iIncrement++;
+				}
+
 				break;
 
 			case 2:
 				$toGetListe = $this->utilisateur->getUtilisateurAgent($iNombreTotal,$this) ;
+
+				$oDataAssign = array();
+				$iIncrement = 1;
+				foreach ($toGetListe as $oGetListe){
+					
+					$oDataTemp=array(); 
+
+					//$oDataTemp[] = '';
+					$oDataTemp[] = $oGetListe['USERID'];
+					$oDataTemp[] = $oGetListe['USERNAME'];
+					$oDataTemp[] = $oGetListe['USERFIRSTNAME'];
+					$oDataTemp[] = $oGetListe['ADRESSE'];
+					$oDataTemp[] = $oGetListe['USERMAIL'];
+
+					$zAction = '<a title="Consultation" alt="Consultation" libelle="'.$oGetListe['USERNAME'].' '.$oGetListe['USERFIRSTNAME'].'" id="'.$oGetListe['USERID'].'" onClick="getTabPc(this);" title="Consultation" style="cursor:pointer;" class="action dialog-link"><i style="font-size:22px;color:#12105A" class="fa fa-search"></i></a>&nbsp;&nbsp;';
+
+					$oDataTemp[] = $zAction;
+					
+					$oDataAssign[] = $oDataTemp;
+					$iIncrement++;
+				}
+
 				break;
 		}
 		
@@ -96,22 +154,7 @@ class Utilisateur extends MY_Controller
 
 		die("tojo");*/
 
-		$oDataAssign = array();
-		$iIncrement = 1;
-		foreach ($toGetListe as $oGetListe){
-			
-			$oDataTemp=array(); 
-
-			$oDataTemp[] = '';
-			$oDataTemp[] = $oGetListe['USERID'];
-			$oDataTemp[] = $oGetListe['LAST_NAME'];
-			$oDataTemp[] = $oGetListe['FIRST_NAME'];
-			$oDataTemp[] = $oGetListe['EMAIL_CANONICAL'];
-			$oDataTemp[] = $oGetListe['ACTIVITYNAME'];
-			
-			$oDataAssign[] = $oDataTemp;
-			$iIncrement++;
-		}
+		
 		$taJson = array(
 						"draw"            => intval( $oRequest['draw'] ),
 						"recordsTotal"    => intval( $iNombreTotal ),
@@ -121,6 +164,135 @@ class Utilisateur extends MY_Controller
 		echo json_encode($taJson);
 			
     }
+
+	/** 
+	* function permettant d'afficher l'onglet relatif à un poste comptable
+	*
+	* @return template HTML
+	*/
+	public function getTabsUser(){
+
+		global $oSmarty ; 
+
+		$oRequest = $_REQUEST;
+
+		/*
+		
+		$zType = $this->postGetValue ("iType", 'statistique');
+		$zPsCode = $this->postGetValue ("zPsCode", '');
+
+		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
+		$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',1) ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',1) ;
+
+		$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',2) ;
+		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',2) ;
+
+		//print_r ($oGetInfo);
+		
+		$oSmarty->assign("oGetInfo", $oGetInfo);
+		$oSmarty->assign("zAfficheValide", $zAfficheValide);
+		$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
+		$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
+		$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
+		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
+
+		$oSmarty->assign("zBasePath", base_url());
+		$oSmarty->assign('zTplAffiche',  $zTplAffiche);
+		$zHtmlGraph = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/parametre.tpl" );
+
+
+		echo $zHtmlGraph;*/
+
+		global $oSmarty ; 
+
+
+		$iUserId = $this->postGetValue ("iUserId", 0);
+
+		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,'2023') ;
+		$zAfficheValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',1) ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',1) ;
+
+		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,'2024',2) ;
+		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,'2024',2) ;
+
+		/*print_r ($oGetInfo);*/
+		
+		$oSmarty->assign("oGetInfo", $oGetInfo);
+		$oSmarty->assign("iUserId", $iUserId);
+		$oSmarty->assign("zAfficheValide", $zAfficheValide);
+		$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
+		$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
+		$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
+		//$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "utilisateur/getUserPerformance.tpl" );
+		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
+
+
+		$oSmarty->assign("zBasePath", base_url());
+		$oSmarty->assign('zTplAffiche',  $zTplAffiche);
+		$zHtmlGraph = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/parametre.tpl" );
+		
+		
+		echo $zHtmlGraph;
+			
+    }
+
+	/** 
+	* function get statitistique global
+	*
+	* @return template HTML
+	*/
+	public function getTabsPcActive(){
+
+		global $oSmarty ; 
+
+		$oRequest = $_REQUEST;
+
+		$zType = $this->postGetValue ("iType", 'statistique');
+		$zPsCode = $this->postGetValue ("zPsCode", '');
+
+		$oSmarty->assign("zBasePath", base_url());
+		$oSmarty->assign("zPsCode", $zPsCode);
+		switch ($zType){
+
+			case 'statistique':
+
+				$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
+				$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',1) ;
+				$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',1) ;
+
+				$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',2) ;
+				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',2) ;
+
+				$oSmarty->assign("oGetInfo", $oGetInfo);
+				$oSmarty->assign("zAfficheValide", $zAfficheValide);
+				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
+				$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
+				$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
+				break;
+
+			case 'agents':
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/agents.tpl" );
+				break;
+
+			case 'valider':
+			case 'refuser':
+				$toColonne = $this->demande->getSessionColonne();
+				$oSmarty->assign("zBasePath", base_url());
+				$oSmarty->assign("zPsCode", $zPsCode);
+				$oSmarty->assign("toColonne", $toColonne);
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/".$zType.".tpl" );
+				break;
+
+		}
+
+
+		echo $zTplAffiche;
+			
+    }
+
+
 
 	/** 
 	* function permettant le la liste des agents avec performance

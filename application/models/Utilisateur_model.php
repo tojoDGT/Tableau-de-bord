@@ -166,18 +166,28 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM specl.V_USERS u WHERE 1=1
-				AND USERID IN (select DISTINCT MAND_UTR_VISA from EXECUTION".$_iAnneeExercice.".MANDAT WHERE MAND_UTR_VISA IS NOT NULL)";
-
-		if( !empty($oRequest['search']['value']) ) {   
-			$zSql.=" AND ( USERID LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  FIRST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  LAST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  EMAIL_CANONICAL LIKE '%".$oRequest['search']['value']."%' ) ";
-		}
+		/*$zSql=" SELECT  COUNT(*) over() found_rows, norm.* FROM
+				(SELECT   DISTINCT USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL, 
+				(SELECT ACTIVITYADRS FROM specl.V_USERS v WHERE v.USERID = u.USERID OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) ADRESSE
+				FROM specl.V_USERS u WHERE 1=1
+				AND USERID IN (select DISTINCT MAND_UTR_VISA from EXECUTION".$_iAnneeExercice.".MANDAT WHERE MAND_UTR_VISA IS NOT NULL)";*/
 
 
-		$zSql .= " GROUP BY USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL ";
+		/*$zSql = "SELECT  COUNT(*) over() found_rows, norm.* FROM ( SELECT DISTINCT r.USERID,USERNAME,USERFIRSTNAME,USERMAIL,
+				(SELECT ACTIVITYADRS FROM specl.USERINFOACTIVITY v WHERE v.USERID = r.USERID ORDER BY ACTIVITYVALIDDATE DESC OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) adresse
+				FROM SPECL.USERINFOGEN u,SPECL.USERINFOROLE r,SPECL.USERINFOACTIVITY a
+				WHERE u.USERID = r.USERID
+
+				AND ROLETYPE = 'TRESOR_COMPTA_VALID'" ; */
+
+		$zSql = "   SELECT  COUNT(*) over() found_rows, norm.* FROM (SELECT u.USERID,USERNAME,USERFIRSTNAME,USERMAIL,
+					(SELECT ACTIVITYADRS FROM specl.USERINFOACTIVITY v WHERE v.USERID = u.USERID ORDER BY ACTIVITYVALIDDATE DESC OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) adresse
+					FROM SPECL.USERINFOGEN u
+					WHERE u.USERID IN (SELECT DISTINCT m.MAND_UTR_VISA FROM EXECUTION2023.MANDAT m 
+					WHERE m.MAND_UTR_VISA IS NOT NULL) ";
+
+
+		$zSql .= " GROUP BY u.USERID,USERNAME,USERFIRSTNAME,USERMAIL ";
 		
 		$zDebut = 0;
 		$zFin = 10;
@@ -194,6 +204,16 @@ class Utilisateur_model extends CI_Model {
 			$zFin =  (int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY FIRST_NAME ASC ";
+		}
+
+		$zSql .= " ) norm WHERE 1=1 ";
+
+		if( !empty($oRequest['search']['value']) ) {   
+			$zSql.=" AND ( USERID LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  USERNAME LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  ADRESSE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  USERFIRSTNAME LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  USERMAIL LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
 		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";

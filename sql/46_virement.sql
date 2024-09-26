@@ -1,7 +1,7 @@
 /* Formatted on 03/09/2024 09:19:28 (QP5 v5.374) */
 /*
 SELECT *
-  FROM nonepn.titre                       t,
+  FROM nonepn.titre                       t,  
        nonepn.dossier                     d,
        nonepn.ctiers_rga                  cais,
        chqop.t_chqop_tresor@dblcca2       a2,

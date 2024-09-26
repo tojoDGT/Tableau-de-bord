@@ -21,13 +21,13 @@
 
 function getTabPc(_this){
 
-	var iUserId = $(_this).attr("id");
+	var zPsCode = $(_this).attr("id");
 	var zLibelle = $(_this).attr("libelle");
 	$.ajax({
 			url: zBasePath + "Utilisateur/getTabsUser",
 			method: "POST",
 			data: {
-				iUserId : iUserId
+				zPsCode : zPsCode
 			},
 			success: function(data, textStatus, jqXHR) {
 					
@@ -37,7 +37,7 @@ function getTabPc(_this){
 						autoOpen: true,
 						width: '80%',
 						modal: true, 
-						title: "Agent poste comptable : " + zLibelle,
+						title: "Performance de Poste comptable : " + zLibelle,
 						open: function(event, ui) {
 							$(event.target).parent().css('top', '40px');
 							$("#overlay").show();

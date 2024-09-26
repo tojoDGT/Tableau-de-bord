@@ -1,13 +1,9 @@
 <table id="table_bd" class="table  table-bordered table-hover" style="margin-left:10px;min-height: 300px;">
 	<thead>
 		<tr>
-			<!--<th>DETAIL</th>-->
-			<th>IDENTIFIANT</th>
-			<th>NOM</th>
-			<th>PRENOM</th>
-			<th>POSTE</th>
-			<th>EMAIL</th>
-			<th>VOIR DETAIL</th>
+			<th>CODE</th>
+			<th>LIBELLE</th>
+			<th>PERFORMANCE</th>
         </tr>
 	</thead>
 	<tbody>
@@ -21,13 +17,13 @@
 
 function getTabPc(_this){
 
-	var iUserId = $(_this).attr("id");
+	var zPsCode = $(_this).attr("id");
 	var zLibelle = $(_this).attr("libelle");
 	$.ajax({
-			url: zBasePath + "Utilisateur/getTabsUser",
+			url: zBasePath + "dashboard/getTabsPc",
 			method: "POST",
 			data: {
-				iUserId : iUserId
+				zPsCode : zPsCode
 			},
 			success: function(data, textStatus, jqXHR) {
 					
@@ -37,7 +33,7 @@ function getTabPc(_this){
 						autoOpen: true,
 						width: '80%',
 						modal: true, 
-						title: "Agent poste comptable : " + zLibelle,
+						title: "Performance de Poste comptable : " + zLibelle,
 						open: function(event, ui) {
 							$(event.target).parent().css('top', '40px');
 							$("#overlay").show();
@@ -53,36 +49,18 @@ function getTabPc(_this){
 
 		});
 }
-		
+
 $(document).ready(function() {
 
-	
-	function format ( d ) {
-				
-		var zData = "";
-		$.ajax({
-			url: zBasePath + "utilisateur/getUserPerformance", // json datasource
-			type: 'POST',
-			data: {
-				iUserId: d[1]
-			},
-			success: function(data, textStatus, jqXHR) {
-				zData = data;
-			},
-			async: !1
-		})
-
-		return zData;
-	}
-	
 	var zListeEntite = $('#table_bd').DataTable( {
 		"processing": true,
 		"serverSide": true,
 		"searching": true,
 		"footer": true,
 		"columnDefs": [
-			{ className: "dt-center", "targets": [ 1,3,4,5] },
-			{ orderable: false, targets: [0] },
+			{ className: "dt-center", "targets": [ 0,1,2 ] },
+			{ className: "details-control", "targets": [ 2 ] },
+			{ orderable: false, targets: [2] },
 		 ],
 		"language": {
 			"sProcessing":     "<div id='overlay111'>Chargement...<br/><div style=\";text-align: center;vertical-align: middle;padding-top: 10px;\"><img class=\"imageAloha\" src=\""+zBasePath+"assets/images/loading.gif\" width=\"100\"></div>",
@@ -114,9 +92,9 @@ $(document).ready(function() {
 			}
 		},
 		"ajax":{
-			url : zBasePath + "utilisateur/getAjax", // json datasource
+			url : zBasePath + "dashboard/getPostComptable", // json datasource
 			data: function ( d ) {
-				d.pc = 2
+				
 			},
 			type: "post",  // method  , by default get
 			error: function(){  // error handling
@@ -125,23 +103,6 @@ $(document).ready(function() {
 		}
 	}); 
 
-	// Add event listener for opening and closing details
-	$('#table_bd tbody').on('click', 'td.details-control', function () {
-		var tr = $(this).parents('tr');
-		var row = zListeEntite.row( tr );
- 
-		if ( row.child.isShown() ) {
-			// This row is already open - close it
-			row.child.hide();
-			tr.removeClass('shown');
-		}
-		else {
-			// Open this row
-			row.child( format(row.data()) ).show();
-			tr.addClass('shown');
-		}
-	} );
-
 });
 		
 </script>
@@ -149,17 +110,7 @@ $(document).ready(function() {
 th.dt-center, td.dt-center { text-align: center!important; }
 .dt-width {width:20%!important}
 #table_bd th{
-    width: 15px!important;
-}
-td.details-control {
-    background: url('{/literal}{$zBasePath}{literal}assets/images/flch_or.png') no-repeat center center;
-    cursor: pointer;
-	background-size: 15px;
-	width:15px;
-}
-tr.shown td.details-control {
-    background: url('{/literal}{$zBasePath}{literal}assets/images/flch_or_bas.png') no-repeat center center;
-	background-size: 25px;
+    /*width: 15px!important;*/
 }
 
 .dataTable > thead > tr > th[class*="details-control"]:before,

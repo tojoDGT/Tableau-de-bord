@@ -42,13 +42,13 @@
 											<div class="progress-bar bg-danger" role="progressbar" data-bs-toggle="tooltip" title='{$num2}%' style='width: {$num2}%'></div>
 										</div>
 
-										<div class="pro-deadline m-b-15">
+										<!--<div class="pro-deadline m-b-15">
 											<div class="sub-title">
 												<br>- Durée minimale de traitement de dossier : <strong style="color:#28a745!important">3 Jours</strong>
 											</div>
 											<div class="sub-title">- Durée maximale de traitement de dossier : <strong style="color:#dc3545!important">21 jours</strong></div>
 											<div class="sub-title">- Temps moyen de traitement de dossier : <strong style="color:#28a745!important">5 jours</strong></div>
-										</div>
+										</div>-->
 										
 										<!--
 										<div class="pro-deadline m-b-15">
