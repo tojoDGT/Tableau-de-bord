@@ -228,6 +228,76 @@ class Dashboard_model extends CI_Model {
 		return $zReturn;
 	}
 
+
+	/** 
+	* function permettant d'afficher le nombre / montant par mois dans la statistique
+	*
+	* @param integer $_iAnneeExercice Année de l'exercice
+	* @param string $_zParamAffich : propriétaire code
+	*
+	* @return format Json
+	*/
+	public function getNombreParMoisStatutDossierAgent($_iAnneeExercice='2024',$_zParamAffich="STATUT"){
+		
+		global $db;
+
+		$oRequest = $_REQUEST;
+
+		$toDB = $this->load->database('catia',true);
+
+		$toRow = array();
+
+		$zSql = "SELECT count(STATUT) as NOMBRE,1 as MONTANT,STATUT,MOIS
+					from (SELECT M.ASSIGNATAIRE,
+						   ECRI_VALID,
+						   MAND_REJET,
+						   MAND_VISA_VALIDE,
+						   E.ECRI_NUM,
+						   to_char(NVL(NVL(ECRI_DT_CECRITURE,MAND_DT_RJT),MAND_DATE_TRAIT), 'MM') as Mois,
+						   PERI_CODE,
+						   MAND_MODE_PAIE,
+						   M.SOA,
+						   MIN_ABREV,
+						   M.EXERCICE,
+						   CASE
+							   WHEN NVL (MAND_REJET, 0) = 1
+							   THEN
+								   'REJET'
+							   WHEN NVL (ECRI_VALID, 0) = 1
+							   THEN
+								   'ADMIS EN DEPENSE'
+							   WHEN NVL (MAND_VISA_VALIDE, 0) = 1 AND NVL (ECRI_VALID, 0) = 0
+							   THEN
+								   'EN INSTANCE DE VISA COMPTA'
+							   ELSE
+								   'EN INSTANCE DE PRISE EN CHARGE'
+						   END                 STATUT
+					  FROM EXECUTION".$_iAnneeExercice.".MANDAT M, EXECUTION".$_iAnneeExercice.".ECRITURE E, CATIA.V_VIREMENT V
+					  WHERE     M.ECRI_NUM = E.ECRI_NUM(+)
+						   AND M.ENTITE = E.ENTITE(+)
+						   AND M.MAND_NUM_INFO = V.MANDAT(+)
+						   AND M.EXERCICE = v.exercice(+)
+					 ) norm  
+					WHERE 1=1  AND EXERCICE = '".$_iAnneeExercice."'   AND SUBSTR (soa, 1, 1) IN ('9','0','4','2') 
+					AND MOIS IS NOT NULL
+					GROUP BY STATUT,MOIS
+					ORDER BY STATUT,MOIS " ;
+
+		//echo $zSql . "\n\n<br>";
+		
+		$zQuery = $toDB->query($zSql);
+		$toRow = $zQuery->result_array();
+
+		/*echo "<pre>";
+		print_r ($toRow);
+		echo "</pre>";*/
+
+		$zReturn = $this->DispatchDataForChartJs(1,$toRow,$_zParamAffich);
+
+
+		return $zReturn;
+	}
+
 	public function getPropCode($_iAnneeExercice){
 		
 		global $db;

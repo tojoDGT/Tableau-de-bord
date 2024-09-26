@@ -187,6 +187,8 @@ class Utilisateur extends MY_Controller
 		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 
+		$zReturnStatut = $this->dashboard->getNombreParMoisStatutDossierAgent($iAnneeExercice) ;
+
 		/*print_r ($oGetInfo);*/
 		
 		$oSmarty->assign("oGetInfo", $oGetInfo);
@@ -195,6 +197,7 @@ class Utilisateur extends MY_Controller
 		$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
 		$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
 		$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
+		$oSmarty->assign("zReturnStatut", $zReturnStatut);
 		//$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "utilisateur/getUserPerformance.tpl" );
 		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
 
@@ -227,6 +230,7 @@ class Utilisateur extends MY_Controller
 		$oSmarty->assign("iUserId", $iUserId);
 
 		$oGetInfo = $this->utilisateur->getInfoPostComptableUser($iUserId,$iAnneeExercice) ;
+		
 		switch ($zType){
 
 			case 'statistique':
@@ -240,11 +244,14 @@ class Utilisateur extends MY_Controller
 				$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 
+				$zReturnStatut = $this->dashboard->getNombreParMoisStatutDossierAgent($iAnneeExercice) ;
+
 				$oSmarty->assign("oGetInfo", $oGetInfo);
 				$oSmarty->assign("zAfficheValide", $zAfficheValide);
 				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
 				$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
 				$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
+				$oSmarty->assign("zReturnStatut", $zReturnStatut);
 				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
 				break;
 
