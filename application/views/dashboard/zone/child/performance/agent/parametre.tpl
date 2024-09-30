@@ -24,6 +24,7 @@
 					<label style="background-color: #777;" for="tab3"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M19,21.5H5a3.00328,3.00328,0,0,1-3-3V5.5a3.00328,3.00328,0,0,1,3-3H9.55859A2.99629,2.99629,0,0,1,12.4043,4.55078L12.7207,5.5H19a3.00328,3.00328,0,0,1,3,3v10A3.00328,3.00328,0,0,1,19,21.5Z"></path><path fill="#aba6a6" d="M14,12.5H13v-1a1,1,0,0,0-2,0v1H10a1,1,0,0,0,0,2h1v1a1,1,0,0,0,2,0v-1h1a1,1,0,0,0,0-2Z"></path></svg> Liste des dossiers validés (<strong id="dossierValide" style="color:#2aff5b !important">{if $oGetInfo->VALIDE>0}{$oGetInfo->VALIDE}{else}0{/if}</strong>)</label>
 					<input type="radio" name="pcss3t" id="tab4" data-info="refuser" data-title="Désactivation des structures filles" class="radioTabs tab-content-addstructure">
 					<label style="background-color: #777;" for="tab4"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M19,21.5H5a3.00328,3.00328,0,0,1-3-3V5.5a3.00328,3.00328,0,0,1,3-3H9.55859A2.99629,2.99629,0,0,1,12.4043,4.55078L12.7207,5.5H19a3.00328,3.00328,0,0,1,3,3v10A3.00328,3.00328,0,0,1,19,21.5Z"></path><path fill="#aba6a6" d="M14,12.5H13v-1a1,1,0,0,0-2,0v1H10a1,1,0,0,0,0,2h1v1a1,1,0,0,0,2,0v-1h1a1,1,0,0,0,0-2Z"></path></svg> Liste des dossiers refusés (<strong id="dossierRefus" style="color:#ffafaf !important">{if $oGetInfo->REJET>0}{$oGetInfo->REJET}{else}0{/if}</strong>)</label>
+
 					<div class="ombremultiple" id="contentPaneTabs">
 						{$zTplAffiche}
 					</div>
@@ -31,7 +32,13 @@
 		</div>
 	</div>			
 </div>
-
+<div id="table_bd_processing" class="dataTables_processing card" style="display: none;">
+	<div id="overlay111">Chargement...<br>
+		<div style=";text-align: center;vertical-align: middle;padding-top: 10px;">
+			<img class="imageAloha" src="http://localhost/Tableau-bord/assets/images/loading.gif" width="100">
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
 		
 		function ChargementOnglet(_iAnnee){
@@ -40,6 +47,7 @@
 		
 		$(".radioTabs").off("click").on("click", function(){
 
+			$("#table_bd_processing").show();
 			var iType = $(this).attr("data-info"); 
 			var iUserId = '{$iUserId}';
 			var iAnneeExercice = $('#iAnneeExercice').val();
@@ -58,6 +66,7 @@
 						$("#dossierValide").html(data.VALIDE);
 						$("#dossierRefus").html(data.REJET);
 						$("#contentPaneTabs").html(data.TEMPALTE);
+						$("#table_bd_processing").hide();
 				},
 				async: true
 
@@ -67,7 +76,17 @@
 
 </script>
 <style>
-
+div.dataTables_processing {
+	position: absolute;
+	top: 100px;
+	left: 42%!important;
+	width: 200px;
+	margin-left: -100px!important;
+	margin-top: -26px!important;
+	text-align: center;
+	padding: 1em 0;
+	z-index: 111111;
+}
 .avatar > img {
   width: 100%;
   height: 100%;

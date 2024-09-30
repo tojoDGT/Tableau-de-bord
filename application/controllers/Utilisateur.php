@@ -187,9 +187,12 @@ class Utilisateur extends MY_Controller
 		$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 
-		$zReturnStatut = $this->dashboard->getNombreParMoisStatutDossierAgent($iAnneeExercice) ;
 
-		/*print_r ($oGetInfo);*/
+		$zAfficheSerieStat = $this->dashboard->getNombreParMoisStatutDossierAgent($iUserId,$iAnneeExercice) ;
+		$oSmarty->assign("zAfficheSerieStat", $zAfficheSerieStat);
+		$zTplGraphPortion = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/Graph/graphUser.tpl" );
+
+		//echo $zTplGraphPortion;
 		
 		$oSmarty->assign("oGetInfo", $oGetInfo);
 		$oSmarty->assign("iUserId", $iUserId);
@@ -197,7 +200,7 @@ class Utilisateur extends MY_Controller
 		$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
 		$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
 		$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
-		$oSmarty->assign("zReturnStatut", $zReturnStatut);
+		$oSmarty->assign("zTplGraphPortion", $zTplGraphPortion);
 		//$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "utilisateur/getUserPerformance.tpl" );
 		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
 
@@ -244,14 +247,17 @@ class Utilisateur extends MY_Controller
 				$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 
-				$zReturnStatut = $this->dashboard->getNombreParMoisStatutDossierAgent($iAnneeExercice) ;
+				$zAfficheSerieStat = $this->dashboard->getNombreParMoisStatutDossierAgent($iUserId,$iAnneeExercice) ;
+				$oSmarty->assign("zAfficheSerieStat", $zAfficheSerieStat);
+				$zTplGraphPortion = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/Graph/graphUser.tpl" );
 
 				$oSmarty->assign("oGetInfo", $oGetInfo);
 				$oSmarty->assign("zAfficheValide", $zAfficheValide);
 				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
 				$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
 				$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
-				$oSmarty->assign("zReturnStatut", $zReturnStatut);
+				//$oSmarty->assign("zReturnStatut", $zReturnStatut);
+				$oSmarty->assign("zTplGraphPortion", $zTplGraphPortion);
 				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agent/statistique.tpl" );
 				break;
 

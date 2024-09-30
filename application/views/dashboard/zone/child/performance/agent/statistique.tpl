@@ -11,6 +11,7 @@
                                 <div class="row">
                                     <h6>&nbsp;</h6>
                                 </div>
+								
                                 <div class="col-lg-10 col-sm-10 col-md-6 col-xl-6" style="float:left;margin-top:10px;">
                                     <div class="card">
                                         <br>
@@ -22,13 +23,14 @@
                                         <div class="card-body" style="align-center;">
                                             <div class="pro-deadline m-b-15">
                                                 <div class="sub-title">
-                                                    <br>Nombre de dossier validé : <a href="#" onclick="$('#tab3').click()"><strong style="color:#28a745!important">{$oGetInfo->VALIDE}</strong></a>
+                                                    <br>Nombre de dossier validé : <a href="#" onclick="$('#tab3').click()"><strong style="color:#28a745!important">{if $oGetInfo->VALIDE>0}{$oGetInfo->VALIDE}{else}0{/if}</strong></a>
                                                 </div>
-                                                <div class="sub-title">Nombre de dossier rejetés : <a onclick="$('#tab4').click()" href="#"><strong style="color:#dc3545!important">{$oGetInfo->REJET}</strong></a></div>
+                                                <div class="sub-title">Nombre de dossier rejetés : <a onclick="$('#tab4').click()" href="#"><strong style="color:#dc3545!important">{if $oGetInfo->REJET>0}{$oGetInfo->REJET}{else}0{/if}</strong></a></div>
                                             </div>
-
+											{assign var=sum value=$oGetInfo->VALIDE+$oGetInfo->REJET}
+											{if $sum>0}
                                             <p>
-												{assign var=sum value=$oGetInfo->VALIDE+$oGetInfo->REJET}
+												
 												{assign var=num1 value=$oGetInfo->VALIDE*100/$sum}
                                                 <span class="text-success float-end">{$num1|number_format:2:",":"."}%</span>
                                                 de dossier validés 
@@ -45,7 +47,7 @@
                                             <div class="progress progress-xs mb-0">
                                                 <div class="progress-bar bg-danger" role="progressbar" data-bs-toggle="tooltip" title='{$num2}%' style='width: {$num2}%'></div>
                                             </div>
-
+											{/if}
 
 											
 											<!--
@@ -67,8 +69,29 @@
 											-->
 										</div>
                                     </div>
-									<!-- début Stat ----->
-									 <div class="card card-primary">
+									
+										 <div class="card card-success">
+											 <div class="card-header">
+												<h3 class="card-title" style="color:white">Graphe Pyramide</h3>
+
+												<div class="card-tools">
+												  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+													<i class="fas fa-minus"></i>
+												  </button>
+												</div>
+											</div>
+											<div class="card-body" style="align-center;">
+												 <canvas id="structurePyramidChart"></canvas>
+												<br>
+												<br>
+												<canvas id="mefPyramidChart"></canvas>
+											</div>
+										</div>
+									
+                                </div>
+								<div class="col-lg-6" style="float:left;margin-top:10px;">
+								 <!-- début Stat ----->
+									 <div class="card card-success">
 										  <div class="card-header">
 											<h3 class="card-title" style="color:white">Statut de dossier par mois</h3>
 
@@ -76,34 +99,20 @@
 											  <button type="button" class="btn btn-tool" data-card-widget="collapse">
 												<i class="fas fa-minus"></i>
 											  </button>
-											  <button type="button" class="btn btn-tool" data-card-widget="remove">
-												<i class="fas fa-times"></i>
-											  </button>
 											</div>
 										  </div>
 										  <div class="card-body">
-											<div class="chart">
-											  <canvas id="areaChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
-											</div>
+												{if $sum>0}
+												{$zTplGraphPortion}
+												{else}
+													<p style="text-align:center;">Aucun enregistrement pour l'année indiquée</p>
+												{/if}
 										  </div>
-										  <div class="card">
-												<table class="eka" style="text-align:center" id="highcharts-data-table-0"><caption class="highcharts-table-caption"> Situation de dossier : Diagramme en baton</caption><thead><tr><th scope="col" class="text">Catégorie</th><th scope="col" class="text">EPN</th><th scope="col" class="text">ETAT</th><th scope="col" class="text">COMMUNE</th><th scope="col" class="text">REGION</th></tr></thead><tbody><tr><th scope="row" class="text">2 024</th><td class="text">0</td><td class="text">9 775</td><td class="text">0</td><td class="text">0</td></tr></tbody></table>
-										  </div>
+										 
 										  <!-- /.card-body -->
-										</div>
-									<!-- fin stat ----->
-                                </div>
-                                <div class="col-lg-6" style="float:left;margin-top:10px;">
-									<div class="card">
-										<div class="card-body" style="align-center;">
-											 <canvas id="structurePyramidChart"></canvas>
-											<br>
-											<br>
-											<canvas id="mefPyramidChart"></canvas>
-										</div>
 									</div>
-                                </div>
-
+									<!-- fin stat ----->
+								 </div>
 
                             </div>
                         </div>
@@ -216,52 +225,6 @@
             }
         });
     </script>
-    <script>
- $(function () {
-
-		var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-		var areaChartData = {
-			  labels  : ['Janv', 'Févr', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil','Août', 'Sept', 'Oct', 'Nov', 'Déc'],
-			  datasets: [{$zReturnStatut}]
-			}
-
-		var lineChartOptions = $.extend(true, {}, areaChartOptions)
-		var lineChartData = $.extend(true, {}, areaChartData)
-		lineChartData.datasets[0].fill = false;
-		lineChartData.datasets[1].fill = false;
-		lineChartData.datasets[2].fill = false;
-		lineChartData.datasets[3].fill = false;
-		//lineChartData.datasets[4].fill = false;
-		lineChartOptions.datasetFill = false
-
-
-		 // This will get the first returned node in the jQuery collection.
-		new Chart(areaChartCanvas, {
-		  type: 'line',
-		  data: lineChartData,
-		  options: lineChartOptions
-		})
-
-		var areaChartOptions = {
-			  maintainAspectRatio : true,
-			  responsive : true,
-			  legend: {
-				display: true
-			  },
-			  scales: {
-				xAxes: [{
-				  gridLines : {
-					display : true,
-				  }
-				}],
-				yAxes: [{
-				  gridLines : {
-					display : true,
-				  }
-				}]
-			  }
-		}
- })
-</script>
+    
 </div>
 </div>

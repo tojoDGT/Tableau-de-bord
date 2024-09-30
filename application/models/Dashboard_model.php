@@ -237,7 +237,7 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return format Json
 	*/
-	public function getNombreParMoisStatutDossierAgent($_iAnneeExercice='2024',$_zParamAffich="STATUT"){
+	public function getNombreParMoisStatutDossierAgent($iUserId,$_iAnneeExercice='2024',$_zParamAffich="STATUT"){
 		
 		global $db;
 
@@ -252,6 +252,7 @@ class Dashboard_model extends CI_Model {
 						   ECRI_VALID,
 						   MAND_REJET,
 						   MAND_VISA_VALIDE,
+						   MAND_UTR_VISA,
 						   E.ECRI_NUM,
 						   to_char(NVL(NVL(ECRI_DT_CECRITURE,MAND_DT_RJT),MAND_DATE_TRAIT), 'MM') as Mois,
 						   PERI_CODE,
@@ -278,7 +279,9 @@ class Dashboard_model extends CI_Model {
 						   AND M.MAND_NUM_INFO = V.MANDAT(+)
 						   AND M.EXERCICE = v.exercice(+)
 					 ) norm  
-					WHERE 1=1  AND EXERCICE = '".$_iAnneeExercice."'   AND SUBSTR (soa, 1, 1) IN ('9','0','4','2') 
+					WHERE 1=1  
+					AND MAND_UTR_VISA = '" . $iUserId . "'
+					AND EXERCICE = '".$_iAnneeExercice."'   AND SUBSTR (soa, 1, 1) IN ('9','0','4','2') 
 					AND MOIS IS NOT NULL
 					GROUP BY STATUT,MOIS
 					ORDER BY STATUT,MOIS " ;
@@ -292,10 +295,56 @@ class Dashboard_model extends CI_Model {
 		print_r ($toRow);
 		echo "</pre>";*/
 
-		$zReturn = $this->DispatchDataForChartJs(1,$toRow,$_zParamAffich);
+		//$zReturn = $this->DispatchDataForChartJs(1,$toRow,$_zParamAffich);
+		$zReturn = $this->getGraphUser(1,$toRow,$_zParamAffich);
+
+		//echo $zReturn;
 
 
 		return $zReturn;
+	}
+
+	public function getGraphUser($_iMode,$_toRow,$_zParamAffich){
+			
+			$toStatut = array('REJET', 'ADMIS EN DEPENSE', 'EN INSTANCE DE VISA COMPTA', 'EN INSTANCE DE PRISE EN CHARGE');
+
+			$zTestPropCode = "-1";
+			$zAfficheSerieStat = "";
+			
+			foreach($toStatut as $zStatut){
+										
+					$zAfficheSerieStat .= "{";
+					$zAfficheSerieStat .= "name: '".$zStatut."',";
+					
+					$tiNombre = array();
+
+					if($zStatut != $zTestPropCode){
+						$zTestPropCode = $zStatut;
+						$iTest = 0;
+					} 
+
+					for($iIncrement=1;$iIncrement<=12;$iIncrement++){
+							
+						$iTest++;
+
+						$iNombre = 0; 
+						
+						foreach($_toRow as $oRow){
+							if($iIncrement == (int)$oRow["MOIS"] && $oRow[$_zParamAffich] == $zStatut) {
+									$iNombre = $oRow["NOMBRE"];
+							}
+						}
+						
+						array_push ($tiNombre, $iNombre);
+					}
+					
+					$zAfficheSerieStat .= "data: [".implode(",", $tiNombre)."],";
+					$zAfficheSerieStat .= "stack: 'male'";
+					$zAfficheSerieStat .= "},";
+			}
+
+			return $zAfficheSerieStat;
+
 	}
 
 	public function getPropCode($_iAnneeExercice){

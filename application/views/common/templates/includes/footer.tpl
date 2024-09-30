@@ -151,5 +151,12 @@
 <!-- ChartJS -->
 <script src="{$zBasePath}assets/common/plugins/chart.js/Chart.min.js"></script>
 <script src="{$zBasePath}assets/common/dist/js/adminlte.min.js"></script>
+
+<link rel="stylesheet" href="{$zBasePath}assets/css/formoid1/formoid-solid-blue-chart.css" type="text/css" />
+<script src="{$zBasePath}assets/code/highcharts.js"></script>
+<script src="{$zBasePath}assets/code/highcharts-3d.js"></script>
+<script src="{$zBasePath}assets/code/modules/exporting.js"></script>
+<script src="{$zBasePath}assets/code/modules/export-data.js"></script>
+
 </body>
 </html>

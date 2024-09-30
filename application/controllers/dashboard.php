@@ -536,8 +536,6 @@ class Dashboard extends MY_Controller
 							$zAfficheSerieStat .= "},";
 					}
 
-					
-
 				break;
 
 			case '2':
