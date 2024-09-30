@@ -712,61 +712,7 @@ class Dashboard extends MY_Controller
 			
     }
 
-	/** 
-	* function get statitistique global
-	*
-	* @return template HTML
-	*/
-	public function getTabsPcActive(){
-
-		global $oSmarty ; 
-
-		$oRequest = $_REQUEST;
-
-		$zType = $this->postGetValue ("iType", 'statistique');
-		$zPsCode = $this->postGetValue ("zPsCode", '');
-
-		$oSmarty->assign("zBasePath", base_url());
-		$oSmarty->assign("zPsCode", $zPsCode);
-		switch ($zType){
-
-			case 'statistique':
-
-				$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
-				$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',1) ;
-				$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',1) ;
-
-				$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',2) ;
-				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',2) ;
-
-				$oSmarty->assign("oGetInfo", $oGetInfo);
-				$oSmarty->assign("zAfficheValide", $zAfficheValide);
-				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
-				$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
-				$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
-				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
-				break;
-
-			case 'agents':
-				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agents.tpl" );
-				break;
-
-			case 'valider':
-			case 'refuser':
-				$toColonne = $this->demande->getSessionColonne();
-				$oSmarty->assign("zBasePath", base_url());
-				$oSmarty->assign("zPsCode", $zPsCode);
-				$oSmarty->assign("toColonne", $toColonne);
-				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/".$zType.".tpl" );
-				break;
-
-		}
-
-
-		echo $zTplAffiche;
-			
-    }
-
+	
 
 	/** 
 	* function Ajax chargement de la liste validé / refusé à partir de la base
@@ -849,12 +795,19 @@ class Dashboard extends MY_Controller
 		$zType = $this->postGetValue ("iType", 'statistique');
 		$zPsCode = $this->postGetValue ("zPsCode", '');
 
-		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode) ;
-		$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',1) ;
-		$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',1) ;
+		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", '2024');
 
-		$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,'2024',2) ;
-		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,'2024',2) ;
+		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode,$iAnneeExercice) ;
+		$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode,$iAnneeExercice,1) ;
+		$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,$iAnneeExercice,1) ;
+
+		$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,$iAnneeExercice,2) ;
+		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,$iAnneeExercice,2) ;
+
+
+		$zAfficheSerieStat = $this->dashboard->getNombreParMoisStatutDossierAgent(2,$zPsCode,$iAnneeExercice) ;
+		$oSmarty->assign("zAfficheSerieStat", $zAfficheSerieStat);
+		$zTplGraphPortion = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/Graph/graphUser.tpl" );
 
 		//print_r ($oGetInfo);
 		
@@ -863,6 +816,7 @@ class Dashboard extends MY_Controller
 		$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
 		$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
 		$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
+		$oSmarty->assign("zTplGraphPortion", $zTplGraphPortion);
 		$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
 
 		$oSmarty->assign("zBasePath", base_url());
@@ -873,6 +827,68 @@ class Dashboard extends MY_Controller
 		echo $zHtmlGraph;
 			
     }
+
+	/** 
+	* function get statitistique global
+	*
+	* @return template HTML
+	*/
+	public function getTabsPcActive(){
+
+		global $oSmarty ; 
+
+		$oRequest = $_REQUEST;
+
+		$zType = $this->postGetValue ("iType", 'statistique');
+		$zPsCode = $this->postGetValue ("zPsCode", '');
+
+		$iAnneeExercice = $this->postGetValue ("iAnneeExercice", '2024');
+
+		$oSmarty->assign("zBasePath", base_url());
+		$oSmarty->assign("zPsCode", $zPsCode);
+		switch ($zType){
+
+			case 'statistique':
+
+				$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode,$iAnneeExercice) ;
+				$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode, $iAnneeExercice,1) ;
+				$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,$iAnneeExercice,1) ;
+
+				$zAfficheRadarValide = $this->dashboard->getValidePcParMois($zPsCode,$iAnneeExercice,2) ;
+				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMois($zPsCode,$iAnneeExercice,2) ;
+
+				$zAfficheSerieStat = $this->dashboard->getNombreParMoisStatutDossierAgent(2,$zPsCode,$iAnneeExercice) ;
+				$oSmarty->assign("zAfficheSerieStat", $zAfficheSerieStat);
+				$zTplGraphPortion = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/Graph/graphUser.tpl" );
+
+				$oSmarty->assign("oGetInfo", $oGetInfo);
+				$oSmarty->assign("zAfficheValide", $zAfficheValide);
+				$oSmarty->assign("zAfficheRefus", $zAfficheRefus);
+				$oSmarty->assign("zAfficheRadarValide", $zAfficheRadarValide);
+				$oSmarty->assign("zAfficheRadarRefus", $zAfficheRadarRefus);
+				$oSmarty->assign("zTplGraphPortion", $zTplGraphPortion);
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/statistique.tpl" );
+				break;
+
+			case 'agents':
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/agents.tpl" );
+				break;
+
+			case 'valider':
+			case 'refuser':
+				$toColonne = $this->demande->getSessionColonne();
+				$oSmarty->assign("zBasePath", base_url());
+				$oSmarty->assign("zPsCode", $zPsCode);
+				$oSmarty->assign("toColonne", $toColonne);
+				$zTplAffiche = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/performance/".$zType.".tpl" );
+				break;
+
+		}
+
+		echo $zTplAffiche;
+			
+    }
+
 
 	/** 
 	* function Ajax chargement des suivis de dossiers

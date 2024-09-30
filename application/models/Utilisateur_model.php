@@ -252,11 +252,11 @@ class Utilisateur_model extends CI_Model {
 		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) valide,
 				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejet,
+				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_REJET = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejet,
 				( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) as valideAutre,
 				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejetAutre,
+				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_REJET = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejetAutre,
 				p.* FROM EXECUTION".$_iAnneeExercice.".POSTE_COMPTABLE_ORIGINAL  p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "' ";
 	
 		//echo $zSql;

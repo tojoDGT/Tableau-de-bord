@@ -1,3 +1,18 @@
+<div class="col-md-4" style="display:inline-flex">
+<table class="table tableRond table-top-countries">
+	<tbody>
+		<tr>
+			<td class="middle" style="vertical-align: middle;padding-left: 36px;" width="10"><h6>Année Exercice:</h6></td>
+			<td class="noBottom">
+				<select class="form-control" id="iAnneeExercice" name="iAnneeExercice" onChange="ChargementOnglet(this.value);">
+						<option {if $iAnneeExercice=='2023'}selected="selected"{/if} value="2023">2023</option>
+						<option {if $iAnneeExercice=='2024'}selected="selected"{else}selected="selected"{/if} value="2024">2024</option>
+				</select>
+			</td>
+		</tr>
+		</tbody>
+</table>
+</div>
 <div class="mb-0 detailTj">
 	<div class="card-body">
 		<div class="row">
@@ -18,13 +33,27 @@
 		</div>
 	</div>			
 </div>
-
+<div id="table_bd_processing1" class="dataTables_processing card" style="display: none;">
+	<div id="overlay111">Chargement...<br>
+		<div style=";text-align: center;vertical-align: middle;padding-top: 10px;">
+			<img class="imageAloha" src="http://localhost/Tableau-bord/assets/images/loading.gif" width="100">
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
 		
+		function ChargementOnglet(_iAnnee){
+			$('input[name="pcss3t"]:checked').click();	
+		}
+
 		$(".radioTabs").off("click").on("click", function(){
 
+			
 			var iType = $(this).attr("data-info"); 
 			var zPsCode = '{$oGetInfo->PSTP_CODE}';
+			var iAnneeExercice = $('#iAnneeExercice').val();
+
+			$("#table_bd_processing1").show();
 			
 			$.ajax({
 				url: zBasePath + "dashboard/getTabsPcActive",
@@ -32,12 +61,14 @@
 				data: {
 					iType : iType,
 					zPsCode : zPsCode,
+					iAnneeExercice : iAnneeExercice,
 					ajax : 1
 				},
 				success: function(data, textStatus, jqXHR) {
 						$("#contentPaneTabs").html(data);
+						$("#table_bd_processing1").hide();
 				},
-				async: false
+				async: true
 
 			});
 			
@@ -45,7 +76,17 @@
 
 </script>
 <style>
-
+div.dataTables_processing {
+	position: absolute;
+	top: 100px;
+	left: 50%!important;
+	width: 200px;
+	margin-left: -100px!important;
+	margin-top: -26px!important;
+	text-align: center;
+	padding: 1em 0;
+	z-index: 111111;
+}
 .avatar > img {
   width: 100%;
   height: 100%;

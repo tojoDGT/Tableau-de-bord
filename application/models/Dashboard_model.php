@@ -237,7 +237,7 @@ class Dashboard_model extends CI_Model {
 	*
 	* @return format Json
 	*/
-	public function getNombreParMoisStatutDossierAgent($iUserId,$_iAnneeExercice='2024',$_zParamAffich="STATUT"){
+	public function getNombreParMoisStatutDossierAgent($_iType, $iUserEntiteId,$_iAnneeExercice='2024',$_zParamAffich="STATUT"){
 		
 		global $db;
 
@@ -254,6 +254,7 @@ class Dashboard_model extends CI_Model {
 						   MAND_VISA_VALIDE,
 						   MAND_UTR_VISA,
 						   E.ECRI_NUM,
+						   M.ENTITE,
 						   to_char(NVL(NVL(ECRI_DT_CECRITURE,MAND_DT_RJT),MAND_DATE_TRAIT), 'MM') as Mois,
 						   PERI_CODE,
 						   MAND_MODE_PAIE,
@@ -279,9 +280,15 @@ class Dashboard_model extends CI_Model {
 						   AND M.MAND_NUM_INFO = V.MANDAT(+)
 						   AND M.EXERCICE = v.exercice(+)
 					 ) norm  
-					WHERE 1=1  
-					AND MAND_UTR_VISA = '" . $iUserId . "'
-					AND EXERCICE = '".$_iAnneeExercice."'   AND SUBSTR (soa, 1, 1) IN ('9','0','4','2') 
+					WHERE 1=1  ";
+
+		if($_iType==1){
+			$zSql .= "AND MAND_UTR_VISA = '" . $iUserEntiteId . "'" ; 
+		} else {
+			$zSql .= "AND ENTITE = '" . $iUserEntiteId . "'" ; 
+		}
+					
+		$zSql .= "	AND EXERCICE = '".$_iAnneeExercice."'   AND SUBSTR (soa, 1, 1) IN ('9','0','4','2') 
 					AND MOIS IS NOT NULL
 					GROUP BY STATUT,MOIS
 					ORDER BY STATUT,MOIS " ;
@@ -306,7 +313,7 @@ class Dashboard_model extends CI_Model {
 
 	public function getGraphUser($_iMode,$_toRow,$_zParamAffich){
 			
-			$toStatut = array('REJET', 'ADMIS EN DEPENSE', 'EN INSTANCE DE VISA COMPTA', 'EN INSTANCE DE PRISE EN CHARGE');
+			$toStatut = array('ADMIS EN DEPENSE', 'REJET', 'EN INSTANCE DE VISA COMPTA' , 'EN INSTANCE DE PRISE EN CHARGE');
 
 			$zTestPropCode = "-1";
 			$zAfficheSerieStat = "";

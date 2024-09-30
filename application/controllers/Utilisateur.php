@@ -188,7 +188,7 @@ class Utilisateur extends MY_Controller
 		$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 
 
-		$zAfficheSerieStat = $this->dashboard->getNombreParMoisStatutDossierAgent($iUserId,$iAnneeExercice) ;
+		$zAfficheSerieStat = $this->dashboard->getNombreParMoisStatutDossierAgent(1,$iUserId,$iAnneeExercice) ;
 		$oSmarty->assign("zAfficheSerieStat", $zAfficheSerieStat);
 		$zTplGraphPortion = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/Graph/graphUser.tpl" );
 
@@ -247,7 +247,7 @@ class Utilisateur extends MY_Controller
 				$zAfficheRadarValide = $this->dashboard->getValidePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 				$zAfficheRadarRefus = $this->dashboard->getRefusePcParMoisUser($iUserId,$iAnneeExercice,2) ;
 
-				$zAfficheSerieStat = $this->dashboard->getNombreParMoisStatutDossierAgent($iUserId,$iAnneeExercice) ;
+				$zAfficheSerieStat = $this->dashboard->getNombreParMoisStatutDossierAgent(1,$iUserId,$iAnneeExercice) ;
 				$oSmarty->assign("zAfficheSerieStat", $zAfficheSerieStat);
 				$zTplGraphPortion = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "dashboard/zone/child/Graph/graphUser.tpl" );
 

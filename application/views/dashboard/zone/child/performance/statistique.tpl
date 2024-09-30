@@ -11,7 +11,7 @@
                                 <div class="row">
                                     <h6>&nbsp;</h6>
                                 </div>
-                                <div class="col-lg-5 col-sm-7 col-md-5 col-xl-4" style="float:left;margin-top:10px;">
+                                <div class="col-lg-10 col-sm-10 col-md-6 col-xl-6" style="float:left;margin-top:10px;">
                                     <div class="card">
                                         <br>
                                         <!-- Placez l'image ici pour qu'elle ne soit pas affectée par le scroll -->
@@ -22,13 +22,14 @@
                                         <div class="card-body" style="align-center;">
                                             <div class="pro-deadline m-b-15">
                                                 <div class="sub-title">
-                                                    <br>Nombre de dossier validés : <strong style="color:#28a745!important">{$oGetInfo->VALIDE}</strong>
+                                                    <br>Nombre de dossier validés : <strong style="color:#28a745!important">{if $oGetInfo->VALIDE>0}{$oGetInfo->VALIDE}{else}0{/if}</strong>
                                                 </div>
-                                                <div class="sub-title">Nombre de dossier rejetés : <strong style="color:#dc3545!important">{$oGetInfo->REJET}</strong></div>
+                                                <div class="sub-title">Nombre de dossier rejetés : <strong style="color:#dc3545!important">{if $oGetInfo->REJET>0}{$oGetInfo->REJET}{else}0{/if}</strong></div>
                                             </div>
-
+											{assign var=sum value=$oGetInfo->VALIDE+$oGetInfo->REJET}
+											{if $sum>0}
                                             <p>
-												{assign var=sum value=$oGetInfo->VALIDE+$oGetInfo->REJET}
+												
 												{assign var=num1 value=$oGetInfo->VALIDE*100/$sum}
                                                 <span class="text-success float-end">{$num1|number_format:2:",":"."}%</span>
                                                 de dossier validés 
@@ -45,7 +46,7 @@
                                             <div class="progress progress-xs mb-0">
                                                 <div class="progress-bar bg-danger" role="progressbar" data-bs-toggle="tooltip" title='{$num2}%' style='width: {$num2}%'></div>
                                             </div>
-											
+											{/if}
 											<!--
                                             <div class="pro-deadline m-b-15">
                                                 <div>
@@ -65,17 +66,49 @@
 											-->
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12" style="margin-top:10px;">
-									<div class="card">
-										<div class="card-body" style="align-center;">
-											 <canvas id="structurePyramidChart"></canvas>
-											<br>
-											<br>
-											<canvas id="mefPyramidChart"></canvas>
-										</div>
+
+									<div class="card card-success">
+											 <div class="card-header">
+												<h3 class="card-title" style="color:white">Graphe Pyramide</h3>
+
+												<div class="card-tools">
+												  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+													<i class="fas fa-minus"></i>
+												  </button>
+												</div>
+											</div>
+											<div class="card-body" style="align-center;">
+												 <canvas id="structurePyramidChart"></canvas>
+												<br>
+												<br>
+												<canvas id="mefPyramidChart"></canvas>
+											</div>
 									</div>
                                 </div>
+                                <div class="col-lg-6" style="float:left;margin-top:10px;">
+								 <!-- début Stat ----->
+									 <div class="card card-success">
+										  <div class="card-header">
+											<h3 class="card-title" style="color:white">Statut de dossier par mois</h3>
+
+											<div class="card-tools">
+											  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+												<i class="fas fa-minus"></i>
+											  </button>
+											</div>
+										  </div>
+										  <div class="card-body">
+												{if $sum>0}
+												{$zTplGraphPortion}
+												{else}
+													<p style="text-align:center;">Aucun enregistrement pour l'année indiquée</p>
+												{/if}
+										  </div>
+										 
+										  <!-- /.card-body -->
+									</div>
+									<!-- fin stat ----->
+								 </div>
 
 
                             </div>
