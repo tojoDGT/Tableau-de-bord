@@ -95,19 +95,21 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM specl.V_USERS u WHERE 1=1
+		/*$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM specl.V_USERS u WHERE 1=1
 				AND USERID IN (select DISTINCT MAND_UTR_VISA from EXECUTION".$_iAnneeExercice.".MANDAT WHERE ENTITE='".$_zPostCode."'
-				AND MAND_UTR_VISA IS NOT NULL)";
-
-		if( !empty($oRequest['search']['value']) ) {   
-			$zSql.=" AND ( USERID LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  FIRST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  LAST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  EMAIL_CANONICAL LIKE '%".$oRequest['search']['value']."%' ) ";
-		}
+				AND MAND_UTR_VISA IS NOT NULL)";*/
 
 
-		$zSql .= " GROUP BY USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL ";
+		$zSql=" SELECT  COUNT(*) over() found_rows, norm.* FROM (SELECT u.USERID,USERNAME,USERFIRSTNAME,USERMAIL,
+				(SELECT ACTIVITYADRS FROM specl.USERINFOACTIVITY v WHERE v.USERID = u.USERID ORDER BY ACTIVITYVALIDDATE DESC OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) adresse
+				FROM SPECL.USERINFOGEN u
+				WHERE u.USERID IN (SELECT DISTINCT m.MAND_UTR_VISA FROM EXECUTION".$_iAnneeExercice.".MANDAT m 
+				WHERE m.MAND_UTR_VISA IS NOT NULL AND M.ENTITE = '".$_zPostCode."') ";
+
+
+		$zSql .= " GROUP BY u.USERID,USERNAME,USERFIRSTNAME,USERMAIL ";
+
+		//$zSql .= " GROUP BY USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL ";
 		
 		$zDebut = 0;
 		$zFin = 10;
@@ -124,6 +126,15 @@ class Utilisateur_model extends CI_Model {
 			$zFin =  (int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY FIRST_NAME ASC ";
+		}
+
+		$zSql .= " ) norm WHERE 1=1 ";
+
+		if( !empty($oRequest['search']['value']) ) {   
+			$zSql.=" AND ( USERID LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  FIRST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  LAST_NAME LIKE '%".$oRequest['search']['value']."%'  ";
+			$zSql.=" OR  EMAIL_CANONICAL LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
 		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";

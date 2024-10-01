@@ -31,7 +31,7 @@
 						success: function(data, textStatus, jqXHR) {
 							zData = data;
 						},
-						async: !1
+						async: true
 					})
 
 					return zData;
