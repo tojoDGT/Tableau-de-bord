@@ -1145,7 +1145,9 @@ SELECT
 
 		$zSql .=" AND SUBSTR (m.soa, 1, 1) IN ('9','0','4','2')";
 
-		if( !empty($oRequest['MAND_MODE_PAIE']) &&  sizeof($oRequest['MAND_MODE_PAIE'])>0) {   
+		//if( !empty($oRequest['MAND_MODE_PAIE']) &&  sizeof($oRequest['MAND_MODE_PAIE'])>0) {   
+
+		if( !empty($oRequest['MAND_MODE_PAIE']) &&  is_array($oRequest['MAND_MODE_PAIE'])>0) {   
 			
 		   $toMandMode = array();
 			foreach ($oRequest['MAND_MODE_PAIE'] as $zMandMode){
@@ -1219,7 +1221,7 @@ SELECT
 			}
 		}
 
-		if( !empty($oRequest['MAND_MODE_PAIE']) &&  sizeof($oRequest['MAND_MODE_PAIE'])>0) {   
+		if( !empty($oRequest['MAND_MODE_PAIE']) &&  is_array($oRequest['MAND_MODE_PAIE'])>0) {   
 			
 		   $toMandMode = array();
 			foreach ($oRequest['MAND_MODE_PAIE'] as $zMandMode){
