@@ -23,9 +23,9 @@
 					<input type="radio" name="pcss3t" id="tab2" data-info="agents" data-title="Agents de la structure" class="radioTabs tab-content-user">
 					<label style="background-color: #777;" for="tab2"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="#dddbdb" d="M12,13.55566c-2.08644,0.00027-3.77805-1.6909-3.77832-3.77734C8.22141,7.69188,9.91258,6.00027,11.99902,6c2.08644-0.00027,3.77805,1.6909,3.77832,3.77734C15.77519,11.86277,14.08543,13.55297,12,13.55566z"></path><path fill="#fff" d="M14.81421,12.27264C14.12238,13.05249,13.12427,13.5542,12,13.55566c-1.1297,0.00012-2.13208-0.50574-2.82452-1.29163c-1.68323,0.90082-2.90991,2.58667-3.13641,4.62756c-0.05969,0.54901,0.33679,1.04248,0.88574,1.10254L16.96582,18c0.03656,0,0.07306-0.00201,0.10938-0.00586c0.54895-0.06006,0.94543-0.55353,0.88574-1.10254C17.73743,14.87793,16.51947,13.18268,14.81421,12.27264z"></path><path fill="#aba6a6" d="M19,2H5C3.34387,2.00183,2.00183,3.34387,2,5v14c0.00183,1.65613,1.34387,2.99817,3,3h14c1.65613-0.00183,2.99817-1.34387,3-3V5C21.99817,3.34387,20.65613,2.00183,19,2z M17.0752,17.99414C17.03888,17.99799,17.00238,18,16.96582,18L6.9248,17.99414c-0.54895-0.06006-0.94543-0.55353-0.88574-1.10254c0.2265-2.04089,1.45319-3.72675,3.13641-4.62756c0,0.00006,0.00012,0.00006,0.00012,0.00012c-0.58636-0.66553-0.9538-1.52911-0.95392-2.48584C8.22144,7.69189,9.9126,6.00024,11.99902,6s3.77808,1.69092,3.77832,3.77734c-0.00098,0.96118-0.3717,1.82861-0.9632,2.49536l0.00006-0.00006c1.70526,0.91003,2.92322,2.60529,3.14673,4.61896C18.02063,17.44061,17.62415,17.93408,17.0752,17.99414z"></path></svg> Les Agents validateurs</label>
 					<input type="radio" name="pcss3t" id="tab3" data-info="valider" data-title="Ajout structures filles" class="radioTabs tab-content-addstructure">
-					<label style="background-color: #777;" for="tab3"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M19,21.5H5a3.00328,3.00328,0,0,1-3-3V5.5a3.00328,3.00328,0,0,1,3-3H9.55859A2.99629,2.99629,0,0,1,12.4043,4.55078L12.7207,5.5H19a3.00328,3.00328,0,0,1,3,3v10A3.00328,3.00328,0,0,1,19,21.5Z"></path><path fill="#aba6a6" d="M14,12.5H13v-1a1,1,0,0,0-2,0v1H10a1,1,0,0,0,0,2h1v1a1,1,0,0,0,2,0v-1h1a1,1,0,0,0,0-2Z"></path></svg> Liste des dossiers validés</label>
+					<label style="background-color: #777;" for="tab3"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M19,21.5H5a3.00328,3.00328,0,0,1-3-3V5.5a3.00328,3.00328,0,0,1,3-3H9.55859A2.99629,2.99629,0,0,1,12.4043,4.55078L12.7207,5.5H19a3.00328,3.00328,0,0,1,3,3v10A3.00328,3.00328,0,0,1,19,21.5Z"></path><path fill="#aba6a6" d="M14,12.5H13v-1a1,1,0,0,0-2,0v1H10a1,1,0,0,0,0,2h1v1a1,1,0,0,0,2,0v-1h1a1,1,0,0,0,0-2Z"></path></svg> Liste des dossiers validés  (<strong id="dossierValide" style="color:#2aff5b !important">{if $oGetInfo->VALIDE>0}{$oGetInfo->VALIDE}{else}0{/if}</strong>)</label>
 					<input type="radio" name="pcss3t" id="tab4" data-info="refuser" data-title="Désactivation des structures filles" class="radioTabs tab-content-addstructure">
-					<label style="background-color: #777;" for="tab4"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M19,21.5H5a3.00328,3.00328,0,0,1-3-3V5.5a3.00328,3.00328,0,0,1,3-3H9.55859A2.99629,2.99629,0,0,1,12.4043,4.55078L12.7207,5.5H19a3.00328,3.00328,0,0,1,3,3v10A3.00328,3.00328,0,0,1,19,21.5Z"></path><path fill="#aba6a6" d="M14,12.5H13v-1a1,1,0,0,0-2,0v1H10a1,1,0,0,0,0,2h1v1a1,1,0,0,0,2,0v-1h1a1,1,0,0,0,0-2Z"></path></svg> Liste des dossiers refusés</label>
+					<label style="background-color: #777;" for="tab4"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M19,21.5H5a3.00328,3.00328,0,0,1-3-3V5.5a3.00328,3.00328,0,0,1,3-3H9.55859A2.99629,2.99629,0,0,1,12.4043,4.55078L12.7207,5.5H19a3.00328,3.00328,0,0,1,3,3v10A3.00328,3.00328,0,0,1,19,21.5Z"></path><path fill="#aba6a6" d="M14,12.5H13v-1a1,1,0,0,0-2,0v1H10a1,1,0,0,0,0,2h1v1a1,1,0,0,0,2,0v-1h1a1,1,0,0,0,0-2Z"></path></svg> Liste des dossiers refusés (<strong id="dossierRefus" style="color:#ffafaf !important">{if $oGetInfo->REJET>0}{$oGetInfo->REJET}{else}0{/if}</strong>)</label>
 					<div class="ombremultiple" id="contentPaneTabs">
 						{$zTplAffiche}
 					</div>
@@ -65,7 +65,10 @@
 					ajax : 1
 				},
 				success: function(data, textStatus, jqXHR) {
-						$("#contentPaneTabs").html(data);
+						var data = JSON.parse(data);
+						$("#dossierValide").html(data.VALIDE);
+						$("#dossierRefus").html(data.REJET);
+						$("#contentPaneTabs").html(data.TEMPLATE);
 						$("#table_bd_processing1").hide();
 				},
 				async: true

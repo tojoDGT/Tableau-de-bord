@@ -276,7 +276,7 @@ class Utilisateur extends MY_Controller
 		$zResponse =  array(
 				'VALIDE' => $oGetInfo->VALIDE,
 				'REJET' => $oGetInfo->REJET,
-				'TEMPALTE' => $zTplAffiche,
+				'TEMPLATE' => $zTplAffiche,
 		);
 
 		echo json_encode($zResponse);

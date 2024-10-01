@@ -65,7 +65,7 @@
 						var data = JSON.parse(data);
 						$("#dossierValide").html(data.VALIDE);
 						$("#dossierRefus").html(data.REJET);
-						$("#contentPaneTabs").html(data.TEMPALTE);
+						$("#contentPaneTabs").html(data.TEMPLATE);
 						$("#table_bd_processing").hide();
 				},
 				async: true

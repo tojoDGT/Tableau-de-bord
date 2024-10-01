@@ -209,12 +209,12 @@ class Dashboard extends MY_Controller
 
 				$this->demande->setExcelExportDossier($iNombreTotal,$toRow,$_REQUEST);
 
-				/*echo "<pre>";
+				/*-echo "<pre>";
 				print_r ($toRow);
 				echo "</pre>";
 
-				die();
-				*/
+				die();*/
+				
 
 				break;
 
@@ -846,11 +846,14 @@ class Dashboard extends MY_Controller
 
 		$oSmarty->assign("zBasePath", base_url());
 		$oSmarty->assign("zPsCode", $zPsCode);
+
+		$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode,$iAnneeExercice) ;
+		
 		switch ($zType){
 
 			case 'statistique':
 
-				$oGetInfo = $this->utilisateur->getInfoPostComptable($zPsCode,$iAnneeExercice) ;
+				
 				$zAfficheValide = $this->dashboard->getValidePcParMois($zPsCode, $iAnneeExercice,1) ;
 				$zAfficheRefus = $this->dashboard->getRefusePcParMois($zPsCode,$iAnneeExercice,1) ;
 
@@ -885,7 +888,15 @@ class Dashboard extends MY_Controller
 
 		}
 
-		echo $zTplAffiche;
+		//echo $zTplAffiche;
+
+		$zResponse =  array(
+				'VALIDE' => $oGetInfo->VALIDE,
+				'REJET' => $oGetInfo->REJET,
+				'TEMPLATE' => $zTplAffiche,
+		);
+
+		echo json_encode($zResponse);
 			
     }
 
