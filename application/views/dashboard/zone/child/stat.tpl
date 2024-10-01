@@ -53,15 +53,9 @@
 	<div class="small-box bg-danger">
 	  <div class="inner">
 		<h3>
-		{if $oResult->COMPTE == 0}
-			{if $oResult->NB_SOA==0}
-			0
-			{else}
-			100
-			{/if}
-		{else}
-		{$oResult->COMPTE/$oResult->NB_SOA*100|number_format:2:",":" "}
-		{/if}
+		{assign var="iPercent" value=$oResult->NB_SOA/($oResult->NB_SOA+$oResult->REJETE)*100}
+		{$iPercent|number_format:2:",":" "}
+		
 		<sup style="font-size: 20px">%</sup></h3>
 
 		<p>Pourcentage des dossiers validés</p>

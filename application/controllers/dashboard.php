@@ -699,7 +699,7 @@ class Dashboard extends MY_Controller
 		$iAnneeExercice = $this->postGetValue ("ECRI_EXERCICE", 2024);
 
 		$zAfficheSerieStat = "";
-		$oResult = $this->dashboard->getStatGLobal($iAnneeExercice);
+		$oResult = $this->dashboard->getStatGLobal($iAnneeExercice, $this);
 
 		/*print_r ($oResult);*/
 		

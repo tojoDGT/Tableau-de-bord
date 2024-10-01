@@ -1177,7 +1177,7 @@ SELECT
 	*
 	* @return tableau objet
 	*/
-	public function getStatGLobal($_iAnneeExercice){
+	public function getStatGLobal($_iAnneeExercice, $_this=''){
 		
 		global $db;
 
@@ -1188,12 +1188,13 @@ SELECT
 		$oRequest = $_REQUEST;
 
 		$zSqlWhere = "";
-
 		$zSqlWhere2 = "";
+		$zSqlWhere3 = "";
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
-			$zSqlWhere .=" AND t.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
-			$zSqlWhere2.=" AND EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
+			//$zSqlWhere2 .=" AND t.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
+			$zSqlWhere.=" AND EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
+			$zSqlWhere3 = $zSqlWhere ; 
 		}
 
 		if( !empty($oRequest['MIN_ABREV']) &&  $oRequest['MIN_ABREV']!="") {   
@@ -1221,6 +1222,16 @@ SELECT
 			}
 		}
 
+		if( !empty($oRequest['MAND_MODE_PAIE']) &&  $oRequest['MAND_MODE_PAIE']!="") {   
+
+			if($oRequest['MAND_MODE_PAIE']=='VB'){
+				$zSqlWhere .=" AND MAND_MODE_PAIE IN ('VB','ME')";
+			} else {
+				$zSqlWhere.=" AND MAND_MODE_PAIE = '".$oRequest['MAND_MODE_PAIE']."'  ";
+			}
+			
+		}
+
 		if( !empty($oRequest['MAND_MODE_PAIE']) &&  is_array($oRequest['MAND_MODE_PAIE'])>0) {   
 			
 		   $toMandMode = array();
@@ -1236,14 +1247,114 @@ SELECT
 			}
 		}
 
-		$zSousRequete	 = " select COUNT(*) from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND m.MAND_REJET = 1 ";
+		if( !empty($oRequest['PROP_CODE']) &&  $oRequest['PROP_CODE']!="") {   
+			$toPropCode = array();
+			foreach ($oRequest['PROP_CODE'] as $zValue){
+					array_push($toPropCode, $zValue);
+			}
+			
+			if(sizeof($toPropCode)>0){
+				$zSqlWhere .=" AND SUBSTR (soa, 1, 1) IN (".implode(",",$toPropCode).")";
+			}
+		}
+
+
+		if( !empty($oRequest['TYPE_MAND']) &&  $oRequest['TYPE_MAND']!="") {   
+			$zSqlWhere.=" AND TYPE_MAND = '".$oRequest['TYPE_MAND']."'  ";
+		} 
+
+
+		/*if( !empty($oRequest['STATUT']) &&  $oRequest['STATUT']!="") {   
+			$zSqlWhere.=" AND STATUT = '".$oRequest['STATUT']."'  ";
+		} */
+
+		if( !empty($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
+			$zSqlWhere.=" AND m.ENTITE = '".$oRequest['zPsCode']."'  ";
+		}
+
+		if( !empty($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']!="") {   
+			$zSqlWhere.=" AND MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
+		}
+
+		if( !empty($oRequest['date_debut_rec']) &&  $oRequest['date_fin_rec']!="") {   
+			$zDateDebRec = $oRequest['date_debut_rec'] ; 
+			$zDateFinRec = $oRequest['date_fin_rec'] ; 
+
+			if ($zDateDebRec == $zDateFinRec){
+				$oDate = new DateTime($_this->date_fr_to_en($zDateFinRec,"/","-"));
+				$oDate->modify('+1 day');
+				$zDateFinRec =  $oDate->format('d/m/Y');
+			}
+
+			$zSqlWhere.="  AND MAND_DATE_RECUP BETWEEN '".$zDateDebRec."' AND '".$zDateFinRec."' ";
+		}
+
+		//print_r ($oRequest);
+
+
+		if( !empty($oRequest['date_debut_visa']) &&  $oRequest['date_fin_visa']!="") {   
+			$zDateDebVisa = $oRequest['date_debut_visa'] ; 
+			$zDateFinVisa = $oRequest['date_fin_visa'] ; 
+
+			if ($zDateDebVisa == $zDateFinVisa){
+				$oDate = new DateTime($_this->date_fr_to_en($zDateFinVisa,"/","-"));
+				$oDate->modify('+1 day');
+				$zDateFinVisa =  $oDate->format('d/m/Y');
+			}
+
+			$zSqlWhere.="  AND MAND_DATE_REEL_VISA BETWEEN '".$zDateDebVisa."' AND '".$zDateFinVisa."' ";
+		}
+
+		if( !empty($oRequest['data']) &&  sizeof($oRequest['data'])>0) {   
+			
+			$toPropCode = array();
+			foreach ($oRequest['data'] as $oData){
+				if($oData['name']=='PROP_CODE[]'){
+					$zValue = "'". $oData['value'] . "'";
+					array_push($toPropCode, $zValue);
+				}
+			}
+			
+			if(sizeof($toPropCode)>0){
+				$zSqlWhere .=" AND SUBSTR (soa, 1, 1) IN (".implode(",",$toPropCode).")";
+			}
+		}
+
+		$toMandMode1 = array();
+		if( !empty($oRequest['data']) &&  sizeof($oRequest['data'])>0) {   
+
+		   $toMandMode = array();
+			foreach ($oRequest['data'] as $oData){
+				if($oData['name']=='MAND_MODE_PAIE'){
+					if($oData['value']!=""){
+						$zValue = "'". $oData['value'] . "'";
+						array_push($toMandMode, $zValue);
+						array_push($toMandMode1, $oData['value']);
+					}
+				}
+				
+			}
+			
+			if(sizeof($toMandMode)>0){
+
+				if(in_array("'VB'", $toMandMode)){
+					/* Money electronique */
+					$zValue = "'ME'";
+					array_push($toMandMode,$zValue);
+				}  
+
+				$zSqlWhere .=" AND MAND_MODE_PAIE IN (".implode(",",$toMandMode).")";
+			}
+		}
+
+		$zSousRequete	 = " select COUNT(*) from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE m.ECRI_NUM = t.ECRI_NUM(+) AND m.MAND_REJET = 1 ";
 		$zSousRequete   .= $zSqlWhere ; 
 
 
-		$zSql = "select distinct (SELECT SUM(MAND_MONTANT) over () FROM EXECUTION".$_iAnneeExercice.".MANDAT WHERE MAND_REJET<>1 ".$zSqlWhere2." OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) TOTAL,COUNT(*) over ()  as NB_SOA,SUM(MAND_MONTANT) over () NBTOTAL, (".$zSousRequete.") as rejete
+		$zSql = "select distinct (SELECT SUM(MAND_MONTANT) over () FROM EXECUTION".$_iAnneeExercice.".MANDAT WHERE MAND_REJET<>1 ".$zSqlWhere3." OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) TOTAL,COUNT(*) over ()  as NB_SOA,SUM(MAND_MONTANT) over () NBTOTAL, (".$zSousRequete.") as rejete
 		
 		
-		from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND m.MAND_REJET<>1 " ;
+		from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE m.ECRI_NUM = t.ECRI_NUM(+) AND m.MAND_REJET<>1 " ;
 
 		
 		$zSql .= $zSqlWhere;
