@@ -51,11 +51,12 @@ $(document).ready(function() {
 				iModePaiement: $("#sendSearch").find("input[name='MAND_MODE_PAIE[]']:checked").val()
 			},
 			beforeSend: function() {
-				
-				$(".shown").html('<div style=";text-align: center;vertical-align: middle;padding-top: 10px;"><img class="imageAloha" src="'+zBasePath+'assets/images/loading.gif" width="100">');
+				$("#table_bd_processing2").show();
+				//$(".shown").html('<div style=";text-align: center;vertical-align: middle;padding-top: 10px;"><img class="imageAloha" src="'+zBasePath+'assets/images/loading.gif" width="100">');
 			},
 			success: function(data, textStatus, jqXHR) {
 				zData = data;
+				$("#table_bd_processing2").hide();
 			},
 			async: !1
 		})
@@ -128,7 +129,9 @@ $(document).ready(function() {
 	if($("#getStatGLobal").hasClass( "active" )){
 		$("#nombreMontant").show();
 		$(".stattGlobal").html("");
-		$(".stattGlobal").html('<div style=";text-align: center;vertical-align: middle;padding-top: 10px;"><img class="imageAloha" src="'+zBasePath+'assets/images/loading.gif" width="100">');
+		//$(".stattGlobal").html('<div style=";text-align: center;vertical-align: middle;padding-top: 10px;"><img class="imageAloha" src="'+zBasePath+'assets/images/loading.gif" width="100">');
+
+		$("#table_bd_processing2").show();
 		
 		$.ajax({
 			url : zBasePath + "dashboard/getStatGLobal", // json datasource
@@ -137,6 +140,7 @@ $(document).ready(function() {
 			success: function (zReturn, textStatus, jqXHR) {
 				$(".stattGlobal").html("");
 				$(".stattGlobal").html(zReturn);
+				$("#table_bd_processing2").hide();
 			},
 			async: true
 		});

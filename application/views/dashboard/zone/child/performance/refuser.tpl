@@ -39,10 +39,12 @@
 							},
 							beforeSend: function() {
 								
-								$(".shown").html('<div style=";text-align: center;vertical-align: middle;padding-top: 10px;"><img class="imageAloha" src="'+zBasePath+'assets/images/loading.gif" width="100">');
+								//$(".shown").html('<div style=";text-align: center;vertical-align: middle;padding-top: 10px;"><img class="imageAloha" src="'+zBasePath+'assets/images/loading.gif" width="100">');
+								$("#table_bd_processing2").show();
 							},
 							success: function(data, textStatus, jqXHR) {
 								zData = data;
+								$("#table_bd_processing2").hide();
 							},
 							async: !1
 						})

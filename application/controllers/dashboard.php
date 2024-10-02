@@ -66,9 +66,9 @@ class Dashboard extends MY_Controller
 		}
 		
 
-		$toUrl = explode("index.php/", $zReturnUrl);
+		//$toUrl = explode("index.php/", $zReturnUrl);
 
-		redirect($toUrl[1]);
+		redirect($zReturnUrl);
 	}
 
 	 

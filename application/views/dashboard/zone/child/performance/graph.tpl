@@ -53,8 +53,8 @@
 		var iModeGraph = $(this).attr("iModeGraph");
 		$("#iModeGraph").val(iModeGraph);
 		$(".stattPlace").html("");
-		$(".stattPlace").html('<div style=";text-align: center;vertical-align: middle;padding-top: 10px;"><img class="imageAloha" src="'+zBasePath+'assets/images/loading.gif" width="100">');
-		
+		//$(".stattPlace").html('<div style=";text-align: center;vertical-align: middle;padding-top: 10px;"><img class="imageAloha" src="'+zBasePath+'assets/images/loading.gif" width="100">');
+		$("#table_bd_processing2").show();
 		$.ajax({
 			url : zBasePath + "dashboard/getGraphAjax", // json datasource
 			type: "post",
@@ -64,6 +64,7 @@
 				$(".stattPlace").html("");
 				$(".stattPlace").html(zReturn);
 				$("html, body").animate({ scrollTop: document.body.scrollHeight }, "slow");
+				$("#table_bd_processing2").hide();
 			},
 			async: true
 		});

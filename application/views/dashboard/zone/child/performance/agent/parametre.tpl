@@ -32,13 +32,6 @@
 		</div>
 	</div>			
 </div>
-<div id="table_bd_processing" class="dataTables_processing card" style="display: none;">
-	<div id="overlay111">Chargement...<br>
-		<div style=";text-align: center;vertical-align: middle;padding-top: 10px;">
-			<img class="imageAloha" src="http://localhost/Tableau-bord/assets/images/loading.gif" width="100">
-		</div>
-	</div>
-</div>
 <script type="text/javascript">
 		
 		function ChargementOnglet(_iAnnee){
@@ -47,7 +40,7 @@
 		
 		$(".radioTabs").off("click").on("click", function(){
 
-			$("#table_bd_processing").show();
+			$("#table_bd_processing1").show();
 			var iType = $(this).attr("data-info"); 
 			var iUserId = '{$iUserId}';
 			var iAnneeExercice = $('#iAnneeExercice').val();
@@ -66,7 +59,7 @@
 						$("#dossierValide").html(data.VALIDE);
 						$("#dossierRefus").html(data.REJET);
 						$("#contentPaneTabs").html(data.TEMPLATE);
-						$("#table_bd_processing").hide();
+						$("#table_bd_processing1").hide();
 				},
 				async: true
 
@@ -76,17 +69,6 @@
 
 </script>
 <style>
-div.dataTables_processing {
-	position: absolute;
-	top: 100px;
-	left: 42%!important;
-	width: 200px;
-	margin-left: -100px!important;
-	margin-top: -26px!important;
-	text-align: center;
-	padding: 1em 0;
-	z-index: 111111;
-}
 .avatar > img {
   width: 100%;
   height: 100%;

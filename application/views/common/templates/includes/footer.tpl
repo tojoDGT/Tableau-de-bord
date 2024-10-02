@@ -14,6 +14,20 @@
 	<strong>Copyright &copy; 2024 <a href="#">MEF</a></strong>/DGT
 </footer>
  <!-- Control Sidebar -->
+ <div id="table_bd_processing1" class="dataTables_processing card" style="display: none;">
+	<div id="overlay111">Chargement...<br>
+		<div style=";text-align: center;vertical-align: middle;padding-top: 10px;">
+			<img class="imageAloha" src="http://localhost/Tableau-bord/assets/images/loading.gif" width="100">
+		</div>
+	</div>
+</div>
+ <div id="table_bd_processing2" class="dataTables_processing dataTables_processing2 card" style="display: none;">
+	<div id="overlay111">Chargement...<br>
+		<div style=";text-align: center;vertical-align: middle;padding-top: 10px;">
+			<img class="imageAloha" src="http://localhost/Tableau-bord/assets/images/loading.gif" width="100">
+		</div>
+	</div>
+</div>
   <aside class="control-sidebar control-sidebar-dark">
 			<!-- Control sidebar content goes here -->
 			<form id="sendSearch" name="sendSearch" action="{$zBasePath}dashboard/changeCol" method="post">
@@ -97,6 +111,31 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
+<style>
+div.dataTables_processing {
+	position: absolute;
+	top: 270px;
+	left: 50%!important;
+	width: 200px;
+	margin-left: -100px!important;
+	margin-top: -26px!important;
+	text-align: center;
+	padding: 1em 0;
+	z-index: 111111;
+}
+
+div.dataTables_processing2 {
+	position: absolute;
+	top: 50%!important;
+	left: 54%!important;
+	width: 200px;
+	margin-left: -100px!important;
+	margin-top: -26px!important;
+	text-align: center;
+	padding: 1em 0;
+	z-index: 111111;
+}
+</style>
 <!-- ./wrapper -->
 <!-- Bootstrap 3.3.7 -->
 <!--<script src="{$zBasePath}assets/common/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
