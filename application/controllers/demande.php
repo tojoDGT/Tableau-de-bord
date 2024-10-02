@@ -77,14 +77,19 @@ class Demande extends MY_Controller
 		//die();
 
 		$toColonne = $this->demande->getSessionColonne();
-
 		//print_r ($toColonne);
 
 		$iNombreTotal = 0;
 
-		$toGetListe = $this->demande->getDemande($iNombreTotal,$this) ; 
+		$toGetListe = $this->demande->getDemande($iNombreTotal,$this); 
 
+		$iTransfert = 0 ; 
+		if( !empty($oRequest['mand_mode_paie']) &&  $oRequest['mand_mode_paie']=="OO") {   
+			$iTransfert = 1 ; 
+		}
+		//die();
 		//print_r ($toGetListe);
+		//die();
 
 		$oDataAssign = array();
 		$iIncrement = 1;
@@ -95,30 +100,53 @@ class Demande extends MY_Controller
 			$oDataTemp[] = '';
 
 			foreach ($toColonne as $oColonne){
+				
 				$oColonne = explode("-", $oColonne);
 
-				if($oColonne[1]=="STATUT"){
-					switch ($oGetListe['STATUT']){
-						case 'REJET':
-							$zSens = "#dc3545";
+					switch ($oColonne[1]){
+
+							case 'STATUT':
+
+								switch ($oGetListe['STATUT']){
+								case 'REJET':
+									$zSens = "#dc3545";
+									
+									break;
+
+								case 'ADMIS EN DEPENSE':
+									$zSens = "#28a745";
+									
+									break;
+
+								default:
+									$zSens = "#007bff";
+									break;
+							}
 							
+							$oDataTemp[] = "<span style=\"color:".$zSens."\">" . $oGetListe['STATUT'] . "</span>";
 							break;
 
-						case 'ADMIS EN DEPENSE':
-							$zSens = "#28a745";
-							
-							break;
+							case 'ECRI_REF':
+								if ($iTransfert == 1){
 
-						default:
-							$zSens = "#007bff";
-							break;
+									$zAffiche  = ($oGetListe['ECRI_REF']!="")?"<strong>-REF Ecriture :</strong> " . $oGetListe['ECRI_REF'] . "<br>":""; 
+									$zAffiche .= ($oGetListe['BT_ENV_TRANSF_DATE']!="")?"<strong>BT date :</strong> " . $oGetListe['BT_ENV_TRANSF_DATE'] . "<br>":""; 
+									$zAffiche .= ($oGetListe['BT_ENV_EDIT_DATE']!="")?"<strong>-BT edit date :</strong> " . $oGetListe['BT_ENV_EDIT_DATE'] . "<br>":"";  
+									$zAffiche .= ($oGetListe['BT_REC_DATE']!="")?"<strong>-BT rec date :</strong> " . $oGetListe['BT_REC_DATE'] . "<br>":""; 
+									$zAffiche .= ($oGetListe['BT_REC_VALID_DATE']!="")?"<strong>BT date valide :</strong> " . $oGetListe['BT_REC_VALID_DATE'] . "<br>":"";   
+
+									$oDataTemp[] = $zAffiche;
+								} else {
+									$oDataTemp[] = $oGetListe[$oColonne[1]];
+								}
+
+								break;
+
+							default:
+								$oDataTemp[] = $oGetListe[$oColonne[1]];
+								break;
 					}
-					
-					$oDataTemp[] = "<span style=\"color:".$zSens."\">" . $oGetListe['STATUT'] . "</span>";
-				} else {
 
-					$oDataTemp[] = $oGetListe[$oColonne[1]];
-				}
 			}
 
 			// cas REGULARISATION
@@ -131,8 +159,7 @@ class Demande extends MY_Controller
 				
 				$oDataTemp[] = '<span class="badge '.$zClass.'">'.$oGetListe["STATUT"].'</span>';
 			}
-			
-			
+		
 			$oDataAssign[] = $oDataTemp;
 			$iIncrement++;
 		}
