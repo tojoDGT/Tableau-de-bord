@@ -219,11 +219,11 @@ class Demande_model extends CI_Model {
 		}
 
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/mdt_vir_tb.sql"); 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/mdt_vir_tb.sql"); 
 		if(sizeof($toMandMode1)>0){
 			/* si transfert */
 			if(in_array("OO", $toMandMode1)){
-				$zData = @file_get_contents(APPLICATION_PATH ."sql/mdt_trsf_specl.sql"); 
+				$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/mdt_trsf_specl.sql"); 
 			}  
 		}
 
@@ -510,7 +510,7 @@ class Demande_model extends CI_Model {
 		$toDB = $this->load->database('catia',true);
 
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/transfert_detail.sql"); 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/transfert/transfert_detail.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
 
@@ -631,7 +631,7 @@ class Demande_model extends CI_Model {
 				   AND T.NUMERO_TITRE = V.TITRENUMERO(+)
 				   AND M.MAND_MODE_PAIE IN ('VB','ME') ";*/
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/compteVirement.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
 

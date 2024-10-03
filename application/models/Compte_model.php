@@ -90,7 +90,7 @@ class Compte_model extends CI_Model {
 			$zWhere.=" AND norm.EXERCICE = '" . $_iAnneeExo . "' ";
 		}
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/normalite.sql"); 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/compte/normalite.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zData = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
 
@@ -212,7 +212,7 @@ class Compte_model extends CI_Model {
 			$zWhere.=" AND EXERCICE = '" . $_iAnneeExo . "' ";
 		}
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/ventiler.sql"); 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/compte/ventiler.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
 		
@@ -340,7 +340,7 @@ class Compte_model extends CI_Model {
 
 		//$zDateParam = date("d/m/".$_iAnneeExo) ;
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/attente.sql"); 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/compte/attente.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zData = str_replace("%ZDATE%", trim($zDate), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
@@ -457,7 +457,7 @@ class Compte_model extends CI_Model {
 
 		//$zWhere.=" AND STATUS != 'VALIDE' ";
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/inexistant.sql"); 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/compte/inexistant.sql"); 
 
 		$zDate = date("d/m/Y");
 

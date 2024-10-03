@@ -174,7 +174,7 @@ class Virement_model extends CI_Model {
 		}
 
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/compteVirement.sql"); 
 		
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
@@ -446,7 +446,7 @@ class Virement_model extends CI_Model {
 						p.*,virement.* ";
 
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/46_virement.sql"); 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/46_virement.sql"); 
 		
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zData = str_replace("%COLUMN%", trim($zColonne), $zData) ; 
@@ -652,7 +652,7 @@ class Virement_model extends CI_Model {
 			case 1:
 				
 				$zWhere = " WHERE MANDAT =  '" . $_iNumMandat . "'";
-				$zData = @file_get_contents(APPLICATION_PATH ."sql/compteVirement.sql"); 
+				$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/compteVirement.sql"); 
 				
 				break;
 				
@@ -662,7 +662,7 @@ class Virement_model extends CI_Model {
 				$zWhere = " AND t.ID =  " . $_id;
 				$zColonne = " * ";
 
-				$zData = @file_get_contents(APPLICATION_PATH ."sql/46_virement.sql"); 
+				$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/46_virement.sql"); 
 				$zData = str_replace("%COLUMN%", trim($zColonne), $zData) ; 
 		
 				break;
@@ -731,7 +731,7 @@ class Virement_model extends CI_Model {
 		$toDB = $this->load->database('catia',true);
 
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/transfert_detail.sql"); 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/transfert/transfert_detail.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
 
