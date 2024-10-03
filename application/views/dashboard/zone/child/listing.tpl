@@ -71,6 +71,7 @@ $(document).ready(function() {
 		"footer": true, 
 		"columnDefs": [
 			{ className: "dt-Visible", "targets": [ 1,2 ] },
+			{ className: "dt-width", "targets": [ 4 ] },
 			{ className: "details-control", "targets": [ 0 ] }
 		 ],
 		"language": {
@@ -187,7 +188,7 @@ hr {
 	background: linear-gradient(to bottom, #30a03f 5%, #126311 100%);
 }
 .dt-width {
-	width:150px;
+	width:200px;
 }
 .dt-Visible {
 	display:none;

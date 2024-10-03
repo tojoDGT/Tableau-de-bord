@@ -130,7 +130,7 @@ class Demande extends MY_Controller
 								if ($iTransfert == 1){
 
 									$zAffiche  = ($oGetListe['ECRI_REF']!="")?"<strong>-REF Ecriture :</strong> " . $oGetListe['ECRI_REF'] . "<br>":""; 
-									$zAffiche .= ($oGetListe['BT_ENV_TRANSF_DATE']!="")?"<strong>BT date :</strong> " . $oGetListe['BT_ENV_TRANSF_DATE'] . "<br>":""; 
+									$zAffiche .= ($oGetListe['BT_ENV_TRANSF_DATE']!="")?"<strong>-BT date :</strong> " . $oGetListe['BT_ENV_TRANSF_DATE'] . "<br>":""; 
 									$zAffiche .= ($oGetListe['BT_ENV_EDIT_DATE']!="")?"<strong>-BT edit date :</strong> " . $oGetListe['BT_ENV_EDIT_DATE'] . "<br>":"";  
 									$zAffiche .= ($oGetListe['BT_REC_DATE']!="")?"<strong>-BT rec date :</strong> " . $oGetListe['BT_REC_DATE'] . "<br>":""; 
 									$zAffiche .= ($oGetListe['BT_REC_VALID_DATE']!="")?"<strong>BT date valide :</strong> " . $oGetListe['BT_REC_VALID_DATE'] . "<br>":"";   

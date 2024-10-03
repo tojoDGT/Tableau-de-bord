@@ -254,13 +254,13 @@ WITH
                 AND NT.DMDVIRID = DV.DMDVIRID(+)
                 AND NT.OVID = OV.OVID(+))
 SELECT %COLUMN%
-  FROM nonepn.titre                       t,
-       nonepn.dossier                     d,
-       ctiers.compte_tiers                c,
-       CTIERS.TIERS                       tt,
-       nonepn.ctiers_rga                  cais,
-       ctiers.compte_tiers ti,
-       catia.poste_comptable@dblccad      p--, chqop.t_chqop_tresor@dblcca2 a2
+  FROM nonepn.titre@salohy               t,
+       nonepn.dossier@salohy             d,
+       ctiers.compte_tiers@salohy        c,
+       CTIERS.TIERS@salohy               tt,
+       nonepn.ctiers_rga@salohy          cais,
+       ctiers.compte_tiers@salohy		 ti,
+       catia.poste_comptable     p--, chqop.t_chqop_tresor@dblcca2 a2
         ,virement                                  
        --,virement.ctrlvir_view_dtl@dblccad  v
  WHERE     t.dossier_id = d.id
