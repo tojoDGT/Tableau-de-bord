@@ -201,9 +201,6 @@ class Virement_model extends CI_Model {
 		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
 		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
 
-		//$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
-
-
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
 		//echo $zSql;
 		//die();
@@ -473,8 +470,6 @@ class Virement_model extends CI_Model {
 			$zWhere.=" ORDER BY virement.DMDVIRDATEVALID ASC ";
 		}
 
-		//$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
-
 		$zData = str_replace("%COLUMN%", trim($zColonne), $zData) ; 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zData = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
@@ -557,7 +552,10 @@ class Virement_model extends CI_Model {
 		print_r ($oRequest);
 		echo "</pre>";*/
 
-		$zSql = "	select COUNT(*) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,REJET_NOTE,MAND_DT_RJT,
+		$zSql = "SELECT * FROM (";
+
+		$zSql .= "	select ROW_NUMBER() OVER (ORDER BY m.MAND_NUM_INFO ASC) AS r__,
+						COUNT(*) OVER () AS found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,REJET_NOTE,MAND_DT_RJT,
 					(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE,
 				    (SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE,
 					m.MAND_VISA_TEF,
@@ -609,8 +607,8 @@ class Virement_model extends CI_Model {
 			$zSql.=" ORDER BY t.ECRI_NUM ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
 
+		$zSql .= " ) niv1 WHERE r__ BETWEEN ".$zDebut." AND ".$zFin." " ;
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
 		//echo $zSql;

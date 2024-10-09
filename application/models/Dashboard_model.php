@@ -55,26 +55,26 @@ class Dashboard_model extends CI_Model {
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getDashboard.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ANNEE%", '2024', $zData) ; 
+		$zData = str_replace("%ANNEE%", '2024', $zData) ; 
 		
 		$zDebut = 0;
 		$zFin = 10;
 		if (sizeof($oRequest)>0){
 			
 			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
-				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+				$zWhere.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
 			} else {
-				$zSql.=" ORDER BY ECRI_NUM ASC ";
+				$zWhere.=" ORDER BY ECRI_NUM ASC ";
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
-			$zSql.=" ORDER BY ECRI_NUM ASC ";
+			$zWhere.=" ORDER BY ECRI_NUM ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
-
+		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
+		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
 		//echo $zSql;
@@ -1079,7 +1079,7 @@ class Dashboard_model extends CI_Model {
 		$zSousRequete   .= $zSqlWhere ; 
 
 
-		$zSql = "select distinct (SELECT SUM(MAND_MONTANT) over () FROM EXECUTION".$_iAnneeExercice.".MANDAT WHERE MAND_REJET<>1 ".$zSqlWhere3." OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) TOTAL,COUNT(*) over ()  as NB_SOA,SUM(MAND_MONTANT) over () NBTOTAL, (".$zSousRequete.") as rejete
+		$zSql = "select distinct (SELECT SUM(MAND_MONTANT) over () FROM EXECUTION".$_iAnneeExercice.".MANDAT WHERE MAND_REJET<>1 ".$zSqlWhere3."  AND rownum=1 ) TOTAL,COUNT(*) over ()  as NB_SOA,SUM(MAND_MONTANT) over () NBTOTAL, (".$zSousRequete.") as rejete
 		
 		
 		from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE m.ECRI_NUM = t.ECRI_NUM(+) AND m.MAND_REJET<>1 " ;
@@ -1087,9 +1087,9 @@ class Dashboard_model extends CI_Model {
 		
 		$zSql .= $zSqlWhere;
 
-		$zSql .= " ORDER BY ECRI_EXERCICE ASC ";
+		$zSql . " AND rownum=1 " ;
 
-		$zSql .= " OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY";
+		//$zSql .= " ORDER BY ECRI_EXERCICE ASC ";
 
 		//echo $zSql;
 		//die();

@@ -389,11 +389,6 @@ class Demande_model extends CI_Model {
 		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
 		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
 
-
-
-		//$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
-
-
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
 		//echo $zSql;
 		//die();
