@@ -57,11 +57,7 @@ class Compte_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		//$zSql = "select * from (";
-
 		$zWhere = " WHERE 1=1 ";
-
-		//$zSql = "select COUNT(*) over () found_rows,n.* from V_NORMALITE_COMPTE n where 1=1 " ;
 
 		if( !empty($oRequest['search']['value']) ) {   
 			$zWhere.=" AND ( PSTP_LIBELLE LIKE '%".$oRequest['search']['value']."%'  ";
@@ -71,23 +67,23 @@ class Compte_model extends CI_Model {
 		}
 
 		if( !empty($oRequest['CONCLUSION']) && ($oRequest['CONCLUSION']!="") ) {   
-			$zWhere.=" AND norm.CONCLUSION = '" . $oRequest['CONCLUSION'] . "'";
+			$zWhere.=" AND CONCLUSION = '" . $oRequest['CONCLUSION'] . "'";
 		}
 
 		if( !empty($oRequest['SENS']) && ($oRequest['SENS']!="") ) {   
-			$zWhere.=" AND norm.SENSOG = '" . $oRequest['SENS'] . "'";
+			$zWhere.=" AND SENSOG = '" . $oRequest['SENS'] . "'";
 		}
 
 		if( !empty($oRequest['PSTP_CODE']) && ($oRequest['PSTP_CODE']!="") ) {   
-			$zWhere.=" AND norm.PSTP_CODE = '" . $oRequest['PSTP_CODE'] . "'";
+			$zWhere.=" AND PSTP_CODE = '" . $oRequest['PSTP_CODE'] . "'";
 		}
 
 		if( !empty($oRequest['COMPTE_NUM']) && ($oRequest['COMPTE_NUM']!="") ) {   
-			$zWhere.=" AND norm.COMPTE_NUM = '" . $oRequest['COMPTE_NUM'] . "'";
+			$zWhere.=" AND COMPTE_NUM = '" . $oRequest['COMPTE_NUM'] . "'";
 		}
 
 		if($_iAnneeExo!=""){
-			$zWhere.=" AND norm.EXERCICE = '" . $_iAnneeExo . "' ";
+			$zWhere.=" AND EXERCICE = '" . $_iAnneeExo . "' ";
 		}
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/compte/normalite.sql"); 
@@ -101,7 +97,7 @@ class Compte_model extends CI_Model {
 
 		//$zDateParam = date("d/m/".$_iAnneeExo) ;
 
-		$zSql = str_replace("%ZDATE%", trim($zDate), $zData) ; 
+		
 		
 		$zDebut = 0;
 		$zFin = 10;
@@ -114,12 +110,17 @@ class Compte_model extends CI_Model {
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+		$zData = str_replace("%ZDATE%", trim($zDate), $zData) ; 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
+		$zData = str_replace("%OTHERWHERE%", trim($zOtherWhere), $zData) ; 
+		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
+		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
@@ -177,8 +178,6 @@ class Compte_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		//$zSql = "select * from (";
-
 		$zWhere = " WHERE 1=1 ";
 
 		if( !empty($oRequest['search']['value']) ) {   
@@ -227,13 +226,18 @@ class Compte_model extends CI_Model {
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
 
+		$zData = str_replace("%ZDATE%", trim($zDate), $zData) ; 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
+		$zData = str_replace("%OTHERWHERE%", trim($zOtherWhere), $zData) ; 
+		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
+		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
 		//echo $zSql;
@@ -290,8 +294,6 @@ class Compte_model extends CI_Model {
 		);
 
 		$oRequest = $_REQUEST;
-
-		//$zSql = "select * from (";
 
 		$zWhere = " WHERE 1=1 ";
 
@@ -356,13 +358,17 @@ class Compte_model extends CI_Model {
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
-
+		$zData = str_replace("%ZDATE%", trim($zDate), $zData) ; 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
+		$zData = str_replace("%OTHERWHERE%", trim($zOtherWhere), $zData) ; 
+		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
+		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
 		//echo $zSql;
@@ -420,8 +426,6 @@ class Compte_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		//$zSql = "select * from (";
-
 		$zWhere = " WHERE 1=1 ";
 
 		if( !empty($oRequest['search']['value']) ) {   
@@ -478,12 +482,17 @@ class Compte_model extends CI_Model {
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+		$zData = str_replace("%ZDATE%", trim($zDate), $zData) ; 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
+		$zData = str_replace("%OTHERWHERE%", trim($zOtherWhere), $zData) ; 
+		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
+		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
@@ -521,18 +530,16 @@ class Compte_model extends CI_Model {
 		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
-
-		$zSql = "select distinct compte_num,compte_lib from COMPTE p
-				 WHERE compte_num IN (SELECT distinct lecr_cpt_general from EXECUTION".$_iAnneeExercice.".lgecriture)
-				 AND p.compte_owner='01' " ;
-
-
+	
+		$zWhere = "";
 		if ($_zTerm != '') {
-			$zSql .= " AND compte_lib like '%". $_zTerm ."%'" ; 
+			$zWhere .= " AND compte_lib like '%". $_zTerm ."%'" ; 
 		}
 
-		$zSql .= " GROUP BY compte_num,compte_lib
-				   ORDER BY compte_num " ; 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/compte/getAllcompte.sql"); 
+
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", '2024', $zData) ; 
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();

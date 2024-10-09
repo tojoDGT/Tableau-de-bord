@@ -33,7 +33,10 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM specl.V_USERS u WHERE 1=1 ";
+		$zSql  = "SELECT * FROM (";
+
+		$zSql .=" SELECT  ROW_NUMBER() OVER (ORDER BY FIRST_NAME ASC) AS r__,
+						COUNT(*) OVER () AS found_rows,USERID,FIRST_NAME,LAST_NAME,EMAIL_CANONICAL FROM specl.V_USERS u WHERE 1=1 ";
 
 		if( !empty($oRequest['search']['value']) ) {   
 			$zSql.=" AND ( USERID LIKE '%".$oRequest['search']['value']."%'  ";
@@ -57,12 +60,12 @@ class Utilisateur_model extends CI_Model {
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY FIRST_NAME ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+		$zSql .= " ) niv1 WHERE r__ BETWEEN ".$zDebut." AND ".$zFin." " ;
 
 		//echo $zSql;
 
@@ -99,9 +102,12 @@ class Utilisateur_model extends CI_Model {
 				AND USERID IN (select DISTINCT MAND_UTR_VISA from EXECUTION".$_iAnneeExercice.".MANDAT WHERE ENTITE='".$_zPostCode."'
 				AND MAND_UTR_VISA IS NOT NULL)";*/
 
+		$zSql  = "SELECT * FROM (";
 
-		$zSql=" SELECT  COUNT(*) over() found_rows, norm.* FROM (SELECT u.USERID,USERNAME,USERFIRSTNAME,USERMAIL,
-				(SELECT ACTIVITYADRS FROM specl.USERINFOACTIVITY v WHERE v.USERID = u.USERID ORDER BY ACTIVITYVALIDDATE DESC OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) adresse
+
+		$zSql=" SELECT  ROW_NUMBER() OVER (ORDER BY USERFIRSTNAME ASC) AS r__,
+						COUNT(*) OVER () AS found_rows, norm.* FROM (SELECT u.USERID,USERNAME,USERFIRSTNAME,USERMAIL,
+				(SELECT ACTIVITYADRS FROM specl.USERINFOACTIVITY v WHERE v.USERID = u.USERID AND rownum=1) adresse
 				FROM SPECL.USERINFOGEN u
 				WHERE u.USERID IN (SELECT DISTINCT m.MAND_UTR_VISA FROM EXECUTION".$_iAnneeExercice.".MANDAT m 
 				WHERE m.MAND_UTR_VISA IS NOT NULL AND M.ENTITE = '".$_zPostCode."') ";
@@ -123,7 +129,7 @@ class Utilisateur_model extends CI_Model {
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY FIRST_NAME ASC ";
 		}
@@ -137,7 +143,7 @@ class Utilisateur_model extends CI_Model {
 			$zSql.=" OR  EMAIL_CANONICAL LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+		$zSql .= " ) niv1 WHERE r__ BETWEEN ".$zDebut." AND ".$zFin." " ;
 
 		//echo $zSql;
 
@@ -177,12 +183,15 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql = "   SELECT  COUNT(*) over() found_rows, norm.* FROM (SELECT u.USERID,USERNAME,USERFIRSTNAME,USERMAIL,
-					(SELECT ACTIVITYADRS FROM specl.USERINFOACTIVITY v WHERE v.USERID = u.USERID ORDER BY ACTIVITYVALIDDATE DESC OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) adresse
+
+		$zSql  = "SELECT * FROM (";
+
+		$zSql .= "  SELECT ROW_NUMBER() OVER (ORDER BY USERFIRSTNAME ASC) AS r__,
+						COUNT(*) OVER () AS found_rows, norm.* FROM (SELECT u.USERID,USERNAME,USERFIRSTNAME,USERMAIL,
+					(SELECT ACTIVITYADRS FROM specl.USERINFOACTIVITY v WHERE v.USERID = u.USERID AND rownum=1) adresse
 					FROM SPECL.USERINFOGEN u
 					WHERE u.USERID IN (SELECT DISTINCT m.MAND_UTR_VISA FROM EXECUTION2023.MANDAT m 
 					WHERE m.MAND_UTR_VISA IS NOT NULL) ";
-
 
 		$zSql .= " GROUP BY u.USERID,USERNAME,USERFIRSTNAME,USERMAIL ";
 		
@@ -198,7 +207,7 @@ class Utilisateur_model extends CI_Model {
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY FIRST_NAME ASC ";
 		}
@@ -213,7 +222,8 @@ class Utilisateur_model extends CI_Model {
 			$zSql.=" OR  USERMAIL LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+		$zSql .= " ) niv1 WHERE r__ BETWEEN ".$zDebut." AND ".$zFin." " ;
+
 
 		//echo $zSql;
 
@@ -247,13 +257,13 @@ class Utilisateur_model extends CI_Model {
 
 		 
 		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) valide,
+				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 AND rownum=1) valide,
 				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_REJET = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejet,
+				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_REJET = 1 AND rownum=1) rejet,
 				( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) as valideAutre,
+				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 AND rownum=1) as valideAutre,
 				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_REJET = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejetAutre,
+				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_REJET = 1 AND rownum=1) rejetAutre,
 				p.* FROM EXECUTION".$_iAnneeExercice.".POSTE_COMPTABLE_ORIGINAL  p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "' ";
 	
 		//echo $zSql;
@@ -278,14 +288,14 @@ class Utilisateur_model extends CI_Model {
 		$toDB = $this->load->database('catia',true);
 
 		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.MAND_UTR_VISA = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) valide,
+				AND m.MAND_UTR_VISA = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 AND rownum=1) valide,
 				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.MAND_UTR_RJT = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejet,
+				AND m.MAND_UTR_RJT = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 0 AND rownum=1) rejet,
 				( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.MAND_UTR_VISA <> '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) as valideAutre,
+				AND m.MAND_UTR_VISA <> '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 AND rownum=1) as valideAutre,
 				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.MAND_UTR_RJT <> '" . $_iUserId . "' AND MAND_VISA_VALIDE = 0 OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) rejetAutre,
-				 m1.MAND_UTR_VISA FROM EXECUTION".$_iAnneeExercice.".MANDAT m1 WHERE m1.MAND_UTR_VISA = '" . $_iUserId . "' OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY";
+				AND m.MAND_UTR_RJT <> '" . $_iUserId . "' AND MAND_VISA_VALIDE = 0 AND rownum=1) rejetAutre,
+				 m1.MAND_UTR_VISA FROM EXECUTION".$_iAnneeExercice.".MANDAT m1 WHERE m1.MAND_UTR_VISA = '" . $_iUserId . "' AND rownum=1";
 	
 		$zQuery = $toDB->query($zSql);
 		$oRow = $zQuery->row();
@@ -315,7 +325,14 @@ class Utilisateur_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		$zSql=" SELECT  DISTINCT COUNT(*) over() found_rows,p.* FROM EXECUTION".$_iAnnee.".POSTE_COMPTABLE_ORIGINAL  p WHERE p.PSTP_TYPE = 0 ";
+		$zSql = "";
+
+		if($iLimit == 0){
+			$zSql .= "SELECT * FROM (";
+		}
+		
+		$zSql .=" SELECT  ROW_NUMBER() OVER (ORDER BY PSTP_LIBELLE ASC) AS r__,
+						COUNT(*) OVER () AS found_rows,p.* FROM EXECUTION".$_iAnnee.".POSTE_COMPTABLE_ORIGINAL  p WHERE p.PSTP_TYPE = 0 ";
 
 		if( !empty($oRequest['search']['value']) ) {   
 			$zSql.=" AND ( PSTP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
@@ -334,13 +351,14 @@ class Utilisateur_model extends CI_Model {
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY PSTP_LIBELLE ASC ";
 		}
 
 		if($iLimit == 0){
-			$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+
+			$zSql .= " ) niv1 WHERE r__ BETWEEN ".$zDebut." AND ".$zFin." " ;
 		}
 
 		//echo $zSql;

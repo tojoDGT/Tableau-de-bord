@@ -26,18 +26,18 @@ class Demande_model extends CI_Model {
 		$toColonne = array();
 		//unset($_SESSION["colonneAffiche"]);
 		if(empty($_SESSION["colonneAffiche"])){
-			array_push($toColonne, 'Identifiant-ECRI_NUM');
-			array_push($toColonne, 'IdentifiantNumInfo-MAND_NUM_INFO');
-			array_push($toColonne, 'STATUT DE PAIEMENT-STATUT_PAIEMENT');
-			array_push($toColonne, 'Référence-ECRI_REF');
-			array_push($toColonne, 'Code tiers-MAND_CODE_TIERS');
-			array_push($toColonne, 'Statut-STATUT');
-			array_push($toColonne, 'Libellé-ECRI_LIB');
-			array_push($toColonne, 'Date-ECRI_DT_CECRITURE');
-			array_push($toColonne, 'Propriétaire-PROP_CODE');
-			array_push($toColonne, 'SOA-SOA');
-			array_push($toColonne, 'Mode-MAND_MODE_PAIE1');
-			array_push($toColonne, 'Montant-MAND_MONTANT1');
+			array_push($toColonne, 'Identifiant-M.ECRI_NUM');
+			array_push($toColonne, 'IdentifiantNumInfo-M.MAND_NUM_INFO');
+			array_push($toColonne, 'STATUT DE PAIEMENT-M.STATUT_PAIEMENT');
+			array_push($toColonne, 'Référence-E.ECRI_REF');
+			array_push($toColonne, 'Code tiers-M.MAND_CODE_TIERS');
+			array_push($toColonne, 'Statut-M.STATUT');
+			array_push($toColonne, 'Libellé-E.ECRI_LIB');
+			array_push($toColonne, 'Date-E.ECRI_DT_CECRITURE');
+			array_push($toColonne, 'Propriétaire-E.PROP_CODE');
+			array_push($toColonne, 'SOA-M.SOA');
+			array_push($toColonne, 'Mode-M.MAND_MODE_PAIE1');
+			array_push($toColonne, 'Montant-M.MAND_MONTANT1');
 
 			$_SESSION["colonneAffiche"] = serialize($toColonne);
 		} else {
@@ -85,10 +85,11 @@ class Demande_model extends CI_Model {
 			$_iAnneeExercice = $oRequest['ECRI_EXERCICE'];
 		}
 
-		$zWhere = " WHERE 1=1 ";
+		$zWhere = "  ";
+		$zOtherWhere = " WHERE 1=1 ";
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
-			$zWhere.=" AND EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
+			$zWhere.=" AND M.EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
 		}
 
 		if( !empty($oRequest['MIN_ABREV']) &&  $oRequest['MIN_ABREV']!="") {   
@@ -98,9 +99,9 @@ class Demande_model extends CI_Model {
 		if( !empty($oRequest['MAND_MODE_PAIE']) &&  $oRequest['MAND_MODE_PAIE']!="") {   
 
 			if($oRequest['MAND_MODE_PAIE']=='VB'){
-				$zWhere .=" AND MAND_MODE_PAIE IN ('VB','ME')";
+				$zWhere .=" AND M.MAND_MODE_PAIE IN ('VB','ME')";
 			} else {
-				$zWhere.=" AND MAND_MODE_PAIE = '".$oRequest['MAND_MODE_PAIE']."'  ";
+				$zWhere.=" AND M.MAND_MODE_PAIE = '".$oRequest['MAND_MODE_PAIE']."'  ";
 			}
 			
 		}
@@ -112,7 +113,7 @@ class Demande_model extends CI_Model {
 			}
 			
 			if(sizeof($toPropCode)>0){
-				$zWhere .=" AND SUBSTR (soa, 1, 1) IN (".implode(",",$toPropCode).")";
+				$zWhere .=" AND SUBSTR (M.SOA, 1, 1) IN (".implode(",",$toPropCode).")";
 			}
 		}
 
@@ -123,15 +124,15 @@ class Demande_model extends CI_Model {
 
 
 		if( !empty($oRequest['STATUT']) &&  $oRequest['STATUT']!="") {   
-			$zWhere.=" AND STATUT = '".$oRequest['STATUT']."'  ";
+			$zOtherWhere.=" AND STATUT = '".$oRequest['STATUT']."'  ";
 		} 
 
 		if( !empty($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
-			$zWhere.=" AND ENTITE = '".$oRequest['zPsCode']."'  ";
+			$zWhere.=" AND M.ENTITE = '".$oRequest['zPsCode']."'  ";
 		}
 
 		if( !empty($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']!="") {   
-			$zWhere.=" AND MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
+			$zWhere.=" AND M.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
 		}
 
 		if( !empty($oRequest['date_debut_rec']) &&  $oRequest['date_fin_rec']!="") {   
@@ -144,7 +145,7 @@ class Demande_model extends CI_Model {
 				$zDateFinRec =  $oDate->format('d/m/Y');
 			}
 
-			$zWhere.="  AND MAND_DATE_RECUP BETWEEN '".$zDateDebRec."' AND '".$zDateFinRec."' ";
+			$zWhere.="  AND M.MAND_DATE_RECUP BETWEEN '".$zDateDebRec."' AND '".$zDateFinRec."' ";
 		}
 
 		//print_r ($oRequest);
@@ -160,7 +161,7 @@ class Demande_model extends CI_Model {
 				$zDateFinVisa =  $oDate->format('d/m/Y');
 			}
 
-			$zWhere.="  AND MAND_DATE_REEL_VISA BETWEEN '".$zDateDebVisa."' AND '".$zDateFinVisa."' ";
+			$zWhere.="  AND M.MAND_DATE_REEL_VISA BETWEEN '".$zDateDebVisa."' AND '".$zDateFinVisa."' ";
 		}
 
 
@@ -176,7 +177,7 @@ class Demande_model extends CI_Model {
 			}
 			
 			if(sizeof($toPropCode)>0){
-				$zWhere .=" AND SUBSTR (soa, 1, 1) IN (".implode(",",$toPropCode).")";
+				$zWhere .=" AND SUBSTR (M.SOA, 1, 1) IN (".implode(",",$toPropCode).")";
 			}
 		}
 
@@ -198,54 +199,51 @@ class Demande_model extends CI_Model {
 			if(sizeof($toMandMode)>0){
 
 				if(in_array("'VB'", $toMandMode)){
-					/* Money electronique */
+					// Money electronique 
 					$zValue = "'ME'";
 					array_push($toMandMode,$zValue);
 				}  
 
-				$zWhere .=" AND MAND_MODE_PAIE IN (".implode(",",$toMandMode).")";
+				$zWhere .=" AND M.MAND_MODE_PAIE IN (".implode(",",$toMandMode).")";
 			}
 		}
 		
 		if( !empty($oRequest['search']['value']) ) {   
-			$zWhere.=" AND ( ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  ECRI_DT_CECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  PROP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  MAND_MODE_PAIE LIKE '%".$oRequest['search']['value']."%' ) ";
+			$zWhere.=" AND ( M.ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  M.ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  M.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  M.ECRI_DT_CECRITURE LIKE '%".$oRequest['search']['value']."%'  ";
+			//$zWhere.=" OR  PROP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  M.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  M.MAND_MODE_PAIE LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/mdt_vir_tb.sql"); 
 		if(sizeof($toMandMode1)>0){
-			/* si transfert */
+			// si transfert 
 			if(in_array("OO", $toMandMode1)){
 				$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/mdt_trsf_specl.sql"); 
 			}  
 		}
+		
 
-		
-		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
-		
 		$zDebut = 0;
 		$zFin = 10;
 		if (sizeof($oRequest)>0){
 			
 			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
-				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+				$zWhere.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
 			} else {
-				$zSql.=" ORDER BY ECRI_NUM ASC ";
+				$zWhere.=" ORDER BY M.ECRI_NUM ASC ";
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
-			$zSql.=" ORDER BY ECRI_NUM ASC ";
+			$zWhere.=" ORDER BY M.ECRI_NUM ASC ";
 		}
+		
 
 		if ($zFin ==0){
 
@@ -261,11 +259,14 @@ class Demande_model extends CI_Model {
 		}
 
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
+		$zData = str_replace("%OTHERWHERE%", trim($zOtherWhere), $zData) ; 
+		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
+		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
 
-
-		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
 		//echo $zSql;
+		
 		//die();
 
 		set_time_limit(200000000000);
@@ -337,47 +338,32 @@ class Demande_model extends CI_Model {
 		print_r ($oRequest);
 		echo "</pre>";*/
 
-		//$zSql = "select * from (";
+		$zWhere = " ";
 
-		$zSql = "	select COUNT(*) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,REJET_NOTE,MAND_DT_RJT,
-					(SELECT PSTP_LIBELLE FROM EXECUTION".$_iAnneeExercice.".POSTE_COMPTABLE_ORIGINAL pc WHERE M.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE,
-					(SELECT PSTP_LIBELLE FROM EXECUTION".$_iAnneeExercice.".POSTE_COMPTABLE_ORIGINAL pc WHERE M.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE,
-					m.MAND_VISA_TEF,
-					m.MAND_NUM_INFO,  
-					m.MAND_OBJET,
-					m.MAND_DATE_RECUP,
-					m.MAND_DATE_REEL_VISA,
-					CASE
-					WHEN m.MAND_MODE_PAIE = 'VB' THEN 'Virement bancaire'
-					WHEN m.MAND_MODE_PAIE = 'OO' THEN 'Opération d`ordre'
-					WHEN m.MAND_MODE_PAIE = 'BC' THEN 'Bon de Caisse'
-					WHEN m.MAND_MODE_PAIE = 'OP' THEN 'Ordre de paiement'
-					END MAND_MODE_PAIE,
-					CONCAT (TO_CHAR(MAND_MONTANT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS MAND_MONTANT1
-
-		from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM " ;
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/getDossier.sql");  
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 
 		if( isset($oRequest['zPsCode']) &&  $oRequest['zPsCode']!="") {   
-			$zSql.=" AND m.ENTITE = '".$oRequest['zPsCode']."'  ";
+			$zWhere.=" AND m.ENTITE = '".$oRequest['zPsCode']."'  ";
 		}
 
 
 		if( isset($oRequest['iUserId']) &&  $oRequest['iUserId']!="") {   
-			$zSql.=" AND m.MAND_UTR_VISA = '".$oRequest['iUserId']."'  ";
+			$zWhere.=" AND m.MAND_UTR_VISA = '".$oRequest['iUserId']."'  ";
 		}
 
 		if( isset($oRequest['MAND_VISA_VALIDE']) &&  $oRequest['MAND_VISA_VALIDE']!="") {   
-			$zSql.=" AND m.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
+			$zWhere.=" AND m.MAND_VISA_VALIDE = ".$oRequest['MAND_VISA_VALIDE']."  ";
 		}
 		
 		if( !empty($oRequest['search']['value']) ) {   
-			$zSql.=" AND ( t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  t.ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  m.MAND_OBJET LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  t.PROP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  m.MAND_MODE_PAIE LIKE '%".$oRequest['search']['value']."%' ) ";
+			$zWhere.=" AND ( t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  t.ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  m.MAND_OBJET LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  t.PROP_CODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  t.ECRI_LIB LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  m.MAND_MODE_PAIE LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 		
 		$zDebut = 0;
@@ -385,18 +371,27 @@ class Demande_model extends CI_Model {
 		if (sizeof($oRequest)>0){
 			
 			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
-				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+				$zWhere.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
 			} else {
-				$zSql.=" ORDER BY t.ECRI_NUM ASC ";
+				$zWhere.=" ORDER BY t.ECRI_NUM ASC ";
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
-			$zSql.=" ORDER BY t.ECRI_NUM ASC ";
+			$zWhere.=" ORDER BY t.ECRI_NUM ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnneeExo), $zData) ; 
+		$zData = str_replace("%OTHERWHERE%", trim($zOtherWhere), $zData) ; 
+		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
+		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
+
+
+
+		//$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
@@ -546,91 +541,6 @@ class Demande_model extends CI_Model {
 
 		$toDB = $this->load->database('catia',true);
 
-		/*$zSql = "select COUNT(*) over () found_rows,v.*,
-		(SELECT LIBELLE_STATUS FROM T_STATUS st WHERE v.NOTESTATUS=st.STATUS AND st.TYPE_STATUS='VB') as STATUTNOTE,
-		(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE v.OVPCPAYEUR=pc.PSTP_CODE) as PAYEUR
-		from T_VIREMENT v WHERE v.INFONUMERO = '" . $_iNumMandat . "'";*/
-
-		/*$zSql = "  SELECT  V.*,   
-				   (SELECT PSTP_LIBELLE FROM EXECUTION".$_iAnnee.".POSTE_COMPTABLE_ORIGINAL pc WHERE v.OVPCPAYEUR=pc.PSTP_CODE) as PAYEUR,
-				   M.EXERCICE,
-				   M.SOA,
-				   M.COMPTE,
-				   M.MAND_VISA_TEF,
-				   M.MAND_NUM_INFO    NUMERO_MANDAT,
-				   T.NUMERO_TITRE     NUMERO_TITRE,
-				   T.CODE_TIERS       CODE_TIERS,
-				   T.TITULAIRE        TITULAIRE,
-				   M.MAND_OBJET,
-				   T.MONTANT          MONTANT,
-				   M.MAND_DATE_RECUP,
-				   M.MAND_DATE_REEL_VISA,
-				   CASE
-					   WHEN NVL (v.OVREF, 'OV') <> 'OV' AND V.NOTESTATUS = '5'
-					   THEN
-						   'VIRE'
-					   WHEN NVL (e.ecri_valid, 0) = 1 AND m.mand_mode_paie = 'VB'
-					   THEN
-						   'EN INSTANCE DE VIREMENT'
-					   WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
-							AND NVL (m.mand_rejet, 0) = 0
-					   THEN
-						   'VISE'
-					   WHEN     m.MAND_COMPTE_CREDIT IS NULL
-							AND NVL (m.mand_rejet, 0) = 1
-					   THEN
-						   'REJETE'
-					   WHEN M.MAND_DATE_TRAIT IS NULL
-					   THEN
-						   'RECUPERE AU NIVEAU GUICHET UNIQUE'
-					   WHEN NVL (m.mand_date_recup,
-								 TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
-							TO_DATE ('01/01/2019', 'DD/MM/RRRR')
-					   THEN
-						   'DOSSIER NON PARVENU AU TRESOR'
-				   END                STATUT,
-				   V.OVREF            REFERENCE,
-				   CASE
-					   WHEN NVL (v.OVREF, 'OV') <> 'OV' AND V.NOTESTATUS = '5'
-					   THEN
-						   TRUNC (V.DATEEXECUTIONOV)
-					   WHEN NVL (e.ecri_valid, 0) = 1 AND m.mand_mode_paie = 'VB'
-					   THEN
-						   TRUNC (E.ECRI_DT_VALID)
-					   WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
-							AND NVL (m.mand_rejet, 0) = 0
-					   THEN
-						   TRUNC (M.MAND_DATE_VISA)
-					   WHEN     m.MAND_COMPTE_CREDIT IS NULL
-							AND NVL (m.mand_rejet, 0) = 1
-					   THEN
-						   TRUNC (M.MAND_DT_RJT)
-					   WHEN M.MAND_DATE_TRAIT IS NULL
-					   THEN
-						   TRUNC (M.MAND_DATE_RECUP)
-					   WHEN NVL (m.mand_date_recup,
-								 TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
-							TO_DATE ('01/01/2019', 'DD/MM/RRRR')
-					   THEN
-						   TRUNC (M.MAND_DATE_ORD)
-				   END                DATE_SITUATION,
-				   M.ASSIGNATAIRE,
-				   M.MANDATAIRE,
-				   V.OVPCPAYEUR
-			  FROM EXECUTION".$_iAnnee.".MANDAT                M,
-				   EXECUTION".$_iAnnee.".TITRE_XXI                 T,
-				   EXECUTION".$_iAnnee.".ECRITURE              E,
-				   V_VIREMENT  V
-			 WHERE 1=1
-				   AND M.COMPTE NOT IN ('6011','6131','6522','6521')
-				   
-				   AND M.ID_MAND = T.ID_MAND
-				   AND M.ENTITE = T.ENTITE
-				   AND M.ECRI_NUM = E.ECRI_NUM(+)
-				  
-				   AND T.NUMERO_TITRE = V.TITRENUMERO(+)
-				   AND M.MAND_MODE_PAIE IN ('VB','ME') ";*/
-
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/compteVirement.sql"); 
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
 		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
@@ -722,6 +632,7 @@ class Demande_model extends CI_Model {
 		$toListeColumns = array();
 		foreach ($toColonne as $oColonne){
 			$tzColonne = explode("-", $oColonne);
+			$tzColonne = explode(".", $tzColonne[1]);
 			$toHead1[utf8_decode($tzColonne[0])] = utf8_decode($tzColonne[0]);
 			array_push($toListeColumns, $tzColonne[1]);
 		}

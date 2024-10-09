@@ -1,0 +1,1 @@
+select COUNT(*) over () found_rows,t.* from EXECUTION%ANNEE%.ECRITURE t where 1=1

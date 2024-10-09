@@ -102,6 +102,7 @@ class Demande extends MY_Controller
 			foreach ($toColonne as $oColonne){
 				
 				$oColonne = explode("-", $oColonne);
+				$oColonne = explode(".", $oColonne[1]);
 
 					switch ($oColonne[1]){
 

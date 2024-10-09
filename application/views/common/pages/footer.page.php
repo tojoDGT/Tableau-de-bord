@@ -25,6 +25,7 @@ switch ($oDataUser['zParam']){
 
 foreach ($toColonne as $oColonne){
 	$oColonne = explode("-", $oColonne);
+	$oColonne = explode(".", $oColonne[1]);
 	array_push($oDataTempCol, $oColonne[1]);
 }
 

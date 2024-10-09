@@ -1,99 +1,107 @@
-SELECT  COUNT(*) over () found_rows,norm.*
-from (SELECT M.ASSIGNATAIRE,
-       MIN_CODE,
-	   E.ECRI_NUM,
-	   M.MAND_NUM_INFO,
-	   M.ECRI_NUM ECRINUM,
-	   ECRI_LIB,
-	   (SELECT PSTP_LIBELLE FROM EXECUTION%ANNEE%.POSTE_COMPTABLE_ORIGINAL pc WHERE M.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE1,
-	   (SELECT PSTP_LIBELLE FROM EXECUTION%ANNEE%.POSTE_COMPTABLE_ORIGINAL pc WHERE M.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE1,
-       MIN_ABREV,
-       MIN_LIBELLE,
-	   CASE
-					WHEN m.MAND_MODE_PAIE = 'VB' THEN 'Virement bancaire'
-					WHEN m.MAND_MODE_PAIE = 'OO' THEN 'Opération d`ordre'
-					WHEN m.MAND_MODE_PAIE = 'BC' THEN 'Bon de Caisse'
-					WHEN m.MAND_MODE_PAIE = 'OP' THEN 'Ordre de paiement'
-	   END MAND_MODE_PAIE1,
-       INTITULE,
-	   M.ENTITE,
-	   PROP_CODE,
-	   M.MAND_VISA_VALIDE,
-       M.EXERCICE,
-       M.ACTIVITE,
-       M.INDICATEUR        PROGRAMME,
-       M.SOA,
-       M.COMMUNE           MISSION,
-       M.COMPTE,
-	   M.MAND_VISA_TEF,
-       M.MAND_COMPTE_CREDIT,
-       MAND_CPTAUX_DEBIT,
-       M.MAND_NUM_INFO     MANDAT1,
-	   M.MAND_OBJET,
-	   m.MAND_DATE_RECUP,
-	   M.MAND_DATE_REEL_VISA,
-       MAND_UTR_VISA       USER_VALID_LCAD,
-       MAND_UTR_RECUP,
-       CODE_UTILISATEUR    TYPE_MAND,
-       MAND_NUMERO_BMAND,
-       MAND_DATE_ORD,
-       MAND_CODE_TIERS,
-       MAND_ORDONNATEUR,
-       MAND_NUMERO_BE,
-       MAND_MODE_PAIE,
-       MAND_MONTANT,
-	   CONCAT (TO_CHAR(MAND_MONTANT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS MAND_MONTANT1,
-       MAND_LIBELLE,
-       TYPE_ENG,
-       REJET_NOTE,
-       ECRI_DT_CECRITURE,
-       ECRI_DT_SECRITURE,
-       MAND_DATE_VISA,
-       MAND_DATE_TRAIT,
-       E.ECRI_REF,
-       PERI_CODE,
-       CASE
-           WHEN NVL (MAND_REJET, 0) = 1
-           THEN
-               'REJET'
-           WHEN NVL (ECRI_VALID, 0) = 1
-           THEN
-               'ADMIS EN DEPENSE'
-           WHEN NVL (MAND_VISA_VALIDE, 0) = 1 AND NVL (ECRI_VALID, 0) = 0
-           THEN
-               'EN INSTANCE DE VISA COMPTA'
-           ELSE
-               'EN INSTANCE DE PRISE EN CHARGE'
-       END                 STATUT,
-       V.NOTEREF,
-       NOTEMT,
-       NOTEDATEEDIT,
-       NOTEDATEVALID,
-       DMDVIRREF,
-       DMDVIRMT,
-       DMDVIRDATEEDIT,
-       DMDVIRDATEVALID,
-       OVEXO,
-       OVREF,
-       OVPCPAYEUR,
-       OVDATEEDIT,
-       DATEEXECUTIONOV,
-       V.CATEG_DEPENSE,
-       v.STATUS            STATUTS_NOTE,
-       CASE
-           WHEN NVL (ECRI_VALID, 0) = 1 AND V.NOTESTATUS NOT IN (4, 5)
-           THEN
-               'INSTANCE DE PAIEMENT'
-           WHEN NVL (ECRI_VALID, 0) = 1 AND V.NOTESTATUS IN (4, 5)
-           THEN
-               'PAYE'
-           ELSE
-               'NON VISE COMPTA'
-       END                 STATUT_PAIEMENT
-  FROM EXECUTION%ANNEE%.MANDAT@dblcca2 M, EXECUTION%ANNEE%.ECRITURE@dblcca2 E, CATIA.V_VIREMENT V
- WHERE     M.ECRI_NUM = E.ECRI_NUM(+)
-       AND M.ENTITE = E.ENTITE(+)
-       AND M.MAND_NUM_INFO = V.MANDAT(+)
-       AND M.EXERCICE = v.exercice(+)
- ) norm  
-%WHERE%
+SELECT * from (	
+	SELECT  rownum r__ , niv2.* from (
+		
+		SELECT  COUNT(*) over () found_rows,niv1.*
+		from (SELECT M.ASSIGNATAIRE,
+			   MIN_CODE,
+			   E.ECRI_NUM,
+			   M.MAND_NUM_INFO,
+			   M.ECRI_NUM ECRINUM,
+			   ECRI_LIB,
+			   (SELECT PSTP_LIBELLE FROM EXECUTION%ANNEE%.POSTE_COMPTABLE_ORIGINAL pc WHERE M.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE1,
+			   (SELECT PSTP_LIBELLE FROM EXECUTION%ANNEE%.POSTE_COMPTABLE_ORIGINAL pc WHERE M.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE1,
+			   MIN_ABREV,
+			   MIN_LIBELLE,
+			   CASE
+							WHEN m.MAND_MODE_PAIE = 'VB' THEN 'Virement bancaire'
+							WHEN m.MAND_MODE_PAIE = 'OO' THEN 'Opération d`ordre'
+							WHEN m.MAND_MODE_PAIE = 'BC' THEN 'Bon de Caisse'
+							WHEN m.MAND_MODE_PAIE = 'OP' THEN 'Ordre de paiement'
+			   END MAND_MODE_PAIE1,
+			   INTITULE,
+			   M.ENTITE,
+			   PROP_CODE,
+			   M.MAND_VISA_VALIDE,
+			   M.EXERCICE,
+			   M.ACTIVITE,
+			   M.INDICATEUR        PROGRAMME,
+			   M.SOA,
+			   M.COMMUNE           MISSION,
+			   M.COMPTE,
+			   M.MAND_VISA_TEF,
+			   M.MAND_COMPTE_CREDIT,
+			   MAND_CPTAUX_DEBIT,
+			   M.MAND_NUM_INFO     MANDAT1,
+			   M.MAND_OBJET,
+			   m.MAND_DATE_RECUP,
+			   M.MAND_DATE_REEL_VISA,
+			   MAND_UTR_VISA       USER_VALID_LCAD,
+			   MAND_UTR_RECUP,
+			   CODE_UTILISATEUR    TYPE_MAND,
+			   MAND_NUMERO_BMAND,
+			   MAND_DATE_ORD,
+			   MAND_CODE_TIERS,
+			   MAND_ORDONNATEUR,
+			   MAND_NUMERO_BE,
+			   MAND_MODE_PAIE,
+			   MAND_MONTANT,
+			   CONCAT (TO_CHAR(MAND_MONTANT,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS MAND_MONTANT1,
+			   MAND_LIBELLE,
+			   TYPE_ENG,
+			   REJET_NOTE,
+			   ECRI_DT_CECRITURE,
+			   ECRI_DT_SECRITURE,
+			   MAND_DATE_VISA,
+			   MAND_DATE_TRAIT,
+			   E.ECRI_REF,
+			   PERI_CODE,
+			   CASE
+				   WHEN NVL (MAND_REJET, 0) = 1
+				   THEN
+					   'REJET'
+				   WHEN NVL (ECRI_VALID, 0) = 1
+				   THEN
+					   'ADMIS EN DEPENSE'
+				   WHEN NVL (MAND_VISA_VALIDE, 0) = 1 AND NVL (ECRI_VALID, 0) = 0
+				   THEN
+					   'EN INSTANCE DE VISA COMPTA'
+				   ELSE
+					   'EN INSTANCE DE PRISE EN CHARGE'
+			   END                 STATUT,
+			   V.NOTEREF,
+			   NOTEMT,
+			   NOTEDATEEDIT,
+			   NOTEDATEVALID,
+			   DMDVIRREF,
+			   DMDVIRMT,
+			   DMDVIRDATEEDIT,
+			   DMDVIRDATEVALID,
+			   OVEXO,
+			   OVREF,
+			   OVPCPAYEUR,
+			   OVDATEEDIT,
+			   DATEEXECUTIONOV,
+			   V.CATEG_DEPENSE,
+			   v.STATUS            STATUTS_NOTE,
+			   CASE
+				   WHEN NVL (ECRI_VALID, 0) = 1 AND V.NOTESTATUS NOT IN (4, 5)
+				   THEN
+					   'INSTANCE DE PAIEMENT'
+				   WHEN NVL (ECRI_VALID, 0) = 1 AND V.NOTESTATUS IN (4, 5)
+				   THEN
+					   'PAYE'
+				   ELSE
+					   'NON VISE COMPTA'
+			   END                 STATUT_PAIEMENT
+		  FROM EXECUTION%ANNEE%.MANDAT@dblcca2 M, EXECUTION%ANNEE%.ECRITURE@dblcca2 E, CATIA.V_VIREMENT V
+		 WHERE     M.ECRI_NUM = E.ECRI_NUM(+)
+			   AND M.ENTITE = E.ENTITE(+)
+			   AND M.MAND_NUM_INFO = V.MANDAT(+)
+			   AND M.EXERCICE = v.exercice(+)
+			   %WHERE%
+		 ) niv1  
+		%OTHERWHERE%
+	) niv2
+	 WHERE rownum <= %FIN%
+) 
+WHERE r__ > %DEBUT%

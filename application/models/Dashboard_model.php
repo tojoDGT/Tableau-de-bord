@@ -45,16 +45,17 @@ class Dashboard_model extends CI_Model {
 
 		$oRequest = $_REQUEST;
 
-		//$zSql = "select * from (";
-
-		$zSql = "select COUNT(*) over () found_rows,t.* from EXECUTION".$_iAnneeExercice.".ECRITURE t where 1=1 " ;
-
+		$zWhere = "";
 		if( !empty($oRequest['search']['value']) ) {   
-			$zSql.=" AND ( ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  PERI_CODE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
-			$zSql.=" OR  ECRI_LIB LIKE '%".$oRequest['search']['value']."%' ) ";
+			$zWhere.=" AND ( ECRI_NUM LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  PERI_CODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  ECRI_REF LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  ECRI_LIB LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
+
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getDashboard.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", '2024', $zData) ; 
 		
 		$zDebut = 0;
 		$zFin = 10;
@@ -95,52 +96,6 @@ class Dashboard_model extends CI_Model {
 	}
 
 	/** 
-	* function permettant d'afficher la liste des propriétaires codes
-	*
-	*
-	* @return liste en tableau d'objet
-	*/
-
-	public function __getPropCode($_iAnneeExercice){
-		
-		global $db;
-
-		$oRequest = $_REQUEST;
-
-		$toDB = $this->load->database('catia',true);
-
-		$toRow = array();
-
-		$zSql = "select t.PROP_CODE from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
-
-		if( !empty($oRequest['PROP_CODE']) &&  sizeof($oRequest['PROP_CODE'])>0) {   
-			
-			$toPropCode = array();
-			foreach ($oRequest['PROP_CODE'] as $zPropCode){
-				$zValue = "'". $zPropCode . "'";
-				array_push($toPropCode, $zValue);
-			}
-			
-			if(sizeof($toPropCode)>0){
-				//$zSql .=" AND t.PROP_CODE IN (".implode(",",$toPropCode).")";
-				$zSql .=" AND SUBSTR (m.soa, 1, 1) IN (".implode(",",$toPropCode).")";
-			}
-		}
-
-		$zSql .=" AND t.PROP_CODE <> 'ERR' ";
-
-		$zSql .=" GROUP BY t.PROP_CODE ORDER BY t.PROP_CODE";
-
-		//echo $zSql;
-		
-		$zQuery = $toDB->query($zSql);
-		$toRow = $zQuery->result_array();
-
-
-		return $toRow;
-	}
-
-	/** 
 	* function permettant d'afficher le nombre / montant par mois dans la statistique
 	*
 	* @param integer $_iAnneeExercice Année de l'exercice
@@ -158,20 +113,9 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "select ".$_zParamAffich.",
-				 (CASE 
-						WHEN SUBSTR (m.soa, 1, 1) ='4' THEN 'COMMUNE'
-						WHEN SUBSTR (m.soa, 1, 1) ='2' THEN 'REGION'
-						WHEN SUBSTR (m.soa, 1, 1) ='9' THEN 'EPN'
-						ELSE 'ETAT'
-				 END) as PROP_CODE,
-				 SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as Mois,ECRI_EXERCICE 
-				 from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
-				 AND t.PROP_CODE <> 'ERR' 
-				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
-				 AND SUBSTR (m.soa, 1, 1) IN ('9','0','4','2')
-				 GROUP BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM'),ECRI_EXERCICE
-				 ORDER BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM') ASC" ;
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getNombreMontantParMoisPropCode.sql"); 
+		$zData = str_replace("%PARAM%", trim($_zParamAffich), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 
 		//echo $zSql . "\n\n<br>";
 		
@@ -205,13 +149,10 @@ class Dashboard_model extends CI_Model {
 		$toDB = $this->load->database('catia',true);
 
 		$toRow = array();
-
-		$zSql = "select ".$_zParamAffich.",SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as Mois,ECRI_EXERCICE 
-				 from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
-				 AND t.PROP_CODE <> 'ERR' 
-				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
-				 GROUP BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM'),ECRI_EXERCICE
-				 ORDER BY ".$_zParamAffich.",to_char(ECRI_DT_VALID, 'MM') ASC" ;
+		
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getNombreMontantParMois.sql"); 
+		$zData = str_replace("%PARAM%", trim($_zParamAffich), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 
 		//echo $zSql . "\n\n<br>";
 		
@@ -247,40 +188,9 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "SELECT count(STATUT) as NOMBRE,1 as MONTANT,STATUT,MOIS
-					from (SELECT M.ASSIGNATAIRE,
-						   ECRI_VALID,
-						   MAND_REJET,
-						   MAND_VISA_VALIDE,
-						   MAND_UTR_VISA,
-						   E.ECRI_NUM,
-						   M.ENTITE,
-						   to_char(NVL(NVL(ECRI_DT_CECRITURE,MAND_DT_RJT),MAND_DATE_TRAIT), 'MM') as Mois,
-						   PERI_CODE,
-						   MAND_MODE_PAIE,
-						   M.SOA,
-						   MIN_ABREV,
-						   M.EXERCICE,
-						   CASE
-							   WHEN NVL (MAND_REJET, 0) = 1
-							   THEN
-								   'REJET'
-							   WHEN NVL (ECRI_VALID, 0) = 1
-							   THEN
-								   'ADMIS EN DEPENSE'
-							   WHEN NVL (MAND_VISA_VALIDE, 0) = 1 AND NVL (ECRI_VALID, 0) = 0
-							   THEN
-								   'EN INSTANCE DE VISA COMPTA'
-							   ELSE
-								   'EN INSTANCE DE PRISE EN CHARGE'
-						   END                 STATUT
-					  FROM EXECUTION".$_iAnneeExercice.".MANDAT M, EXECUTION".$_iAnneeExercice.".ECRITURE E, CATIA.V_VIREMENT V
-					  WHERE     M.ECRI_NUM = E.ECRI_NUM(+)
-						   AND M.ENTITE = E.ENTITE(+)
-						   AND M.MAND_NUM_INFO = V.MANDAT(+)
-						   AND M.EXERCICE = v.exercice(+)
-					 ) norm  
-					WHERE 1=1  ";
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getNombreParMoisStatutDossierAgent.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 
 		if($_iType==1){
 			$zSql .= "AND MAND_UTR_VISA = '" . $iUserEntiteId . "'" ; 
@@ -401,11 +311,11 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "SELECT  COUNT(m.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as MOIS
-				from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.ENTITE = '".$_zPsCode."' AND MAND_VISA_VALIDE = 1 
-				GROUP BY to_char(ECRI_DT_VALID, 'MM')
-				ORDER BY to_char(ECRI_DT_VALID, 'MM') ASC" ;
+		$zWhere.=" AND m.ENTITE = '".$_zPsCode."'"  ; 
+
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getValidePcParMois.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
@@ -434,11 +344,11 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "SELECT  COUNT(m.ECRI_NUM) as NOMBRE,to_char(ECRI_DT_VALID, 'MM') as MOIS
-				from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				AND m.MAND_UTR_VISA = '".$_iUserId."' AND MAND_VISA_VALIDE = 1 
-				GROUP BY to_char(ECRI_DT_VALID, 'MM')
-				ORDER BY to_char(ECRI_DT_VALID, 'MM') ASC" ;
+		$zWhere.=" AND m.MAND_UTR_VISA = '".$_iUserId."'" ; 
+
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getValidePcParMoisUser.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
@@ -469,11 +379,10 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = " SELECT  COUNT(m.MAND_DT_RJT) as NOMBRE,to_char(MAND_DT_RJT, 'MM') as MOIS
-				  from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				  AND m.ENTITE = '".$_zPsCode."' AND MAND_VISA_VALIDE = 0 
-				  GROUP BY to_char(MAND_DT_RJT, 'MM')
-				  ORDER BY to_char(MAND_DT_RJT, 'MM') ASC" ;
+		$zWhere.=" AND m.ENTITE = '".$_zPsCode."'" ;  
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getRefusePcParMois.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 
 		
 		$zQuery = $toDB->query($zSql);
@@ -505,12 +414,11 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = " SELECT  COUNT(m.MAND_DT_RJT) as NOMBRE,to_char(MAND_DT_RJT, 'MM') as MOIS
-				  from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
-				  AND m.MAND_UTR_RJT = '".$_iUserId."' AND MAND_VISA_VALIDE = 0 
-				  GROUP BY to_char(MAND_DT_RJT, 'MM')
-				  ORDER BY to_char(MAND_DT_RJT, 'MM') ASC" ;
+		$zWhere.=" AND m.MAND_UTR_RJT = '".$_iUserId."'";
 
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getRefusePcParMoisUser.sql"); 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
@@ -609,13 +517,9 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "select ".$_zParamAffich.",SUM(MAND_MONTANT) as montant,COUNT(t.ECRI_NUM) as nombre,ECRI_EXERCICE 
-				 from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
-				 AND t.PROP_CODE <> 'ERR' 
-				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
-				 GROUP BY ".$_zParamAffich.",ECRI_EXERCICE
-				 ORDER BY ".$_zParamAffich." ASC" ;
-	
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getNombreMontantParMoisEcriture.sql"); 
+		$zData = str_replace("%PARAM%", trim($_zParamAffich), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
@@ -640,20 +544,9 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "select ".$_zParamAffich.",
-				 (CASE 
-						WHEN SUBSTR (m.soa, 1, 1) ='4' THEN 'COMMUNE'
-						WHEN SUBSTR (m.soa, 1, 1) ='2' THEN 'REGION'
-						WHEN SUBSTR (m.soa, 1, 1) ='9' THEN 'EPN'
-						ELSE 'ETAT'
-				 END) as PROP_CODE,
-				 SUM(MAND_MONTANT) as MONTANT,COUNT(t.ECRI_NUM) as NOMBRE,ECRI_EXERCICE 
-				 from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM
-				 AND t.PROP_CODE <> 'ERR' 
-				 AND ECRI_EXERCICE = '" .$_iAnneeExercice."' AND ECRI_DT_VALID IS NOT NULL
-				 AND SUBSTR (m.soa, 1, 1) IN ('9','0','4','2')
-				 GROUP BY ".$_zParamAffich.",ECRI_EXERCICE
-				 ORDER BY ".$_zParamAffich." ASC" ;
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getNombreParMoisStatutDossierAgent.sql"); 
+		$zData = str_replace("%PARAM%", trim($_zParamAffich), $zData) ; 
+		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 	
 		
 		$zQuery = $toDB->query($zSql);
@@ -921,174 +814,9 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "SELECT     
-          M.EXERCICE,
-           M.SOA,
-           M.COMPTE,
-           M.MAND_VISA_TEF,
-           M.MAND_NUM_INFO    NUMERO_MANDAT,
-           T.NUMERO_TITRE     NUMERO_TITRE,
-           T.CODE_TIERS       CODE_TIERS,
-           T.TITULAIRE        TITULAIRE,
-           M.MAND_OBJET,
-           T.MONTANT          MONTANT,
-           M.MAND_DATE_RECUP,
-           M.MAND_DATE_REEL_VISA,
-           CASE
-               WHEN NVL (v.OVREF, 'OV') <> 'OV' AND V.NOTESTATUS = '5'
-               THEN
-                   'VIRE'
-               WHEN NVL (e.ecri_valid, 0) = 1 AND m.mand_mode_paie = 'VB'
-               THEN
-                   'EN INSTANCE DE VIREMENT'
-               WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
-                    AND NVL (m.mand_rejet, 0) = 0
-               THEN
-                   'VISE'
-               WHEN     m.MAND_COMPTE_CREDIT IS NULL
-                    AND NVL (m.mand_rejet, 0) = 1
-               THEN
-                   'REJETE'-- (Motif:' || M.rejet_note || ')'
-               WHEN M.MAND_DATE_TRAIT IS NULL
-               THEN
-                   'RECUPERE AU NIVEAU GUICHET UNIQUE'
-               WHEN NVL (m.mand_date_recup,
-                         TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
-                    TO_DATE ('01/01/2019', 'DD/MM/RRRR')
-               THEN
-                   'DOSSIER NON PARVENU AU TRESOR'
-           END                STATUT,
-           V.OVREF            REFERENCE,
-           CASE
-               WHEN NVL (v.OVREF, 'OV') <> 'OV' AND V.NOTESTATUS = '5'
-               THEN
-                   TRUNC (V.OVDATEVALID)
-               WHEN NVL (e.ecri_valid, 0) = 1 AND m.mand_mode_paie = 'VB'
-               THEN
-                   TRUNC (E.ECRI_DT_VALID)
-               WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
-                    AND NVL (m.mand_rejet, 0) = 0
-               THEN
-                   TRUNC (M.MAND_DATE_VISA)
-               WHEN     m.MAND_COMPTE_CREDIT IS NULL
-                    AND NVL (m.mand_rejet, 0) = 1
-               THEN
-                   TRUNC (M.MAND_DT_RJT)
-               WHEN M.MAND_DATE_TRAIT IS NULL
-               THEN
-                   TRUNC (M.MAND_DATE_RECUP)
-               WHEN NVL (m.mand_date_recup,
-                         TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
-                    TO_DATE ('01/01/2019', 'DD/MM/RRRR')
-               THEN
-                   TRUNC (M.MAND_DATE_ORD)
-           END                DATE_SITUATION,
-           M.ASSIGNATAIRE,
-           M.MANDATAIRE,
-           V.OVPCPAYEUR
-      FROM EXECUTION".$_iAnneeExercice.".MANDAT                M,
-           TITRE_XXI                 T,
-           EXECUTION".$_iAnneeExercice.".ECRITURE              E,
-           T_VIREMENT  V
-     WHERE 1=1
-           AND M.COMPTE NOT IN ('6011','6131','6522','6521')
-           --AND M.SOA = '00-17-0-620-00000'
-           AND M.ID_MAND = T.ID_MAND
-           AND M.ENTITE = T.ENTITE
-           AND M.ECRI_NUM = E.ECRI_NUM(+)
-           --AND M.MAND_NUM_INFO=v.infonumero (+)
-           AND T.NUMERO_TITRE = V.TITRENUMERO(+)
-           --AND V.NOTESTATUS(+) = '5'
-           AND M.MAND_MODE_PAIE = 'VB'
-    UNION
-SELECT 
-           M.EXERCICE,
-           M.SOA,
-           M.COMPTE,
-           M.MAND_VISA_TEF,
-           M.MAND_NUM_INFO    NUMERO_MANDAT,
-           T.NUMERO_TITRE     NUMERO_TITRE,
-           T.CODE_TIERS       CODE_TIERS,
-           T.TITULAIRE        TITULAIRE,
-           M.MAND_OBJET,
-           T.MONTANT          MONTANT,
-           M.MAND_DATE_RECUP,
-           M.MAND_DATE_REEL_VISA,
-           CASE
-               WHEN NVL (e.ecri_valid, 0) = 1 AND BT_REF IS NULL
-               THEN
-                   'EN INSTANCE DE TRANSFERT'
-               WHEN NVL (e.ecri_valid, 0) = 1 AND BT_REF IS NOT NULL
-               THEN
-                   LIB_STATUS
-               WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
-                    AND NVL (m.mand_rejet, 0) = 0
-               THEN
-                   'VISE'
-               WHEN     m.MAND_COMPTE_CREDIT IS NULL
-                    AND NVL (m.mand_rejet, 0) = 1
-               THEN
-                   'REJETE (Motif:' || M.rejet_note || ')'
-               WHEN M.MAND_DATE_TRAIT IS NULL
-               THEN
-                   'RECUPERE AU NIVEAU GUICHET UNIQUE'
-               WHEN NVL (m.mand_date_recup,
-                         TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
-                    TO_DATE ('01/01/2019', 'DD/MM/RRRR')
-               THEN
-                   'DOSSIER NON PARVENU AU TRESOR'
-           END                STATUT,
-           BT_REF             REFERENCE,
-           CASE
-               WHEN BT_STATUS = '0'
-               THEN
-                   TRUNC (BT_ENV_EDIT_DATE)
-               WHEN BT_STATUS = '2'
-               THEN
-                   TRUNC (BT_ENV_VALID_DATE)
-               WHEN BT_STATUS = '4'
-               THEN
-                   TRUNC (BT_REC_DATE)
-               WHEN BT_STATUS = '5'
-               THEN
-                   TRUNC (BT_REC_VALID_DATE)
-               WHEN NVL (e.ecri_valid, 0) = 1 AND BT_REF IS NULL
-               THEN
-                   TRUNC (E.ECRI_DT_VALID)
-               WHEN     m.MAND_COMPTE_CREDIT IS NOT NULL
-                    AND NVL (m.mand_rejet, 0) = 0
-               THEN
-                   TRUNC (M.MAND_DATE_VISA)
-               WHEN     m.MAND_COMPTE_CREDIT IS NULL
-                    AND NVL (m.mand_rejet, 0) = 1
-               THEN
-                   TRUNC (M.MAND_DT_RJT)
-               WHEN M.MAND_DATE_TRAIT IS NULL
-               THEN
-                   TRUNC (M.MAND_DATE_RECUP)
-               WHEN NVL (m.mand_date_recup,
-                         TO_DATE ('01/01/2019', 'DD/MM/RRRR')) =
-                    TO_DATE ('01/01/2019', 'DD/MM/RRRR')
-               THEN
-                   TRUNC (M.MAND_DATE_ORD)
-         END                DATE_SITUATION,
-         M.ASSIGNATAIRE,
-           M.MANDATAIRE,
-           '' OVPCPAYEUR
-      FROM EXECUTION".$_iAnneeExercice.".MANDAT          M,
-           TITRE_XXI           T,
-           EXECUTION".$_iAnneeExercice.".ECRITURE        E,
-           T_TRANSFERT  TR
-     WHERE 1=1
-           AND M.COMPTE NOT IN ('6011','6131','6522','6521')
-           AND M.MAND_MODE_PAIE = 'OO'
-           --AND M.SOA = '00-17-0-620-00000'
-           AND M.ECRI_NUM = E.ECRI_NUM(+)
-           AND M.ID_MAND = T.ID_MAND(+)
-           AND T.MAND_NUM_INFO = TR.DET_BEXECUTION".$_iAnneeExercice.".MANDAT(+)
---           ) group by SUBSTR(SOA,4,2) ;" ;
-
-
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/dashboard/getSuiviMandat.sql"); 
+		$zSql = str_replace("%ANNEE%", '2024', $zData) ; 
+		
 		//echo $zSql;
 		
 		$zQuery = $toDB->query($zSql);

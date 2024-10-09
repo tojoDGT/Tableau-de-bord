@@ -29,17 +29,17 @@ class Virement_model extends CI_Model {
 			case 1:
 				$toColonneVirement = array();
 				if(empty($_SESSION["colonneAfficheVirement"])){
-					array_push($toColonneVirement, '-MANDAT');
-					array_push($toColonneVirement, 'PCASSIGNATAIRE-PCASSIGNATAIRE');
-					array_push($toColonneVirement, 'PCPAYEUR-PCPAYEUR');
-					array_push($toColonneVirement, 'STATUT-STATUS');
-					array_push($toColonneVirement, 'DATE DE VIREMENT-DMDVIRDATEVALID');
-					array_push($toColonneVirement, 'TYPE BUDGET DEPENSE-TYPE_BUDG_DEP');
-					array_push($toColonneVirement, 'EXERCICE-EXERCICE');
-					array_push($toColonneVirement, 'OBJET-DEPENSEOBJET');
-					array_push($toColonneVirement, 'TITULAIRE-TITULAIRE');
-					array_push($toColonneVirement, 'CATEGORIE DEPENSE-CATEG_DEPENSE');
-					array_push($toColonneVirement, 'MONTANT-MONTANT');
+					array_push($toColonneVirement, '-dtl.MANDAT');
+					array_push($toColonneVirement, 'PCASSIGNATAIRE-dtl.PCASSIGNATAIRE');
+					array_push($toColonneVirement, 'PCPAYEUR-dtl.PCPAYEUR');
+					array_push($toColonneVirement, 'STATUT-dtl.STATUS');
+					array_push($toColonneVirement, 'DATE DE VIREMENT-virement.DMDVIRDATEVALID');
+					array_push($toColonneVirement, 'TYPE BUDGET DEPENSE-dtl.TYPE_BUDG_DEP');
+					array_push($toColonneVirement, 'EXERCICE-dtl.EXERCICE');
+					array_push($toColonneVirement, 'OBJET-dtl.DEPENSEOBJET');
+					array_push($toColonneVirement, 'TITULAIRE-dtl.TITULAIRE');
+					array_push($toColonneVirement, 'CATEGORIE DEPENSE-dtl.CATEG_DEPENSE');
+					array_push($toColonneVirement, 'MONTANT-dtl.MONTANT');
 
 					$_SESSION["colonneAfficheVirement"] = serialize($toColonneVirement);
 				} else {
@@ -53,22 +53,22 @@ class Virement_model extends CI_Model {
 
 				$toColonneOP46 = array();
 				if(empty($_SESSION["colonneAfficheOP46"])){
-					array_push($toColonneOP46, '-ID');
-					array_push($toColonneOP46, 'DATE DE VIREMENT-DMDVIRDATEVALID');
-					array_push($toColonneOP46, 'TITULAIRE-TITULAIRE');
-					array_push($toColonneOP46, 'VILLE-VILLE');
-					array_push($toColonneOP46, 'OBJET-OBJET');
-					array_push($toColonneOP46, 'DATE DOSSIER-DATE_DOSSIER');
-					array_push($toColonneOP46, 'STATUT-STATUS');
-					array_push($toColonneOP46, 'CATEGORIE DEPENSE-CATEG_DEPENSE');
-					array_push($toColonneOP46, 'PCPAYEUR-PCPAYEUR');
-					array_push($toColonneOP46, 'PCASSIGNATAIRE-PCASSIGNATAIRE');
+					array_push($toColonneOP46, '-virement.ID');
+					array_push($toColonneOP46, 'DATE DE VIREMENT-virement.DMDVIRDATEVALID');
+					array_push($toColonneOP46, 'TITULAIRE-virement.TITULAIRE');
+					array_push($toColonneOP46, 'VILLE-c.VILLE');
+					array_push($toColonneOP46, 'OBJET-c.OBJET');
+					array_push($toColonneOP46, 'DATE DOSSIER-c.DATE_DOSSIER');
+					array_push($toColonneOP46, 'STATUT-virement.STATUS');
+					array_push($toColonneOP46, 'CATEGORIE DEPENSE-dtl.CATEG_DEPENSE');
+					array_push($toColonneOP46, 'PCPAYEUR-virement.PCPAYEUR');
+					array_push($toColonneOP46, 'PCASSIGNATAIRE-virement.PCASSIGNATAIRE');
 
-					array_push($toColonneOP46, 'EXERCICE-PERI_EXERCICE');
-					array_push($toColonneOP46, 'DENOMINATION-DENOMINATION');
-					array_push($toColonneOP46, 'POSTE-PSTP_LIBELLE');
-					array_push($toColonneOP46, 'CODE TIERS-CODE_TIERS');
-					array_push($toColonneOP46, 'MONTANT-MONTANT');
+					array_push($toColonneOP46, 'EXERCICE-d.PERI_EXERCICE');
+					array_push($toColonneOP46, 'DENOMINATION-c.DENOMINATION');
+					array_push($toColonneOP46, 'POSTE-p.PSTP_LIBELLE');
+					array_push($toColonneOP46, 'CODE TIERS-t.CODE_TIERS');
+					array_push($toColonneOP46, 'MONTANT-virement.MONTANT');
 
 					$_SESSION["colonneAfficheOP46"] = serialize($toColonneOP46);
 				} else {
@@ -121,30 +121,31 @@ class Virement_model extends CI_Model {
 			$_iAnneeExercice = $oRequest['EXERCICE'];
 		}
 
-		$zWhere = " WHERE 1=1 ";
+		$zWhere = "  ";
+		$zOtherWhere = "  WHERE 1=1 ";
 
 		if( !empty($oRequest['EXERCICE']) &&  $oRequest['EXERCICE']!="") {   
-			$zWhere.=" AND EXERCICE = '".$oRequest['EXERCICE']."'  ";
+			$zWhere.=" AND dtl.EXERCICE = '".$oRequest['EXERCICE']."'  ";
 		}
 
 		if( !empty($oRequest['PCPAYEUR']) &&  $oRequest['PCPAYEUR']!="") {   
-			$zWhere.=" AND PCPAYEUR = '".$oRequest['PCPAYEUR']."'  ";
+			$zWhere.=" AND dtl.PCPAYEUR = '".$oRequest['PCPAYEUR']."'  ";
 		}
 
 		if( !empty($oRequest['PCASSIGNATAIRE']) &&  $oRequest['PCASSIGNATAIRE']!="") {   
-			$zWhere.=" AND PCASSIGNATAIRE = '".$oRequest['PCASSIGNATAIRE']."'  ";
+			$zWhere.=" AND dtl.PCASSIGNATAIRE = '".$oRequest['PCASSIGNATAIRE']."'  ";
 		}
 
 		if( !empty($oRequest['TYPE_BUDGET_DEP']) &&  $oRequest['TYPE_BUDGET_DEP']!="") {   
-			$zWhere.=" AND TYPE_BUDG_DEP = '".$oRequest['TYPE_BUDGET_DEP']."'  ";
+			$zOtherWhere.=" AND TYPE_BUDG_DEP = '".$oRequest['TYPE_BUDGET_DEP']."'  ";
 		}
 
 		if( !empty($oRequest['STATUS']) &&  $oRequest['STATUS']!="") {   
-			$zWhere.=" AND STATUS = '".$oRequest['STATUS']."'  ";
+			$zOtherWhere.=" AND STATUS = '".$oRequest['STATUS']."'  ";
 		}
 
 		if( !empty($oRequest['CATEG_DEPENSE']) &&  $oRequest['CATEG_DEPENSE']!="") {   
-			$zWhere.=" AND CATEG_DEPENSE= '".$oRequest['CATEG_DEPENSE']."'  ";
+			$zOtherWhere.=" AND CATEG_DEPENSE= '".$oRequest['CATEG_DEPENSE']."'  ";
 		} 
 
 		if( !empty($oRequest['DATE_DEB']) &&  $oRequest['DATE_FIN']!="") {   
@@ -157,45 +158,50 @@ class Virement_model extends CI_Model {
 				$zDateFinVrmt =  $oDate->format('d/m/Y');
 			}
 
-			$zWhere.="  AND DMDVIRDATEVALID BETWEEN '".$zDateDebVrmt."' AND '".$zDateFinVrmt."' ";
+			$zWhere.="  AND virement.DMDVIRDATEVALID BETWEEN '".$zDateDebVrmt."' AND '".$zDateFinVrmt."' ";
 		}
 
 		$toMandMode1 = array();
 		
 		if( !empty($oRequest['search']['value']) ) {   
-			$zWhere.=" AND ( PCASSIGNATAIRE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  PCPAYEUR LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  ENTITECODE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  EXERCICE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  DEPENSEOBJET LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  CATEG_DEPENSE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  MONTANT LIKE '%".$oRequest['search']['value']."%' ) ";
+			$zWhere.=" AND ( dtl.PCASSIGNATAIRE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  dtl.PCPAYEUR LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  dtl.ENTITECODE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  dtl.EXERCICE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  dtl.DEPENSEOBJET LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  dtl.TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  dtl.MONTANT LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
+		if( !empty($oRequest['search']['value']) ) {  
+			$zOtherWhere.=" AND  CATEG_DEPENSE LIKE '%".$oRequest['search']['value']."%'  ";
+		}
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/compteVirement.sql"); 
-		
-		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 		
 		$zDebut = 0;
 		$zFin = 10;
 		if (sizeof($oRequest)>0){
 			
 			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
-				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+				$zWhere.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
 			} else {
-				$zSql.=" ORDER BY PCPAYEUR ASC ";
+				$zWhere.=" ORDER BY PCPAYEUR ASC ";
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
-			$zSql.=" ORDER BY PCPAYEUR ASC ";
+			$zWhere.=" ORDER BY PCPAYEUR ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
+		$zData = str_replace("%OTHERWHERE%", trim($zOtherWhere), $zData) ; 
+		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
+		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
+
+		//$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
@@ -217,6 +223,7 @@ class Virement_model extends CI_Model {
 		//$_iNbrTotal = 0;
 
 		if(sizeof($toRow)>0){
+			//$_iNbrTotal = (trim($zOtherWhere)!="")?$toRow[0]['FOUND_ROWS1']:$toRow[0]['FOUND_ROWS'] ;
 			$_iNbrTotal = $toRow[0]['FOUND_ROWS'] ;
 		}
 
@@ -349,20 +356,20 @@ class Virement_model extends CI_Model {
 		$toDB = $this->load->database('catia',true);
 			
 		$toColumns = array( 
-				0  => 'DMDVIRDATEVALID', 
-				1  => 'TITULAIRE',
-				2  => 'VILLE', 
-				3  => 'OBJET',
-				4  => 'DATE_DOSSIER',
-				5  => 'STATUS', 
-				4  => 'CATEG_DEPENSE',
-				5  => 'PCPAYEUR',
-				6  => 'PCASSIGNATAIRE',
-				7  => 'PERI_EXERCICE',
-				8  => 'DENOMINATION',
-				9  => 'PSTP_LIBELLE',
-				10  => 'CATEGORIE',
-				11  => 'MONTANT'
+				0  => 'virement.DMDVIRDATEVALID', 
+				1  => 'dtl.TITULAIRE',
+				2  => 'c.VILLE', 
+				3  => 'd.OBJET',
+				4  => 'd.DATE_DOSSIER',
+				5  => 'virement.STATUS', 
+				4  => 'dtl.CATEG_DEPENSE',
+				5  => 'dtl.PCPAYEUR',
+				6  => 'dtl.PCASSIGNATAIRE',
+				7  => 'd.PERI_EXERCICE',
+				8  => 'c.DENOMINATION',
+				9  => 'p.PSTP_LIBELLE',
+				10  => 'dtl.CATEGORIE',
+				11  => 'dtl.MONTANT'
 		);
 
 
@@ -371,35 +378,36 @@ class Virement_model extends CI_Model {
 		$_iAnneeExercice = 2023;
 
 		$zWhere = " ";
+		$zOtherWhere = " ";
 
 		if( !empty($oRequest['PERI_EXERCICE']) &&  $oRequest['PERI_EXERCICE']!="") {   
-			$zWhere.=" AND PERI_EXERCICE = '".$oRequest['PERI_EXERCICE']."'  ";
+			$zWhere.=" AND d.PERI_EXERCICE = '".$oRequest['PERI_EXERCICE']."'  ";
 			$_iAnneeExercice = $oRequest['PERI_EXERCICE'];
 		}
 
 		if( !empty($oRequest['PERI_MOIS']) &&  $oRequest['PERI_MOIS']!="") {   
-			$zWhere.=" AND PERI_MOIS = '".$oRequest['PERI_MOIS']."'  ";
+			$zWhere.=" AND d.PERI_MOIS = '".$oRequest['PERI_MOIS']."'  ";
 		}
 
 		if( !empty($oRequest['PCPAYEUR']) &&  $oRequest['PCPAYEUR']!="") {   
-			$zWhere.=" AND PCPAYEUR = '".$oRequest['PCPAYEUR']."'  ";
+			$zWhere.=" AND virement.PCPAYEUR = '".$oRequest['PCPAYEUR']."'  ";
 		}
 
 		if( !empty($oRequest['PCASSIGNATAIRE']) &&  $oRequest['PCASSIGNATAIRE']!="") {   
-			$zWhere.=" AND PCASSIGNATAIRE = '".$oRequest['PCASSIGNATAIRE']."'  ";
+			$zWhere.=" AND virement.PCASSIGNATAIRE = '".$oRequest['PCASSIGNATAIRE']."'  ";
 		}
 
 		if( !empty($oRequest['DENOMINATION']) &&  $oRequest['DENOMINATION']!="") {   
-			$zWhere.=" AND DENOMINATION = '".$oRequest['DENOMINATION']."'  ";
+			$zWhere.=" AND c.DENOMINATION = '".$oRequest['DENOMINATION']."'  ";
 		}
 
 		if( !empty($oRequest['STATUS']) &&  $oRequest['STATUS']!="") {   
 			$zWhere.=" AND virement.STATUS = '".$oRequest['STATUS']."'  ";
 		}
 
-		if( !empty($oRequest['CATEG_DEPENSE']) &&  $oRequest['CATEG_DEPENSE']!="") {   
-			$zWhere.=" AND CATEG_DEPENSE= '".$oRequest['CATEG_DEPENSE']."'  ";
-		} 
+		/*if( !empty($oRequest['CATEG_DEPENSE']) &&  $oRequest['CATEG_DEPENSE']!="") {   
+			$zOtherWhere.=" AND CATEG_DEPENSE= '".$oRequest['CATEG_DEPENSE']."'  ";
+		} */
 
 		if( !empty($oRequest['DATE_DEB']) &&  $oRequest['DATE_FIN']!="") {   
 			$zDateDebVrmt = $oRequest['DATE_DEB'] ; 
@@ -411,9 +419,8 @@ class Virement_model extends CI_Model {
 				$zDateFinVrmt =  $oDate->format('d/m/Y');
 			}
 
-			$zWhere.="  AND DMDVIRDATEVALID BETWEEN '".$zDateDebVrmt."' AND '".$zDateFinVrmt."' ";
+			$zWhere.="  AND virement.DMDVIRDATEVALID BETWEEN '".$zDateDebVrmt."' AND '".$zDateFinVrmt."' ";
 		}
-
 
 		if( !empty($oRequest['CATEG_DEPENSE']) &&  $oRequest['CATEG_DEPENSE']!="") {   
 
@@ -427,50 +434,53 @@ class Virement_model extends CI_Model {
 		$toMandMode1 = array();
 		
 		if( !empty($oRequest['search']['value']) ) {   
-			$zWhere.=" AND ( TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  VILLE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  OBJET LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" AND ( virement.TITULAIRE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  c.VILLE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  d.OBJET LIKE '%".$oRequest['search']['value']."%'  ";
 			$zWhere.=" OR  t.ID LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  DATE_DOSSIER LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  PERI_EXERCICE LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  DENOMINATION LIKE '%".$oRequest['search']['value']."%'  ";
-			$zWhere.=" OR  PSTP_LIBELLE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  d.DATE_DOSSIER LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  d.PERI_EXERCICE LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  c.DENOMINATION LIKE '%".$oRequest['search']['value']."%'  ";
+			$zWhere.=" OR  p.PSTP_LIBELLE LIKE '%".$oRequest['search']['value']."%'  ";
 			$zWhere.=" OR  CATEG_DEPENSE LIKE '%".$oRequest['search']['value']."%' ) ";
 		}
 
-		$zColonne = "	COUNT(*) over () found_rows,
-						c.denomination,t.code_tiers,c.ville,
+		$zColonne = "	ROW_NUMBER() OVER (ORDER BY virement.DMDVIRDATEVALID ASC) AS r__,
+						COUNT(*) OVER () AS found_rows,c.denomination,t.code_tiers,c.ville,
 						t.ID,CONCAT (TO_CHAR(t.montant,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS montant,t.compte_tiers,
 						d.objet,d.date_dossier,d.peri_exercice,
 						tt.titulaire,
-						p.*,virement.* ";
+						p.*,virement.* "; 
 
 
 		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/46_virement.sql"); 
-		
-		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zData = str_replace("%COLUMN%", trim($zColonne), $zData) ; 
-		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
 		
 		$zDebut = 0;
 		$zFin = 10;
 		if (sizeof($oRequest)>0){
 			
 			if (isset($toColumns[$oRequest['order'][0]['column']]) && isset($oRequest['order'][0]['dir'])){
-				$zSql.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
+				$zWhere.=" ORDER BY ". $toColumns[$oRequest['order'][0]['column']]."   ".$oRequest['order'][0]['dir']."    ";
 			} else {
-				$zSql.=" ORDER BY DMDVIRDATEVALID ASC ";
+				$zWhere.=" ORDER BY virement.DMDVIRDATEVALID ASC ";
 			}
 
 			//$zSql.=" ORDER BY DMDVIRDATEVALID ASC ";
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
-			$zSql.=" ORDER BY DMDVIRDATEVALID ASC ";
+			$zWhere.=" ORDER BY virement.DMDVIRDATEVALID ASC ";
 		}
 
-		$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+		//$zSql .= " OFFSET ".$zDebut." ROWS FETCH NEXT ".$zFin." ROWS ONLY";
+
+		$zData = str_replace("%COLUMN%", trim($zColonne), $zData) ; 
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
+		$zData = str_replace("%OTHERWHERE%", trim($zOtherWhere), $zData) ; 
+		$zData = str_replace("%DEBUT%", trim($zDebut), $zData) ; 
+		$zSql = str_replace("%FIN%", trim($zFin), $zData) ; 
 
 
 		//$zSql .= " WHERE r between ".$zDebut." and ".$zFin."";
@@ -492,6 +502,7 @@ class Virement_model extends CI_Model {
 		//$_iNbrTotal = 0;
 
 		if(sizeof($toRow)>0){
+			
 			$_iNbrTotal = $toRow[0]['FOUND_ROWS'] ;
 		}
 
@@ -545,8 +556,6 @@ class Virement_model extends CI_Model {
 		echo "<pre>";
 		print_r ($oRequest);
 		echo "</pre>";*/
-
-		//$zSql = "select * from (";
 
 		$zSql = "	select COUNT(*) over () found_rows,t.*,m.soa,m.compte,m.commune,m.ID_MAND,REJET_NOTE,MAND_DT_RJT,
 					(SELECT PSTP_LIBELLE FROM T_POSTE_COMPTABLE pc WHERE m.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE,

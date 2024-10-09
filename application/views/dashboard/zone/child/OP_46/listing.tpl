@@ -101,6 +101,7 @@ $(document).ready(function() {
 				d.PCPAYEUR				= $('#PCPAYEUR').val();
 				d.STATUS				= $('#STATUS').val();
 				d.CATEG_DEPENSE			= $('#CATEG_DEPENSE').val();
+				d.DENOMINATION			= $('#DENOMINATION').val();
 				d.iTypeAfficheSearch	= 2;
 				d.data					= $("#sendSearch").serializeArray();
 				d.DATE_DEB				= $('#date_debut').val();

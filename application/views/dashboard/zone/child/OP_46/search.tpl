@@ -68,7 +68,7 @@
 								<tr>
 										<td class="middle" width="10">DENOMINATION : </td>
 										<td class="noBottom">
-											<select class="form-control" id="SIGLE" name="SIGLE">
+											<select class="form-control" id="DENOMINATION" name="DENOMINATION">
 												<option value="">Tous</option>
 												{foreach from=$toGetListeSigle item=$oGetListeSigle}
 												<option value="{$oGetListeSigle.DENOMINATION}">{$oGetListeSigle.DENOMINATION}</option>

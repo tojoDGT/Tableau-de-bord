@@ -100,6 +100,7 @@ class Virement extends MY_Controller
 
 						foreach ($toColonne as $oColonne){
 							$oColonne = explode("-", $oColonne);
+							$oColonne = explode(".", $oColonne[1]);
 							$oDataTemp[] = $oGetListe[$oColonne[1]];
 						}
 						
@@ -132,6 +133,7 @@ class Virement extends MY_Controller
 
 						foreach ($toColonne as $oColonne){
 							$oColonne = explode("-", $oColonne);
+							$oColonne = explode(".", $oColonne[1]);
 
 							if($oColonne[1]=="CATEG_DEPENSE"){
 								$oDataTemp[] = is_null($oGetListe['CATEG_DEPENSE'])?'<span style="color:red">En cours de virement</span>':$oGetListe['CATEG_DEPENSE'];

@@ -253,31 +253,38 @@ WITH
                 AND DTL.NOTEID = nt.NOTEID
                 AND NT.DMDVIRID = DV.DMDVIRID(+)
                 AND NT.OVID = OV.OVID(+))
-SELECT %COLUMN%
-  FROM nonepn.titre@salohy               t,
-       nonepn.dossier@salohy             d,
-       ctiers.compte_tiers@salohy        c,
-       CTIERS.TIERS@salohy               tt,
-       nonepn.ctiers_rga@salohy          cais,
-       ctiers.compte_tiers@salohy		 ti,
-       catia.poste_comptable     p--, chqop.t_chqop_tresor@dblcca2 a2
-        ,virement                                  
-       --,virement.ctrlvir_view_dtl@dblccad  v
- WHERE     t.dossier_id = d.id
-    AND d.compte_tiers = ti.id_ct
-       AND t.compte_tiers = d.compte_tiers
-       AND c.id_ct = d.compte_tiers
-       AND tt.code_tiers = t.code_tiers
-       AND p.pstp_code = c.comptable_gestionnaire
-       AND d.compte_tiers = cais.compte_tiers
-       AND d.mode_reglement = 'VB'
-       AND d.compte_tiers NOT IN ('46-14-7-A26-10101', '46-14-7-A25-10101')
-       AND d.peri_exercice >= '2023'
-       AND valid = '1'
-       AND t.numero_titre = virement.titrenumero (+)
---and a2.CAISSE = cais.cais_code 
---and a2.num_chq = cais.cais_code||d.id
---and not exists (select 1 from virement.ctrlvir_view_dtl@dblccad where titrenumero=t.numero_titre)
---and not exists (select 1 from virement.vir_autorise@dblccad where infonumero=t.numero_titre) 
+		
+		
+SELECT * FROM (		
+		SELECT %COLUMN%
+		  FROM nonepn.titre               t,
+			   nonepn.dossier             d,
+			   ctiers.compte_tiers        c,
+			   CTIERS.TIERS               tt,
+			   nonepn.ctiers_rga          cais,
+			   ctiers.compte_tiers		 ti,
+			   catia.poste_comptable     p--, chqop.t_chqop_tresor@dblcca2 a2
+				,virement                                  
+			   --,virement.ctrlvir_view_dtl@dblccad  v
+		 WHERE     t.dossier_id = d.id
+			AND d.compte_tiers = ti.id_ct
+			   AND t.compte_tiers = d.compte_tiers
+			   AND c.id_ct = d.compte_tiers
+			   AND tt.code_tiers = t.code_tiers
+			   AND p.pstp_code = c.comptable_gestionnaire
+			   AND d.compte_tiers = cais.compte_tiers
+			   AND d.mode_reglement = 'VB'
+			   AND d.compte_tiers NOT IN ('46-14-7-A26-10101', '46-14-7-A25-10101')
+			   AND d.peri_exercice = '%ANNEE%'
+			   AND valid = '1'
+			   AND t.numero_titre = virement.titrenumero (+)
+		--and a2.CAISSE = cais.cais_code 
+		--and a2.num_chq = cais.cais_code||d.id
+		--and not exists (select 1 from virement.ctrlvir_view_dtl@dblccad where titrenumero=t.numero_titre)
+		--and not exists (select 1 from virement.vir_autorise@dblccad where infonumero=t.numero_titre) 
 
-%WHERE%
+		%WHERE%
+) niv1
+
+WHERE r__ BETWEEN %DEBUT% AND %FIN%
+%OTHERWHERE%
