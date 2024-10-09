@@ -602,7 +602,7 @@ class Virement_model extends CI_Model {
 			}
 
 			$zDebut = (int)$oRequest['start'] ;
-			$zFin =  (int)$oRequest['length'];
+			$zFin =  (int)$oRequest['start']+(int)$oRequest['length'];
 		} else {
 			$zSql.=" ORDER BY t.ECRI_NUM ASC ";
 		}
