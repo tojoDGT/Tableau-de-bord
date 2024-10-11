@@ -536,11 +536,15 @@ class Demande_model extends CI_Model {
 
 		$toDB = $this->load->database('catia',true);
 
-		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/compteVirement.sql"); 
-		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
+		$zWhere = " AND dtl.INFONUMERO =  '" . $_iNumMandat . "'";
 
-		$zSql .= " WHERE MANDAT = '" . $_iNumMandat . "'";
+		$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/compteVirement.sql"); 
+
+		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnnee), $zData) ; 
+		$zData = str_replace("%OTHERWHERE%", '', $zData) ; 
+		$zData = str_replace("%DEBUT%", 0, $zData) ; 
+		$zSql = str_replace("%FIN%", 1, $zData) ; 
 
 		//echo $zSql;
 
