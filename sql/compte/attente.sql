@@ -16,7 +16,7 @@ SELECT * from (
 					   b.tier_code, b.lecr_reference_oper libelle_ligne, b.lecr_sens sens,
 					   b.lecr_mt montant_operation, b.lecr_cpt_general compte,
 					   b.lecr_num
-				  FROM (SELECT * from execution%ANNEE%.T_LGECRITURE_CTRL union all SELECT * from execution%ANNEE%.T_LGECRITURE_CTRL)   b
+				  FROM (SELECT * from execution%ANNEE%.T_LGECRITURE_CTRL@dblcca2 union all SELECT * from execution%ANNEE%.T_LGECRITURE_CTRL)   b
 				  ,
 					   CATIA.POSTE_COMPTABLE pc,
 					   (select * from CATIA.compte where exO='%ANNEE%') c--SUBSTR($P{Date_End}, 7)) c
@@ -36,7 +36,7 @@ SELECT * from (
 			   ) ecriture_a_apure,
 			   /*
 			   (SELECT   r.lecr_num lecr_num_ap, SUM (r.lec_mt_apure) mt_ap
-					FROM execution%ANNEE%.T_LGECRITURE_CTRL b,
+					FROM execution%ANNEE%.T_LGECRITURE_CTRL@dblcca2 b,
 						 CENTRAL.T_r_lecr_lecr r
 				   WHERE r.lec_num = b.lecr_num
 					   and b.entite= '10101.100'-- $P{poste_comptable}
@@ -53,7 +53,7 @@ SELECT * from (
 
 				GROUP BY r.lecr_num) */
 				(SELECT   r.lecr_num lecr_num_ap, SUM (r.lec_mt_apure) mt_ap
-					FROM --execution%ANNEE%.T_LGECRITURE_CTRL b,
+					FROM --execution%ANNEE%.T_LGECRITURE_CTRL@dblcca2 b,
 						 CENTRAL.T_r_lecr_lecr r
 				   WHERE 
 						r.entite = '10101.100'--r.lec_num = b.lecr_num

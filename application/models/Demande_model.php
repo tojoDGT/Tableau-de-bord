@@ -434,7 +434,7 @@ class Demande_model extends CI_Model {
 
 		$toDB = $this->load->database('catia',true);
 
-		$zSql = "select COUNT(*) over () found_rows,m.* from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum . " AND m.MAND_NUM_INFO = " . $_iNumMandat;
+		$zSql = "select COUNT(*) over () found_rows,m.* from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE t.ECRI_NUM = m.ECRI_NUM AND t.ECRI_NUM = " . $_iEcriNum . " AND m.MAND_NUM_INFO = " . $_iNumMandat;
 
 		if($_iMode != ""){
 			$zSql .= " AND m.MAND_MODE_PAIE = '" . $_iMode . "'";

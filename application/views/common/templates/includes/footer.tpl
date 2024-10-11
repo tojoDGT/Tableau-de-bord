@@ -37,7 +37,7 @@
 			<div class="p-3 control-sidebar-content" style="">
 				<h5>COLONNE A AFFICHER</h5>
 				<hr class="mb-2" />
-				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="Identifiant-ID" class="mr-1" name="colonneAffiche[]" /><span>Identifiant</span></div>
+				<div style="display:none;" class="mb-2"><input type="checkbox" checked="checked" value="Identifiant-virement.ID" class="mr-1" name="colonneAffiche[]" /><span>Identifiant</span></div>
 				<div class="mb-2"><input type="checkbox" {if TITULAIRE|in_array:$oDataTempCol} checked="checked" {/if} value="TITULAIRE-dtl.TITULAIRE" class="mr-1" name="colonneAffiche[]" /><span>TITULAIRE</span></div>
 				<div class="mb-2"><input type="checkbox" {if VILLE|in_array:$oDataTempCol} checked="checked" {/if} value="VILLE-c.VILLE" class="mr-1" name="colonneAffiche[]" /><span>Ville</span></div>
 				<div class="mb-2"><input type="checkbox" {if OBJET|in_array:$oDataTempCol} checked="checked" {/if} value="OBJET-c.OBJET" class="mr-1" name="colonneAffiche[]" /><span>Objet</span></div>
@@ -126,7 +126,7 @@ div.dataTables_processing {
 
 div.dataTables_processing2 {
 	position: absolute;
-	top: 50%!important;
+	top: 29%!important;
 	left: 54%!important;
 	width: 200px;
 	margin-left: -100px!important;

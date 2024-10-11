@@ -276,7 +276,7 @@ class Dashboard_model extends CI_Model {
 
 		$toValue = array("9","0","4","2");
 
-		$zSql = "select t.PROP_LIBELLE from EXECUTION".$_iAnneeExercice.".PROPRIETAIRE t" ;
+		$zSql = "select t.PROP_LIBELLE from EXECUTION".$_iAnneeExercice.".PROPRIETAIRE@dblcca2 t" ;
 
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
@@ -735,7 +735,7 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "select MIN_ABREV from EXECUTION".$_iAnneeExercice.".MANDAT GROUP BY MIN_ABREV ORDER BY MIN_ABREV" ;
+		$zSql = "select MIN_ABREV from EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 GROUP BY MIN_ABREV ORDER BY MIN_ABREV" ;
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
@@ -757,7 +757,7 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "select DISTINCT TYPE_MAND from EXECUTION".$_iAnneeExercice.".MANDAT GROUP BY TYPE_MAND ORDER BY TYPE_MAND ASC" ;
+		$zSql = "select DISTINCT TYPE_MAND from EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 GROUP BY TYPE_MAND ORDER BY TYPE_MAND ASC" ;
 		
 		$zQuery = $toDB->query($zSql);
 		$toRow = $zQuery->result_array();
@@ -781,7 +781,7 @@ class Dashboard_model extends CI_Model {
 
 		$toRow = array();
 
-		$zSql = "select ECRI_EXERCICE from EXECUTION".$_iAnneeExercice.".ECRITURE " ;
+		$zSql = "select ECRI_EXERCICE from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 " ;
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$zSql.=" WHERE ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
@@ -843,7 +843,7 @@ class Dashboard_model extends CI_Model {
 		$oRequest = $_REQUEST;
 
 		$zSql = "select count(PROP_CODE) as NB,
-		SUM(MAND_MONTANT) as TOTAL, SUBSTR (m.soa, 1, 1) PROP_CODE,ECRI_EXERCICE from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
+		SUM(MAND_MONTANT) as TOTAL, SUBSTR (m.soa, 1, 1) PROP_CODE,ECRI_EXERCICE from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE t.ECRI_NUM = m.ECRI_NUM " ;
 
 		if( !empty($oRequest['ECRI_EXERCICE']) &&  $oRequest['ECRI_EXERCICE']!="") {   
 			$zSql.=" AND t.ECRI_EXERCICE = '".$oRequest['ECRI_EXERCICE']."'  ";
@@ -1075,14 +1075,14 @@ class Dashboard_model extends CI_Model {
 			}
 		}
 
-		$zSousRequete	 = " select COUNT(*) from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE m.ECRI_NUM = t.ECRI_NUM(+) AND m.MAND_REJET = 1 ";
+		$zSousRequete	 = " select COUNT(*) from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE m.ECRI_NUM = t.ECRI_NUM(+) AND m.MAND_REJET = 1 ";
 		$zSousRequete   .= $zSqlWhere ; 
 
 
-		$zSql = "select distinct (SELECT SUM(MAND_MONTANT) over () FROM EXECUTION".$_iAnneeExercice.".MANDAT WHERE MAND_REJET<>1 ".$zSqlWhere3."  AND rownum=1 ) TOTAL,COUNT(*) over ()  as NB_SOA,SUM(MAND_MONTANT) over () NBTOTAL, (".$zSousRequete.") as rejete
+		$zSql = "select distinct (SELECT SUM(MAND_MONTANT) over () FROM EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 WHERE MAND_REJET<>1 ".$zSqlWhere3."  AND rownum=1 ) TOTAL,COUNT(*) over ()  as NB_SOA,SUM(MAND_MONTANT) over () NBTOTAL, (".$zSousRequete.") as rejete
 		
 		
-		from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE m.ECRI_NUM = t.ECRI_NUM(+) AND m.MAND_REJET<>1 " ;
+		from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE m.ECRI_NUM = t.ECRI_NUM(+) AND m.MAND_REJET<>1 " ;
 
 		
 		$zSql .= $zSqlWhere;

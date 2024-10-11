@@ -109,7 +109,7 @@ class Utilisateur_model extends CI_Model {
 						COUNT(*) OVER () AS found_rows, norm.* FROM (SELECT u.USERID,USERNAME,USERFIRSTNAME,USERMAIL,
 				(SELECT ACTIVITYADRS FROM specl.USERINFOACTIVITY v WHERE v.USERID = u.USERID AND rownum=1) adresse
 				FROM SPECL.USERINFOGEN u
-				WHERE u.USERID IN (SELECT DISTINCT m.MAND_UTR_VISA FROM EXECUTION".$_iAnneeExercice.".MANDAT m 
+				WHERE u.USERID IN (SELECT DISTINCT m.MAND_UTR_VISA FROM EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m 
 				WHERE m.MAND_UTR_VISA IS NOT NULL AND M.ENTITE = '".$_zPostCode."') ";
 
 
@@ -256,15 +256,15 @@ class Utilisateur_model extends CI_Model {
 		//$zSql=" SELECT  * FROM EXECUTION".$_iAnnee.".POSTE_COMPTABLE_ORIGINAL  p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "'";
 
 		 
-		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 AND rownum=1) valide,
-				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE = '" . $_zPsCode . "' AND MAND_REJET = 1 AND rownum=1) rejet,
-				( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_VISA_VALIDE = 1 AND rownum=1) as valideAutre,
-				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.ENTITE <> '" . $_zPsCode . "' AND MAND_REJET = 1 AND rownum=1) rejetAutre,
-				p.* FROM EXECUTION".$_iAnneeExercice.".POSTE_COMPTABLE_ORIGINAL  p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "' ";
+				p.* FROM EXECUTION".$_iAnneeExercice.".POSTE_COMPTABLE_ORIGINAL@dblcca2  p WHERE p.PSTP_TYPE = 0 AND PSTP_CODE =  '" . $_zPsCode . "' ";
 	
 		//echo $zSql;
 		$zQuery = $toDB->query($zSql);
@@ -287,15 +287,15 @@ class Utilisateur_model extends CI_Model {
 
 		$toDB = $this->load->database('catia',true);
 
-		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+		$zSql=" SELECT  ( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.MAND_UTR_VISA = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 AND rownum=1) valide,
-				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.MAND_UTR_RJT = '" . $_iUserId . "' AND MAND_VISA_VALIDE = 0 AND rownum=1) rejet,
-				( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				( SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.MAND_UTR_VISA <> '" . $_iUserId . "' AND MAND_VISA_VALIDE = 1 AND rownum=1) as valideAutre,
-				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE t,EXECUTION".$_iAnneeExercice.".MANDAT m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
+				(  SELECT  COUNT(*) over () found_rows from EXECUTION".$_iAnneeExercice.".ECRITURE@dblcca2 t,EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m WHERE t.ECRI_NUM(+) = m.ECRI_NUM
 				AND m.MAND_UTR_RJT <> '" . $_iUserId . "' AND MAND_VISA_VALIDE = 0 AND rownum=1) rejetAutre,
-				 m1.MAND_UTR_VISA FROM EXECUTION".$_iAnneeExercice.".MANDAT m1 WHERE m1.MAND_UTR_VISA = '" . $_iUserId . "' AND rownum=1";
+				 m1.MAND_UTR_VISA FROM EXECUTION".$_iAnneeExercice.".MANDAT@dblcca2 m1 WHERE m1.MAND_UTR_VISA = '" . $_iUserId . "' AND rownum=1";
 	
 		$zQuery = $toDB->query($zSql);
 		$oRow = $zQuery->row();

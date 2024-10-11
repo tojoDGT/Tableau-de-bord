@@ -220,11 +220,11 @@ WITH
                              ELSE
                                  'DEPENSE'
                          END                       AS CATEG_DEPENSE
-           FROM VIREMENT.CV_NOTEDTL          dtl,
-                VIREMENT.CV_NOTE             nt,
-                VIREMENT.CV_NOTESTATUS       ntst,
-                VIREMENT.CV_DEMANDEVIREMENT  dv,
-                VIREMENT.CV_ORDREVIREMENT    ov
+           FROM VIREMENT.CV_NOTEDTL@dblccad           dtl,
+                VIREMENT.CV_NOTE@dblccad              nt,
+                VIREMENT.CV_NOTESTATUS@dblccad        ntst,
+                VIREMENT.CV_DEMANDEVIREMENT@dblccad   dv,
+                VIREMENT.CV_ORDREVIREMENT@dblccad     ov
           WHERE     1 = 1
                 AND DTL.EXERCICE = '%ANNEE%'
                 AND ntst.NOTESTATUSID = NT.NOTESTATUS
@@ -245,8 +245,8 @@ SELECT * from (
 			   M.MAND_NUM_INFO,
 			   M.ECRI_NUM ECRINUM,
 			   ECRI_LIB,
-			   (SELECT PSTP_LIBELLE FROM EXECUTION%ANNEE%.POSTE_COMPTABLE_ORIGINAL pc WHERE M.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE1,
-			   (SELECT PSTP_LIBELLE FROM EXECUTION%ANNEE%.POSTE_COMPTABLE_ORIGINAL pc WHERE M.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE1,
+			   (SELECT PSTP_LIBELLE FROM EXECUTION%ANNEE%.POSTE_COMPTABLE_ORIGINAL@dblcca2 pc WHERE M.ASSIGNATAIRE=pc.PSTP_CODE) as ASSIGNATAIRE1,
+			   (SELECT PSTP_LIBELLE FROM EXECUTION%ANNEE%.POSTE_COMPTABLE_ORIGINAL@dblcca2 pc WHERE M.MANDATAIRE=pc.PSTP_CODE) as MANDATAIRE1,
 			   MIN_ABREV,
 			   MIN_LIBELLE,
 			   CASE

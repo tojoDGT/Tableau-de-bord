@@ -29,7 +29,7 @@ class Virement_model extends CI_Model {
 			case 1:
 				$toColonneVirement = array();
 				if(empty($_SESSION["colonneAfficheVirement"])){
-					array_push($toColonneVirement, '-dtl.MANDAT');
+					array_push($toColonneVirement, 'IdentifiantNumInfo-dtl.MANDAT');
 					array_push($toColonneVirement, 'PCASSIGNATAIRE-dtl.PCASSIGNATAIRE');
 					array_push($toColonneVirement, 'PCPAYEUR-dtl.PCPAYEUR');
 					array_push($toColonneVirement, 'STATUT-dtl.STATUS');
@@ -53,16 +53,16 @@ class Virement_model extends CI_Model {
 
 				$toColonneOP46 = array();
 				if(empty($_SESSION["colonneAfficheOP46"])){
-					array_push($toColonneOP46, '-virement.ID');
+					array_push($toColonneOP46, 'Identifiant-virement.ID');
 					array_push($toColonneOP46, 'DATE DE VIREMENT-virement.DMDVIRDATEVALID');
 					array_push($toColonneOP46, 'TITULAIRE-virement.TITULAIRE');
 					array_push($toColonneOP46, 'VILLE-c.VILLE');
 					array_push($toColonneOP46, 'OBJET-c.OBJET');
-					array_push($toColonneOP46, 'DATE DOSSIER-c.DATE_DOSSIER');
+					//array_push($toColonneOP46, 'DATE DOSSIER-c.DATE_DOSSIER');
 					array_push($toColonneOP46, 'STATUT-virement.STATUS');
 					array_push($toColonneOP46, 'CATEGORIE DEPENSE-dtl.CATEG_DEPENSE');
-					array_push($toColonneOP46, 'PCPAYEUR-virement.PCPAYEUR');
-					array_push($toColonneOP46, 'PCASSIGNATAIRE-virement.PCASSIGNATAIRE');
+					//array_push($toColonneOP46, 'PCPAYEUR-virement.PCPAYEUR');
+					//array_push($toColonneOP46, 'PCASSIGNATAIRE-virement.PCASSIGNATAIRE');
 
 					array_push($toColonneOP46, 'EXERCICE-d.PERI_EXERCICE');
 					array_push($toColonneOP46, 'DENOMINATION-c.DENOMINATION');
@@ -658,7 +658,7 @@ class Virement_model extends CI_Model {
 		switch ($_iTypeAfficheSearch){
 			case 1:
 				
-				$zWhere = " WHERE MANDAT =  '" . $_iNumMandat . "'";
+				$zWhere = " AND dtl.INFONUMERO =  '" . $_iNumMandat . "'";
 				$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/compteVirement.sql"); 
 				
 				break;
@@ -667,16 +667,26 @@ class Virement_model extends CI_Model {
 
 
 				$zWhere = " AND t.ID =  " . $_id;
-				$zColonne = " * ";
+				//$zColonne = " * ";
+
+				$zColonne = "	ROW_NUMBER() OVER (ORDER BY virement.DMDVIRDATEVALID ASC) AS r__,
+						COUNT(*) OVER () AS found_rows,c.denomination,t.code_tiers,c.ville,
+						t.ID,CONCAT (TO_CHAR(t.montant,'FM999G999G999G999D00' , 'NLS_NUMERIC_CHARACTERS = '', '' '), ' Ar') AS montant,t.compte_tiers,
+						d.objet,d.date_dossier,d.peri_exercice,
+						tt.titulaire,
+						p.*,virement.* "; 
 
 				$zData = @file_get_contents(APPLICATION_PATH ."sql/situation/46_virement.sql"); 
 				$zData = str_replace("%COLUMN%", trim($zColonne), $zData) ; 
 		
 				break;
 		}
-
+		
 		$zData = str_replace("%WHERE%", trim($zWhere), $zData) ; 
-		$zSql = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
+		$zData = str_replace("%ANNEE%", trim($_iAnneeExercice), $zData) ; 
+		$zData = str_replace("%OTHERWHERE%", '', $zData) ; 
+		$zData = str_replace("%DEBUT%", 0, $zData) ; 
+		$zSql = str_replace("%FIN%", 1, $zData) ; 
 
 		//echo $zSql;
 

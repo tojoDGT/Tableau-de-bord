@@ -25,19 +25,7 @@
 									  <div class="time-label">
 										<span class="bg-green">Traitement et Visa</span>
 									  </div>
-									  {assign var="zCreationString1" value=$oGetDetail->DATERECUPDOSSIER}
-									  {assign var="zCreationSplit1" value=" "|explode:$zCreationString1}
-									  <div>
-										<i class="fas fa-user bg-olive"></i>
-										<div class="timeline-item">
-										  <span class="time"><i class="fas fa-clock"></i> {$zCreationSplit1[1]}</span>
-										  <h3 class="timeline-header"><a href="#">Récuperation</a>&nbsp;</h3>
-										  <div class="timeline-body">
-											<b>Date :</b> {$zCreationSplit1[0]}
-										  </div>
-										  
-										</div>
-									  </div>
+									  
 									  {assign var="zCreationString2" value=$oGetDetail->DATE_VISA}
 									  {assign var="zCreationSplit2" value=" "|explode:$zCreationString2}
 									  <div>
@@ -51,7 +39,19 @@
 										  
 										</div>
 									  </div>
-									 
+									  {assign var="zCreationString1" value=$oGetDetail->DATERECUPDOSSIER}
+									  {assign var="zCreationSplit1" value=" "|explode:$zCreationString1}
+									  <div>
+										<i class="fas fa-user bg-olive"></i>
+										<div class="timeline-item">
+										  <span class="time"><i class="fas fa-clock"></i> {$zCreationSplit1[1]}</span>
+										  <h3 class="timeline-header"><a href="#">Récuperation</a>&nbsp;</h3>
+										  <div class="timeline-body">
+											<b>Date :</b> {$zCreationSplit1[0]}
+										  </div>
+										  
+										</div>
+									  </div>
 									  
 									</div>
 								</div>
@@ -62,7 +62,7 @@
 									  <li>
 										{assign var=num1 value=$oGetDetail->DATERECUPDOSSIER|mktimedate}
 										{assign var=num2 value=$oGetDetail->DATE_VISA|mktimedate}
-										{assign var=diff value=$num2-$num1}
+										{assign var=diff value=$num1-$num2}
 										{assign var=final value=$diff/86400}
 										
 										<span class="text">Délai :</span>
@@ -166,7 +166,7 @@
 												{assign var=final value=$diff/86400}
 												
 												<span class="text">Délai :</span>
-												<small class="badge bg-green"><i class="far fa-clock"></i> {$final|round} jour{if $final|round>1}s{/if}</small>
+												<small class="badge bg-green">{if $final|round==0} le même jour {else}<i class="far fa-clock"></i> {$final|round} jour{if $final|round>1}s{/if}{/if}</small>
 											  </li>
 											</ul>
 										</div>

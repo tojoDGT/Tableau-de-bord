@@ -26,7 +26,7 @@ class Login_model extends CI_Model{
 
 		$toDB = $this->load->database('specl',true);
 
-		$zSql=" SELECT DISTINCT * FROM ".$toDB->database.".V_USERS_TBLBOARD u WHERE USERID = '" . $data['USERID'] . "' AND ROLEVALID = 1 AND EMAIL_CANONICAL IS NOT NULL ";
+		$zSql=" SELECT DISTINCT * FROM ".$toDB->database.".V_USERS_TBLBOARD@dblccad u WHERE USERID = '" . $data['USERID'] . "' AND ROLEVALID = 1 AND EMAIL_CANONICAL IS NOT NULL ";
 
 		//echo $zSql; die();
 

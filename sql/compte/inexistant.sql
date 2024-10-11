@@ -1,11 +1,11 @@
 WITH LGECRITUREBAL AS (
-SELECT l.*, 'BALANCE D''ENTREE' TYPE_ECRITURE  FROM execution%ANNEE%.T_LGECRITURE_CTRL l WHERE  entite = '10101.100' and ECRI_NUM = (
-SELECT max(ecri_num) FROM execution%ANNEE%.T_LGECRITURE_CTRL l WHERE  NVL (l.ecri_type, 'XX') = '00' and l.entite = '10101.100')
+SELECT l.*, 'BALANCE D''ENTREE' TYPE_ECRITURE  FROM execution%ANNEE%.T_LGECRITURE_CTRL@dblcca2 l WHERE  entite = '10101.100' and ECRI_NUM = (
+SELECT max(ecri_num) FROM execution%ANNEE%.T_LGECRITURE_CTRL@dblcca2 l WHERE  NVL (l.ecri_type, 'XX') = '00' and l.entite = '10101.100')
 union all
-SELECT l.*, 'FIN DE GESTION' TYPE_ECRITURE  FROM execution%ANNEE%.T_LGECRITURE_CTRL l WHERE entite = '10101.100' and ECRI_NUM = (
-SELECT max(ecri_num) FROM execution%ANNEE%.T_LGECRITURE_CTRL l WHERE  NVL (l.ecri_type, 'XX') = '08' and l.entite = '10101.100') 
+SELECT l.*, 'FIN DE GESTION' TYPE_ECRITURE  FROM execution%ANNEE%.T_LGECRITURE_CTRL@dblcca2 l WHERE entite = '10101.100' and ECRI_NUM = (
+SELECT max(ecri_num) FROM execution%ANNEE%.T_LGECRITURE_CTRL@dblcca2 l WHERE  NVL (l.ecri_type, 'XX') = '08' and l.entite = '10101.100') 
 union all
-SELECT l.*, 'OPERATION DE LA GESTION' TYPE_ECRITURE  FROM execution%ANNEE%.T_LGECRITURE_CTRL l WHERE entite = '10101.100'
+SELECT l.*, 'OPERATION DE LA GESTION' TYPE_ECRITURE  FROM execution%ANNEE%.T_LGECRITURE_CTRL@dblcca2 l WHERE entite = '10101.100'
 and NVL (l.ecri_type, '99') NOT IN
                                                                  ('00', '08') 
 ) 

@@ -114,13 +114,15 @@ class Virement extends MY_Controller
 
 					$toColonne = $this->virement->getSessionColonne(2);
 
+					/*echo "<pre>";
+					print_r ($toColonne);
+					echo "</pre>";*/
+
 					$iNombreTotal = 0;
 
 					$toGetListe = $this->virement->GetVirementListe_op46($iNombreTotal,$this) ; 
 
-					/*echo "<pre>";
-					print_r ($toGetListe);
-					echo "</pre>";*/
+					
 
 					$oDataAssign = array();
 					$iIncrement = 1;
@@ -147,6 +149,11 @@ class Virement extends MY_Controller
 
 				break;
 		}
+
+		/*echo "<pre>";
+		print_r ($oDataAssign);
+		echo "</pre>";*/
+
 
 		//print_r ($oDataTemp);
 		$taJson = array(
