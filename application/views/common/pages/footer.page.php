@@ -5,6 +5,8 @@ global $oDataUser ;
 
 $oDataTempCol = array();
 
+$toColonne = array();
+
 switch ($oDataUser['zParam']){
 
 	case 'op_46':
@@ -23,10 +25,12 @@ switch ($oDataUser['zParam']){
 		break;
 }
 
-foreach ($toColonne as $oColonne){
-	$oColonne = explode("-", $oColonne);
-	$oColonne = explode(".", $oColonne[1]);
-	array_push($oDataTempCol, $oColonne[1]);
+if(sizeof($toColonne)>0){
+	foreach ($toColonne as $oColonne){
+		$oColonne = explode("-", $oColonne);
+		$oColonne = explode(".", $oColonne[1]);
+		array_push($oDataTempCol, $oColonne[1]);
+	}
 }
 
 $oSmarty->assign('zParam',  $oDataUser['zParam']);

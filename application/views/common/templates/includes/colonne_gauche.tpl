@@ -102,9 +102,15 @@
 		</a>
    </li>-->
     <li class="nav-item">
-		<a href="{$zBasePath}/utilisateur/liste" class="nav-link {if $oData.iMenuActifId==33}active{/if}">
+		<a href="{$zBasePath}utilisateur/liste" class="nav-link {if $oData.iMenuActifId==33}active{/if}">
 		  <i class="nav-icon fas fa-copy"></i>
 		  <p>Les utilisateurs</p>
+		</a>
+   </li>  
+     <li class="nav-item">
+		<a href="{$zBasePath}rnf/template" class="nav-link {if $oData.iMenuActifId==663}active{/if}">
+		  <i class="nav-icon fas fa-copy"></i>
+		  <p>RNF</p>
 		</a>
    </li>  
    <li class="nav-item">

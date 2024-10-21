@@ -48,3 +48,20 @@ thead .text {
 .eka .highcharts-table-caption {
 	display:none!important;
 }
+
+.message {
+    display: none;
+	color: #ed1b24!important;
+	font-style: italic;
+}
+
+
+.error input, .error select, .error textarea {
+    border-color: #ed1b24!important;
+    color: #ed1b24!important;
+}
+
+
+.error .message {
+    display: block;
+}

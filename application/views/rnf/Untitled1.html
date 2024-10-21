@@ -1,0 +1,152 @@
+{include_php file=$zCssJs}
+  {include_php file=$zHeader}
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            &nbsp;
+			<small>&nbsp;</small>
+          </div>
+        
+		  <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+			  <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+			  <li class="breadcrumb-item"><a href="#">RNF</a></li>
+			  <li class="breadcrumb-item"><a href="#">Dynamisation formulaire</a></li>
+			  <li class="breadcrumb-item active">formule</li>
+            </ol>
+          </div>
+        </div>
+		
+      </div>
+	  <div class="row">	
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title"></h3>
+							Formulaire
+					<div class="card-tools">
+					</div>
+				</div>
+			<!------------------------------------------------------------->
+			<div class="row">
+				<div class="col-xs-12">
+						<div class="box box-primary">
+								<form method="post" name="formulaireEdit" id="formulaireEdit" onSubmit="return valider();"  enctype="multipart/form-data" action="{$zBasePath}equipe/save/{$oData.zHashModule}">
+									
+									<div class="box-body col-xs-12 col-sm-12 pull-left">
+												<div class="form-group">
+												  <label for="exampleInputPassword1"><b>ENTITE</b></label>
+																					  <select class="input input-sm form-control" id="entite" name="entite">
+																							<option value="MEF">MEF</option>
+																							<option value="MEN">MEN</option>
+																							<option value="CUA">CUA</option>
+																							<option value="MEH">MEH</option>
+																					  </select>
+												</div>
+									</div>
+									<input style="width: 150px;" type="button" name="btnAddChamp" data-toggle="modal" data-target="#modal-xl" class="btn  bg-green form-btnChamp" value="Ajouter un champ" autocomplete="off">
+								</form>
+						</div>
+				</div>
+			</div>
+			<!------------------------------------------------------------->
+	
+	</div>
+			<!-- /.content -->
+			</div>
+		</div>
+	</div>
+	
+	</section>
+
+    <!-- Main content -->
+			
+    <!-- /.content -->
+  </div>
+
+
+<div class="modal fade" id="modal-xl">
+	<div class="modal-dialog modal-xl">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h4 class="modal-title">Extra Large Modal</h4>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  <p>One fine body&hellip;</p>
+		</div>
+		<div class="modal-footer justify-content-between">
+		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  <button type="button" class="btn btn-primary">Save changes</button>
+		</div>
+	  </div>
+	  <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+ {literal}
+<style>
+.row {
+margin-left:15px;
+margin-right:15px;
+}
+</style>
+<script type="text/javascript">
+  $(document).ready(function() {
+
+		$(".form-check").on("click", function(){
+			var iValue = $(this).val();
+			switch (iValue)
+			{
+				case '1' :
+					$("#panelFixe").show();
+					$("#panelForfaitaire").hide();
+					$("#panelFormule").hide();
+					break;
+
+				case '2' :
+					$("#panelFixe").hide();
+					$("#panelForfaitaire").show();
+					$("#panelFormule").hide();
+					break;
+
+				case '3' :
+					$("#panelFixe").hide();
+					$("#panelForfaitaire").hide();
+					$("#panelFormule").show();
+					break;
+			
+			}
+		})
+
+		$(".form-btnChamp").on("click", function(){
+			var iValue =  $('input[name=typeChamp]:checked').val()
+			$('#myModal').modal('show');
+			switch (iValue)
+			{
+				case '1' :
+					
+					break;
+
+				case '2' :
+					
+					break;
+
+				case '3' :
+					
+					break;
+			
+			}
+		})
+	})
+
+ </script>
+{/literal}
+{include_php file=$zFooter}
+<script type="text/javascript" src="{$zBasePath}assets/common/js/vendor/jquery-ui.js"></script>
