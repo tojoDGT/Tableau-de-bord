@@ -6,9 +6,9 @@
 				<table class="table table-bordered" id="tablePrincipale">
 					  <thead>
 							<tr>
-								  <th>Rendu</th>
-								  <th>HTML</th>
-								  <th style="width: 10px">#</th>
+								  <th style="width:40%">Rendu</th>
+								  <th style="width:57%">HTML</th>
+								  <th style="width:3%">#</th>
 							</tr>
 					  </thead>
 					  <tbody>
@@ -21,7 +21,7 @@
 												<h5 class="card-title m-0">{$oSaveForm.intitule}</h5>
 											</div>
 											<div class="card-body">
-												<div class="custom-control {if $oSaveForm.iType==1}custom-radio{elseif $oSaveForm.iType==2}custom-check{else}custom-check{/if}">
+												<div class="custom-control {if $oSaveForm.iType==1}custom-radio{elseif $oSaveForm.iType==2}custom-check{else}form-check{/if}">
 													
 													{if $oSaveForm.iType==3}
 														<div class="rowdynamique">
@@ -35,8 +35,8 @@
 															 {foreach $oSaveForm.caption as $zCaption}
 																<span class="marge">
 																	<input {if $oSaveForm.iType==1}type="radio" {elseif $oSaveForm.iType==2}type="checkbox" {else}type="checkbox"{/if} 
-																	name="{$oSaveForm.champNom.$iIncrement}_1" id="{$zCaption.$iIncrement}_1" value="{$oSaveForm.montant.$iIncrement}" class="custom-control-input form-typeChamp">
-																	<label class="custom-control-label" for="{$zCaption.$iIncrement}">&nbsp;{$zCaption}</label>
+																	name="{$oSaveForm.champNom.$iIncrement}_1" id="{$zCaption}_1" value="{$oSaveForm.montant.$iIncrement}" class="custom-control-input form-typeChamp">
+																	<label class="custom-control-label" for="{$zCaption}_1">&nbsp;{$zCaption} <span class="content_1">1</span></label>
 																</span>
 															{assign var=iIncrement value=$iIncrement+1}
 															{/foreach}
@@ -59,11 +59,11 @@
 											</div>
 										</div>
 								</td>
-								<td style="width:60%">
+								<td style="width:57%">
 									
-									<textarea  id="codeMirrorDemo{$iIncrementForm}" class="p-3">
+									<textarea rows="1" cols="5"  id="codeMirrorDemo{$iIncrementForm}" class="p-3">
 <h5 class="card-title m-0">{$oSaveForm.intitule}</h5>
-<div class="custom-control {if $oSaveForm.iType==1}custom-radio{elseif $oSaveForm.iType==2}custom-check{else}custom-check{/if}">
+<div class="custom-control {if $oSaveForm.iType==1}custom-radio{elseif $oSaveForm.iType==2}custom-check{else}form-check{/if}">
 	{assign var=iIncrement value="0"}
 	{foreach $oSaveForm.caption as $zCaption}
 		<span class="marge">
@@ -98,10 +98,12 @@
     // CodeMirror
 	{for $foo=1 to $iIncrementForm-1}
 
-    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo{$foo}"), {
-      mode: "htmlmixed",
-      theme: "monokai"
-    });
+		var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo{$foo}"), {
+		  mode: "htmlmixed",
+		  theme: "monokai"
+		});
+
+		myCodeMirror.setSize(850, 300);
 
 	{/for}
 
@@ -126,9 +128,12 @@
 				
 				var boucleCibleInit2 = boucleCibleInit.replaceAll("_1", zChange);
 
-				//console.log(boucleCibleInit2);
+				
+
+				//console.log(iLast + "--" + boucleCibleInit2);
 				
 				$(zCible).append(boucleCibleInit2+ "<br>");
+				$(".content_"+iLast).html(iLast);
 			}
 		}
   }
