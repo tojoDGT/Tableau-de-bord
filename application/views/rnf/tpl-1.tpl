@@ -50,58 +50,57 @@
 </table>
 </div>
 <script type="text/javascript">
-	function deleteChamp(index){
-		   $("#ChampTr_" +index).fadeOut('slow',function(){
-			   $(this).html('')
-		   });
-	}
+function deleteChamp(index){
+	   $("#ChampTr_" +index).fadeOut('slow',function(){
+		   $(this).html('')
+	   });
+}
+$(document).ready(function() {
+		
+		$(".prix").numeric({ decimal : ".",  negative : false, scale: 2 });
+		$('#champNom_1').on("change",function(){
+				var iValue = $('#champNom_1').val();
+				$(".automaticRad").val(iValue);
+		});  
+		
+		$('.AddLigne').on("click",function(){
 
+				var iCible = $(this).attr("incrementCible");  
+				var zTable = $(this).attr("tableCible");  
+				var iType = $(this).attr("iTypeCible");  
 
-  $(document).ready(function() {
+				var iNbr = $('#' + iCible).val();
+				iIndexNew = eval(iNbr)+1;
+				$('#' + iCible).val(iIndexNew);
+				getAjax(zTable,iIndexNew,iType,'getTemplate');
+				$('html, body').animate({
+					scrollTop: $(this).offset().top
+				}, 1500);
+		});  
+		function getAjax(_zCible,_iIndexNew,_iType,_zTemplate){
 			
-			$(".prix").numeric({ decimal : ".",  negative : false, scale: 2 });
-			$('#champNom_1').on("change",function(){
+			$("#beforeSend11").show();
+			var zChampNom = $('#champNom_1').val();
+			$.ajax({
+				url: zBasePath + "rnf/"+_zTemplate+"/",
+				type: 'post',
+				data: {
+					iIndexNew : _iIndexNew,
+					iType	  : _iType,
+				},
+				success: function(data, textStatus, jqXHR) {
 
-					var iValue = $('#champNom_1').val();
-					$(".automaticRad").val(iValue);
-			});  
-			
-			$('.AddLigne').on("click",function(){
-
-					var iCible = $(this).attr("incrementCible");  
-					var zTable = $(this).attr("tableCible");  
-					var iType = $(this).attr("iTypeCible");  
-
-					var iNbr = $('#' + iCible).val();
-					iIndexNew = eval(iNbr)+1;
-					$('#' + iCible).val(iIndexNew);
-					getAjax(zTable,iIndexNew,iType,'getTemplate');
-					$('html, body').animate({
-						scrollTop: $(this).offset().top
-					}, 1500);
-			});  
-			function getAjax(_zCible,_iIndexNew,_iType,_zTemplate){
-				
-				$("#beforeSend11").show();
-				$.ajax({
-					url: zBasePath + "rnf/"+_zTemplate+"/",
-					type: 'post',
-					data: {
-						iIndexNew : _iIndexNew,
-						iType	  : _iType,
-					},
-					success: function(data, textStatus, jqXHR) {
-
-						var zRow = $(data);
-						$('#'+_zCible).append(zRow);
-						zRow.fadeIn(1000);
-						event.preventDefault()
-						
-					},
-					async: false
-				}).done(function() {
-					//$.getScript( zBasePath + "assets/js/loading.js" )
-				});
-			}
-	})
+					var zRow = $(data);
+					$('#'+_zCible).append(zRow);
+					zRow.fadeIn(1000);
+					event.preventDefault();
+					$(".automaticRad").val(zChampNom);
+					
+				},
+				async: false
+			}).done(function() {
+				//$.getScript( zBasePath + "assets/js/loading.js" )
+			});
+		}
+})
 </script>

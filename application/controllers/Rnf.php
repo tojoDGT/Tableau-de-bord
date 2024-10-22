@@ -89,33 +89,59 @@ class Rnf extends MY_Controller
 
 		$toSaveForm = $_SESSION["rnfSaveFormule"] ;
 
-		$iType = $this->postGetValue ("iType",'');
-		$zIntitule = $this->postGetValue ("intitule",'');
-		$oCaption = $_REQUEST["caption"];
-		$oChampNom = $_REQUEST["champNom"];
-		$oMontant = $_REQUEST["montant"];
+		$iMode = $this->postGetValue ("iMode",0);
+		$iKey = $this->postGetValue ("iKey",0);
 
-		$oSaveForm = array();
-		$oSaveForm['iType'] = $iType ; 
-		$oSaveForm['intitule'] = $zIntitule ; 
-		$oSaveForm['caption'] = $oCaption ; 
-		$oSaveForm['champNom'] = $oChampNom ; 
-		$oSaveForm['montant'] = $oMontant ; 
-		$oSaveForm['iKey'] = sizeof($toSaveForm)+1 ; 
-		$iKey = sizeof($toSaveForm)+1 ; 
+		switch ($iMode){
 
+			case 0:
+				
+				$iType = $this->postGetValue ("iType",'');
+				$zIntitule = $this->postGetValue ("intitule",'');
+				$oCaption = $_REQUEST["caption"];
+				$oChampNom = $_REQUEST["champNom"];
+				$oMontant = $_REQUEST["montant"];
+
+				$oSaveForm = array();
+				$oSaveForm['iType'] = $iType ; 
+				$oSaveForm['intitule'] = $zIntitule ; 
+				$oSaveForm['caption'] = $oCaption ; 
+				$oSaveForm['champNom'] = $oChampNom ; 
+				$oSaveForm['montant'] = $oMontant ; 
+				$oSaveForm['iKey'] = sizeof($toSaveForm)+1 ; 
+				$iKey = sizeof($toSaveForm)+1 ; 
+
+				array_push($toSaveForm, $oSaveForm);
+
+				$_SESSION["rnfSaveFormule"] = $toSaveForm ; 
+
+				$oSmarty->assign("toSaveForm",$toSaveForm);
+
+
+				break;
+
+			case 1:
+
+				$toNewForm = array();
+				foreach ($toSaveForm as $oSaveForm){
+					if($iKey != $oSaveForm['iKey']){
+						array_push($toNewForm, $oSaveForm);
+					}
+				}
+
+				$_SESSION["rnfSaveFormule"] = $toNewForm ; 
+
+				$oSmarty->assign("toSaveForm",$toNewForm);
+
+				break;
+		}
 
 		/*$oSaveForm['zRender'] = $zRender ; */
 
 		/*echo "<pre>";
 		print_r ($toSaveForm);
 		echo "</pre>";*/
-
-		array_push($toSaveForm, $oSaveForm);
-
-		$_SESSION["rnfSaveFormule"] = $toSaveForm ; 
-
-		$oSmarty->assign("toSaveForm",$toSaveForm);
+		
 		$oSmarty->assign("zBasePath",base_url());
 		$zRender = $oSmarty->fetch( ADMIN_TEMPLATE_PATH . "rnf/tpl-render.tpl" );
 

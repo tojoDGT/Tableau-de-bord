@@ -77,7 +77,7 @@
 									</textarea>																					
 								</td>
 								<td style="vertical-align:middle">
-									<button style="cursonr:pointer" class="btn_close" type="button" onclick="deleteChamp({$iIndexNew})"><img style="cursonr:pointer;color: #F10610;" width="20" src="{$zBasePath}/assets/iles/del.png"></button>
+									<button style="cursonr:pointer" class="btn_close" type="button" onclick="deleteTR({$oSaveForm.iKey})"><img style="cursonr:pointer;color: #F10610;" width="20" src="{$zBasePath}/assets/iles/del.png"></button>
 								</td>
 							</tr>
 							{assign var=iIncrementForm value=$iIncrementForm+1}

@@ -75,6 +75,9 @@
 														  <span class="marge"><input type="radio" name="iType" id="radioPrimary3" value="3"  class="custom-control-input form-check">
 															<label class="custom-control-label" for="radioPrimary3">Formule</label>
 														   </span>
+														  <span class="marge"><input type="radio" name="iType" id="radioPrimary4" value="4"  class="custom-control-input form-check">
+															<label class="custom-control-label" for="radioPrimary4">Champ libre</label>
+														  </span>
 													</div>
 											  </div>
 										</div>
@@ -249,6 +252,13 @@ margin-right:15px;
 					$("#panelFormule").show();
 					$("#renderHtml").show();
 					break;
+
+				case '4' :
+					$("#panelFixe").hide();
+					$("#panelForfaitaire").hide();
+					$("#panelFormule").hide();
+					$("#renderHtml").hide();
+					break;
 			
 			}
 		})
@@ -289,6 +299,32 @@ margin-right:15px;
 			})
 		})
 	})
+
+	function deleteTR(_iKey){
+		
+		var zConfirm = confirm("Êtes-vous sûr de vouloir supprimer cette ligne d'enregistrement ?")
+
+		if(zConfirm == true){
+			$.ajax({
+				url: zBasePath + "rnf/save",
+				type: 'post',
+				data: {
+					iMode	: 1,
+					iKey	: _iKey,
+				},
+				success: function(zReturn, textStatus, jqXHR) {
+					$("#renderHtml").html(zReturn);
+					$("#renderHtml").show();
+				},
+				async: false
+			}).done(function() {
+				$("#tr_" +index).fadeOut('slow',function(){
+				   $(this).html('')
+			   });
+
+			});
+		}
+  }
 
  </script>
 {/literal}
